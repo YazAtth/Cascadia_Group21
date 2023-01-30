@@ -18,7 +18,21 @@
 
 ## Controllers
 
+### PlayerController
+ - Handles all the players in the game.
+ - Keeps a list of all the players.
+
+#### cycleToNextPlayer()
+```java
+    public Player cycleToNextPlayer() {
+```
+- Returns a player at index `n` from the ArrayList `playerList`.
+- When the method is called again: it returns the player at index `n+1`.
+- When the method is called after returning the player at the end of the ArrayList: it cycles back to the player at the start of the ArrayList and returns that player.
+#### 
+
 ### RandomNumberGenerator
+
 
 #### getRandomNumberInRange()
 ``` java
