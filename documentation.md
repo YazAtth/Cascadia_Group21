@@ -4,7 +4,8 @@
 2. [Methods](#Methods)
    1. [cycleToNextPlayer()](#cycletonextplayer--)
    2. [getRandomNumberInRange()](#getrandomnumberinrange--)
-
+3. [Classes](#classes)
+   1. [PlayerController](#playercontroller)
 
 
 
@@ -37,6 +38,11 @@
 
 
 
+# Classes
+
+## PlayerController
+
+- Contains an ArrayList of Player objects so that it can keep track of all of the players in the game.
 
 
 
