@@ -22,7 +22,7 @@ Dominic was here
 ### cycleToNextPlayer()
 *controllers.PlayerController.cycleToNextPlayer()*
 ```java
-    public Player cycleToNextPlayer() {
+    publicm Player cycleToNextPlayer() {
 ```
 - Returns a player at index `n` from the ArrayList `playerList`.
 - When the method is called again: it returns the player at index `n+1`.
@@ -46,6 +46,13 @@ Dominic was here
 - Takes in a user input and returns an enum that represents the user action to be performed.
 - If an invalid input is received, an 'INVALID_COMMAND' enum is returned.
 
+### askUserForInput()
+*views.GameView.askUserForInput()*
+```java
+public static String askUserForInput()
+```
+- GUI presented to user to get command from user
+- 
 
 # Classes
 
