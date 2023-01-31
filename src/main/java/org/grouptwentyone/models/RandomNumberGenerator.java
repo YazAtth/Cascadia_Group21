@@ -5,7 +5,9 @@ public class RandomNumberGenerator {
     public static int getRandomNumberInRange(int minInclusive, int maxInclusive) {
 
         if (minInclusive > maxInclusive) {
-            throw new IllegalArgumentException(String.format("Your min number: %d is greater than your max number: %d", minInclusive, maxInclusive));
+            int temp = minInclusive;
+            minInclusive = maxInclusive;
+            maxInclusive = temp;
         }
 
         int min = minInclusive;

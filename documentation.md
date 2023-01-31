@@ -35,8 +35,6 @@ Dominic was here
     public static int getRandomNumberInRange(int minInclusive, int maxInclusive)
 ```
 - Takes in two non-decreasing integers and outputs a random number between them inclusive of the two integers passed in.
-- Throws an `illegalArgumentException` if `minInclusive` is greater than `maxInclusive`.
-
 
 
 # Classes
