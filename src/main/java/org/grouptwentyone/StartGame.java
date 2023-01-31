@@ -56,7 +56,6 @@ public class StartGame {
                 case INVALID_COMMAND:
                     GameView.setIsPreviousInputInvalid(true);
                     GameView.setPreviousInvalidInput(userInput);
-                    System.out.printf("\"%s\" is not a valid command, please try again or type \"help\" to see the list of commands", userInput);
                     System.out.println(GameUiView.LARGE_SPACE);
             }
 
