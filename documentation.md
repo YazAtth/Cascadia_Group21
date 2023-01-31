@@ -22,7 +22,7 @@ Dominic was here
 ### cycleToNextPlayer()
 *controllers.PlayerController.cycleToNextPlayer()*
 ```java
-    publicm Player cycleToNextPlayer() {
+    public Player cycleToNextPlayer() {
 ```
 - Returns a player at index `n` from the ArrayList `playerList`.
 - When the method is called again: it returns the player at index `n+1`.
