@@ -5,6 +5,7 @@ Dominic was here
 2. [Methods](#Methods)
    1. [cycleToNextPlayer()](#cycletonextplayer--)
    2. [getRandomNumberInRange()](#getrandomnumberinrange--)
+   3. [getUserActionFromInput()](#getUserActionFromInput--)
 3. [Classes](#classes)
    1. [PlayerController](#playercontroller)
 
@@ -35,6 +36,15 @@ Dominic was here
     public static int getRandomNumberInRange(int minInclusive, int maxInclusive)
 ```
 - Takes in two non-decreasing integers and outputs a random number between them inclusive of the two integers passed in.
+
+
+### getUserActionFromInput()
+*controllers.GameController.getUserActionFromInput()*
+```java
+   public static UserAction getUserActionFromInput(String userInput)
+```
+- Takes in a user input and returns an enum that represents the user action to be performed.
+- If an invalid input is received, an 'INVALID_COMMAND' enum is returned.
 
 
 # Classes
