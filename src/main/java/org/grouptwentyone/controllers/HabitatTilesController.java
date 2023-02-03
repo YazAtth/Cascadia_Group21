@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class HabitatTilesController {
+    //for debugging
     public static void main(String[] args) {
         System.out.println(createBagOfHabitatTiles());
     }
