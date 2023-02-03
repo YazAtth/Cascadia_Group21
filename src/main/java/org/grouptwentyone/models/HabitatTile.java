@@ -4,23 +4,32 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class HabitatTile {
-    enum HabitatTileType {MOUNTAINS, FORESTS, PRAIRIES,WETLANDS, RIVERS}
-    ArrayList<HabitatTileType> habitatTileTypeList;
-    ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeList;
-    WildlifeToken wildlifeToken;
-    boolean keystone;
+    public enum HabitatTileType {MOUNTAINS, FORESTS, PRAIRIES, WETLANDS, RIVERS}
+    private ArrayList<HabitatTileType> habitatTileTypeList;
+    private ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeList;
+    private WildlifeToken wildlifeToken;
+    private boolean keystone;
 
-    public HabitatTile(ArrayList<HabitatTileType> habitatTileTypeList, int numWildlifeTypes) {
+    //keystone tile constructor
+    public HabitatTile(ArrayList<HabitatTileType> habitatTileTypeList, ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeList) {
         this.habitatTileTypeList = habitatTileTypeList;
-        if (numWildlifeTypes < 1 || numWildlifeTypes > 3)
-            throw new IllegalArgumentException("Invalid number of wildlife types inputted");
-        this.wildlifeTokenTypeList = wildlifeTokenTypeListGenerator(numWildlifeTypes);
+        this.wildlifeTokenTypeList = wildlifeTokenTypeList;
+        this.wildlifeToken = new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY);
+        this.keystone = (habitatTileTypeList.size() == 1);
+    }
+
+    //constructor for other tile types
+    public HabitatTile(int numTypes) {
+        if (numTypes < 2 || numTypes > 3)
+            throw new IllegalArgumentException("invalid number of types inputted");
+        this.habitatTileTypeList = habitatTileTypeListGenerator(numTypes);
+        this.wildlifeTokenTypeList = wildlifeTokenTypeListGenerator(numTypes);
         this.wildlifeToken = new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY);
         this.keystone = (habitatTileTypeList.size() == 1);
     }
 
     private static ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeListGenerator(int numWildlifeTypes) {
-        HashSet<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeSet = new HashSet<>(numWildlifeTypes);
+        HashSet<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeSet = new HashSet<>();
 
         for (int i = 0; i < numWildlifeTypes; i++) {
             switch (RandomNumberGenerator.getRandomNumberInRange(1, 5)) {
@@ -32,9 +41,28 @@ public class HabitatTile {
                 default -> throw new IllegalArgumentException("num generator failed");
             }
             //reduces i by 1 if a duplicate WildlifeTokenType was about to be added
-            if (i != wildlifeTokenTypeSet.size()) i--;
+            if (i+1 != wildlifeTokenTypeSet.size()) i--;
         }
         return new ArrayList<>(wildlifeTokenTypeSet);
+    }
+
+    private static ArrayList<HabitatTileType> habitatTileTypeListGenerator(int numHabitatTypes) {
+        HashSet<HabitatTileType> habitatTileTypeSet = new HashSet<>();
+
+        for (int i = 0; i < numHabitatTypes; i++) {
+            int test = RandomNumberGenerator.getRandomNumberInRange(1, 5);
+            switch (test) {
+                case 1 -> habitatTileTypeSet.add(HabitatTileType.MOUNTAINS);
+                case 2 -> habitatTileTypeSet.add(HabitatTileType.FORESTS);
+                case 3 -> habitatTileTypeSet.add(HabitatTileType.PRAIRIES);
+                case 4 -> habitatTileTypeSet.add(HabitatTileType.WETLANDS);
+                case 5 -> habitatTileTypeSet.add(HabitatTileType.RIVERS);
+                default -> throw new IllegalArgumentException("num generator failed");
+            }
+            //reduces i by 1 if a duplicate HabitatTileType was about to be added
+            if (i+1 != habitatTileTypeSet.size()) i--;
+        }
+        return new ArrayList<>(habitatTileTypeSet);
     }
 
     public ArrayList<HabitatTileType> getHabitatTileTypeList() {
@@ -51,5 +79,9 @@ public class HabitatTile {
 
     public boolean isKeystone() {
         return keystone;
+    }
+
+    public static void main(String[] args) {
+        habitatTileTypeListGenerator(2);
     }
 }
