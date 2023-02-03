@@ -1,6 +1,5 @@
 
 # Table of Contents
-Dominic was here
 1. [Introduction](#introduction)
 2. [Methods](#Methods)
    1. [cycleToNextPlayer()](#cycletonextplayer--)
