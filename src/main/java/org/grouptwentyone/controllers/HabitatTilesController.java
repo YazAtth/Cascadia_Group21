@@ -7,33 +7,30 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class HabitatTilesController {
-    //for debugging
-    public static void main(String[] args) {
-        System.out.println(createBagOfHabitatTiles());
-    }
+    public static ArrayList<HabitatTile> habitatTilesBag = createBagOfHabitatTiles();
 
     public static ArrayList<HabitatTile> createBagOfHabitatTiles() {
-        ArrayList<HabitatTile> HabitatTilesBag = new ArrayList<>();
+        ArrayList<HabitatTile> habitatTilesBag = new ArrayList<>();
 
         //create keystone tiles
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeList = wildlifeTokenTypeSelector(i);
                 ArrayList<HabitatTile.HabitatTileType> habitatTileTypeList = habitatTileTypeSelector(j);
-                HabitatTilesBag.add(new HabitatTile(habitatTileTypeList, wildlifeTokenTypeList));
+                habitatTilesBag.add(new HabitatTile(habitatTileTypeList, wildlifeTokenTypeList));
             }
         }
 
         //create other tiles
         for (int i = 2; i <=3; i++) {
             for (int j = 1; j <= 30; j++) {
-                HabitatTilesBag.add(new HabitatTile(i));
+                habitatTilesBag.add(new HabitatTile(i));
             }
         }
 
-        Collections.shuffle(HabitatTilesBag);
+        Collections.shuffle(habitatTilesBag);
 
-        return HabitatTilesBag;
+        return habitatTilesBag;
     }
 
     private static ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeSelector(int wildlifeType) {

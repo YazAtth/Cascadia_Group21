@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class WildlifeTokensController {
-    public static void main(String[] args) {
-        System.out.println(createBagOfWildlifeTokens());
-    }
+    public static ArrayList<WildlifeToken> wildlifeTokenBag = createBagOfWildlifeTokens();
 
     public static ArrayList<WildlifeToken> createBagOfWildlifeTokens() {
         ArrayList<WildlifeToken> wildlifeTokenBag = new ArrayList<>();

@@ -12,6 +12,13 @@ public class Tile {
         isActive = false; //changes to true once the tile is adjacent to a tile that has a habitat tile
     }
 
+    //constructor for debugging
+    public Tile (HabitatTile habitatTile, HexCoordinate hexCoordinate) {
+        this.habitatTile = habitatTile;
+        this.hexCoordinate = hexCoordinate;
+        this.isActive = true;
+    }
+
     public HabitatTile getHabitatTile() {
         return habitatTile;
     }
