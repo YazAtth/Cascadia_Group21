@@ -51,7 +51,7 @@ public class HabitatTilesController {
         return wildlifeTokenTypeList;
     }
 
-    public static ArrayList<HabitatTile.HabitatTileType> habitatTileTypeSelector(int tileType) {
+    private static ArrayList<HabitatTile.HabitatTileType> habitatTileTypeSelector(int tileType) {
         ArrayList<HabitatTile.HabitatTileType> HabitatTileTypeList = new ArrayList<>();
 
         switch (tileType) {
