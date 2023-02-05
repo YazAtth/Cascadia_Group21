@@ -4,6 +4,10 @@ import org.grouptwentyone.controllers.HabitatTilesController;
 import org.grouptwentyone.models.HabitatTile;
 import org.grouptwentyone.models.HexCoordinate;
 import org.grouptwentyone.models.Tile;
+import org.grouptwentyone.models.WildlifeToken;
+
+import java.util.Hashtable;
+import java.util.Objects;
 
 import java.util.ArrayList;
 
@@ -27,31 +31,39 @@ public class TestBoardView {
         Tile oneTwo = new Tile(HabitatTilesController.habitatTilesBag.get(1), new HexCoordinate(1, 2));
         Tile twoOne = new Tile(HabitatTilesController.habitatTilesBag.get(2), new HexCoordinate(2, 1));
 
-        playerBoard.get(1).add(1, oneOne);
+        playerBoard.get(1).set(1, oneOne);
         //note oneTwo is added at index [2, 1]
-        playerBoard.get(2).add(1, oneTwo);
-        playerBoard.get(1).add(2, twoOne);
-
-        //dummy loops //DELETE ONCE ARRAY LISTS ARE SIZE THREE
-        System.out.println(playerBoard.size());
-        System.out.println(playerBoard.get(0).size());
-        System.out.println(playerBoard.get(1).size());
-        System.out.println(playerBoard.get(2).size());
-
-
-        for (int row = 0; row < playerBoard.size() ; row++) {
-            for (int col = 0; col < playerBoard.get(row).size(); col++) {
-                Tile currTile = playerBoard.get(row).get(col);
-                System.out.println(currTile.isActive());
-            }
-        }  //END OF DUMMY LOOPS
+        playerBoard.get(2).set(1, oneTwo);
+        playerBoard.get(1).set(2, twoOne);
     }
 
     //static method to display tiles
     public static String displayTiles(ArrayList<ArrayList<Tile>> playerBoard) {
+
         StringBuilder pattern = new StringBuilder();
 
-            //iterate over each ArrayList in the ArrayList (rows)
+        //link HabitatTileTypes to a colour
+        Hashtable<HabitatTile.HabitatTileType, String> tileToColourTable = new Hashtable<HabitatTile.HabitatTileType, String>();
+        tileToColourTable.put(HabitatTile.HabitatTileType.FORESTS, "\033[1;92m");
+        tileToColourTable.put(HabitatTile.HabitatTileType.MOUNTAINS, "\033[1;37m");
+        tileToColourTable.put(HabitatTile.HabitatTileType.PRAIRIES, "\033[1;93m");
+        tileToColourTable.put(HabitatTile.HabitatTileType.RIVERS, "\033[1;34m");
+        tileToColourTable.put(HabitatTile.HabitatTileType.WETLANDS, "\033[1;96m");
+
+        //link WildLifeTokenType to a coloured letter
+        Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToStringTable = new Hashtable<WildlifeToken.WildlifeTokenType, String>();
+        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.BEAR, "\033[1;38;5;94m" + "B" + "\u001B[0m");
+        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.ELK, "\033[1;90m" + "E" + "\u001B[0m");
+        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.SALMON, "\033[1;91m" + "S" + "\u001B[0m");
+        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.FOX, "\033[1;33m" + "F" + "\u001B[0m");
+        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.HAWK, "\033[1;36m" + "H" + "\u001B[0m");
+
+        String tokenString = "";
+        String endString = "\u001B[0m";
+        String colourOne, colourTwo, colourThree, colourFour, colourFive, colourSix;
+        colourOne = colourTwo = colourThree = colourFour = colourFive = colourSix = "";
+
+        //iterate over each ArrayList in the ArrayList (rows)
         for (int row = 0; row < playerBoard.size(); row++) {
             //iterate over each row of each tile (tiles size is 6)
             for (int i = 0; i < 6; i++) {
@@ -64,19 +76,54 @@ public class TestBoardView {
                 for (int col = 0; col < playerBoard.get(row).size(); col++) {
 
                     Tile currTile = playerBoard.get(row).get(col);
-                    HabitatTile currHabitatTile = playerBoard.get(row).get(col).getHabitatTile();
 
 
+                    if (currTile.getHabitatTile() == null) {
+                        //if null do nothing
+                    }
+
+                    else {
+
+                        //current row of tiles
+                        ArrayList<HabitatTile.HabitatTileType> currHabitatTileTypeList = currTile.getHabitatTile().getHabitatTileTypeList();
+
+                        //tokenString should always length 5, hence the different if statements
+                        if (currHabitatTileTypeList.size() == 1) {
+                            colourOne = colourTwo = colourThree = colourFour = colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(0));
+                            tokenString = "  " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + "  ";
+                        } else if (currHabitatTileTypeList.size() == 2) {
+                            colourOne = colourTwo = colourThree = tileToColourTable.get(currHabitatTileTypeList.get(0));
+                            colourFour = colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(1));
+                            tokenString = " " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + " " +
+                                                tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(1)) + " ";
+
+                        } else {
+                            colourOne = colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(0));
+                            colourThree = colourFour = tileToColourTable.get(currHabitatTileTypeList.get(1));
+                            colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(2));
+                            tokenString = tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + " " +
+                                          tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(1)) + " " +
+                                          tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(2));
+                        }
+
+
+                    }
+
+                    //if tile is not placed, just print spaces
                     if (!playerBoard.get(row).get(col).isActive()) {
                         pattern.append("               ");
-                    } else if (i == 0 || i == 5) {
-                        pattern.append("    *  *  *    ");
-                    } else if (i == 1 || i == 4) {
-                        pattern.append("  *         *  ");
-                    } else if (i == 2 || i == 3) {
-                        pattern.append(" *           * ");
+                    } else if (i == 0) {
+                        pattern.append(colourOne +   "    *******    " + endString);
+                    } else if (i == 1) {
+                        pattern.append(colourTwo +   "  ***********  " + endString);
+                    } else if (i == 2) {
+                        pattern.append(colourThree + " ****" + tokenString +  endString + colourThree + "**** " + endString);
+                    } else if (i == 3) {
+                        pattern.append(colourFour +  " ****     **** " + endString);
+                    } else if (i == 4) {
+                        pattern.append(colourFive +  "  ***********  " + endString);
                     } else {
-                        pattern.append("*             *");
+                        pattern.append(colourSix +   "    *******    " + endString);
                     }
                 }
                 pattern.append("\n");
@@ -87,6 +134,6 @@ public class TestBoardView {
 
     public static void main(String[] args) {
         addToBoard();
-        //System.out.println(displayTiles(playerBoard));
+        System.out.println(displayTiles(playerBoard));
     }
 }
