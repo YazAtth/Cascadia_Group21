@@ -20,6 +20,9 @@ public class StartGame {
         ArrayList<Player> playerList = GameSetupView.getPlayerNamesFromUser(numOfPlayers);
 
         PlayerController playerController = new PlayerController(playerList);
+        playerController.shufflePlayerList();
+        GameSetupView.displayPlayerOrder(playerList);
+
         Player activePlayer = playerController.getFirstPlayer();
 
 

@@ -3,8 +3,7 @@ package org.grouptwentyone.views;
 import org.grouptwentyone.controllers.UserTerminationController;
 import org.grouptwentyone.models.Player;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class GameSetupView {
 
@@ -57,5 +56,27 @@ public class GameSetupView {
         GameUiView.printLargeSpace();
 
         return playerList;
+    }
+
+    public static void displayPlayerOrder(ArrayList<Player> playerList) {
+
+        StringBuilder output = new StringBuilder();
+        GameUiView.printPageBorder();
+
+        System.out.println("Player will play in this order:");
+
+        for (int i=0; i<playerList.size(); i++) {
+            output.append(String.format("%d. %s\n", i+1, playerList.get(i).getUserName()));
+        }
+
+        System.out.println(output);
+
+        GameUiView.printPageBorder();
+        System.out.println("Press \"ENTER\" on your keyboard to continue");
+        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
+
+        GameUiView.printLargeSpace();
+
     }
 }
