@@ -32,10 +32,10 @@ public class GameView {
               
                 "help"\t\t\topens up this page
                 "quit"\t\t\texits program
+                "next"\t\t\tgoes to the next player's turn
                 
                 --- DEVELOPER COMMANDS (for debugging) ---
                 "active"\t\tsee details of the player who's turn it is to make an action.
-                "next"\t\t\tmake the current player forfeit their turn and move to the next active player
                 
                 %s
                 """, GameUiView.PAGE_BORDER, GameUiView.PAGE_BORDER);

@@ -35,9 +35,6 @@ public class StartGame {
             System.out.println("VIEW OF HABITAT GOES HERE");
             System.out.println("VIEW OF CARD OPTIONS GOES HERE\n");
 
-
-
-
             GameUiView.printPageBorder();
 
             String userInput = GameView.askUserForInput();
@@ -54,7 +51,7 @@ public class StartGame {
                 case DEV__PRINT_ACTIVE_PLAYER:
                     System.out.println(activePlayer);
                     break;
-                case DEV__NEXT_PLAYER:
+                case NEXT_PLAYER:
                     System.out.println("Moved to next player");
                     activePlayer = playerController.cycleToNextPlayer();
                     break;
