@@ -24,14 +24,22 @@ public class GameSetupView {
 
             try {
                 numberOfPlayers = Integer.parseInt(userInput);
-                return numberOfPlayers;
+
+                if (numberOfPlayers > 4 || numberOfPlayers < 2) {
+                    GameUiView.printLargeSpace();
+                    GameUiView.printPageBorder();
+
+                    System.out.println("Invalid Input: Please enter a number between 2-4 OR type \"quit\" to exit the program");
+                } else {
+                    return numberOfPlayers;
+                }
 
             } catch (NumberFormatException ex) {
 
                 GameUiView.printLargeSpace();
                 GameUiView.printPageBorder();
 
-                System.out.println("Invalid Input: Please enter a number between 2-4 OR type 'quit' to exit program");
+                System.out.println("Invalid Input: Please enter a number between 2-4 OR type \"quit\" to exit the program");
             }
         }
 
