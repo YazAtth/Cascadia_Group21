@@ -25,24 +25,38 @@ public class GameView {
     }
 
     public static void showHelpPage() {
+
+        System.out.println(GameUiView.GREEN);
+
         System.out.println(GameUiView.LARGE_SPACE);
         System.out.printf("""
                 %s
-                --- HELP ---
+                %s⏺ HELP ⏺%s
               
-                "help"\t\t\topens up this page
-                "quit"\t\t\texits program
-                "next"\t\t\tgoes to the next player's turn
+                %s"help"%s\t\t\topens up this page
+                %s"quit"%s\t\t\texits program
+                %s"next"%s\t\t\tgoes to the next player's turn
                 
-                --- DEVELOPER COMMANDS (for debugging) ---
-                "active"\t\tsee details of the player who's turn it is to make an action.
+                %s⏺ DEVELOPER COMMANDS (for debugging) ⏺%s
+                
+                %s"active"%s\t\tsee details of the player who's turn it is to make an action.
                 
                 %s
-                """, GameUiView.PAGE_BORDER, GameUiView.PAGE_BORDER);
+                """, GameUiView.PAGE_BORDER_NO_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
+                GameUiView.PAGE_BORDER_NO_COLOUR);
+
+        System.out.println(GameUiView.RESET_COLOUR);
 
         System.out.println("Press \"ENTER\" on your keyboard to go back to the game");
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
+
 
         GameUiView.printLargeSpace();
 

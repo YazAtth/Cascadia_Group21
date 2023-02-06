@@ -29,7 +29,8 @@ public class GameSetupView {
                     GameUiView.printLargeSpace();
                     GameUiView.printPageBorder();
 
-                    System.out.println("Invalid Input: Please enter a number between 2-4 OR type \"quit\" to exit the program");
+                    System.out.printf("%sInvalid Input:%s Please enter a number between 2-4 OR type \"quit\" to exit the program%s\n",
+                            GameUiView.RED_BOLD, GameUiView.RED, GameUiView.RESET_COLOUR);
                 } else {
                     return numberOfPlayers;
                 }
@@ -39,7 +40,8 @@ public class GameSetupView {
                 GameUiView.printLargeSpace();
                 GameUiView.printPageBorder();
 
-                System.out.println("Invalid Input: Please enter a number between 2-4 OR type \"quit\" to exit the program");
+                System.out.printf("%sInvalid Input:%s Please enter a number between 2-4 OR type \"quit\" to exit the program%s\n",
+                        GameUiView.RED_BOLD, GameUiView.RED, GameUiView.RESET_COLOUR);
             }
         }
 
@@ -58,6 +60,13 @@ public class GameSetupView {
         for (int i=0; i<numberOfPlayers; i++) {
             System.out.printf("Enter \"Player %d\" name: ", i + 1);
             playerName = sc.nextLine();
+
+            if (Objects.equals(playerName, "")) {
+                System.out.printf("\n%sInvalid Input:%s A player cannot have an empty name%s\n", GameUiView.RED_BOLD, GameUiView.RED, GameUiView.RESET_COLOUR);
+                i--;
+                continue;
+            }
+
             playerList.add(new Player(playerName));
         }
 
@@ -71,7 +80,7 @@ public class GameSetupView {
         StringBuilder output = new StringBuilder();
         GameUiView.printPageBorder();
 
-        System.out.println("Player will play in this order:");
+        System.out.println("Players will play in this order:");
 
         for (int i=0; i<playerList.size(); i++) {
             output.append(String.format("%d. %s\n", i+1, playerList.get(i).getUserName()));

@@ -2,10 +2,27 @@ package org.grouptwentyone.views;
 
 public class GameUiView {
 
-    public static String PAGE_BORDER = "====================================================";
-    public static String PAGE_BORDER_BOTTOM = "\n====================================================\n\n";
+    // Colours
+    public static String RESET_COLOUR = "\u001B[0m";
 
+    public static final String RED = "\033[0;31m";
+    public static final String GREEN = "\033[0;32m";   // GREEN
+
+    public static final String GREEN_BOLD = "\033[1;32m";
+    public static final String RED_BOLD = "\033[1;31m";
+    public static final String WHITE_BOLD_BRIGHT = "\033[1;97m";
+
+
+    // Page Items
+    public static String PAGE_BORDER_NO_COLOUR = "====================================================";
+    public static String PAGE_BORDER = "\033[1;90m" + PAGE_BORDER_NO_COLOUR + RESET_COLOUR;
+    public static String PAGE_BORDER_BOTTOM = "\n====================================================\n\n";
     public static String LARGE_SPACE = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+
+
+
+
+
 
 
     public static void printLargeSpace() {
@@ -15,6 +32,7 @@ public class GameUiView {
     public static void printPageBorder() {
         System.out.println(PAGE_BORDER);
     }
+
 
 
 }

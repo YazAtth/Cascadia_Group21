@@ -30,7 +30,7 @@ public class StartGame {
 
             GameUiView.printPageBorder();
 
-            System.out.printf("--- %s ---\n\n", activePlayer.getUserName());
+            System.out.printf("%s ⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
 
             System.out.println("VIEW OF HABITAT GOES HERE");
             System.out.println("VIEW OF CARD OPTIONS GOES HERE\n");
@@ -54,6 +54,7 @@ public class StartGame {
                 case NEXT_PLAYER:
                     System.out.println("Moved to next player");
                     activePlayer = playerController.cycleToNextPlayer();
+                    GameUiView.printLargeSpace();
                     break;
                 case INVALID_COMMAND:
                     GameView.setIsPreviousInputInvalid(true);
