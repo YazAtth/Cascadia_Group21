@@ -5,7 +5,7 @@ public class GameUiView {
     public static String PAGE_BORDER = "====================================================";
     public static String PAGE_BORDER_BOTTOM = "\n====================================================\n\n";
 
-    public static String LARGE_SPACE = "\n\n\n\n\n\n\n\n\n\n\n";
+    public static String LARGE_SPACE = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 
 
     public static void printLargeSpace() {

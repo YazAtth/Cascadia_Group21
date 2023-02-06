@@ -31,7 +31,7 @@ public class GameView {
                 --- HELP ---
               
                 "help"\t\t\topens up this page
-                "exit"\t\t\texits program
+                "quit"\t\t\texits program
                 
                 --- DEVELOPER COMMANDS (for debugging) ---
                 "active"\t\tsee details of the player who's turn it is to make an action.

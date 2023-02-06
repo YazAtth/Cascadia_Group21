@@ -32,7 +32,7 @@ public class GameSetupView {
                 GameUiView.printLargeSpace();
                 GameUiView.printPageBorder();
 
-                System.out.println("Invalid Input: Please enter a number between 2-4 OR type 'exit' to exit program");
+                System.out.println("Invalid Input: Please enter a number between 2-4 OR type 'quit' to exit program");
             }
         }
 

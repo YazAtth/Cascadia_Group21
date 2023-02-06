@@ -14,7 +14,7 @@ public class GameController {
     // Hash that takes in Strings and converts them to enums (much nicer looking than a switch statement)
     private static final Map<String, UserAction> hashmap = Map.ofEntries(
             entry("HELP", UserAction.HELP),
-            entry("EXIT", UserAction.EXIT),
+            entry("QUIT", UserAction.EXIT),
             entry("ACTIVE", UserAction.DEV__PRINT_ACTIVE_PLAYER),
             entry("NEXT", UserAction.DEV__NEXT_PLAYER)
     );
