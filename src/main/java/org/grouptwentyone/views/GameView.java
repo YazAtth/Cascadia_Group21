@@ -26,7 +26,7 @@ public class GameView {
 
     public static void showHelpPage() {
 
-        System.out.println(GameUiView.GREEN);
+        System.out.println(GameUiView.GREEN_BOLD);
 
         System.out.println(GameUiView.LARGE_SPACE);
         System.out.printf("""
@@ -41,7 +41,7 @@ public class GameView {
                 
                 %s"active"%s\t\tsee details of the player who's turn it is to make an action.
                 
-                %s
+                %s%s
                 """, GameUiView.PAGE_BORDER_NO_COLOUR,
                 GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
                 GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
@@ -49,6 +49,7 @@ public class GameView {
                 GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
                 GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
                 GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
+                GameUiView.GREEN_BOLD,
                 GameUiView.PAGE_BORDER_NO_COLOUR);
 
         System.out.println(GameUiView.RESET_COLOUR);
