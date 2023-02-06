@@ -11,7 +11,7 @@ public class GameSetupView {
     public static int getNumberOfPlayersFromUser() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println(GameUiView.PAGE_BORDER_TOP);
+        GameUiView.printPageBorder();
         System.out.println("Enter Number of Players");
 
         String userInput;
@@ -29,8 +29,8 @@ public class GameSetupView {
 
             } catch (NumberFormatException ex) {
 
-                System.out.println(GameUiView.LARGE_SPACE);
-                System.out.println(GameUiView.PAGE_BORDER_TOP);
+                GameUiView.printLargeSpace();
+                GameUiView.printPageBorder();
 
                 System.out.println("Invalid Input: Please enter a number between 2-4 OR type 'exit' to exit program");
             }
@@ -44,8 +44,8 @@ public class GameSetupView {
 
         Scanner sc = new Scanner(System.in);
 
-        System.out.println(GameUiView.LARGE_SPACE);
-        System.out.println(GameUiView.PAGE_BORDER_TOP);
+        GameUiView.printLargeSpace();
+        GameUiView.printPageBorder();
         System.out.println("Player Names");
 
         for (int i=0; i<numberOfPlayers; i++) {
@@ -54,7 +54,7 @@ public class GameSetupView {
             playerList.add(new Player(playerName));
         }
 
-        System.out.println(GameUiView.LARGE_SPACE);
+        GameUiView.printLargeSpace();
 
         return playerList;
     }

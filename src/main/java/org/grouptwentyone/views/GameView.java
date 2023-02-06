@@ -38,7 +38,7 @@ public class GameView {
                 "next"\t\t\tmake the current player forfeit their turn and move to the next active player
                 
                 %s
-                """, GameUiView.PAGE_BORDER_TOP, GameUiView.PAGE_BORDER_TOP);
+                """, GameUiView.PAGE_BORDER, GameUiView.PAGE_BORDER);
 
         System.out.println("Press \"ENTER\" on your keyboard to go back to the game");
         Scanner sc = new Scanner(System.in);

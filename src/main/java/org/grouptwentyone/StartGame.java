@@ -1,6 +1,5 @@
 package org.grouptwentyone;
 
-import com.sun.jdi.InterfaceType;
 import org.grouptwentyone.controllers.GameController;
 import org.grouptwentyone.controllers.PlayerController;
 import org.grouptwentyone.controllers.UserTerminationController;
@@ -10,10 +9,6 @@ import org.grouptwentyone.views.GameUiView;
 import org.grouptwentyone.views.GameView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import static java.util.Map.entry;
 
 public class StartGame {
 
@@ -30,12 +25,12 @@ public class StartGame {
 
         while (true) {
 
-            System.out.println(GameUiView.PAGE_BORDER_TOP);
+            GameUiView.printPageBorder();
 
             System.out.println("VIEW OF HABITAT GOES HERE");
             System.out.println("VIEW OF CARD OPTIONS GOES HERE\n");
 
-            System.out.println(GameUiView.PAGE_BORDER_TOP);
+            GameUiView.printPageBorder();
 
             String userInput = GameView.askUserForInput();
             GameController.UserAction userAction = GameController.getUserActionFromInput(userInput);
@@ -43,11 +38,11 @@ public class StartGame {
             switch (userAction) {
                 case HELP:
                     GameView.showHelpPage();
-                    System.out.println(GameUiView.LARGE_SPACE);
+                    GameUiView.printLargeSpace();
                     break;
                 case EXIT:
                     UserTerminationController.endProgram();
-                    System.out.println(GameUiView.LARGE_SPACE);
+                    GameUiView.printLargeSpace();
                     break;
                 case DEV__PRINT_ACTIVE_PLAYER:
                     System.out.println(activePlayer);
@@ -59,7 +54,7 @@ public class StartGame {
                 case INVALID_COMMAND:
                     GameView.setIsPreviousInputInvalid(true);
                     GameView.setPreviousInvalidInput(userInput);
-                    System.out.println(GameUiView.LARGE_SPACE);
+                    GameUiView.printLargeSpace();
             }
 
 
