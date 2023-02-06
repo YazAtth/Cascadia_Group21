@@ -44,6 +44,8 @@ public class GameView {
         Scanner sc = new Scanner(System.in);
         sc.nextLine();
 
+        GameUiView.printLargeSpace();
+
 
     }
 

@@ -30,8 +30,13 @@ public class StartGame {
 
             GameUiView.printPageBorder();
 
+            System.out.printf("--- %s ---\n\n", activePlayer.getUserName());
+
             System.out.println("VIEW OF HABITAT GOES HERE");
             System.out.println("VIEW OF CARD OPTIONS GOES HERE\n");
+
+
+
 
             GameUiView.printPageBorder();
 
@@ -41,7 +46,6 @@ public class StartGame {
             switch (userAction) {
                 case HELP:
                     GameView.showHelpPage();
-                    GameUiView.printLargeSpace();
                     break;
                 case EXIT:
                     UserTerminationController.endProgram();
