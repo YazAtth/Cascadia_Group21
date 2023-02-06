@@ -1,5 +1,6 @@
 package org.grouptwentyone;
 
+import com.sun.jdi.InterfaceType;
 import org.grouptwentyone.controllers.GameController;
 import org.grouptwentyone.controllers.PlayerController;
 import org.grouptwentyone.controllers.UserTerminationController;
@@ -10,12 +11,14 @@ import org.grouptwentyone.views.GameView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
+import static java.util.Map.entry;
 
 public class StartGame {
 
 
     public static void start() {
-
 
 
         int numOfPlayers = GameSetupView.getNumberOfPlayersFromUser();
