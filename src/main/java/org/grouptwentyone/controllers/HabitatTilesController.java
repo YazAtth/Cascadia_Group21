@@ -33,7 +33,7 @@ public class HabitatTilesController {
         return habitatTilesBag;
     }
 
-    private static ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeSelector(int wildlifeType) {
+    public static ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeSelector(int wildlifeType) {
         ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeList = new ArrayList<>();
 
         switch (wildlifeType) {
@@ -48,7 +48,7 @@ public class HabitatTilesController {
         return wildlifeTokenTypeList;
     }
 
-    private static ArrayList<HabitatTile.HabitatTileType> habitatTileTypeSelector(int tileType) {
+    public static ArrayList<HabitatTile.HabitatTileType> habitatTileTypeSelector(int tileType) {
         ArrayList<HabitatTile.HabitatTileType> HabitatTileTypeList = new ArrayList<>();
 
         switch (tileType) {

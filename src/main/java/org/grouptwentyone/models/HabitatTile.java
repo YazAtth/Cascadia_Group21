@@ -22,7 +22,7 @@ public class HabitatTile {
     public HabitatTile(int numTypes) {
         if (numTypes < 2 || numTypes > 3)
             throw new IllegalArgumentException("invalid number of types inputted");
-        this.habitatTileTypeList = habitatTileTypeListGenerator(numTypes);
+        this.habitatTileTypeList = habitatTileTypeListGenerator(2);
         this.wildlifeTokenTypeList = wildlifeTokenTypeListGenerator(numTypes);
         this.wildlifeToken = new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY);
         this.keystone = (habitatTileTypeList.size() == 1);
@@ -46,7 +46,7 @@ public class HabitatTile {
         return new ArrayList<>(wildlifeTokenTypeSet);
     }
 
-    private static ArrayList<HabitatTileType> habitatTileTypeListGenerator(int numHabitatTypes) {
+    public static ArrayList<HabitatTileType> habitatTileTypeListGenerator(int numHabitatTypes) {
         HashSet<HabitatTileType> habitatTileTypeSet = new HashSet<>();
 
         for (int i = 0; i < numHabitatTypes; i++) {
@@ -81,7 +81,11 @@ public class HabitatTile {
         return keystone;
     }
 
-    public static void main(String[] args) {
-        habitatTileTypeListGenerator(2);
+    @Override
+    public String toString() {
+        return "HabitatTile\n" +
+                "Habitat Type(s): " + habitatTileTypeList.toString() +
+                ", Wildlife Token Types: " + wildlifeTokenTypeList.toString() +
+                ", wildlife Token: " + wildlifeToken.toString();
     }
 }
