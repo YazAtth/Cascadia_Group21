@@ -60,8 +60,8 @@ public class TestBoardView {
 
         String tokenString = "";
         String endString = "\u001B[0m";
-        String colourOne, colourTwo, colourThree, colourFour, colourFive, colourSix;
-        colourOne = colourTwo = colourThree = colourFour = colourFive = colourSix = "";
+        String colourOne, colourTwo;
+        colourOne = colourTwo = "";
 
         //iterate over each ArrayList in the ArrayList (rows)
         for (int row = 0; row < playerBoard.size(); row++) {
@@ -89,24 +89,26 @@ public class TestBoardView {
 
                         //tokenString should always length 5, hence the different if statements
                         if (currHabitatTileTypeList.size() == 1) {
-                            colourOne = colourTwo = colourThree = colourFour = colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(0));
+                            colourOne = colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(0));
                             tokenString = "  " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + "  ";
                         } else if (currHabitatTileTypeList.size() == 2) {
-                            colourOne = colourTwo = colourThree = tileToColourTable.get(currHabitatTileTypeList.get(0));
-                            colourFour = colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(1));
+                            colourOne = tileToColourTable.get(currHabitatTileTypeList.get(0));
+                            colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(1));
                             tokenString = " " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + " " +
                                                 tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(1)) + " ";
+                        }
 
+                        //create the string that display the animals on the Tile
+                        if (currTile.getHabitatTile().getWildlifeTokenTypeList().size() == 1) {
+                            tokenString = "  " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + "  ";
+                        } else if (currTile.getHabitatTile().getWildlifeTokenTypeList().size() == 2) {
+                            tokenString = " " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + " " +
+                                                tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(1)) + " ";
                         } else {
-                            colourOne = colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(0));
-                            colourThree = colourFour = tileToColourTable.get(currHabitatTileTypeList.get(1));
-                            colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(2));
                             tokenString = tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + " " +
                                           tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(1)) + " " +
                                           tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(2));
                         }
-
-
                     }
 
                     //if tile is not placed, just print spaces
@@ -115,15 +117,15 @@ public class TestBoardView {
                     } else if (i == 0) {
                         pattern.append(colourOne +   "    *******    " + endString);
                     } else if (i == 1) {
-                        pattern.append(colourTwo +   "  ***********  " + endString);
+                        pattern.append(colourOne +   "  ***********  " + endString);
                     } else if (i == 2) {
-                        pattern.append(colourThree + " ****" + tokenString +  endString + colourThree + "**** " + endString);
+                        pattern.append(colourOne + " ****" + tokenString +  endString + colourOne + "**** " + endString);
                     } else if (i == 3) {
-                        pattern.append(colourFour +  " ****     **** " + endString);
+                        pattern.append(colourTwo +  " ****     **** " + endString);
                     } else if (i == 4) {
-                        pattern.append(colourFive +  "  ***********  " + endString);
+                        pattern.append(colourTwo +  "  ***********  " + endString);
                     } else {
-                        pattern.append(colourSix +   "    *******    " + endString);
+                        pattern.append(colourTwo +   "    *******    " + endString);
                     }
                 }
                 pattern.append("\n");
