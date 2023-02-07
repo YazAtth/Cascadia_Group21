@@ -7,11 +7,11 @@ import org.grouptwentyone.models.Player;
 import org.grouptwentyone.views.GameSetupView;
 import org.grouptwentyone.views.GameUiView;
 import org.grouptwentyone.views.GameView;
+import org.grouptwentyone.views.TestBoardView;
 
 import java.util.ArrayList;
 
 public class StartGame {
-
 
     public static void start() {
 
@@ -32,7 +32,9 @@ public class StartGame {
 
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
 
-            System.out.println("VIEW OF HABITAT GOES HERE");
+            //System.out.println("VIEW OF HABITAT GOES HERE");
+            System.out.println(TestBoardView.displayTiles(activePlayer.getPlayerBoard()));
+
             System.out.println("VIEW OF CARD OPTIONS GOES HERE\n");
 
             GameUiView.printPageBorder();

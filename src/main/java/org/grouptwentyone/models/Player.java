@@ -52,6 +52,9 @@ public class Player {
         return String.format("\nPlayer ID: %d\nUsername: %s\nScore: %d\n\n", getPlayerId(), getUserName(), getScore());
     }
 
+    public ArrayList<ArrayList<Tile>> getPlayerBoard() {
+        return playerBoard;
+    }
 
     public int getPlayerId() {
         return playerId;
@@ -68,5 +71,7 @@ public class Player {
     public int getNumOfNatureTokens() {
         return numOfNatureTokens;
     }
+
+
 
 }
