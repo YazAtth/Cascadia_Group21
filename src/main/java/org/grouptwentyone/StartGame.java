@@ -3,11 +3,9 @@ package org.grouptwentyone;
 import org.grouptwentyone.controllers.GameController;
 import org.grouptwentyone.controllers.PlayerController;
 import org.grouptwentyone.controllers.UserTerminationController;
+import org.grouptwentyone.models.HabitatTile;
 import org.grouptwentyone.models.Player;
-import org.grouptwentyone.views.GameSetupView;
-import org.grouptwentyone.views.GameUiView;
-import org.grouptwentyone.views.GameView;
-import org.grouptwentyone.views.TestBoardView;
+import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
 
@@ -25,17 +23,15 @@ public class StartGame {
 
         Player activePlayer = playerController.getFirstPlayer();
 
+        ArrayList<HabitatTile> availableTiles = SelectionOptionsView.getFourHabitatTiles();
 
         while (true) {
 
             GameUiView.printPageBorder();
 
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-
-            //System.out.println("VIEW OF HABITAT GOES HERE");
             System.out.println(TestBoardView.displayTiles(activePlayer.getPlayerBoard()));
-
-            System.out.println("VIEW OF CARD OPTIONS GOES HERE\n");
+            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(availableTiles));
 
             GameUiView.printPageBorder();
 
