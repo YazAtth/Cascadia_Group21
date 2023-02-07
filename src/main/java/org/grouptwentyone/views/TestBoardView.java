@@ -87,18 +87,17 @@ public class TestBoardView {
                         //current row of tiles
                         ArrayList<HabitatTile.HabitatTileType> currHabitatTileTypeList = currTile.getHabitatTile().getHabitatTileTypeList();
 
-                        //tokenString should always length 5, hence the different if statements
                         if (currHabitatTileTypeList.size() == 1) {
                             colourOne = colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(0));
                             tokenString = "  " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + "  ";
-                        } else if (currHabitatTileTypeList.size() == 2) {
+                        } else {
                             colourOne = tileToColourTable.get(currHabitatTileTypeList.get(0));
                             colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(1));
                             tokenString = " " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + " " +
                                                 tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(1)) + " ";
                         }
 
-                        //create the string that display the animals on the Tile
+                        //tokenString should always length 5, hence the different if statements
                         if (currTile.getHabitatTile().getWildlifeTokenTypeList().size() == 1) {
                             tokenString = "  " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + "  ";
                         } else if (currTile.getHabitatTile().getWildlifeTokenTypeList().size() == 2) {
