@@ -20,12 +20,17 @@ public class StartGame {
         ArrayList<Player> playerList = GameSetupView.getPlayerNamesFromUser(numOfPlayers);
 
         PlayerController playerController = new PlayerController(playerList);
+        playerController.shufflePlayerList();
+        GameSetupView.displayPlayerOrder(playerList);
+
         Player activePlayer = playerController.getFirstPlayer();
 
 
         while (true) {
 
             GameUiView.printPageBorder();
+
+            System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
 
             System.out.println("VIEW OF HABITAT GOES HERE");
             System.out.println("VIEW OF CARD OPTIONS GOES HERE\n");
@@ -38,7 +43,6 @@ public class StartGame {
             switch (userAction) {
                 case HELP:
                     GameView.showHelpPage();
-                    GameUiView.printLargeSpace();
                     break;
                 case EXIT:
                     UserTerminationController.endProgram();
@@ -47,9 +51,10 @@ public class StartGame {
                 case DEV__PRINT_ACTIVE_PLAYER:
                     System.out.println(activePlayer);
                     break;
-                case DEV__NEXT_PLAYER:
+                case NEXT_PLAYER:
                     System.out.println("Moved to next player");
                     activePlayer = playerController.cycleToNextPlayer();
+                    GameUiView.printLargeSpace();
                     break;
                 case INVALID_COMMAND:
                     GameView.setIsPreviousInputInvalid(true);

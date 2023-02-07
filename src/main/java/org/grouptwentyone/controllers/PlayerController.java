@@ -3,11 +3,12 @@ package org.grouptwentyone.controllers;
 import org.grouptwentyone.models.Player;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PlayerController {
 
-    ArrayList<Player> playerList;
-    int playerIndexCycle = 0;
+    private ArrayList<Player> playerList;
+    private int playerIndexCycle = 0;
 
 
 
@@ -33,9 +34,9 @@ public class PlayerController {
         return playerList.get(playerIndexCycle);
     }
 
-
-
-
+    public void shufflePlayerList() {
+        Collections.shuffle(playerList);
+    }
 
 
     public ArrayList<Player> getPlayerList() {
