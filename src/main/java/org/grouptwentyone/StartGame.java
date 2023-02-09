@@ -5,6 +5,7 @@ import org.grouptwentyone.controllers.PlayerController;
 import org.grouptwentyone.controllers.UserTerminationController;
 import org.grouptwentyone.models.HabitatTile;
 import org.grouptwentyone.models.Player;
+import org.grouptwentyone.models.WildlifeToken;
 import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
@@ -23,7 +24,9 @@ public class StartGame {
 
         Player activePlayer = playerController.getFirstPlayer();
 
-        ArrayList<HabitatTile> availableTiles = SelectionOptionsView.getFourHabitatTiles();
+        ArrayList<HabitatTile> selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+
+        ArrayList<WildlifeToken> selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
 
         while (true) {
 
@@ -31,7 +34,8 @@ public class StartGame {
 
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
             System.out.println(TestBoardView.displayTiles(activePlayer.getPlayerBoard()));
-            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(availableTiles));
+            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(selectedTiles));
+            System.out.println(SelectionOptionsView.displaySelectedWiildlifeTokens(selectedTokens));
 
             GameUiView.printPageBorder();
 

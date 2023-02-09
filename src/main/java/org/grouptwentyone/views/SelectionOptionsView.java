@@ -82,7 +82,6 @@ public class SelectionOptionsView {
                     colourFour = colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(1));
                     tokenString = " " + tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
                             tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " ";
-
                 } else {
                     colourOne = colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(0));
                     colourThree = colourFour = tileToColourTable.get(currHabitatTileTypeList.get(1));
@@ -112,7 +111,82 @@ public class SelectionOptionsView {
         return pattern.toString();
     }
 
+    public static String displaySelectedWiildlifeTokens(ArrayList<WildlifeToken> selectedWildlifeTokens) {
+        StringBuilder pattern = new StringBuilder();
+
+        //link WildLifeTokenType to a colour
+        Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToColourTable = new Hashtable<>();
+        tokenToColourTable.put(WildlifeToken.WildlifeTokenType.BEAR, "\033[1;38;5;94m");
+        tokenToColourTable.put(WildlifeToken.WildlifeTokenType.ELK, "\033[1;90m");
+        tokenToColourTable.put(WildlifeToken.WildlifeTokenType.SALMON, "\033[1;91m");
+        tokenToColourTable.put(WildlifeToken.WildlifeTokenType.FOX, "\033[1;33m");
+        tokenToColourTable.put(WildlifeToken.WildlifeTokenType.HAWK, "\033[1;36m");
+
+        //link WildLifeTokenType to a letter
+        Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToStringTable = new Hashtable<WildlifeToken.WildlifeTokenType, String>();
+        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.BEAR, "B");
+        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.ELK, "E");
+        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.SALMON, "S");
+        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.FOX, "F");
+        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.HAWK, "H");
+
+        String tokenString = "";
+        String endString = "\u001B[0m";
+        String colour = "";
+
+        //iterate through habitat tiles
+        //iterate over each row of each tile (tiles size is 6)
+        for (int i = 0; i < 3; i++) {
+//
+//            if (row % 2 == 0) { //slight offset for even columns
+//                pattern.append("       ");
+//            }
+
+            //iterate over each Tile
+            for (int j = 0; j < selectedWildlifeTokens.size(); j++) {
+
+                WildlifeToken currToken = selectedWildlifeTokens.get(j);
+
+
+                //current row of tiles
+                WildlifeToken.WildlifeTokenType currWildlifeTokenType = currToken.getWildlifeTokenType();
+
+                colour = tokenToColourTable.get(currWildlifeTokenType);
+                tokenString = " " + tokenToStringTable.get(currWildlifeTokenType) + " ";
+
+//                //tokenString should always length 5, hence the different if statements
+//                if (currWildlifeTokenType.size() == 1) {
+//                    colour = tokenToColourTable.get(currWildlifeTokenType.get(0));
+//                    tokenString = "  " + tokenToColourTable.get(currTile.getWildlifeTokenTypeList().get(0)) + "  ";
+//                } else if (currWildlifeTokenType.size() == 2) {
+//                    colourOne = colourTwo = colourThree = tokenToColourTable.get(currWildlifeTokenType.get(0));
+//                    colourFour = colourFive = colourSix = tokenToColourTable.get(currWildlifeTokenType.get(1));
+//                    tokenString = " " + tokenToColourTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
+//                            tokenToColourTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " ";
+//                } else {
+//                    colourOne = colourTwo = tokenToColourTable.get(currWildlifeTokenType.get(0));
+//                    colourThree = colourFour = tokenToColourTable.get(currWildlifeTokenType.get(1));
+//                    colourFive = colourSix = tokenToColourTable.get(currWildlifeTokenType.get(2));
+//                    tokenString = tokenToColourTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
+//                            tokenToColourTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " " +
+//                            tokenToColourTable.get(currTile.getWildlifeTokenTypeList().get(2));
+//                }
+
+                if (i == 0) {
+                    pattern.append(colour +   "     *****     " + endString);
+                } else if (i == 1) {
+                    pattern.append(colour + "     *" + tokenString + "*     " + endString);
+                } else {
+                    pattern.append(colour +   "     *****     " + endString);
+                }
+            }
+            pattern.append("\n");
+        }
+        pattern.append("\n");
+        return pattern.toString();
+    }
+
     public static void main(String[] args) {
-        System.out.println(displaySelectedHabitatTiles(getFourHabitatTiles()));
+        System.out.println(displaySelectedWiildlifeTokens(getFourWildlifeTokens()));
     }
 }
