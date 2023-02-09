@@ -14,10 +14,11 @@ public class GameUiView {
 
 
     // Page Items
-    public static String PAGE_BORDER_NO_COLOUR = "====================================================";
+    public static String PAGE_BORDER_NO_COLOUR = "==========================================================================================";
     public static String PAGE_BORDER = "\033[1;90m" + PAGE_BORDER_NO_COLOUR + RESET_COLOUR;
     public static String PAGE_BORDER_BOTTOM = "\n====================================================\n\n";
     public static String LARGE_SPACE = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    public static String LINE_PAGE_BORDER_NO_COLOUR = "------------------------------------------------------------------------------------------";
 
 
 
@@ -31,6 +32,10 @@ public class GameUiView {
 
     public static void printPageBorder() {
         System.out.println(PAGE_BORDER);
+    }
+
+    public static void printLinePageBorder() {
+        System.out.println(LINE_PAGE_BORDER_NO_COLOUR);
     }
 
 

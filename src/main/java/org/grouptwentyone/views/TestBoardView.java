@@ -66,11 +66,14 @@ public class TestBoardView {
         System.out.println("\033[1;92m" +  "Forest = GREEN " + endString +
                 "\033[1;37m" + "  Mountains = GREY" + endString + "\033[1;93m" + "  Prairies = YELLOW" + endString +
                 "\033[1;34m" + "  Rivers = BLUE" + endString + "\033[1;96m" + "  Wetlands = CYAN" + endString);
-        System.out.println("-----------------------------------------------------------------------------");
+
+        GameUiView.printLinePageBorder();
+
         System.out.println("\033[1;36m" + "  H = Hawk " + endString +
                 "\033[1;38;5;94m" + "  B = Bear" + endString + "\033[1;90m" + "  E = Elk" + endString +
                 "\033[1;91m" + "  S = Salmon" + endString + "\033[1;33m" + "  F = Fox" + endString);
-        System.out.println("-----------------------------------------------------------------------------");
+
+        GameUiView.printLinePageBorder();
 
         //iterate over each ArrayList in the ArrayList (rows)
         for (int row = 0; row < playerBoard.size(); row++) {
