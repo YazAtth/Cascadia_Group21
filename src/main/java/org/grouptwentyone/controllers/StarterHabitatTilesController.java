@@ -54,9 +54,7 @@ public class StarterHabitatTilesController {
     }
 
     public static ArrayList<HabitatTile> getStarterTile() {
-        ArrayList<HabitatTile> selectedTile = starterHabitatTilesBag.get(0);
-
-        starterHabitatTilesBag.remove(0);
+        ArrayList<HabitatTile> selectedTile = starterHabitatTilesBag.remove(0);
 
         return selectedTile;
     }

@@ -15,9 +15,8 @@ public class SelectionOptionsView {
         ArrayList<HabitatTile> selectedHabitatTiles = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
-            //gets a tile from habitatTileBag and then removes it from that bag
-            selectedHabitatTiles.add(habitatTilesBag.get(0));
-            habitatTilesBag.remove(0);
+            //gets a tile from habitatTileBag and removes it from that bag simultaneously
+            selectedHabitatTiles.add(habitatTilesBag.remove(0));
         }
 
         return selectedHabitatTiles;
@@ -27,9 +26,8 @@ public class SelectionOptionsView {
         ArrayList<WildlifeToken> selectedWildlifeTokens = new ArrayList<>();
 
         for (int i = 0; i < 4; i++) {
-            //gets a token from wildlifeTokenBag and then removes it from that bag
-            selectedWildlifeTokens.add(wildlifeTokenBag.get(0));
-            wildlifeTokenBag.remove(0);
+            //gets a token from wildlifeTokenBag and removes it from that bag simultaneously
+            selectedWildlifeTokens.add(wildlifeTokenBag.remove(0));
         }
         return selectedWildlifeTokens;
     }
@@ -72,41 +70,29 @@ public class SelectionOptionsView {
                 HabitatTile currTile = selectedHabitatTiles.get(col);
 
 
-                if (currTile == null) {
-                    //if null do nothing
+                //current row of tiles
+                ArrayList<HabitatTile.HabitatTileType> currHabitatTileTypeList = currTile.getHabitatTileTypeList();
+
+                //tokenString should always length 5, hence the different if statements
+                if (currHabitatTileTypeList.size() == 1) {
+                    colourOne = colourTwo = colourThree = colourFour = colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(0));
+                    tokenString = "  " + tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + "  ";
+                } else if (currHabitatTileTypeList.size() == 2) {
+                    colourOne = colourTwo = colourThree = tileToColourTable.get(currHabitatTileTypeList.get(0));
+                    colourFour = colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(1));
+                    tokenString = " " + tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
+                            tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " ";
+
+                } else {
+                    colourOne = colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(0));
+                    colourThree = colourFour = tileToColourTable.get(currHabitatTileTypeList.get(1));
+                    colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(2));
+                    tokenString = tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
+                            tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " " +
+                            tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(2));
                 }
 
-                else {
-
-                    //current row of tiles
-                    ArrayList<HabitatTile.HabitatTileType> currHabitatTileTypeList = currTile.getHabitatTileTypeList();
-
-                    //tokenString should always length 5, hence the different if statements
-                    if (currHabitatTileTypeList.size() == 1) {
-                        colourOne = colourTwo = colourThree = colourFour = colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(0));
-                        tokenString = "  " + tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + "  ";
-                    } else if (currHabitatTileTypeList.size() == 2) {
-                        colourOne = colourTwo = colourThree = tileToColourTable.get(currHabitatTileTypeList.get(0));
-                        colourFour = colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(1));
-                        tokenString = " " + tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
-                                tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " ";
-
-                    } else {
-                        colourOne = colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(0));
-                        colourThree = colourFour = tileToColourTable.get(currHabitatTileTypeList.get(1));
-                        colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(2));
-                        tokenString = tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
-                                tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " " +
-                                tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(2));
-                    }
-
-
-                }
-
-                //if tile is not placed, just print spaces
-                /*if (!selectedHabitatTiles.get(row).get(col).isActive()) {
-                    pattern.append("               ");
-                } else*/ if (i == 0) {
+                if (i == 0) {
                     pattern.append(colourOne +   "    *******    " + endString);
                 } else if (i == 1) {
                     pattern.append(colourTwo +   "  ***********  " + endString);
