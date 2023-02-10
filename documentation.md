@@ -5,6 +5,7 @@
    1. [cycleToNextPlayer()](#cycletonextplayer--)
    2. [getRandomNumberInRange()](#getrandomnumberinrange--)
    3. [getUserActionFromInput()](#getUserActionFromInput--)
+   4. [getNumberOfPlayersFromUser()](#getnumberofplayersfromuser)
 3. [Classes](#classes)
    1. [PlayerController](#playercontroller)
 
