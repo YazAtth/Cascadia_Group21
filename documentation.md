@@ -16,6 +16,12 @@
 
 # Methods
 
+### getNumberOfPlayersFromUser()
+*views.GameSetupView.getNumberOfPlayersFromUser()*
+```java
+    public static int getNumberOfPlayersFromUser()
+```
+- Returns an integer representing the number of players. This number of players should be between 2 and 4 inclusive
 
 
 ### cycleToNextPlayer()
