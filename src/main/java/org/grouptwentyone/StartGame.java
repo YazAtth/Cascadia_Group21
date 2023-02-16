@@ -58,6 +58,9 @@ public class StartGame {
                     activePlayer = playerController.cycleToNextPlayer();
                     GameUiView.printLargeSpace();
                     break;
+                case ROTATE_TILE_CLOCKWISE:
+                    System.out.println("SAMPLE TEXT: Rotated tile");
+                    break;
                 case INVALID_COMMAND:
                     GameView.setIsPreviousInputInvalid(true);
                     GameView.setPreviousInvalidInput(userInput);
