@@ -38,6 +38,10 @@ public class Tile {
 
     }
 
+    public int getTileOrientation() {
+        return tileOrientation;
+    }
+
     public String toString() {
         if (this.habitatTile == null) {
             return String.format("Empty Tile at %s", this.hexCoordinate);

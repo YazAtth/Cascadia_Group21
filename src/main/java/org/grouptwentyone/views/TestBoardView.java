@@ -122,21 +122,77 @@ public class TestBoardView {
                         }
                     }
 
-                    //if tile is not placed, just print spaces
-                    if (!playerBoard.get(row).get(col).isActive()) {
-                        pattern.append("               ");
-                    } else if (i == 0) {
-                        pattern.append(colourOne +   "    *******    " + endString);
-                    } else if (i == 1) {
-                        pattern.append(colourOne +   "  ***********  " + endString);
-                    } else if (i == 2) {
-                        pattern.append(colourOne + " ****" + tokenString +  endString + colourOne + "**** " + endString);
-                    } else if (i == 3) {
-                        pattern.append(colourTwo +  " ****     **** " + endString);
-                    } else if (i == 4) {
-                        pattern.append(colourTwo +  "  ***********  " + endString);
+                    int currOrientation = currTile.getTileOrientation();
+                    String tempString = "";
+                    switch (currOrientation) {
+                        case 3:
+                            tempString = colourOne;
+                            colourOne = colourTwo;
+                            colourTwo = tempString;
+                        case 4:
+                            tempString = colourOne;
+                            colourOne = colourTwo;
+                            colourTwo = tempString;
+                        case 5:
+                            tempString = colourOne;
+                            colourOne = colourTwo;
+                            colourTwo = tempString;
+                        default:
+                            ;
+                    }
+
+                    if (currTile.getTileOrientation() == 0 || //print horizontal tile
+                    currTile.getTileOrientation() == 3) {
+                        //if tile is not placed, just print spaces
+                        if (!playerBoard.get(row).get(col).isActive()) {
+                            pattern.append("               ");
+                        } else if (i == 0) {
+                            pattern.append(colourOne + "    *******    " + endString);
+                        } else if (i == 1) {
+                            pattern.append(colourOne + "  ***********  " + endString);
+                        } else if (i == 2) {
+                            pattern.append(colourOne + " ****" + tokenString + endString + colourOne + "**** " + endString);
+                        } else if (i == 3) {
+                            pattern.append(colourTwo + " ****     **** " + endString);
+                        } else if (i == 4) {
+                            pattern.append(colourTwo + "  ***********  " + endString);
+                        } else {
+                            pattern.append(colourTwo + "    *******    " + endString);
+                        }
+                    }
+                    else if (currOrientation == 1 || currOrientation == 4) { //print diagonal tile
+                        //if tile is not placed, just print spaces
+                        if (!playerBoard.get(row).get(col).isActive()) {
+                            pattern.append("               ");
+                        } else if (i == 0) {
+                            pattern.append(colourOne + "    *" + colourTwo + "******    " + endString);
+                        } else if (i == 1) {
+                            pattern.append(colourOne + "  ****" + colourTwo + "*******  " + endString);
+                        } else if (i == 2) {
+                            pattern.append(colourOne + " ****" + tokenString + endString + colourTwo + "**** " + endString);
+                        } else if (i == 3) {
+                            pattern.append(colourOne + " ****     " + colourTwo + "**** " + endString);
+                        } else if (i == 4) {
+                            pattern.append(colourOne + "  *******" + colourTwo + "****  " + endString);
+                        } else {
+                            pattern.append(colourOne + "    ******" + colourTwo + "*    " + endString);
+                        }
                     } else {
-                        pattern.append(colourTwo +   "    *******    " + endString);
+                        if (!playerBoard.get(row).get(col).isActive()) {
+                            pattern.append("               ");
+                        } else if (i == 0) {
+                            pattern.append(colourOne + "    ******" + colourTwo + "*    " + endString);
+                        } else if (i == 1) {
+                            pattern.append(colourOne + "  *******" + colourTwo + "****  " + endString);
+                        } else if (i == 2) {
+                            pattern.append(colourOne + " ****" + tokenString + endString + colourTwo + "**** " + endString);
+                        } else if (i == 3) {
+                            pattern.append(colourOne + " ****     " + colourTwo + "**** " + endString);
+                        } else if (i == 4) {
+                            pattern.append(colourOne + "  ****" + colourTwo + "*******  " + endString);
+                        } else {
+                            pattern.append(colourOne + "    *" + colourTwo + "******    " + endString);
+                        }
                     }
                 }
                 pattern.append("\n");
