@@ -13,16 +13,17 @@ public class HexCoordinate {
 
     public boolean isAdjacentToHexCoordinate(HexCoordinate o) {
 
-        boolean isHigherOnSameLine = this.getY() % 2 == 0;
-        if (isHigherOnSameLine) {
-//            System.out.println(o.getX()-1);
-            return (this.getX() == o.getX() && (this.getY() == o.getY()-1 || this.getY() == o.getY()+1)) ||
-                    (this.getX() == o.getX()+1 && (this.getY() == o.getY()-1 || this.getY() == o.getY() || this.getY() == o.getY()+1)) ||
-                    (this.getX() == o.getX()-1 && this.getY() == o.getY());
+        // For a given vertical line: half are on the left side of the line and half are on the right
+        boolean isLeftSideOnSameVerticalLine = this.getX() % 2 == 1;
+
+        if (isLeftSideOnSameVerticalLine) {
+            return (this.getY() == o.getY() && (this.getX() == o.getX()-1 || this.getX() == o.getX()+1)) ||
+                    (this.getY() == o.getY()+1 && (this.getX() == o.getX()-1 || this.getX() == o.getX() || this.getX() == o.getX()+1)) ||
+                    (this.getY() == o.getY()-1 && this.getX() == o.getX());
         } else {
-            return (this.getX() == o.getX() && (this.getY() == o.getY()-1 || this.getY() == o.getY()+1)) ||
-                    (this.getX() == o.getX()-1 && (this.getY() == o.getY()-1 || this.getY() == o.getY() || this.getY() == o.getY()+1)) ||
-                    (this.getX() == o.getX()+1 && this.getY() == o.getY());
+            return (this.getY() == o.getY() && (this.getX() == o.getX()-1 || this.getX() == o.getX()+1)) ||
+                    (this.getY() == o.getY()-1 && (this.getX() == o.getX()-1 || this.getX() == o.getX() || this.getX() == o.getX()+1)) ||
+                    (this.getY() == o.getY()+1 && this.getX() == o.getX());
         }
     }
 
