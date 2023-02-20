@@ -59,10 +59,6 @@ public class SelectionOptionsView {
         //iterate through habitat tiles
         //iterate over each row of each tile (tiles size is 6)
         for (int i = 0; i < 6; i++) {
-//
-//            if (row % 2 == 0) { //slight offset for even columns
-//                pattern.append("       ");
-//            }
 
             //iterate over each Tile
             for (int col = 0; col < selectedHabitatTiles.size(); col++) {
@@ -137,10 +133,6 @@ public class SelectionOptionsView {
         //iterate through habitat tiles
         //iterate over each row of each tile (tiles size is 6)
         for (int i = 0; i < 3; i++) {
-//
-//            if (row % 2 == 0) { //slight offset for even columns
-//                pattern.append("       ");
-//            }
 
             //iterate over each Tile
             for (int j = 0; j < selectedWildlifeTokens.size(); j++) {
@@ -153,24 +145,6 @@ public class SelectionOptionsView {
 
                 colour = tokenToColourTable.get(currWildlifeTokenType);
                 tokenString = " " + tokenToStringTable.get(currWildlifeTokenType) + " ";
-
-//                //tokenString should always length 5, hence the different if statements
-//                if (currWildlifeTokenType.size() == 1) {
-//                    colour = tokenToColourTable.get(currWildlifeTokenType.get(0));
-//                    tokenString = "  " + tokenToColourTable.get(currTile.getWildlifeTokenTypeList().get(0)) + "  ";
-//                } else if (currWildlifeTokenType.size() == 2) {
-//                    colourOne = colourTwo = colourThree = tokenToColourTable.get(currWildlifeTokenType.get(0));
-//                    colourFour = colourFive = colourSix = tokenToColourTable.get(currWildlifeTokenType.get(1));
-//                    tokenString = " " + tokenToColourTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
-//                            tokenToColourTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " ";
-//                } else {
-//                    colourOne = colourTwo = tokenToColourTable.get(currWildlifeTokenType.get(0));
-//                    colourThree = colourFour = tokenToColourTable.get(currWildlifeTokenType.get(1));
-//                    colourFive = colourSix = tokenToColourTable.get(currWildlifeTokenType.get(2));
-//                    tokenString = tokenToColourTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
-//                            tokenToColourTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " " +
-//                            tokenToColourTable.get(currTile.getWildlifeTokenTypeList().get(2));
-//                }
 
                 if (i == 0) {
                     pattern.append(colour +   "     *****     " + endString);
