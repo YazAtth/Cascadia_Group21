@@ -22,4 +22,8 @@ public class HexCoordinate {
     public String toString() {
         return String.format("(%d, %d)", getX(), getY());
     }
+
+    public boolean equals(HexCoordinate o) {
+        return this.getX() == o.getX() && this.getY() == o.getY();
+    }
 }
