@@ -6,9 +6,14 @@ public class GameView {
 
     static boolean isPreviousInputInvalid = false;
     static String previousInvalidInput = "EMPTY";
+    static String previousInputDisallowedMessage = "";
 
     public static String askUserForInput() {
 
+        if (!previousInputDisallowedMessage.equals("")) {
+            System.out.println(previousInputDisallowedMessage);
+            setPreviousInputDisallowedMessage("");
+        }
 
         if (!isPreviousInputInvalid()) {
             System.out.println("What action do you wish to take? (type 'help' if you're unsure)");
@@ -81,5 +86,9 @@ public class GameView {
 
     public static void setPreviousInvalidInput(String previousInvalidInput) {
         GameView.previousInvalidInput = previousInvalidInput;
+    }
+
+    public static void setPreviousInputDisallowedMessage(String message) {
+        previousInputDisallowedMessage = message;
     }
 }

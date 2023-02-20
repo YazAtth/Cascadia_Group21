@@ -5,6 +5,7 @@ import org.grouptwentyone.controllers.HabitatTilesController;
 import org.grouptwentyone.controllers.PlayerController;
 import org.grouptwentyone.controllers.UserTerminationController;
 import org.grouptwentyone.models.*;
+import org.grouptwentyone.models.Exceptions.TilePlacedAtOccupiedPositionException;
 import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
@@ -69,7 +70,12 @@ public class StartGame {
                     int xCoordinate = Integer.parseInt(tilePlacedCoordinates.split(",")[0]);
                     int yCoordinate = Integer.parseInt(tilePlacedCoordinates.split(",")[1]);
                     HexCoordinate newTileHexCoordinate = new HexCoordinate(xCoordinate, yCoordinate);
-                    activePlayer.addNewTile(newTileHexCoordinate);
+
+                    try {
+                        activePlayer.addNewTile(newTileHexCoordinate);
+                    } catch (TilePlacedAtOccupiedPositionException ex) {
+                        GameView.setPreviousInputDisallowedMessage(String.format("%sTile Already Exists at that position! Try again.%s", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
+                    }
                     break;
                 case INVALID_COMMAND:
                     GameView.setIsPreviousInputInvalid(true);

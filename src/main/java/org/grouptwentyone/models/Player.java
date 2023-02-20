@@ -1,9 +1,11 @@
 package org.grouptwentyone.models;
 
 import org.grouptwentyone.controllers.HabitatTilesController;
+import org.grouptwentyone.models.Exceptions.TilePlacedAtOccupiedPositionException;
 
 import java.util.ArrayList;
 
+import static java.lang.System.err;
 import static org.grouptwentyone.controllers.StarterHabitatTilesController.getStarterTile;
 
 public class Player {
@@ -55,6 +57,18 @@ public class Player {
     public void addNewTile(HexCoordinate newTileHexCoordinate) {
         // .get() is set to "3" idk what that means but it felt right lol
         Tile newTile = new Tile(HabitatTilesController.habitatTilesBag.get(3), newTileHexCoordinate);
+
+        // Loop through entire scoreboard and compare the new tile with existing habitatTiles to see if the spot is occupied.
+        for (int i=0; i<playerBoard.size()-1; i++) {
+            for (int k=0; k<playerBoard.get(0).size()-1; k++) {
+                Tile focusedTile = playerBoard.get(i).get(k);
+
+                if (focusedTile.isActive() && focusedTile.getHexCoordinate().equals(newTileHexCoordinate)) {
+                    throw new TilePlacedAtOccupiedPositionException(String.format("Tried to place %s onto existing %s at %s", newTile, focusedTile, newTileHexCoordinate));
+                }
+
+            }
+        }
         this.playerBoard.get(newTile.getHexCoordinate().getX()).set(newTile.getHexCoordinate().getY(), newTile);
     }
 
