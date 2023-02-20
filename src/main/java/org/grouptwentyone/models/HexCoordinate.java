@@ -11,6 +11,21 @@ public class HexCoordinate {
         this.Y = Y;
     }
 
+    public boolean isAdjacentToHexCoordinate(HexCoordinate o) {
+
+        boolean isHigherOnSameLine = this.getY() % 2 == 0;
+        if (isHigherOnSameLine) {
+//            System.out.println(o.getX()-1);
+            return (this.getX() == o.getX() && (this.getY() == o.getY()-1 || this.getY() == o.getY()+1)) ||
+                    (this.getX() == o.getX()+1 && (this.getY() == o.getY()-1 || this.getY() == o.getY() || this.getY() == o.getY()+1)) ||
+                    (this.getX() == o.getX()-1 && this.getY() == o.getY());
+        } else {
+            return (this.getX() == o.getX() && (this.getY() == o.getY()-1 || this.getY() == o.getY()+1)) ||
+                    (this.getX() == o.getX()-1 && (this.getY() == o.getY()-1 || this.getY() == o.getY() || this.getY() == o.getY()+1)) ||
+                    (this.getX() == o.getX()+1 && this.getY() == o.getY());
+        }
+    }
+
     public int getX() {
         return X;
     }

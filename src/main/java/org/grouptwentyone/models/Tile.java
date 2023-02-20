@@ -31,6 +31,12 @@ public class Tile {
         return isActive;
     }
 
+    public boolean isAdjacentToTile(Tile o) {
+
+        return this.getHexCoordinate().isAdjacentToHexCoordinate(o.getHexCoordinate());
+
+    }
+
     public String toString() {
         if (this.habitatTile == null) {
             return String.format("Empty Tile at %s", this.hexCoordinate);
