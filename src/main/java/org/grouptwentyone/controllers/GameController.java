@@ -10,7 +10,8 @@ import static java.util.Map.entry;
 public class GameController {
 
     // Enums prefixed with "DEV_" (developer) are for debugging
-    public enum UserAction {HELP, EXIT, INVALID_COMMAND, DEV__PRINT_ACTIVE_PLAYER, NEXT_PLAYER, ROTATE_TILE_CLOCKWISE, SELECT_TILE_AND_TOKEN, PLACE_TILE_AND_TOKEN}
+    public enum UserAction {HELP, EXIT, INVALID_COMMAND, DEV__PRINT_ACTIVE_PLAYER, NEXT_PLAYER,
+        ROTATE_TILE_CLOCKWISE, SELECT_TILE_AND_TOKEN, PLACE_TILE, PLACE_TOKEN, RETURN_TOKEN}
 
 
     // Hash that takes in Strings and converts them to enums (much nicer looking than a switch statement)
@@ -21,7 +22,9 @@ public class GameController {
             entry("NEXT", UserAction.NEXT_PLAYER),
             entry("ROTATE", UserAction.ROTATE_TILE_CLOCKWISE),
             entry("SELECT", UserAction.SELECT_TILE_AND_TOKEN),
-            entry("PLACE", UserAction.PLACE_TILE_AND_TOKEN)
+            entry("PLACE_TILE", UserAction.PLACE_TILE),
+            entry("PLACE_TOKEN", UserAction.PLACE_TOKEN),
+            entry("RETURN_TOKEN", UserAction.RETURN_TOKEN)
     );
 
     public static UserAction getUserActionFromInput(String userInputCapitalised) {

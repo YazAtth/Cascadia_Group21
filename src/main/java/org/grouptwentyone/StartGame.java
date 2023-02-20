@@ -1,12 +1,8 @@
 package org.grouptwentyone;
 
-import org.grouptwentyone.controllers.GameController;
-import org.grouptwentyone.controllers.HabitatTilesController;
-import org.grouptwentyone.controllers.PlayerController;
-import org.grouptwentyone.controllers.UserTerminationController;
+import org.grouptwentyone.controllers.*;
 import org.grouptwentyone.models.*;
-import org.grouptwentyone.models.Exceptions.TileNotPlacedAdjacentlyException;
-import org.grouptwentyone.models.Exceptions.TilePlacedAtOccupiedPositionException;
+import org.grouptwentyone.models.Exceptions.*;
 import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
@@ -43,6 +39,7 @@ public class StartGame {
 
             System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(selectedTiles));
             System.out.println(SelectionOptionsView.displaySelectedWiildlifeTokens(selectedTokens));
+            System.out.println("      (1)            (2)            (3)            (4)      \n");
 
             GameUiView.printPageBorder();
 
@@ -72,11 +69,11 @@ public class StartGame {
                 case SELECT_TILE_AND_TOKEN:
                     selectTileAndToken(activePlayer);
                     break;
-                case PLACE_TILE_AND_TOKEN:
+                case PLACE_TILE:
                     String tilePlacedCoordinates = userCommandArguments.get(0);
-                    int xCoordinate = Integer.parseInt(tilePlacedCoordinates.split(",")[0]);
-                    int yCoordinate = Integer.parseInt(tilePlacedCoordinates.split(",")[1]);
-                    HexCoordinate newTileHexCoordinate = new HexCoordinate(xCoordinate, yCoordinate);
+                    int tileXCoordinate = Integer.parseInt(tilePlacedCoordinates.split(",")[0]);
+                    int tileYCoordinate = Integer.parseInt(tilePlacedCoordinates.split(",")[1]);
+                    HexCoordinate newTileHexCoordinate = new HexCoordinate(tileXCoordinate, tileYCoordinate);
 
                     try {
                         activePlayer.addNewTile(newTileHexCoordinate);
@@ -85,6 +82,27 @@ public class StartGame {
                     } catch (TileNotPlacedAdjacentlyException ex) {
                         GameView.setPreviousInputDisallowedMessage(String.format("%sTile cannot be placed in a position that is not adjacent to an existing tile. Try again.%s", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     }
+                    break;
+                case PLACE_TOKEN:
+                    String tokenPlacedCoordinates = userCommandArguments.get(0);
+                    int tokenXCoordinate = Integer.parseInt(tokenPlacedCoordinates.split(",")[0]);
+                    int tokenYCoordinate = Integer.parseInt(tokenPlacedCoordinates.split(",")[1]);
+                    HexCoordinate newTokenHexCoordinate = new HexCoordinate(tokenXCoordinate, tokenYCoordinate);
+
+                    try {
+                        activePlayer.addNewToken(newTokenHexCoordinate);
+                    } catch (TokenPlacedAtOccupiedPositionException ex) {
+                        GameView.setPreviousInputDisallowedMessage("Tried to place Wildlife Token on an already occupied Habitat Tile");
+                    } catch (TokenPlacedAtEmptyPositionException ex) {
+                        GameView.setPreviousInputDisallowedMessage("Tried to place Wildlife Token where there is no Habitat Tile");
+                    } catch (TokenPlacedAtIllegalTileException ex) {
+                        GameView.setPreviousInputDisallowedMessage("This type of Wildlife Token Typw cannot be placed on this Habitat Tile");
+                    }
+                    break;
+                case RETURN_TOKEN:
+                    WildlifeTokensController.wildlifeTokenBag.add(activePlayer.getSelectedToken());
+                    //reset selectedToken
+                    activePlayer.getSelectedToken().setWildlifeTokenType(WildlifeToken.WildlifeTokenType.EMPTY);
                     break;
                 case INVALID_COMMAND:
                     GameView.setIsPreviousInputInvalid(true);

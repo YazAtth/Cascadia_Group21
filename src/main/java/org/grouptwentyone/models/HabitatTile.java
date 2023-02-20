@@ -9,6 +9,7 @@ public class HabitatTile {
     private ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeList;
     private WildlifeToken wildlifeToken;
     private boolean keystone;
+    private boolean isNull;
 
     //keystone tile constructor
     public HabitatTile(ArrayList<HabitatTileType> habitatTileTypeList, ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeList) {
@@ -16,6 +17,7 @@ public class HabitatTile {
         this.wildlifeTokenTypeList = wildlifeTokenTypeList;
         this.wildlifeToken = new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY);
         this.keystone = (habitatTileTypeList.size() == 1);
+        this.isNull = false;
     }
 
     //constructor for other tile types
@@ -26,6 +28,15 @@ public class HabitatTile {
         this.wildlifeTokenTypeList = wildlifeTokenTypeListGenerator(numTypes);
         this.wildlifeToken = new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY);
         this.keystone = (habitatTileTypeList.size() == 1);
+        this.isNull = false;
+    }
+
+    public HabitatTile() {
+        this.habitatTileTypeList = new ArrayList<>();
+        this.wildlifeTokenTypeList = new ArrayList<>();
+        this.wildlifeToken = new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY);
+        this.keystone = false;
+        this.isNull = true;
     }
 
     private static ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeListGenerator(int numWildlifeTypes) {
@@ -80,6 +91,15 @@ public class HabitatTile {
     public boolean isKeystone() {
         return keystone;
     }
+
+    public void setWildlifeToken(WildlifeToken wildlifeToken) {
+        this.wildlifeToken = wildlifeToken;
+    }
+
+    public boolean isNull() {
+        return isNull;
+    }
+
 
     @Override
     public String toString() {

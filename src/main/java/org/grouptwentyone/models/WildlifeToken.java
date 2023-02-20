@@ -13,6 +13,10 @@ public class WildlifeToken {
         return wildlifeTokenType;
     }
 
+    public void setWildlifeTokenType(WildlifeTokenType wildlifeTokenType) {
+        this.wildlifeTokenType = wildlifeTokenType;
+    }
+
     @Override
     public String toString() {
         return "WildlifeToken: " +

@@ -158,35 +158,29 @@ public class SelectionOptionsView {
             }
             pattern.append("\n");
         }
-        pattern.append("\n");
+        //pattern.append("\n");
         return pattern.toString();
     }
 
     public static void selectTileAndToken(Player activePlayer) {
-        System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(org.grouptwentyone.StartGame.selectedTiles));
-        System.out.println(SelectionOptionsView.displaySelectedWiildlifeTokens(org.grouptwentyone.StartGame.selectedTokens));
-
-        System.out.print("      (1)            (2)            (3)            (4)      \n\n" +
-                "Please select one of the above pairs by entering the associated number: \n>");
+        System.out.print("Please select one of the above pairs by entering the associated number: \n>");
         int userNum = -1;
 
-        while (userNum < 1 && userNum > 4) {
+        while (userNum < 1 || userNum > 4) {
             Scanner sc = new Scanner(System.in);
             String userInput = sc.nextLine();
             try {
                 userNum = Integer.parseInt(userInput);
-            } catch (IllegalArgumentException ex) {
+            } catch (NumberFormatException ex) {
                 System.out.print("Invalid argument, please enter a number between 1 and 4 to select an above pair: \n>");
             }
+            if (userNum < 1 || userNum > 4) System.out.print("Invalid number, " +
+                    "please enter a number between 1 and 4 to select an above pair: \n>");
         }
 
         activePlayer.setSelectedTile(org.grouptwentyone.StartGame.selectedTiles.remove(userNum));
         activePlayer.setSelectedToken(org.grouptwentyone.StartGame.selectedTokens.remove(userNum));
 
-        //replace tokens
-    }
-
-    public static void main(String[] args) {
-        System.out.println(displaySelectedWiildlifeTokens(getFourWildlifeTokens()));
+        //replace tile and token
     }
 }

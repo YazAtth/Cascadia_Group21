@@ -1,8 +1,7 @@
 package org.grouptwentyone.models;
 
 import org.grouptwentyone.controllers.HabitatTilesController;
-import org.grouptwentyone.models.Exceptions.TileNotPlacedAdjacentlyException;
-import org.grouptwentyone.models.Exceptions.TilePlacedAtOccupiedPositionException;
+import org.grouptwentyone.models.Exceptions.*;
 
 import java.time.temporal.IsoFields;
 import java.util.ArrayList;
@@ -30,6 +29,7 @@ public class Player {
     public Player(String userName) {
         setPlayerIdFromCounterAndIncrement();
         this.userName = userName;
+        this.numOfNatureTokens = 0;
         setupPlayerBoard();
     }
 
@@ -58,8 +58,12 @@ public class Player {
 
 
     public void addNewTile(HexCoordinate newTileHexCoordinate) {
-        // .get() is set to "3" idk what that means but it felt right lol
-        Tile newTile = new Tile(HabitatTilesController.habitatTilesBag.get(3), newTileHexCoordinate);
+        // changed this so that the habitat tile is the one selected in an earlier select command
+        if (this.getSelectedTile().isNull()) {
+            System.out.println("No tile has been selected. Please select a tile first.");
+            return;
+        }
+        Tile newTile = new Tile(this.getSelectedTile(), newTileHexCoordinate);
 
         boolean isAdjacentToExistingTile = false;
         // Loop through entire scoreboard and compare the new tile with existing habitatTiles to see if the spot is occupied.
@@ -84,6 +88,35 @@ public class Player {
             throw new TileNotPlacedAdjacentlyException(String.format("Tried to place tile at %s of which there are no adjacent tiles", newTile));
         }
         this.playerBoard.get(newTile.getHexCoordinate().getX()).set(newTile.getHexCoordinate().getY(), newTile);
+
+        //reset selectedTile to an empty tile
+        this.setSelectedTile(new HabitatTile());
+    }
+
+    public void addNewToken(HexCoordinate newTokenHexCoordinate) {
+        //check that player has selected a token
+        if (this.getSelectedToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+            System.out.println("No token has been selected. Please select a token first.");
+            return;
+        }
+
+        Tile focusedTile = playerBoard.get(newTokenHexCoordinate.getX()).get(newTokenHexCoordinate.getY());
+
+        if (focusedTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY) {
+            throw new TokenPlacedAtOccupiedPositionException("Tried to place Wildlife Token on an already occupied Habitat Tile");
+        } else if (!focusedTile.isActive()) {
+            throw new TokenPlacedAtEmptyPositionException("Tried to place Wildlife Token where there is no Habitat Tile");
+        } else if (!focusedTile.getHabitatTile().getWildlifeTokenTypeList().contains(this.getSelectedToken())){
+            throw new TokenPlacedAtIllegalTileException("This type of Wildlife Token Typw cannot be placed on this Habitat Tile");
+        }
+        //place token on selected tile
+        focusedTile.getHabitatTile().setWildlifeToken(this.getSelectedToken());
+
+        //check if habitat tile is keystone and if so, increase numOfNatureTokens by 1
+        if (focusedTile.getHabitatTile().isKeystone()) this.addToNumOfNatureTokens();
+
+        //reset selectedToken
+        this.getSelectedToken().setWildlifeTokenType(WildlifeToken.WildlifeTokenType.EMPTY);
     }
 
     public String toString() {
@@ -118,5 +151,15 @@ public class Player {
         this.selectedToken = selectedToken;
     }
 
+    public HabitatTile getSelectedTile() {
+        return selectedTile;
+    }
 
+    public WildlifeToken getSelectedToken() {
+        return selectedToken;
+    }
+
+    public void addToNumOfNatureTokens() {
+        this.numOfNatureTokens++;
+    }
 }

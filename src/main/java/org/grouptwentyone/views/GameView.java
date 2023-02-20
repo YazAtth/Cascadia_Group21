@@ -42,6 +42,7 @@ public class GameView {
                 %s"quit"%s\t\t\texits program
                 %s"next"%s\t\t\tgoes to the next player's turn
                 %s"rotate"%s\t\trotates the tile clockwise
+                %s"select"%s\t\tselects a habitat tile and wildlife token pair
                 
                 %s⏺ DEVELOPER COMMANDS (for debugging) ⏺%s
                 
@@ -49,6 +50,7 @@ public class GameView {
                 
                 %s%s
                 """, GameUiView.PAGE_BORDER_NO_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
                 GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
                 GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
                 GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
