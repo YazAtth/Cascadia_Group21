@@ -1,11 +1,13 @@
 package org.grouptwentyone.views;
 
 import org.grouptwentyone.models.HabitatTile;
+import org.grouptwentyone.models.Player;
 import org.grouptwentyone.models.Tile;
 import org.grouptwentyone.models.WildlifeToken;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Scanner;
 
 import static org.grouptwentyone.controllers.HabitatTilesController.habitatTilesBag;
 import static org.grouptwentyone.controllers.WildlifeTokensController.wildlifeTokenBag;
@@ -158,6 +160,30 @@ public class SelectionOptionsView {
         }
         pattern.append("\n");
         return pattern.toString();
+    }
+
+    public static void selectTileAndToken(Player activePlayer) {
+        System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(org.grouptwentyone.StartGame.selectedTiles));
+        System.out.println(SelectionOptionsView.displaySelectedWiildlifeTokens(org.grouptwentyone.StartGame.selectedTokens));
+
+        System.out.print("      (1)            (2)            (3)            (4)      \n\n" +
+                "Please select one of the above pairs by entering the associated number: \n>");
+        int userNum = -1;
+
+        while (userNum < 1 && userNum > 4) {
+            Scanner sc = new Scanner(System.in);
+            String userInput = sc.nextLine();
+            try {
+                userNum = Integer.parseInt(userInput);
+            } catch (IllegalArgumentException ex) {
+                System.out.print("Invalid argument, please enter a number between 1 and 4 to select an above pair: \n>");
+            }
+        }
+
+        activePlayer.setSelectedTile(org.grouptwentyone.StartGame.selectedTiles.remove(userNum));
+        activePlayer.setSelectedToken(org.grouptwentyone.StartGame.selectedTokens.remove(userNum));
+
+        //replace tokens
     }
 
     public static void main(String[] args) {

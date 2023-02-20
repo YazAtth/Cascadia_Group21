@@ -19,7 +19,8 @@ public class Player {
     int Score = 0;
     int numOfNatureTokens = 0;
     ArrayList<ArrayList<Tile>> playerBoard;
-
+    HabitatTile selectedTile;
+    WildlifeToken selectedToken;
 
     public void setPlayerIdFromCounterAndIncrement() {
         this.playerId = playerIdCounter;
@@ -109,6 +110,13 @@ public class Player {
         return numOfNatureTokens;
     }
 
+    public void setSelectedTile(HabitatTile selectedTile) {
+        this.selectedTile = selectedTile;
+    }
+
+    public void setSelectedToken(WildlifeToken selectedToken) {
+        this.selectedToken = selectedToken;
+    }
 
 
 }
