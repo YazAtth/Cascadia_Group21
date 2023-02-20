@@ -1,5 +1,7 @@
 package org.grouptwentyone.models;
 
+import org.grouptwentyone.controllers.HabitatTilesController;
+
 import java.util.ArrayList;
 
 import static org.grouptwentyone.controllers.StarterHabitatTilesController.getStarterTile;
@@ -46,6 +48,14 @@ public class Player {
         //note: a hex coordinate of [1, 2] is set at array index [2, 1]
         this.playerBoard.get(2).set(1, new Tile(starterTile.get(1), new HexCoordinate(1, 2)));
         this.playerBoard.get(1).set(2, new Tile(starterTile.get(2), new HexCoordinate(2, 1)));
+
+    }
+
+
+    public void addNewTile(HexCoordinate newTileHexCoordinate) {
+        // .get() is set to "3" idk what that means but it felt right lol
+        Tile newTile = new Tile(HabitatTilesController.habitatTilesBag.get(3), newTileHexCoordinate);
+        this.playerBoard.get(newTile.getHexCoordinate().getX()).set(newTile.getHexCoordinate().getY(), newTile);
     }
 
     public String toString() {

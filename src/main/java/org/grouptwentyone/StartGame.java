@@ -1,11 +1,10 @@
 package org.grouptwentyone;
 
 import org.grouptwentyone.controllers.GameController;
+import org.grouptwentyone.controllers.HabitatTilesController;
 import org.grouptwentyone.controllers.PlayerController;
 import org.grouptwentyone.controllers.UserTerminationController;
-import org.grouptwentyone.models.HabitatTile;
-import org.grouptwentyone.models.Player;
-import org.grouptwentyone.models.WildlifeToken;
+import org.grouptwentyone.models.*;
 import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
@@ -34,6 +33,9 @@ public class StartGame {
 
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
             System.out.println(TestBoardView.displayTiles(activePlayer.getPlayerBoard()));
+
+            GameUiView.printPageBorder();
+
             System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(selectedTiles));
             System.out.println(SelectionOptionsView.displaySelectedWiildlifeTokens(selectedTokens));
 
@@ -41,6 +43,7 @@ public class StartGame {
 
             String userInput = GameView.askUserForInput();
             GameController.UserAction userAction = GameController.getUserActionFromInput(userInput);
+            ArrayList<String> userCommandArguments = GameController.getUserActionCommandArguments(userInput);
 
             switch (userAction) {
                 case HELP:
@@ -60,6 +63,13 @@ public class StartGame {
                     break;
                 case ROTATE_TILE_CLOCKWISE:
                     System.out.println("SAMPLE TEXT: Rotated tile");
+                    break;
+                case PLACE_TILE_AND_TOKEN:
+                    String tilePlacedCoordinates = userCommandArguments.get(0);
+                    int xCoordinate = Integer.parseInt(tilePlacedCoordinates.split(",")[0]);
+                    int yCoordinate = Integer.parseInt(tilePlacedCoordinates.split(",")[1]);
+                    HexCoordinate newTileHexCoordinate = new HexCoordinate(xCoordinate, yCoordinate);
+                    activePlayer.addNewTile(newTileHexCoordinate);
                     break;
                 case INVALID_COMMAND:
                     GameView.setIsPreviousInputInvalid(true);
