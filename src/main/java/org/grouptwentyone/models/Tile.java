@@ -3,8 +3,8 @@ package org.grouptwentyone.models;
 public class Tile {
     HabitatTile habitatTile;
     HexCoordinate hexCoordinate;
-
     boolean isActive; //this will determine whether coordinates get displayed
+    int tileOrientation = 0; // Defaults to 0 and is between 0-5 inclusive (so 6 states).
 
     public Tile (HexCoordinate hexCoordinate) {
         this.habitatTile = null; //need to switch to empty habitat tile
