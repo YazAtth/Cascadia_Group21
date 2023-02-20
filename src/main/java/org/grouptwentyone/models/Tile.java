@@ -30,4 +30,12 @@ public class Tile {
     public boolean isActive() {
         return isActive;
     }
+
+    public String toString() {
+        if (this.habitatTile == null) {
+            return String.format("Empty Tile at %s", this.hexCoordinate);
+        } else {
+            return String.format("Habitat Tile at %s", this.hexCoordinate);
+        }
+    }
 }
