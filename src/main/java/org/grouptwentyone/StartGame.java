@@ -5,6 +5,7 @@ import org.grouptwentyone.controllers.HabitatTilesController;
 import org.grouptwentyone.controllers.PlayerController;
 import org.grouptwentyone.controllers.UserTerminationController;
 import org.grouptwentyone.models.*;
+import org.grouptwentyone.models.Exceptions.TileNotPlacedAdjacentlyException;
 import org.grouptwentyone.models.Exceptions.TilePlacedAtOccupiedPositionException;
 import org.grouptwentyone.views.*;
 
@@ -75,6 +76,8 @@ public class StartGame {
                         activePlayer.addNewTile(newTileHexCoordinate);
                     } catch (TilePlacedAtOccupiedPositionException ex) {
                         GameView.setPreviousInputDisallowedMessage(String.format("%sTile Already Exists at that position! Try again.%s", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
+                    } catch (TileNotPlacedAdjacentlyException ex) {
+                        GameView.setPreviousInputDisallowedMessage(String.format("%sTile cannot be placed in a position that is not adjacent to an existing tile. Try again.%s", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     }
                     break;
                 case INVALID_COMMAND:
