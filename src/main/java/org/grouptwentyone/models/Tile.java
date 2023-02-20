@@ -33,7 +33,8 @@ public class Tile {
 
     public boolean isAdjacentToTile(Tile o) {
 
-        return this.getHexCoordinate().isAdjacentToHexCoordinate(o.getHexCoordinate());
+        return (this.habitatTile != null && o.habitatTile != null) &&
+                this.getHexCoordinate().isAdjacentToHexCoordinate(o.getHexCoordinate());
 
     }
 
