@@ -11,7 +11,13 @@ import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
 
+import static org.grouptwentyone.views.SelectionOptionsView.selectTileAndToken;
+
 public class StartGame {
+    public static ArrayList<HabitatTile> selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+
+    public static ArrayList<WildlifeToken> selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
+
 
     public static void start() {
 
@@ -25,9 +31,6 @@ public class StartGame {
 
         Player activePlayer = playerController.getFirstPlayer();
 
-        ArrayList<HabitatTile> selectedTiles = SelectionOptionsView.getFourHabitatTiles();
-
-        ArrayList<WildlifeToken> selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
 
         while (true) {
 
@@ -65,6 +68,9 @@ public class StartGame {
                     break;
                 case ROTATE_TILE_CLOCKWISE:
                     System.out.println("SAMPLE TEXT: Rotated tile");
+                    break;
+                case SELECT_TILE_AND_TOKEN:
+                    selectTileAndToken(activePlayer);
                     break;
                 case PLACE_TILE_AND_TOKEN:
                     String tilePlacedCoordinates = userCommandArguments.get(0);
