@@ -43,6 +43,9 @@ public class StartGame {
 
             GameUiView.printPageBorder();
 
+            //check for cull before user turn
+            CullingController.checkForCull();
+
             String userInput = GameView.askUserForInput();
             GameController.UserAction userAction = GameController.getUserActionFromInput(userInput);
             ArrayList<String> userCommandArguments = GameController.getUserActionCommandArguments(userInput);
@@ -85,8 +88,8 @@ public class StartGame {
                     break;
                 case PLACE_TOKEN:
                     String tokenPlacedCoordinates = userCommandArguments.get(0);
-                    int tokenXCoordinate = Integer.parseInt(tokenPlacedCoordinates.split(",")[0]);
-                    int tokenYCoordinate = Integer.parseInt(tokenPlacedCoordinates.split(",")[1]);
+                    int tokenXCoordinate = Integer.parseInt(tokenPlacedCoordinates.split(",|, ")[0]);
+                    int tokenYCoordinate = Integer.parseInt(tokenPlacedCoordinates.split(",|, ")[1]);
                     HexCoordinate newTokenHexCoordinate = new HexCoordinate(tokenXCoordinate, tokenYCoordinate);
 
                     try {
@@ -96,7 +99,7 @@ public class StartGame {
                     } catch (TokenPlacedAtEmptyPositionException ex) {
                         GameView.setPreviousInputDisallowedMessage("Tried to place Wildlife Token where there is no Habitat Tile");
                     } catch (TokenPlacedAtIllegalTileException ex) {
-                        GameView.setPreviousInputDisallowedMessage("This type of Wildlife Token Typw cannot be placed on this Habitat Tile");
+                        GameView.setPreviousInputDisallowedMessage("This type of Wildlife Token Type cannot be placed on this Habitat Tile");
                     }
                     break;
                 case RETURN_TOKEN:
