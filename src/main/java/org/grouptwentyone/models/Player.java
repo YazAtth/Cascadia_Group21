@@ -1,15 +1,13 @@
 package org.grouptwentyone.models;
 
-import org.grouptwentyone.controllers.HabitatTilesController;
 import org.grouptwentyone.models.Exceptions.*;
 
-import java.time.temporal.IsoFields;
 import java.util.ArrayList;
 
-import static java.lang.System.err;
 import static org.grouptwentyone.controllers.StarterHabitatTilesController.getStarterTile;
 
 public class Player {
+    public enum PlayerBoardSide {LEFT, RIGHT, TOP, BOTTOM, MIDDLE}
 
     private static int playerIdCounter = 0;
 
@@ -34,18 +32,134 @@ public class Player {
     }
 
     public void printPlayerBoard() {
+
+//        System.out.println(playerBoard.size());
+//        System.out.println(playerBoard.get(0).size());
+
         for (int i=0; i<playerBoard.size(); i++) {
             for (int k=0; k<playerBoard.get(0).size(); k++) {
+//                System.out.printf("%d, %d\n", i, k);
                 System.out.printf("[%s]", playerBoard.get(i).get(k));
             }
             System.out.println();
         }
     }
 
-    public void addPlayerBoardBuffer() {
-        for (int i=0; i<playerBoard.size(); i++) {
-//            playerBoard.get(i).add(0, new Tile(new HexCoordinate()))
+    public void addPlayerBoardBuffer(PlayerBoardSide playerBoardSide) {
+
+        ArrayList<Tile> newRow = new ArrayList<>();
+
+        // Add empty tiles for the specified row/column based on user input of side.
+        switch(playerBoardSide) {
+            case LEFT:
+                for (int i=0; i<playerBoard.size(); i++) {
+                    for (int k=0; k<playerBoard.get(0).size(); k++) {
+                        int oldValue = playerBoard.get(i).get(k).getHexCoordinate().getY();
+                        playerBoard.get(i).get(k).getHexCoordinate().setY(oldValue+1);
+                    }
+                }
+
+                for (int i=0; i<playerBoard.size(); i++) {
+                    playerBoard.get(i).add(0, new Tile(new HexCoordinate(i, 0)));
+                }
+                break;
+
+            case TOP:
+                // In this case: 2 lines of buffer space are added
+                // This is because of the way every second line is shifted to the left in the hex-coordinate system.
+                // Adding two lines ensures the parity of the system is maintained, so we don't have to care about the left shifting.
+
+                for (int i=0; i<playerBoard.size(); i++) {
+                    for (int k = 0; k < playerBoard.get(0).size(); k++) {
+                        int oldValue = playerBoard.get(i).get(k).getHexCoordinate().getX();
+                        playerBoard.get(i).get(k).getHexCoordinate().setX(oldValue+2);
+                    }
+                }
+
+                for (int k=0; k<2; k++) {
+                    newRow = new ArrayList<>();
+                    for (int i = 0; i < playerBoard.get(0).size(); i++) {
+                        newRow.add(new Tile(new HexCoordinate(0, i)));
+                    }
+                    playerBoard.add(0, newRow);
+                }
+                break;
+
+            case BOTTOM:
+                int indexOfLastRow = playerBoard.size();
+                for (int i=0; i<playerBoard.get(0).size(); i++) {
+                    newRow.add(new Tile(new HexCoordinate(indexOfLastRow, i)));
+                }
+                playerBoard.add(indexOfLastRow, newRow);
+                break;
+
+            case RIGHT:
+                int indexOfLastColumn = playerBoard.get(0).size();
+                for (int i=0; i<playerBoard.size(); i++) {
+                    playerBoard.get(i).add(indexOfLastColumn, new Tile(new HexCoordinate(i, indexOfLastColumn)));
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Did not enter a valid \"playerBoardSide\" type");
         }
+
+    }
+
+    public boolean isCoordinateOnBoardEdge(HexCoordinate coordinate) {
+        int lastRow = this.getPlayerBoard().size()-1;
+        int lastColumn = this.getPlayerBoard().get(0).size()-1;
+
+//        System.out.printf("%d and %d\n", lastRow-1, lastColumn-1);
+
+        int coordinateYVal = coordinate.getY();
+        int coordinateXVal = coordinate.getX();
+
+        boolean isCoordinateOnFirstOrLastRow = coordinateXVal == 0 || coordinateXVal == lastRow;
+        boolean isCoordinateOnFirstOrLastColumn = coordinateYVal == 0 || coordinateYVal == lastColumn;
+
+
+//        System.out.printf("y-val: %d > lastRow: %d...x-val: %d > lastColumn: %d\n", coordinateYVal, lastRow, coordinateXVal, lastColumn);
+        if (coordinateXVal < 0 || coordinateXVal > lastRow || coordinateYVal < 0 || coordinateYVal > lastColumn) {
+            throw new IllegalArgumentException("Entered coordinate in not on the board");
+        }
+
+        return isCoordinateOnFirstOrLastRow || isCoordinateOnFirstOrLastColumn;
+    }
+
+    public ArrayList<PlayerBoardSide> getPartOfBoardCoordinateIsOn(HexCoordinate coordinate) {
+        int lastRow = this.getPlayerBoard().size()-1;
+        int lastColumn = this.getPlayerBoard().get(0).size()-1;
+        int coordinateYVal = coordinate.getY();
+        int coordinateXVal = coordinate.getX();
+
+        // Checks if coordinate is on the board.
+//        System.out.printf("y-val: %d > lastColumn: %d...x-val: %d > lastRow: %d\n", coordinateYVal, lastColumn, coordinateXVal, lastRow);
+//        System.out.println(lastRow);
+        if (coordinateXVal < 0 || coordinateXVal > lastRow || coordinateYVal < 0 || coordinateYVal > lastColumn) {
+            throw new IllegalArgumentException("Entered coordinate in not on the board");
+        }
+
+        ArrayList<PlayerBoardSide> coordinateSideList = new ArrayList<>();
+
+        if (coordinateXVal == 0) {
+            coordinateSideList.add(PlayerBoardSide.TOP);
+        }
+        if (coordinateXVal == lastRow) {
+            coordinateSideList.add(PlayerBoardSide.BOTTOM);
+        }
+        if (coordinateYVal == 0) {
+            coordinateSideList.add(PlayerBoardSide.LEFT);
+        }
+        if (coordinateYVal == lastColumn) {
+            coordinateSideList.add(PlayerBoardSide.RIGHT);
+        }
+
+        // If coordinate is not on any edges it must be in the middle.
+        if (coordinateSideList.isEmpty()) {
+            coordinateSideList.add(PlayerBoardSide.MIDDLE);
+        }
+
+        return coordinateSideList;
     }
 
     private void setupPlayerBoard() {
@@ -93,7 +207,7 @@ public class Player {
                 // Checks if there's at least one existing tile that is adjacent to the new tile
                 if (newTile.isAdjacentToTile(focusedTile) && !isAdjacentToExistingTile) {
                     isAdjacentToExistingTile = true;
-                    System.out.printf("%s is adjacent to %s\n", newTile, focusedTile);
+//                    System.out.printf("%s is adjacent to %s\n", newTile, focusedTile);
                 }
 
             }
@@ -102,7 +216,29 @@ public class Player {
         if (!isAdjacentToExistingTile) {
             throw new TileNotPlacedAdjacentlyException(String.format("Tried to place tile at %s of which there are no adjacent tiles", newTile));
         }
+
+        // Adds the new tile
         this.playerBoard.get(newTile.getHexCoordinate().getX()).set(newTile.getHexCoordinate().getY(), newTile);
+
+        // Checks to see if the returned array has a "middle" in it signifying it's not on the edge.
+        ArrayList<PlayerBoardSide> tilePosition = this.getPartOfBoardCoordinateIsOn(newTile.getHexCoordinate());
+        boolean isNewTileOnEdge = !tilePosition.contains(PlayerBoardSide.MIDDLE);
+        System.out.printf("Is the new tile on the edge? %s\n", isNewTileOnEdge);
+
+        if (isNewTileOnEdge) {
+            if (tilePosition.contains(PlayerBoardSide.LEFT)) {
+                addPlayerBoardBuffer(PlayerBoardSide.LEFT);
+            }
+            if (tilePosition.contains(PlayerBoardSide.RIGHT)) {
+                addPlayerBoardBuffer(PlayerBoardSide.RIGHT);
+            }
+            if (tilePosition.contains(PlayerBoardSide.TOP)) {
+                addPlayerBoardBuffer(PlayerBoardSide.TOP);
+            }
+            if (tilePosition.contains(PlayerBoardSide.BOTTOM)) {
+                addPlayerBoardBuffer(PlayerBoardSide.BOTTOM);
+            }
+        }
 
         //reset selectedTile to an empty tile
         this.setSelectedTile(new HabitatTile());
