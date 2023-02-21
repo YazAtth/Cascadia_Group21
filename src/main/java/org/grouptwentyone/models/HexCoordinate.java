@@ -35,6 +35,14 @@ public class HexCoordinate {
         return Y;
     }
 
+    public void setX(int x) {
+        X = x;
+    }
+
+    public void setY(int y) {
+        Y = y;
+    }
+
     public String toString() {
         return String.format("(%d, %d)", getX(), getY());
     }
