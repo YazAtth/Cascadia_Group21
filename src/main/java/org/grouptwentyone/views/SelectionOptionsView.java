@@ -1,5 +1,6 @@
 package org.grouptwentyone.views;
 
+import org.grouptwentyone.StartGame;
 import org.grouptwentyone.models.HabitatTile;
 import org.grouptwentyone.models.Player;
 import org.grouptwentyone.models.Tile;
@@ -166,21 +167,37 @@ public class SelectionOptionsView {
         System.out.print("Please select one of the above pairs by entering the associated number: \n>");
         int userNum = -1;
 
-        while (userNum < 1 || userNum > 4) {
+        while (userNum < 1 || userNum > org.grouptwentyone.StartGame.selectedTiles.size()) {
             Scanner sc = new Scanner(System.in);
             String userInput = sc.nextLine();
             try {
                 userNum = Integer.parseInt(userInput);
             } catch (NumberFormatException ex) {
-                System.out.print("Invalid argument, please enter a number between 1 and 4 to select an above pair: \n>");
+                System.out.print(String.format("Invalid argument, please enter a number between " +
+                        "1 and %s to select an above pair: \n>", org.grouptwentyone.StartGame.selectedTiles.size()));
             }
-            if (userNum < 1 || userNum > 4) System.out.print("Invalid number, " +
-                    "please enter a number between 1 and 4 to select an above pair: \n>");
+            if (userNum < 1 || userNum > 4) System.out.print(String.format("Invalid argument, please enter a number " +
+                    "between 1 and %s to select an above pair: \n>", org.grouptwentyone.StartGame.selectedTiles.size()));
         }
+        userNum--;
 
         activePlayer.setSelectedTile(org.grouptwentyone.StartGame.selectedTiles.remove(userNum));
         activePlayer.setSelectedToken(org.grouptwentyone.StartGame.selectedTokens.remove(userNum));
 
-        //replace tile and token
+        //detects that no tiles remain so ends player turns
+        if (!replaceTileAndToken() && StartGame.selectedTiles.size() == 0) {
+            StartGame.tilesRemain = false;
+            System.out.println("No tiles remain so play is finished, calculating player score...");
+        }
+    }
+
+    private static boolean replaceTileAndToken() {
+        if (habitatTilesBag.size() > 0 && wildlifeTokenBag.size() > 0) {
+            org.grouptwentyone.StartGame.selectedTiles.add(habitatTilesBag.remove(0));
+            org.grouptwentyone.StartGame.selectedTokens.add(wildlifeTokenBag.remove(0));
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -14,6 +14,7 @@ public class StartGame {
 
     public static ArrayList<WildlifeToken> selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
 
+    public static boolean tilesRemain = true;
 
     public static void start() {
 
@@ -27,8 +28,7 @@ public class StartGame {
 
         Player activePlayer = playerController.getFirstPlayer();
 
-
-        while (true) {
+        while (tilesRemain) {
 
             GameUiView.printPageBorder();
 
