@@ -164,7 +164,7 @@ public class SelectionOptionsView {
     }
 
     public static void selectTileAndToken(Player activePlayer) {
-        System.out.print("Please select one of the above pairs by entering the associated number: \n>");
+        System.out.print("Please select one of the above pairs by entering the associated number: \n> ");
         int userNum = -1;
 
         while (userNum < 1 || userNum > org.grouptwentyone.StartGame.selectedTiles.size()) {
@@ -172,6 +172,7 @@ public class SelectionOptionsView {
             String userInput = sc.nextLine();
             try {
                 userNum = Integer.parseInt(userInput);
+                userNum -= 1; // selectedTiles.remove() uses a number line starting at 0 while the user sees one starting at 1: so we subtract one.
             } catch (NumberFormatException ex) {
                 System.out.print(String.format("Invalid argument, please enter a number between " +
                         "1 and %s to select an above pair: \n>", org.grouptwentyone.StartGame.selectedTiles.size()));
