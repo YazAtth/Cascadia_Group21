@@ -43,6 +43,10 @@ public class GameView {
                 %s"next"%s\t\t\tgoes to the next player's turn
                 %s"rotate"%s\t\trotates the tile clockwise
                 %s"select"%s\t\tselects a habitat tile and wildlife token pair
+                %s"place_tile x,y"%s\tplaces habitat tile at selected coordinates
+                %s"place_token x,y"%s\tplaces wildlife token on habitat tile at selected coordinates
+                %s"return_token"%s\treturns selected wildlife token to token bag
+                
                 
                 %s⏺ DEVELOPER COMMANDS (for debugging) ⏺%s
                 
@@ -50,6 +54,9 @@ public class GameView {
                 
                 %s%s
                 """, GameUiView.PAGE_BORDER_NO_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
                 GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
                 GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
                 GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
