@@ -33,6 +33,21 @@ public class Player {
         setupPlayerBoard();
     }
 
+    public void printPlayerBoard() {
+        for (int i=0; i<playerBoard.size(); i++) {
+            for (int k=0; k<playerBoard.get(0).size(); k++) {
+                System.out.printf("[%s]", playerBoard.get(i).get(k));
+            }
+            System.out.println();
+        }
+    }
+
+    public void addPlayerBoardBuffer() {
+        for (int i=0; i<playerBoard.size(); i++) {
+//            playerBoard.get(i).add(0, new Tile(new HexCoordinate()))
+        }
+    }
+
     private void setupPlayerBoard() {
         //these for loops initialise the board with null habitat tiles
         this.playerBoard = new ArrayList<>();
