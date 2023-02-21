@@ -51,8 +51,8 @@ public class Player {
 
         this.playerBoard.get(1).set(1, new Tile(starterTile.get(0), new HexCoordinate(1, 1)));
         //note: a hex coordinate of [1, 2] is set at array index [2, 1]
-        this.playerBoard.get(2).set(1, new Tile(starterTile.get(1), new HexCoordinate(1, 2)));
-        this.playerBoard.get(1).set(2, new Tile(starterTile.get(2), new HexCoordinate(2, 1)));
+        this.playerBoard.get(2).set(1, new Tile(starterTile.get(1), new HexCoordinate(2, 1)));
+        this.playerBoard.get(1).set(2, new Tile(starterTile.get(2), new HexCoordinate(1, 2)));
 
     }
 
