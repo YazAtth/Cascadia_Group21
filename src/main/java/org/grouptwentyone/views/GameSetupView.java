@@ -3,7 +3,9 @@ package org.grouptwentyone.views;
 import org.grouptwentyone.controllers.UserTerminationController;
 import org.grouptwentyone.models.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class GameSetupView {
 

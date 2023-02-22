@@ -4,7 +4,7 @@ import org.grouptwentyone.models.Exceptions.*;
 
 import java.util.ArrayList;
 
-import static org.grouptwentyone.controllers.StarterHabitatTilesController.getStarterTile;
+import org.grouptwentyone.controllers.StarterHabitatTilesController;
 
 public class Player {
     public enum PlayerBoardSide {LEFT, RIGHT, TOP, BOTTOM, MIDDLE}
@@ -176,7 +176,7 @@ public class Player {
         }
 
         //insert random starter tile into players board
-        ArrayList<HabitatTile> starterTile = getStarterTile();
+        ArrayList<HabitatTile> starterTile = StarterHabitatTilesController.getStarterTile();
 
         this.playerBoard.get(1).set(1, new Tile(starterTile.get(0), new HexCoordinate(1, 1)));
         //note: a hex coordinate of [1, 2] is set at array index [2, 1]
@@ -267,7 +267,7 @@ public class Player {
         if (focusedTile.getHabitatTile().isKeystone()) this.addToNumOfNatureTokens();
 
         //reset selectedToken
-        this.getSelectedToken().setWildlifeTokenType(WildlifeToken.WildlifeTokenType.EMPTY);
+        this.setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY));
     }
 
     public String toString() {

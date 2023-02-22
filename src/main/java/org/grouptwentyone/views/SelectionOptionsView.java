@@ -3,7 +3,6 @@ package org.grouptwentyone.views;
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.models.HabitatTile;
 import org.grouptwentyone.models.Player;
-import org.grouptwentyone.models.Tile;
 import org.grouptwentyone.models.WildlifeToken;
 
 import java.util.ArrayList;
@@ -122,12 +121,12 @@ public class SelectionOptionsView {
         tokenToColourTable.put(WildlifeToken.WildlifeTokenType.HAWK, "\033[1;36m");
 
         //link WildLifeTokenType to a letter
-        Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToStringTable = new Hashtable<WildlifeToken.WildlifeTokenType, String>();
-        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.BEAR, "B");
-        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.ELK, "E");
-        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.SALMON, "S");
-        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.FOX, "F");
-        tokenToStringTable.put(WildlifeToken.WildlifeTokenType.HAWK, "H");
+        Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToLetterTable = new Hashtable<WildlifeToken.WildlifeTokenType, String>();
+        tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.BEAR, "B");
+        tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.ELK, "E");
+        tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.SALMON, "S");
+        tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.FOX, "F");
+        tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.HAWK, "H");
 
         String tokenString = "";
         String endString = "\u001B[0m";
@@ -147,7 +146,7 @@ public class SelectionOptionsView {
                 WildlifeToken.WildlifeTokenType currWildlifeTokenType = currToken.getWildlifeTokenType();
 
                 colour = tokenToColourTable.get(currWildlifeTokenType);
-                tokenString = " " + tokenToStringTable.get(currWildlifeTokenType) + " ";
+                tokenString = " " + tokenToLetterTable.get(currWildlifeTokenType) + " ";
 
                 if (i == 0) {
                     pattern.append(colour +   "     *****     " + endString);
@@ -176,7 +175,7 @@ public class SelectionOptionsView {
                 System.out.print(String.format("Invalid argument, please enter a number between " +
                         "1 and %s to select an above pair: \n>", org.grouptwentyone.StartGame.selectedTiles.size()));
             }
-            if (userNum < 1 || userNum > 4) System.out.print(String.format("Invalid argument, please enter a number " +
+            if (userNum < 1 || userNum > org.grouptwentyone.StartGame.selectedTiles.size()) System.out.print(String.format("Invalid argument, please enter a number " +
                     "between 1 and %s to select an above pair: \n>", org.grouptwentyone.StartGame.selectedTiles.size()));
         }
         userNum--;

@@ -31,6 +31,7 @@ public class HabitatTile {
         this.isNull = false;
     }
 
+    //empty habitat tile type
     public HabitatTile() {
         this.habitatTileTypeList = new ArrayList<>();
         this.wildlifeTokenTypeList = new ArrayList<>();

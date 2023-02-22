@@ -10,7 +10,7 @@ public class WildlifeToken {
     }
 
     public WildlifeTokenType getWildlifeTokenType() {
-        return wildlifeTokenType;
+        return this.wildlifeTokenType;
     }
 
     public void setWildlifeTokenType(WildlifeTokenType wildlifeTokenType) {

@@ -1,9 +1,12 @@
+package org.grouptwentyone;
+
 import org.grouptwentyone.models.HabitatTile;
 import org.grouptwentyone.models.HexCoordinate;
 import org.grouptwentyone.models.Player;
 
 public class TestingSpace {
-    public static void main(String[] args) {
+    //moved code to separate method so main can be used to call specific tests
+    private static void playerBoardBufferTest() {
         Player p1 = new Player("bob");
         HabitatTile habitatTile = new HabitatTile(2);
         p1.setSelectedTile(habitatTile);
@@ -23,5 +26,8 @@ public class TestingSpace {
 //        System.out.println(p1.getPlayerBoard().get(3).get(4));
 //        System.out.println("\n");
         p1.printPlayerBoard();
+    }
+    public static void main(String[] args) {
+        playerBoardBufferTest();
     }
 }
