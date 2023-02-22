@@ -7,11 +7,10 @@ import org.grouptwentyone.models.Tile;
 import org.grouptwentyone.models.WildlifeToken;
 
 import java.util.Hashtable;
-import java.util.Objects;
 
 import java.util.ArrayList;
 
-public class TestBoardView {
+public class BoardView {
     public static ArrayList<ArrayList<Tile>> playerBoard = new ArrayList<>();
 
     public static void addToBoard() {
@@ -37,13 +36,17 @@ public class TestBoardView {
         playerBoard.get(1).set(2, twoOne);
     }
 
+    //gave these hashtables a private scope for use in helper methods
+    private static Hashtable<HabitatTile.HabitatTileType, String> tileToColourTable = new Hashtable<HabitatTile.HabitatTileType, String>();
+    private static Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToStringTable = new Hashtable<WildlifeToken.WildlifeTokenType, String>();
+
     //static method to display tiles
     public static String displayTiles(ArrayList<ArrayList<Tile>> playerBoard) {
 
         StringBuilder pattern = new StringBuilder();
 
         //link HabitatTileTypes to a colour
-        Hashtable<HabitatTile.HabitatTileType, String> tileToColourTable = new Hashtable<HabitatTile.HabitatTileType, String>();
+        //Hashtable<HabitatTile.HabitatTileType, String> tileToColourTable = new Hashtable<HabitatTile.HabitatTileType, String>();
         tileToColourTable.put(HabitatTile.HabitatTileType.FORESTS, "\033[1;92m");
         tileToColourTable.put(HabitatTile.HabitatTileType.MOUNTAINS, "\033[1;37m");
         tileToColourTable.put(HabitatTile.HabitatTileType.PRAIRIES, "\033[1;93m");
@@ -51,7 +54,7 @@ public class TestBoardView {
         tileToColourTable.put(HabitatTile.HabitatTileType.WETLANDS, "\033[1;96m");
 
         //link WildLifeTokenType to a coloured letter
-        Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToStringTable = new Hashtable<WildlifeToken.WildlifeTokenType, String>();
+//        Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToStringTable = new Hashtable<WildlifeToken.WildlifeTokenType, String>();
         tokenToStringTable.put(WildlifeToken.WildlifeTokenType.BEAR, "\033[1;38;5;94m" + "B" + "\u001B[0m");
         tokenToStringTable.put(WildlifeToken.WildlifeTokenType.ELK, "\033[1;90m" + "E" + "\u001B[0m");
         tokenToStringTable.put(WildlifeToken.WildlifeTokenType.SALMON, "\033[1;91m" + "S" + "\u001B[0m");
@@ -101,12 +104,12 @@ public class TestBoardView {
 
                         if (currHabitatTileTypeList.size() == 1) {
                             colourOne = colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(0));
-                            tokenString = "  " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + "  ";
+//                            tokenString = "  " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + "  ";
                         } else {
                             colourOne = tileToColourTable.get(currHabitatTileTypeList.get(0));
                             colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(1));
-                            tokenString = " " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + " " +
-                                                tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(1)) + " ";
+//                            tokenString = " " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + " " +
+//                                                tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(1)) + " ";
                         }
 
                         //tokenString should always length 5, hence the different if statements
@@ -151,9 +154,9 @@ public class TestBoardView {
                         } else if (i == 1) {
                             pattern.append(colourOne + "  ***********  " + endString);
                         } else if (i == 2) {
-                            pattern.append(colourOne + " ****" + tokenString + endString + colourOne + "**** " + endString);
+                            pattern.append(colourOne + " ****" + placeTokenInfo(0, currTile) + colourOne + "**** " + endString);
                         } else if (i == 3) {
-                            pattern.append(colourTwo + " ****     **** " + endString);
+                            pattern.append(colourTwo + " ****" + placeTokenInfo(1, currTile) + colourOne + "**** " + endString);
                         } else if (i == 4) {
                             pattern.append(colourTwo + "  ***********  " + endString);
                         } else {
@@ -169,9 +172,9 @@ public class TestBoardView {
                         } else if (i == 1) {
                             pattern.append(colourOne + "  ****" + colourTwo + "*******  " + endString);
                         } else if (i == 2) {
-                            pattern.append(colourOne + " ****" + tokenString + endString + colourTwo + "**** " + endString);
+                            pattern.append(colourOne + " ****" + placeTokenInfo(0, currTile) + colourTwo + "**** " + endString);
                         } else if (i == 3) {
-                            pattern.append(colourOne + " ****     " + colourTwo + "**** " + endString);
+                            pattern.append(colourOne + " ****" + placeTokenInfo(1, currTile) + colourTwo + "**** " + endString);
                         } else if (i == 4) {
                             pattern.append(colourOne + "  *******" + colourTwo + "****  " + endString);
                         } else {
@@ -185,9 +188,9 @@ public class TestBoardView {
                         } else if (i == 1) {
                             pattern.append(colourOne + "  *******" + colourTwo + "****  " + endString);
                         } else if (i == 2) {
-                            pattern.append(colourOne + " ****" + tokenString + endString + colourTwo + "**** " + endString);
+                            pattern.append(colourOne + " ****" + placeTokenInfo(0, currTile) + colourTwo + "**** " + endString);
                         } else if (i == 3) {
-                            pattern.append(colourOne + " ****     " + colourTwo + "**** " + endString);
+                            pattern.append(colourOne + " ****" + placeTokenInfo(1, currTile) + colourTwo + "**** " + endString);
                         } else if (i == 4) {
                             pattern.append(colourOne + "  ****" + colourTwo + "*******  " + endString);
                         } else {
@@ -201,8 +204,57 @@ public class TestBoardView {
         return pattern.toString();
     }
 
-    public static void main(String[] args) {
-        addToBoard();
-        System.out.println(displayTiles(playerBoard));
+    private static String placeTokenInfo(int line, Tile currTile) {
+        String tokenString;
+        String endString = "\u001B[0m";
+        boolean isTokenPlaced = currTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY;
+
+        //link WildLifeTokenType to a colour
+        Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToColourTable = new Hashtable<>();
+        tokenToColourTable.put(WildlifeToken.WildlifeTokenType.BEAR, "\033[1;38;5;94m");
+        tokenToColourTable.put(WildlifeToken.WildlifeTokenType.ELK, "\033[1;90m");
+        tokenToColourTable.put(WildlifeToken.WildlifeTokenType.SALMON, "\033[1;91m");
+        tokenToColourTable.put(WildlifeToken.WildlifeTokenType.FOX, "\033[1;33m");
+        tokenToColourTable.put(WildlifeToken.WildlifeTokenType.HAWK, "\033[1;36m");
+
+        //link WildLifeTokenType to a letter
+        Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToLetterTable = new Hashtable<>();
+        tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.BEAR, "B");
+        tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.ELK, "E");
+        tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.SALMON, "S");
+        tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.FOX, "F");
+        tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.HAWK, "H");
+
+        if (!isTokenPlaced) {
+            if (line == 0) {
+                if (currTile.getHabitatTile().getWildlifeTokenTypeList().size() == 1) {
+                    tokenString = "  " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + "  ";
+                } else if (currTile.getHabitatTile().getWildlifeTokenTypeList().size() == 2) {
+                    tokenString = " " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + " " +
+                            tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(1)) + " ";
+                } else {
+                    tokenString = tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + " " +
+                            tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(1)) + " " +
+                            tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(2));
+                }
+                return tokenString + endString;
+            } else if (line == 1) {
+                //return string of coordinates
+                return endString + currTile.getHexCoordinate().toString();
+            } else {
+                throw new IllegalArgumentException("invalid line num passed to func");
+            }
+        } else {
+            String colour = tokenToColourTable.get(currTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType());
+
+            if (line == 0) {
+                tokenString = colour +   "*****" + endString;
+            } else if (line == 1) {
+                tokenString = colour + "* " + tokenToLetterTable.get(currTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType()) + " *" + endString;
+            } else {
+                throw new IllegalArgumentException("invalid line num passed to func");
+            }
+            return tokenString;
+        }
     }
 }

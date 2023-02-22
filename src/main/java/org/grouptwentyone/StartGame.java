@@ -33,7 +33,7 @@ public class StartGame {
             GameUiView.printPageBorder();
 
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-            System.out.println(TestBoardView.displayTiles(activePlayer.getPlayerBoard()));
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
 
             GameUiView.printPageBorder();
 

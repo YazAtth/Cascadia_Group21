@@ -43,8 +43,9 @@ public class HexCoordinate {
         Y = y;
     }
 
+    //removed space after comma for use in playerBoard printing
     public String toString() {
-        return String.format("(%d, %d)", getX(), getY());
+        return String.format("(%d,%d)", getX(), getY());
     }
 
     public boolean equals(HexCoordinate o) {
