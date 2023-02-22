@@ -1,8 +1,6 @@
 package org.grouptwentyone.views;
 
-import org.grouptwentyone.controllers.HabitatTilesController;
 import org.grouptwentyone.models.HabitatTile;
-import org.grouptwentyone.models.HexCoordinate;
 import org.grouptwentyone.models.Tile;
 import org.grouptwentyone.models.WildlifeToken;
 
@@ -11,34 +9,11 @@ import java.util.Hashtable;
 import java.util.ArrayList;
 
 public class BoardView {
-    public static ArrayList<ArrayList<Tile>> playerBoard = new ArrayList<>();
 
-    public static void addToBoard() {
-        //these for loops initialise the board to null habitat tiles
-        int sizeX = 3, sizeY = 3;
-        for (int i = 0; i < sizeX; i++) {
-            playerBoard.add(new ArrayList<>());
-        }
-        for (int i = 0; i < sizeY; i++) {
-            for (int j = 0; j < sizeX; j++) {
-                playerBoard.get(i).add(j, new Tile(new HexCoordinate(i, j)));
-            }
-        }
-
-        //create dummy tiles
-        Tile oneOne = new Tile(HabitatTilesController.habitatTilesBag.get(0), new HexCoordinate(1, 1));
-        Tile oneTwo = new Tile(HabitatTilesController.habitatTilesBag.get(1), new HexCoordinate(1, 2));
-        Tile twoOne = new Tile(HabitatTilesController.habitatTilesBag.get(2), new HexCoordinate(2, 1));
-
-        playerBoard.get(1).set(1, oneOne);
-        //note oneTwo is added at index [2, 1]
-        playerBoard.get(2).set(1, oneTwo);
-        playerBoard.get(1).set(2, twoOne);
-    }
 
     //gave these hashtables a private scope for use in helper methods
-    private static Hashtable<HabitatTile.HabitatTileType, String> tileToColourTable = new Hashtable<HabitatTile.HabitatTileType, String>();
-    private static Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToStringTable = new Hashtable<WildlifeToken.WildlifeTokenType, String>();
+    private static Hashtable<HabitatTile.HabitatTileType, String> tileToColourTable = new Hashtable<>();
+    private static Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToStringTable = new Hashtable<>();
 
     //static method to display tiles
     public static String displayTiles(ArrayList<ArrayList<Tile>> playerBoard) {
@@ -61,7 +36,6 @@ public class BoardView {
         tokenToStringTable.put(WildlifeToken.WildlifeTokenType.FOX, "\033[1;33m" + "F" + "\u001B[0m");
         tokenToStringTable.put(WildlifeToken.WildlifeTokenType.HAWK, "\033[1;36m" + "H" + "\u001B[0m");
 
-        String tokenString = "";
         String endString = "\u001B[0m";
         String colourOne, colourTwo;
         colourOne = colourTwo = "";
@@ -104,29 +78,14 @@ public class BoardView {
 
                         if (currHabitatTileTypeList.size() == 1) {
                             colourOne = colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(0));
-//                            tokenString = "  " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + "  ";
                         } else {
                             colourOne = tileToColourTable.get(currHabitatTileTypeList.get(0));
                             colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(1));
-//                            tokenString = " " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + " " +
-//                                                tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(1)) + " ";
-                        }
-
-                        //tokenString should always length 5, hence the different if statements
-                        if (currTile.getHabitatTile().getWildlifeTokenTypeList().size() == 1) {
-                            tokenString = "  " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + "  ";
-                        } else if (currTile.getHabitatTile().getWildlifeTokenTypeList().size() == 2) {
-                            tokenString = " " + tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + " " +
-                                                tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(1)) + " ";
-                        } else {
-                            tokenString = tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(0)) + " " +
-                                          tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(1)) + " " +
-                                          tokenToStringTable.get(currTile.getHabitatTile().getWildlifeTokenTypeList().get(2));
                         }
                     }
 
                     int currOrientation = currTile.getTileOrientation();
-                    String tempString = "";
+                    String tempString;
                     switch (currOrientation) {
                         case 3:
                             tempString = colourOne;
@@ -140,8 +99,6 @@ public class BoardView {
                             tempString = colourOne;
                             colourOne = colourTwo;
                             colourTwo = tempString;
-                        default:
-                            ;
                     }
 
                     if (currTile.getTileOrientation() == 0 || //print horizontal tile

@@ -62,7 +62,7 @@ public class CullingController {
 
         System.out.println("New selection of Wildlife Tokens along with associated Habitat Tiles shown below:");
         System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
-        System.out.println(SelectionOptionsView.displaySelectedWiildlifeTokens(StartGame.selectedTokens));
+        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
         System.out.println("      (1)            (2)            (3)            (4)      \n");
         checkForCull();
 

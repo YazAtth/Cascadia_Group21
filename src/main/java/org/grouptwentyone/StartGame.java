@@ -38,7 +38,7 @@ public class StartGame {
             GameUiView.printPageBorder();
 
             System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(selectedTiles));
-            System.out.println(SelectionOptionsView.displaySelectedWiildlifeTokens(selectedTokens));
+            System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(selectedTokens));
             System.out.println("      (1)            (2)            (3)            (4)      \n");
 
             GameUiView.printPageBorder();

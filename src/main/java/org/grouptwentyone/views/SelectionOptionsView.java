@@ -53,10 +53,9 @@ public class SelectionOptionsView {
         tokenToStringTable.put(WildlifeToken.WildlifeTokenType.FOX, "\033[1;33m" + "F" + "\u001B[0m");
         tokenToStringTable.put(WildlifeToken.WildlifeTokenType.HAWK, "\033[1;36m" + "H" + "\u001B[0m");
 
-        String tokenString = "";
+        String tokenString;
         String endString = "\u001B[0m";
         String colourOne, colourTwo, colourThree, colourFour, colourFive, colourSix;
-        colourOne = colourTwo = colourThree = colourFour = colourFive = colourSix = "";
 
         //iterate through habitat tiles
         //iterate over each row of each tile (tiles size is 6)
@@ -75,20 +74,12 @@ public class SelectionOptionsView {
                 if (currHabitatTileTypeList.size() == 1) {
                     colourOne = colourTwo = colourThree = colourFour = colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(0));
                     tokenString = "  " + tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + "  ";
-                } else if (currHabitatTileTypeList.size() == 2) {
+                } else {
                     colourOne = colourTwo = colourThree = tileToColourTable.get(currHabitatTileTypeList.get(0));
                     colourFour = colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(1));
                     tokenString = " " + tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
                             tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " ";
-                } else {
-                    colourOne = colourTwo = tileToColourTable.get(currHabitatTileTypeList.get(0));
-                    colourThree = colourFour = tileToColourTable.get(currHabitatTileTypeList.get(1));
-                    colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(2));
-                    tokenString = tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
-                            tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " " +
-                            tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(2));
                 }
-
                 if (i == 0) {
                     pattern.append(colourOne +   "    *******    " + endString);
                 } else if (i == 1) {
@@ -109,7 +100,7 @@ public class SelectionOptionsView {
         return pattern.toString();
     }
 
-    public static String displaySelectedWiildlifeTokens(ArrayList<WildlifeToken> selectedWildlifeTokens) {
+    public static String displaySelectedWildlifeTokens(ArrayList<WildlifeToken> selectedWildlifeTokens) {
         StringBuilder pattern = new StringBuilder();
 
         //link WildLifeTokenType to a colour
@@ -121,16 +112,16 @@ public class SelectionOptionsView {
         tokenToColourTable.put(WildlifeToken.WildlifeTokenType.HAWK, "\033[1;36m");
 
         //link WildLifeTokenType to a letter
-        Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToLetterTable = new Hashtable<WildlifeToken.WildlifeTokenType, String>();
+        Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToLetterTable = new Hashtable<>();
         tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.BEAR, "B");
         tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.ELK, "E");
         tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.SALMON, "S");
         tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.FOX, "F");
         tokenToLetterTable.put(WildlifeToken.WildlifeTokenType.HAWK, "H");
 
-        String tokenString = "";
+        String tokenString;
         String endString = "\u001B[0m";
-        String colour = "";
+        String colour;
 
         //iterate through habitat tiles
         //iterate over each row of each tile (tiles size is 6)
@@ -172,11 +163,11 @@ public class SelectionOptionsView {
             try {
                 userNum = Integer.parseInt(userInput);
             } catch (NumberFormatException ex) {
-                System.out.print(String.format("Invalid argument, please enter a number between " +
-                        "1 and %s to select an above pair: \n>", org.grouptwentyone.StartGame.selectedTiles.size()));
+                System.out.printf("Invalid argument, please enter a number between " +
+                        "1 and %s to select an above pair: \n>", StartGame.selectedTiles.size());
             }
-            if (userNum < 1 || userNum > org.grouptwentyone.StartGame.selectedTiles.size()) System.out.print(String.format("Invalid argument, please enter a number " +
-                    "between 1 and %s to select an above pair: \n>", org.grouptwentyone.StartGame.selectedTiles.size()));
+            if (userNum < 1 || userNum > org.grouptwentyone.StartGame.selectedTiles.size()) System.out.printf("Invalid argument, please enter a number " +
+                    "between 1 and %s to select an above pair: \n>", StartGame.selectedTiles.size());
         }
         userNum--;
 
