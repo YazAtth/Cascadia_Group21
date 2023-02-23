@@ -23,7 +23,7 @@ public class BoardView {
         //link HabitatTileTypes to a colour
         //Hashtable<HabitatTile.HabitatTileType, String> tileToColourTable = new Hashtable<HabitatTile.HabitatTileType, String>();
         tileToColourTable.put(HabitatTile.HabitatTileType.FORESTS, "\033[1;92m");
-        tileToColourTable.put(HabitatTile.HabitatTileType.MOUNTAINS, "\033[1;37m");
+        tileToColourTable.put(HabitatTile.HabitatTileType.MOUNTAINS, "\033[1;97m");
         tileToColourTable.put(HabitatTile.HabitatTileType.PRAIRIES, "\033[1;93m");
         tileToColourTable.put(HabitatTile.HabitatTileType.RIVERS, "\033[1;34m");
         tileToColourTable.put(HabitatTile.HabitatTileType.WETLANDS, "\033[1;96m");
@@ -37,11 +37,12 @@ public class BoardView {
         tokenToStringTable.put(WildlifeToken.WildlifeTokenType.HAWK, "\033[1;36m" + "H" + "\u001B[0m");
 
         String endString = "\u001B[0m";
+        String greyCode = "\033[1;90m";
         String colourOne, colourTwo;
         colourOne = colourTwo = "";
 
         System.out.println("\033[1;92m" +  "Forest = GREEN " + endString +
-                "\033[1;37m" + "  Mountains = GREY" + endString + "\033[1;93m" + "  Prairies = YELLOW" + endString +
+                "\033[0;97m" + "  Mountains = WHITE" + endString + "\033[1;93m" + "  Prairies = YELLOW" + endString +
                 "\033[1;34m" + "  Rivers = BLUE" + endString + "\033[1;96m" + "  Wetlands = CYAN" + endString);
 
         GameUiView.printLinePageBorder();
@@ -68,7 +69,15 @@ public class BoardView {
 
 
                     if (currTile.getHabitatTile() == null) {
-                        //if null do nothing
+                        if (i == 0 || i == 5) {
+                            pattern.append(greyCode + "    *  *  *    " + endString);
+                        } else if (i == 1 || i == 4) {
+                            pattern.append(greyCode + "  *         *  " + endString);
+                        } else if (i == 3){
+                            pattern.append(greyCode +  " *   " + currTile.getHexCoordinate().toString() + "   * " + endString);
+                        } else  {
+                            pattern.append(greyCode + " *           * " + endString);
+                        }
                     }
 
                     else {
@@ -86,6 +95,7 @@ public class BoardView {
 
                     int currOrientation = currTile.getTileOrientation();
                     String tempString;
+
                     switch (currOrientation) {
                         case 3:
                             tempString = colourOne;
@@ -105,7 +115,7 @@ public class BoardView {
                     currTile.getTileOrientation() == 3) {
                         //if tile is not placed, just print spaces
                         if (!playerBoard.get(row).get(col).isActive()) {
-                            pattern.append("               ");
+                            //pattern.append("               ");
                         } else if (i == 0) {
                             pattern.append(colourOne + "    *******    " + endString);
                         } else if (i == 1) {
@@ -123,7 +133,7 @@ public class BoardView {
                     else if (currOrientation == 1 || currOrientation == 4) { //print diagonal tile
                         //if tile is not placed, just print spaces
                         if (!playerBoard.get(row).get(col).isActive()) {
-                            pattern.append("               ");
+                            //pattern.append("               ");
                         } else if (i == 0) {
                             pattern.append(colourOne + "    *" + colourTwo + "******    " + endString);
                         } else if (i == 1) {
@@ -139,7 +149,7 @@ public class BoardView {
                         }
                     } else {
                         if (!playerBoard.get(row).get(col).isActive()) {
-                            pattern.append("               ");
+                            //pattern.append("               ");
                         } else if (i == 0) {
                             pattern.append(colourOne + "    ******" + colourTwo + "*    " + endString);
                         } else if (i == 1) {
