@@ -17,6 +17,7 @@ public class Player {
     int numOfNatureTokens = 0;
     ArrayList<ArrayList<Tile>> playerBoard;
     HabitatTile selectedTile;
+    Tile recentlyPlacedTile;
     WildlifeToken selectedToken;
 
     public void setPlayerIdFromCounterAndIncrement() {
@@ -240,6 +241,16 @@ public class Player {
             }
         }
 
+        //makes reference to placed tile so user can choose to rotate tile
+        for (int i = 0; i < playerBoard.size()-1; i++) {
+            for (int j = 0; j < playerBoard.get(0).size()-1; j++) {
+                if (playerBoard.get(i).get(j) == newTile) {
+                    this.recentlyPlacedTile = playerBoard.get(i).get(j);
+                    break;
+                }
+            }
+        }
+
         //reset selectedTile to an empty tile
         this.setSelectedTile(new HabitatTile());
     }
@@ -304,6 +315,10 @@ public class Player {
 
     public HabitatTile getSelectedTile() {
         return selectedTile;
+    }
+
+    public Tile getRecentlyPlacedTile() {
+        return recentlyPlacedTile;
     }
 
     public WildlifeToken getSelectedToken() {
