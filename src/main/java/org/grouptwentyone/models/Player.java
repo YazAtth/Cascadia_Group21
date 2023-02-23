@@ -80,9 +80,9 @@ public class Player {
                 for (int k=0; k<2; k++) {
                     newRow = new ArrayList<>();
                     for (int i = 0; i < playerBoard.get(0).size(); i++) {
-                        newRow.add(new Tile(new HexCoordinate(0, i)));
+                        newRow.add(new Tile(new HexCoordinate(k, i)));
                     }
-                    playerBoard.add(0, newRow);
+                    playerBoard.add(k, newRow);
                 }
                 break;
 
