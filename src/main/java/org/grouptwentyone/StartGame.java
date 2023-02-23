@@ -61,7 +61,7 @@ public class StartGame {
             //display selected tile below
 
 
-            System.out.print("Please enter the coordinates for where you would like to place the tile at in the format 'x, y'\n>");
+            System.out.print("Please enter the coordinates for where you would like to place the tile at in the format 'x, y'\n> ");
 
             do {
                 String [] tilePlacedCoordinates = GameView.askUserForInput().split(coordinateDelim);
@@ -74,16 +74,16 @@ public class StartGame {
                     activePlayer.addNewTile(newTileHexCoordinate);
                     GameView.setIsPreviousInputInvalid(false);
                 } catch (ArrayIndexOutOfBoundsException ex) {
-                    GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y%s\n>",
+                    GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y%s\n> ",
                             GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                 } catch (NumberFormatException ex) {
-                    GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y%s\n>",
+                    GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y%s\n> ",
                             GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                 } catch (TilePlacedAtOccupiedPositionException ex) {
-                    GameView.setPreviousInputDisallowedMessage(String.format("%sTile Already Exists at that position! Try again.%s\n>",
+                    GameView.setPreviousInputDisallowedMessage(String.format("%sTile Already Exists at that position! Try again.%s\n> ",
                             GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                 } catch (TileNotPlacedAdjacentlyException ex) {
-                    GameView.setPreviousInputDisallowedMessage(String.format("%sTile cannot be placed in a position that is not adjacent to an existing tile. Try again.%s\n>",
+                    GameView.setPreviousInputDisallowedMessage(String.format("%sTile cannot be placed in a position that is not adjacent to an existing tile. Try again.%s\n> ",
                             GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                 }
             } while (GameView.isIsPreviousInputInvalid());
@@ -97,7 +97,7 @@ public class StartGame {
             if (rotateTile) {
                 boolean finishedRotation = false;
                 while (!finishedRotation) {
-                    System.out.print("Please enter the number of times you would like to rotate the tile clockwise\n>");
+                    System.out.print("Please enter the number of times you would like to rotate the tile clockwise\n> ");
 
                     do {
                         try {
@@ -106,7 +106,7 @@ public class StartGame {
 
                             GameView.setIsPreviousInputInvalid(false);
                         } catch (NumberFormatException ex) {
-                            GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid number entered! Try again.%s\n>",
+                            GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid number entered! Try again.%s\n> ",
                                     GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                         }
                     } while (GameView.isIsPreviousInputInvalid());
@@ -130,7 +130,7 @@ public class StartGame {
             boolean placeToken = GameView.getUserConfirmation("place a token");
 
             if (placeToken) {
-                System.out.print("Please enter the coordinates for where you would like to place the token at in the format 'x, y'\n>");
+                System.out.print("Please enter the coordinates for where you would like to place the token at in the format 'x, y'\n> ");
                 do {
                     String tokenPlacedCoordinates = GameView.askUserForInput();
                     try {
@@ -141,19 +141,19 @@ public class StartGame {
                         activePlayer.addNewToken(newTokenHexCoordinate);
                         GameView.setIsPreviousInputInvalid(false);
                     } catch (ArrayIndexOutOfBoundsException ex) {
-                        GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y%s\n>",
+                        GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y%s\n> ",
                                 GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     } catch (NumberFormatException ex) {
-                        GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y%s\n>",
+                        GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y%s\n> ",
                                 GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     } catch (TokenPlacedAtOccupiedPositionException ex) {
-                        GameView.setPreviousInputDisallowedMessage(String.format("%sTried to place Wildlife Token on an already occupied Habitat Tile%s\n>",
+                        GameView.setPreviousInputDisallowedMessage(String.format("%sTried to place Wildlife Token on an already occupied Habitat Tile%s\n> ",
                                 GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     } catch (TokenPlacedAtEmptyPositionException ex) {
-                        GameView.setPreviousInputDisallowedMessage(String.format("%sTried to place Wildlife Token where there is no Habitat Tile%s\n>",
+                        GameView.setPreviousInputDisallowedMessage(String.format("%sTried to place Wildlife Token where there is no Habitat Tile%s\n> ",
                                 GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     } catch (TokenPlacedAtIllegalTileException ex) {
-                        GameView.setPreviousInputDisallowedMessage(String.format("%sThis type of Wildlife Token Type cannot be placed on this Habitat Tile%s\n>",
+                        GameView.setPreviousInputDisallowedMessage(String.format("%sThis type of Wildlife Token Type cannot be placed on this Habitat Tile%s\n> ",
                                 GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     }
                 } while (GameView.isIsPreviousInputInvalid());
