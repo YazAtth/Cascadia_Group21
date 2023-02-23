@@ -262,7 +262,12 @@ public class Player {
             return;
         }
 
-        Tile focusedTile = playerBoard.get(newTokenHexCoordinate.getX()).get(newTokenHexCoordinate.getY());
+        Tile focusedTile;
+        try {
+            focusedTile = playerBoard.get(newTokenHexCoordinate.getX()).get(newTokenHexCoordinate.getY());
+        } catch (IndexOutOfBoundsException ex) {
+            throw new TokenPlacedAtEmptyPositionException("Tried to place Wildlife Token where there is no Habitat Tile");
+        }
 
         if (!focusedTile.isActive()) {
             throw new TokenPlacedAtEmptyPositionException("Tried to place Wildlife Token where there is no Habitat Tile");

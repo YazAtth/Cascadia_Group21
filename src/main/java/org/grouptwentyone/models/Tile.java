@@ -9,7 +9,7 @@ public class Tile {
     public Tile (HexCoordinate hexCoordinate) {
         this.habitatTile = null; //need to switch to empty habitat tile
         this.hexCoordinate = hexCoordinate;
-        isActive = false; //changes to true once the tile is adjacent to a tile that has a habitat tile
+        this.isActive = false; //changes to true once the tile is adjacent to a tile that has a habitat tile
         this.tileOrientation = 0;
     }
 
@@ -17,6 +17,7 @@ public class Tile {
     public Tile (HabitatTile habitatTile, HexCoordinate hexCoordinate) {
         this.habitatTile = habitatTile;
         this.hexCoordinate = hexCoordinate;
+        this.tileOrientation = 0;
         this.isActive = true;
     }
 
