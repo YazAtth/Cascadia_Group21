@@ -54,4 +54,7 @@ public class Tile {
     public void rotateTile() {
         this.tileOrientation = (this.tileOrientation + 1) % 6;
     }
+
+    //rotate tile by custom number
+    public void rotateTile(int numRotations) {this.tileOrientation = (this.tileOrientation + numRotations) % 6;}
 }

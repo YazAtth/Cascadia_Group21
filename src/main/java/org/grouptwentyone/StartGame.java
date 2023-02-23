@@ -88,6 +88,38 @@ public class StartGame {
                 }
             } while (GameView.isIsPreviousInputInvalid());
 
+            GameUiView.printPageBorder();
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
+            GameUiView.printPageBorder();
+
+            //rotate tile
+            boolean rotateTile = GameView.getUserConfirmation("rotate the tile you just placed");
+            if (rotateTile) {
+                boolean finishedRotation = false;
+                while (!finishedRotation) {
+                    System.out.print("Please enter the number of times you would like to rotate the tile clockwise\n>");
+
+                    do {
+                        try {
+                            int numRotations = Integer.parseInt(GameView.askUserForInput());
+                            activePlayer.getRecentlyPlacedTile().rotateTile(numRotations);
+
+                            GameView.setIsPreviousInputInvalid(false);
+                        } catch (NumberFormatException ex) {
+                            GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid number entered! Try again.%s\n>",
+                                    GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
+                        }
+                    } while (GameView.isIsPreviousInputInvalid());
+
+                    GameUiView.printPageBorder();
+                    System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
+                    GameUiView.printPageBorder();
+
+                    finishedRotation = !GameView.getUserConfirmation("continue rotating the tile you just placed");
+                }
+            }
+
+
             //place token
             GameUiView.printPageBorder();
             System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
@@ -133,6 +165,8 @@ public class StartGame {
                 System.out.println("Token returned to token bag");
             }
 
+            //quit game option
+            if (GameView.getUserConfirmation("quit the game")) UserTerminationController.endProgram();
 
             //next player
             System.out.println("Moving to next player");
