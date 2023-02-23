@@ -33,11 +33,17 @@ public class Tile {
         return isActive;
     }
 
+    // This requires both the host tile and the argument tile to be non-empty
     public boolean isAdjacentToTile(Tile o) {
 
         return (this.habitatTile != null && o.habitatTile != null) &&
                 this.getHexCoordinate().isAdjacentToHexCoordinate(o.getHexCoordinate());
 
+    }
+
+    // This requires only the argument tile to be non-empty. The host tile can be an empty tile.
+    public boolean isEmptyTileAdjacentToTile(Tile o) {
+        return (o.habitatTile != null) && this.getHexCoordinate().isAdjacentToHexCoordinate(o.getHexCoordinate());
     }
 
     public int getTileOrientation() {
