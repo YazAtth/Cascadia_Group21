@@ -68,6 +68,8 @@ public class StartGame {
                     break;
                 case ROTATE_TILE_CLOCKWISE:
                     System.out.println("SAMPLE TEXT: Rotated tile");
+                    Tile recentlyPlacedTile = activePlayer.getRecentlyPlacedTile();
+                    recentlyPlacedTile.rotateTile();
                     break;
                 case SELECT_TILE_AND_TOKEN:
                     selectTileAndToken(activePlayer);

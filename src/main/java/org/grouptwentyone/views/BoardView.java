@@ -96,16 +96,8 @@ public class BoardView {
                     int currOrientation = currTile.getTileOrientation();
                     String tempString;
 
-                    switch (currOrientation) {
-                        case 3:
-                            tempString = colourOne;
-                            colourOne = colourTwo;
-                            colourTwo = tempString;
-                        case 4:
-                            tempString = colourOne;
-                            colourOne = colourTwo;
-                            colourTwo = tempString;
-                        case 5:
+
+                    if (currOrientation == 3 || currOrientation == 4 || currOrientation == 5) {
                             tempString = colourOne;
                             colourOne = colourTwo;
                             colourTwo = tempString;
@@ -123,7 +115,7 @@ public class BoardView {
                         } else if (i == 2) {
                             pattern.append(colourOne + " ****" + placeTokenInfo(0, currTile) + colourOne + "**** " + endString);
                         } else if (i == 3) {
-                            pattern.append(colourTwo + " ****" + placeTokenInfo(1, currTile) + colourOne + "**** " + endString);
+                            pattern.append(colourTwo + " ****" + placeTokenInfo(1, currTile) + colourTwo + "**** " + endString);
                         } else if (i == 4) {
                             pattern.append(colourTwo + "  ***********  " + endString);
                         } else {
@@ -135,33 +127,33 @@ public class BoardView {
                         if (!playerBoard.get(row).get(col).isActive()) {
                             //pattern.append("               ");
                         } else if (i == 0) {
-                            pattern.append(colourOne + "    *" + colourTwo + "******    " + endString);
+                            pattern.append(colourTwo + "    *" + colourOne + "******    " + endString);
                         } else if (i == 1) {
-                            pattern.append(colourOne + "  ****" + colourTwo + "*******  " + endString);
+                            pattern.append(colourTwo + "  ****" + colourOne + "*******  " + endString);
                         } else if (i == 2) {
-                            pattern.append(colourOne + " ****" + placeTokenInfo(0, currTile) + colourTwo + "**** " + endString);
+                            pattern.append(colourTwo + " ****" + placeTokenInfo(0, currTile) + colourOne + "**** " + endString);
                         } else if (i == 3) {
-                            pattern.append(colourOne + " ****" + placeTokenInfo(1, currTile) + colourTwo + "**** " + endString);
+                            pattern.append(colourTwo + " ****" + placeTokenInfo(1, currTile) + colourOne + "**** " + endString);
                         } else if (i == 4) {
-                            pattern.append(colourOne + "  *******" + colourTwo + "****  " + endString);
+                            pattern.append(colourTwo + "  *******" + colourOne + "****  " + endString);
                         } else {
-                            pattern.append(colourOne + "    ******" + colourTwo + "*    " + endString);
+                            pattern.append(colourTwo + "    ******" + colourOne + "*    " + endString);
                         }
                     } else {
                         if (!playerBoard.get(row).get(col).isActive()) {
                             //pattern.append("               ");
                         } else if (i == 0) {
-                            pattern.append(colourOne + "    ******" + colourTwo + "*    " + endString);
+                            pattern.append(colourTwo + "    ******" + colourOne + "*    " + endString);
                         } else if (i == 1) {
-                            pattern.append(colourOne + "  *******" + colourTwo + "****  " + endString);
+                            pattern.append(colourTwo + "  *******" + colourOne + "****  " + endString);
                         } else if (i == 2) {
-                            pattern.append(colourOne + " ****" + placeTokenInfo(0, currTile) + colourTwo + "**** " + endString);
+                            pattern.append(colourTwo + " ****"  + placeTokenInfo(0, currTile) + colourOne + "**** " + endString);
                         } else if (i == 3) {
-                            pattern.append(colourOne + " ****" + placeTokenInfo(1, currTile) + colourTwo + "**** " + endString);
+                            pattern.append(colourTwo + " ****" + placeTokenInfo(1, currTile) + colourOne + "**** " + endString);
                         } else if (i == 4) {
-                            pattern.append(colourOne + "  ****" + colourTwo + "*******  " + endString);
+                            pattern.append(colourTwo + "  ****" + colourOne + "*******  " + endString);
                         } else {
-                            pattern.append(colourOne + "    *" + colourTwo + "******    " + endString);
+                            pattern.append(colourTwo + "    *" + colourOne + "******    " + endString);
                         }
                     }
                 }

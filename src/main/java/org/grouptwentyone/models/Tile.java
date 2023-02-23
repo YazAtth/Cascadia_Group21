@@ -4,12 +4,13 @@ public class Tile {
     HabitatTile habitatTile;
     HexCoordinate hexCoordinate;
     boolean isActive; //this will determine whether coordinates get displayed
-    int tileOrientation = 0; // Defaults to 0 and is between 0-5 inclusive (so 6 states).
+    int tileOrientation; // Defaults to 0 and is between 0-5 inclusive (so 6 states).
 
     public Tile (HexCoordinate hexCoordinate) {
         this.habitatTile = null; //need to switch to empty habitat tile
         this.hexCoordinate = hexCoordinate;
         isActive = false; //changes to true once the tile is adjacent to a tile that has a habitat tile
+        this.tileOrientation = 0;
     }
 
     //constructor for debugging
@@ -48,5 +49,8 @@ public class Tile {
         } else {
             return String.format("Habitat Tile at %s", this.hexCoordinate);
         }
+    }
+    public void rotateTile() {
+        this.tileOrientation = (this.tileOrientation + 1) % 6;
     }
 }
