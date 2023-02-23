@@ -65,7 +65,6 @@ public class BoardView {
 
         //iterate over each ArrayList in the ArrayList (rows)
         for (int row = 0; row < playerBoard.size(); row++) {
-//            System.out.printf("row: %d\n", row);
             //iterate over each row of each tile (tiles size is 6)
             for (int i = 0; i < 6; i++) {
 
@@ -73,32 +72,19 @@ public class BoardView {
                     pattern.append("       ");
                 }
 
-//                System.out.println("break");
-
                 //iterate over each Tile
                 for (int col = 0; col < playerBoard.get(row).size(); col++) {
 
 
                     Tile currTile = playerBoard.get(row).get(col);
 
-//                    if (row == 1) {
-////                        System.out.printf("RANNNN: %s, row=%d, btw i=%d\n", currTile, currTile.getHexCoordinate().getX(), i);
-//                    }
-
-//                    if (i==2 && row % 2 == 1) { System.out.printf("\nNew current tile %s\n", currTile);}
-
                     // Not ideal
                     boolean isCurrentTileAdjacentToActiveTile = false;
                     for (Tile focusedTile: activeTiles) {
-//                        if (i==2 && row%2==1) {System.out.printf("\tNew Focused tile %s\n", focusedTile);}
                         if (currTile.isEmptyTileAdjacentToTile(focusedTile)) {
                             isCurrentTileAdjacentToActiveTile = true;
-//                            if (i==2 && row%2==1) {System.out.printf("\t\t%s IS ADJACENT to %s\n", currTile, focusedTile);}
 
                         }
-//                        else {
-//                            if (i==2 && row%2==1) {System.out.printf("\t\t%s is not adjacent to %s\n", currTile, focusedTile);}
-//                        }
                     }
                     if (currTile.getHabitatTile() == null & isCurrentTileAdjacentToActiveTile) {
                         if (i == 0 || i == 5) {
