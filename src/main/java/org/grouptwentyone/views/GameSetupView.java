@@ -20,7 +20,7 @@ public class GameSetupView {
 
         // Keep asking until user enters a valid int or exit program (returns -1).
         while (true) {
-            userInput = sc.nextLine();
+            userInput = sc.nextLine().trim();
 
             UserTerminationController.checkUserInputForProgramTermination(userInput);
 
@@ -61,7 +61,7 @@ public class GameSetupView {
 
         for (int i=0; i<numberOfPlayers; i++) {
             System.out.printf("Enter \"Player %d\" name: ", i + 1);
-            playerName = sc.nextLine();
+            playerName = sc.nextLine().trim();
 
             if (Objects.equals(playerName, "")) {
                 System.out.printf("\n%sInvalid Input:%s A player cannot have an empty name%s\n", GameUiView.RED_BOLD, GameUiView.RED, GameUiView.RESET_COLOUR);
