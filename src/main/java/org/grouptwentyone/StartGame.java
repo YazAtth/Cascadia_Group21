@@ -57,6 +57,7 @@ public class StartGame {
 
             //place tile
             GameUiView.printPageBorder();
+            System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
             System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
             GameUiView.printPageBorder();
 
@@ -93,6 +94,7 @@ public class StartGame {
             GameUiView.printLargeSpace();
 
             GameUiView.printPageBorder();
+            System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
             System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
             GameUiView.printPageBorder();
 
@@ -116,6 +118,7 @@ public class StartGame {
                     } while (GameView.isIsPreviousInputInvalid());
 
                     GameUiView.printPageBorder();
+                    System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
                     System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
                     GameUiView.printPageBorder();
 
@@ -128,6 +131,7 @@ public class StartGame {
 
             //place token
             GameUiView.printPageBorder();
+            System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
             System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
             GameUiView.printPageBorder();
 
