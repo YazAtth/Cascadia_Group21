@@ -171,8 +171,10 @@ public class SelectionOptionsView {
         }
         userNum--;
 
-        activePlayer.setSelectedTile(org.grouptwentyone.StartGame.selectedTiles.remove(userNum));
-        activePlayer.setSelectedToken(org.grouptwentyone.StartGame.selectedTokens.remove(userNum));
+//        activePlayer.setSelectedTile(org.grouptwentyone.StartGame.selectedTiles.remove(userNum));
+//        activePlayer.setSelectedToken(org.grouptwentyone.StartGame.selectedTokens.remove(userNum));
+        activePlayer.getPlayerBoardObject().setSelectedToken(org.grouptwentyone.StartGame.selectedTokens.remove(userNum));
+        activePlayer.getPlayerBoardObject().setSelectedTile(org.grouptwentyone.StartGame.selectedTiles.remove(userNum));
 
         //detects that no tiles remain so ends player turns
         if (!replaceTileAndToken() && StartGame.selectedTiles.size() == 0) {
