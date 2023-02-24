@@ -34,22 +34,12 @@ public class CullingController {
             cullType(tokenType1);
         }
         else if (occurrence1 == 3) { //give user option to cull
-            boolean inputComplete = false;
             System.out.println("3 tokens of type '" + tokenType1 + "'are available in selection.");
-            GameView.getUserConfirmation("cull these tokens");
-            while (!inputComplete) {
-                Scanner sc = new Scanner(System.in);
-                String userInput = sc.nextLine();
-
-                if (userInput.equalsIgnoreCase("y")) {
+            boolean cullTheseTokens = GameView.getUserConfirmation("cull these tokens");
+            if (cullTheseTokens) {
                     cullType(tokenType1);
-                    inputComplete = true;
-                } else if (userInput.equalsIgnoreCase("n")) {
-                    System.out.println("No culling performed, continue with selection.");
-                    inputComplete = true;
-                } else {
-                    System.out.print("Invalid input, please re-enter either y or n for yes or no respectively:\n>");
-                }
+            } else {
+                System.out.println("No culling performed, continue with selection.");
             }
         }
     }
