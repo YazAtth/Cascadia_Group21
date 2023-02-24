@@ -53,6 +53,8 @@ public class StartGame {
             //select tile/token pair
             SelectionOptionsView.selectTileAndToken(activePlayer);
 
+            GameUiView.printLargeSpace();
+
             //place tile
             GameUiView.printPageBorder();
             System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
@@ -88,6 +90,8 @@ public class StartGame {
                 }
             } while (GameView.isIsPreviousInputInvalid());
 
+            GameUiView.printLargeSpace();
+
             GameUiView.printPageBorder();
             System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
             GameUiView.printPageBorder();
@@ -118,6 +122,8 @@ public class StartGame {
                     finishedRotation = !GameView.getUserConfirmation("continue rotating the tile you just placed");
                 }
             }
+
+            GameUiView.printLargeSpace();
 
 
             //place token
