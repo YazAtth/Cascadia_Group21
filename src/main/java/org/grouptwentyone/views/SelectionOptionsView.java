@@ -175,9 +175,8 @@ public class SelectionOptionsView {
         activePlayer.setSelectedToken(org.grouptwentyone.StartGame.selectedTokens.remove(userNum));
 
         //detects that no tiles remain so ends player turns
-        if (!replaceTileAndToken() && StartGame.selectedTiles.size() == 0) {
+        if (!replaceTileAndToken() && StartGame.selectedTiles.size() < 4) {
             StartGame.tilesRemain = false;
-            System.out.println("No tiles remain so play is finished, calculating player score...");
         }
     }
 

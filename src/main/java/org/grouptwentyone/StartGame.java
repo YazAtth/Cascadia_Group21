@@ -19,13 +19,19 @@ public class StartGame {
         int numOfPlayers = GameSetupView.getNumberOfPlayersFromUser();
         ArrayList<Player> playerList = GameSetupView.getPlayerNamesFromUser(numOfPlayers);
 
+        //remove habitat tiles depending on number of players
+        int tilesToRemove = (((numOfPlayers-4)*-1)*20)+2;
+        for (int i = 0; i < tilesToRemove; i++) {
+            HabitatTilesController.habitatTilesBag.remove(0);
+        }
+
         PlayerController playerController = new PlayerController(playerList);
         playerController.shufflePlayerList();
         GameSetupView.displayPlayerOrder(playerList);
 
         Player activePlayer = playerController.getFirstPlayer();
 
-        String coordinateDelim = ",|, ";
+        String coordinateDelim = ", |,";
 
         while (tilesRemain) {
 
@@ -46,8 +52,13 @@ public class StartGame {
             CullingController.checkForCull();
 
 
-            //nature token options will go here
-
+//            //nature token options will go here
+//            if (activePlayer.getNumOfNatureTokens() > 0) {
+//                boolean spendToken = GameView.getUserConfirmation("spend a nature token");
+//                if (spendToken) {
+//                    NatureTokenController.natureTokenSelectOption();
+//                }
+//            }
 
 
             //select tile/token pair
@@ -183,6 +194,8 @@ public class StartGame {
             activePlayer = playerController.cycleToNextPlayer();
             GameUiView.printLargeSpace();
         }
+
+        System.out.println("No tiles remain so play is finished, calculating player score...");
 
         //end program
         UserTerminationController.endProgram();
