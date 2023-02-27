@@ -8,6 +8,7 @@ import org.grouptwentyone.views.SelectionOptionsView;
 import java.util.Scanner;
 
 public class CullingController {
+    private static boolean haveCulled = false;
     public static void checkForCull() {
         WildlifeToken.WildlifeTokenType tokenType1 = StartGame.selectedTokens.get(0).getWildlifeTokenType();
         int occurrence1 = 1;
@@ -33,10 +34,11 @@ public class CullingController {
             System.out.println("There are 4 tokens of type '" + tokenType1 + "' available, proceeding to cull...\n");
             cullType(tokenType1);
         }
-        else if (occurrence1 == 3) { //give user option to cull
+        else if (occurrence1 == 3 && !haveCulled) { //give user option to cull
             System.out.println("3 tokens of type '" + tokenType1 + "'are available in selection.");
             boolean cullTheseTokens = GameView.getUserConfirmation("cull these tokens");
             if (cullTheseTokens) {
+                haveCulled = true;
                     cullType(tokenType1);
             } else {
                 System.out.println("No culling performed, continue with selection.");
@@ -57,6 +59,9 @@ public class CullingController {
         System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
         System.out.println("      (1)            (2)            (3)            (4)      \n");
         checkForCull();
+
+        //resets variable for next time its called
+        haveCulled = false;
 
         System.out.println("Culling complete, please continue with selection");
     }

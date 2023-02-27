@@ -154,10 +154,10 @@ public class SelectionOptionsView {
     }
 
     public static void selectTileAndToken(Player activePlayer) {
-        System.out.print("Please select one of the above pairs by entering the associated number: \n> ");
+        System.out.print("Please select one of the above pairs by entering the associated number: \n>");
         int userNum = -1;
 
-        while (userNum < 1 || userNum > org.grouptwentyone.StartGame.selectedTiles.size()) {
+        while (userNum < 1 || userNum > 4) {
             Scanner sc = new Scanner(System.in);
             String userInput = sc.nextLine();
             try {
@@ -175,7 +175,7 @@ public class SelectionOptionsView {
         activePlayer.setSelectedToken(org.grouptwentyone.StartGame.selectedTokens.remove(userNum));
 
         //detects that no tiles remain so ends player turns
-        if (!replaceTileAndToken() && StartGame.selectedTiles.size() < 4) {
+        if (!replaceTileAndToken()) {
             StartGame.tilesRemain = false;
         }
     }

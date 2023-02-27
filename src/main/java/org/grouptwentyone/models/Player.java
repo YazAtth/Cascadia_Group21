@@ -333,4 +333,8 @@ public class Player {
     public void addToNumOfNatureTokens() {
         this.numOfNatureTokens++;
     }
+
+    public void spendNatureToken() {
+        this.numOfNatureTokens--;
+    }
 }

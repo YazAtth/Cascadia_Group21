@@ -21,9 +21,8 @@ public class StartGame {
 
         //remove habitat tiles depending on number of players
         int tilesToRemove = (((numOfPlayers-4)*-1)*20)+2;
-        for (int i = 0; i < tilesToRemove; i++) {
-            HabitatTilesController.habitatTilesBag.remove(0);
-        }
+        if (tilesToRemove > 0)
+            HabitatTilesController.habitatTilesBag.subList(0, tilesToRemove).clear();
 
         PlayerController playerController = new PlayerController(playerList);
         playerController.shufflePlayerList();
@@ -52,13 +51,14 @@ public class StartGame {
             CullingController.checkForCull();
 
 
-//            //nature token options will go here
-//            if (activePlayer.getNumOfNatureTokens() > 0) {
-//                boolean spendToken = GameView.getUserConfirmation("spend a nature token");
-//                if (spendToken) {
-//                    NatureTokenController.natureTokenSelectOption();
-//                }
-//            }
+            //nature token options will go here
+            if (activePlayer.getNumOfNatureTokens() > 0) {
+                boolean spendToken = GameView.getUserConfirmation("spend a nature token");
+                if (spendToken) {
+                    NatureTokenController.natureTokenSelectOption(activePlayer);
+                    activePlayer.spendNatureToken();
+                }
+            }
 
 
             //select tile/token pair
