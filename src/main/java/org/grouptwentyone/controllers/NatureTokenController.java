@@ -57,7 +57,7 @@ public class NatureTokenController {
         }
         userNum--;
 
-        activePlayer.setSelectedTile(org.grouptwentyone.StartGame.selectedTiles.remove(userNum));
+        activePlayer.getPlayerBoardObject().setSelectedTile(org.grouptwentyone.StartGame.selectedTiles.remove(userNum));
 
         //checks that tiles still remain in bag, else ends the game
         if (habitatTilesBag.size() > 0) {
@@ -87,7 +87,7 @@ public class NatureTokenController {
         }
         userNum--;
 
-        activePlayer.setSelectedToken(org.grouptwentyone.StartGame.selectedTokens.remove(userNum));
+        activePlayer.getPlayerBoardObject().setSelectedToken(org.grouptwentyone.StartGame.selectedTokens.remove(userNum));
         System.out.printf("Wildlife token number %s has been selected\n", userNum+1);
 
         //replaces selected token

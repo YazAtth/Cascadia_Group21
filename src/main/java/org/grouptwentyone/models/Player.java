@@ -56,4 +56,8 @@ public class Player {
     public void spendNatureToken() {
         this.numOfNatureTokens--;
     }
+
+    public int getNumOfNatureTokens() {
+        return numOfNatureTokens;
+    }
 }
