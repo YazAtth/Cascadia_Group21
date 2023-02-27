@@ -77,8 +77,14 @@ public class SelectionOptionsView {
                 } else {
                     colourOne = colourTwo = colourThree = tileToColourTable.get(currHabitatTileTypeList.get(0));
                     colourFour = colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(1));
-                    tokenString = " " + tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
-                            tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " ";
+                    if (currTile.getWildlifeTokenTypeList().size() == 2) {
+                        tokenString = " " + tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
+                                tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " ";
+                    } else {
+                        tokenString = tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + " " +
+                                tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(1)) + " " +
+                                tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(2));
+                    }
                 }
                 if (i == 0) {
                     pattern.append(colourOne +   "    *******    " + endString);
