@@ -7,6 +7,7 @@ import org.grouptwentyone.views.GameView;
 import org.grouptwentyone.views.SelectionOptionsView;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.grouptwentyone.controllers.HabitatTilesController.habitatTilesBag;
 import static org.grouptwentyone.controllers.WildlifeTokensController.wildlifeTokenBag;
@@ -114,6 +115,14 @@ public class NatureTokenController {
                     inputInvalid = true;
                 }
 
+                HashSet numSet = new HashSet(Arrays.asList(selectedNums));
+                if (numSet.size() < 4) {
+                    GameView.setPreviousInputDisallowedMessage(String.format("%sA duplicate number has been entered, " +
+                            "please only enter unique numbers between 1 and 4%s\n> ",
+                            GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
+                    inputInvalid = true;
+                    continue;
+                }
 
                 for (int num : selectedNums) {
                     if (num < 1 || num > 4){

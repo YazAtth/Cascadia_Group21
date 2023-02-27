@@ -58,6 +58,7 @@ public class CullingController {
         System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
         System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
         System.out.println("      (1)            (2)            (3)            (4)      \n");
+
         checkForCull();
 
         //resets variable for next time its called

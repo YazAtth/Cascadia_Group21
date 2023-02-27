@@ -40,7 +40,7 @@ public class SelectionOptionsView {
         //link HabitatTileTypes to a colour
         Hashtable<HabitatTile.HabitatTileType, String> tileToColourTable = new Hashtable<>();
         tileToColourTable.put(HabitatTile.HabitatTileType.FORESTS, "\033[1;92m");
-        tileToColourTable.put(HabitatTile.HabitatTileType.MOUNTAINS, "\033[1;37m");
+        tileToColourTable.put(HabitatTile.HabitatTileType.MOUNTAINS, "\033[1;97m");
         tileToColourTable.put(HabitatTile.HabitatTileType.PRAIRIES, "\033[1;93m");
         tileToColourTable.put(HabitatTile.HabitatTileType.RIVERS, "\033[1;34m");
         tileToColourTable.put(HabitatTile.HabitatTileType.WETLANDS, "\033[1;96m");
@@ -166,7 +166,8 @@ public class SelectionOptionsView {
                 System.out.printf("Invalid argument, please enter a number between " +
                         "1 and %s to select an above pair: \n>", StartGame.selectedTiles.size());
             }
-            if (userNum < 1 || userNum > org.grouptwentyone.StartGame.selectedTiles.size()) System.out.printf("Invalid argument, please enter a number " +
+            if (userNum < 1 || userNum > org.grouptwentyone.StartGame.selectedTiles.size())
+                System.out.printf("Invalid argument, please enter a number " +
                     "between 1 and %s to select an above pair: \n>", StartGame.selectedTiles.size());
         }
         userNum--;
