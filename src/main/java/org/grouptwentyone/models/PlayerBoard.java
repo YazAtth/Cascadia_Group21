@@ -265,7 +265,10 @@ public class PlayerBoard {
         focusedTile.getHabitatTile().setWildlifeToken(this.getSelectedToken());
 
         //check if habitat tile is keystone and if so, increase numOfNatureTokens by 1
-        if (focusedTile.getHabitatTile().isKeystone()) this.addToNumOfNatureTokens();
+        if (focusedTile.getHabitatTile().isKeystone()) {
+            this.addToNumOfNatureTokens();
+            System.out.println("You have just received 1 nature token for placing a token on a keystone tile");
+        }
 
         //reset selectedToken
         this.setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY));

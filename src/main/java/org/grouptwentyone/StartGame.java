@@ -53,7 +53,7 @@ public class StartGame {
             CullingController.checkForCull();
 
 
-            //nature token options will go here
+            //nature token options
             if (activePlayer.getNumOfNatureTokens() > 0) {
                 boolean spendToken = GameView.getUserConfirmation("spend a nature token");
                 if (spendToken) {
@@ -184,6 +184,10 @@ public class StartGame {
                                 GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     }
                 } while (GameView.isIsPreviousInputInvalid());
+                GameUiView.printPageBorder();
+                System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
+                System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+                GameUiView.printPageBorder();
             } else {
                 //return token
 //                WildlifeTokensController.wildlifeTokenBag.add(activePlayer.getSelectedToken());

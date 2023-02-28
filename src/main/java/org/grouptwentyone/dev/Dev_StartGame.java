@@ -1,5 +1,6 @@
 package org.grouptwentyone.dev;
 
+import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.*;
 import org.grouptwentyone.models.*;
 import org.grouptwentyone.models.Exceptions.*;
@@ -8,9 +9,9 @@ import org.grouptwentyone.views.*;
 import java.util.ArrayList;
 
 public class Dev_StartGame {
-    public static ArrayList<HabitatTile> selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+    //public static ArrayList<HabitatTile> selectedTiles = SelectionOptionsView.getFourHabitatTiles();
 
-    public static ArrayList<WildlifeToken> selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
+    //public static ArrayList<WildlifeToken> selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
 
     public static boolean tilesRemain = true;
 
@@ -37,8 +38,8 @@ public class Dev_StartGame {
 
             GameUiView.printPageBorder();
 
-            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(selectedTiles));
-            System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(selectedTokens));
+            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
+            System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
             System.out.println("      (1)            (2)            (3)            (4)      \n");
 
             //GameUiView.printPageBorder();
@@ -47,7 +48,14 @@ public class Dev_StartGame {
             CullingController.checkForCull();
 
 
-            //nature token options will go here
+            //nature token options
+            if (activePlayer.getNumOfNatureTokens() > 0) {
+                boolean spendToken = GameView.getUserConfirmation("spend a nature token");
+                if (spendToken) {
+                    NatureTokenController.natureTokenSelectOption(activePlayer);
+                    activePlayer.spendNatureToken();
+                }
+            }
 
 
 
@@ -171,6 +179,10 @@ public class Dev_StartGame {
                                 GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     }
                 } while (GameView.isIsPreviousInputInvalid());
+                GameUiView.printPageBorder();
+                System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
+                System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+                GameUiView.printPageBorder();
             } else {
                 //return token
 //                WildlifeTokensController.wildlifeTokenBag.add(activePlayer.getSelectedToken());
