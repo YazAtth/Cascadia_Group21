@@ -172,11 +172,12 @@ public class PlayerBoard {
     }
 
     public void addNewTile(HexCoordinate newTileHexCoordinate) {
-        // changed this so that the habitat tile is the one selected in an earlier select command
-        if (this.getSelectedTile().isNull()) {
-            System.out.println("No tile has been selected. Please select a tile first.");
-            return;
-        }
+        //legacy code
+//        // changed this so that the habitat tile is the one selected in an earlier select command
+//        if (this.getSelectedTile().isNull()) {
+//            System.out.println("No tile has been selected. Please select a tile first.");
+//            return;
+//        }
         Tile newTile = new Tile(this.getSelectedTile(), newTileHexCoordinate);
 
         boolean isAdjacentToExistingTile = false;
@@ -241,11 +242,12 @@ public class PlayerBoard {
 
 
     public void addNewToken(HexCoordinate newTokenHexCoordinate) {
-        //check that player has selected a token
-        if (this.getSelectedToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
-            System.out.println("No token has been selected. Please select a token first.");
-            return;
-        }
+        //legacy code
+//        //check that player has selected a token
+//        if (this.getSelectedToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+//            System.out.println("No token has been selected. Please select a token first.");
+//            return;
+//        }
 
         Tile focusedTile;
         try {
@@ -308,11 +310,5 @@ public class PlayerBoard {
     public void setSelectedToken(WildlifeToken selectedToken) {
         this.selectedToken = selectedToken;
     }
-
-
-
-
-
-
 
 }

@@ -129,8 +129,7 @@ public class SelectionOptionsView {
         String endString = "\u001B[0m";
         String colour;
 
-        //iterate through habitat tiles
-        //iterate over each row of each tile (tiles size is 6)
+        //iterate through wildlife tokens
         for (int i = 0; i < 3; i++) {
 
             //iterate over each Tile
@@ -164,22 +163,19 @@ public class SelectionOptionsView {
         int userNum = -1;
 
         while (userNum < 1 || userNum > 4) {
-            Scanner sc = new Scanner(System.in);
-            String userInput = sc.nextLine();
+            String userInput = GameView.askUserForInput();
             try {
                 userNum = Integer.parseInt(userInput);
             } catch (NumberFormatException ex) {
-                System.out.printf("Invalid argument, please enter a number between " +
-                        "1 and %s to select an above pair: \n>", StartGame.selectedTiles.size());
+                GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
+                        "between 1 and 4 to select an above pair: %s\n> ", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
             }
-            if (userNum < 1 || userNum > org.grouptwentyone.StartGame.selectedTiles.size())
-                System.out.printf("Invalid argument, please enter a number " +
-                    "between 1 and %s to select an above pair: \n>", StartGame.selectedTiles.size());
+            if (userNum < 1 || userNum > 4)
+                GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
+                        "between 1 and 4 to select an above pair: %s\n> ", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
         }
         userNum--;
 
-//        activePlayer.setSelectedTile(org.grouptwentyone.StartGame.selectedTiles.remove(userNum));
-//        activePlayer.setSelectedToken(org.grouptwentyone.StartGame.selectedTokens.remove(userNum));
         activePlayer.getPlayerBoardObject().setSelectedToken(org.grouptwentyone.StartGame.selectedTokens.remove(userNum));
         activePlayer.getPlayerBoardObject().setSelectedTile(org.grouptwentyone.StartGame.selectedTiles.remove(userNum));
 
