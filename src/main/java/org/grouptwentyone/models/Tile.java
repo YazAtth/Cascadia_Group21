@@ -7,7 +7,7 @@ public class Tile {
     int tileOrientation; // Defaults to 0 and is between 0-5 inclusive (so 6 states).
 
     public Tile (HexCoordinate hexCoordinate) {
-        this.habitatTile = null; //need to switch to empty habitat tile
+        this.habitatTile = new HabitatTile(); //need to switch to empty habitat tile
         this.hexCoordinate = hexCoordinate;
         this.isActive = false; //changes to true once the tile is adjacent to a tile that has a habitat tile
         this.tileOrientation = 0;
@@ -36,14 +36,14 @@ public class Tile {
     // This requires both the host tile and the argument tile to be non-empty
     public boolean isAdjacentToTile(Tile o) {
 
-        return (this.habitatTile != null && o.habitatTile != null) &&
+        return (!this.habitatTile.isNull() && !o.habitatTile.isNull()) &&
                 this.getHexCoordinate().isAdjacentToHexCoordinate(o.getHexCoordinate());
 
     }
 
     // This requires only the argument tile to be non-empty. The host tile can be an empty tile.
     public boolean isEmptyTileAdjacentToTile(Tile o) {
-        return (o.habitatTile != null) && this.getHexCoordinate().isAdjacentToHexCoordinate(o.getHexCoordinate());
+        return (!o.habitatTile.isNull()) && this.getHexCoordinate().isAdjacentToHexCoordinate(o.getHexCoordinate());
     }
 
     public int getTileOrientation() {
@@ -51,7 +51,7 @@ public class Tile {
     }
 
     public String toString() {
-        if (this.habitatTile == null) {
+        if (this.habitatTile.isNull()) {
             return String.format("Empty Tile at %s", this.hexCoordinate);
         } else {
             return String.format("Habitat Tile at %s", this.hexCoordinate);

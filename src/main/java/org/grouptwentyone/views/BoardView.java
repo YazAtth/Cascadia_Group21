@@ -86,7 +86,7 @@ public class BoardView {
 
                         }
                     }
-                    if (currTile.getHabitatTile() == null & isCurrentTileAdjacentToActiveTile) {
+                    if (currTile.getHabitatTile().isNull() & isCurrentTileAdjacentToActiveTile) {
                         if (i == 0 || i == 5) {
                             pattern.append(greyCode + "    *  *  *    " + endString);
                         } else if (i == 1 || i == 4) {
@@ -97,7 +97,7 @@ public class BoardView {
                             pattern.append(greyCode + " *           * " + endString);
                         }
                     }
-                    else if (currTile.getHabitatTile() == null) {
+                    else if (currTile.getHabitatTile().isNull()) {
                         if (i == 0 || i == 5) {
                             pattern.append(greyCode + "               " + endString);
                         } else if (i == 1 || i == 4) {
@@ -110,7 +110,7 @@ public class BoardView {
                     }
 
 
-                    if (currTile.getHabitatTile() != null) {
+                    if (!currTile.getHabitatTile().isNull()) {
 
                         //current row of tiles
                         ArrayList<HabitatTile.HabitatTileType> currHabitatTileTypeList = currTile.getHabitatTile().getHabitatTileTypeList();
