@@ -35,7 +35,7 @@ public class CullingController {
             cullType(tokenType1);
         }
         else if (occurrence1 == 3 && !haveCulled) { //give user option to cull
-            System.out.println("3 tokens of type '" + tokenType1 + "'are available in selection.");
+            System.out.println("3 tokens of type '" + tokenType1 + "' are available in selection.");
             boolean cullTheseTokens = GameView.getUserConfirmation("cull these tokens");
             if (cullTheseTokens) {
                 haveCulled = true;

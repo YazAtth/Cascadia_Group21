@@ -54,17 +54,19 @@ public class StartGame {
 
 
             //nature token options
+            boolean tileSelected = false;
             if (activePlayer.getNumOfNatureTokens() > 0) {
                 boolean spendToken = GameView.getUserConfirmation("spend a nature token");
                 if (spendToken) {
-                    NatureTokenController.natureTokenSelectOption(activePlayer);
+                    tileSelected = NatureTokenController.natureTokenSelectOption(activePlayer);
                     activePlayer.spendNatureToken();
                 }
             }
 
 
-            //select tile/token pair
-            SelectionOptionsView.selectTileAndToken(activePlayer);
+            //select tile/token pair if not already selected through spending a nature token
+            if (!tileSelected)
+                SelectionOptionsView.selectTileAndToken(activePlayer);
 
             GameUiView.printLargeSpace();
 

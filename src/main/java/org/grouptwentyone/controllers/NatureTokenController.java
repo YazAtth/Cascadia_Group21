@@ -13,7 +13,7 @@ import static org.grouptwentyone.controllers.HabitatTilesController.habitatTiles
 import static org.grouptwentyone.controllers.WildlifeTokensController.wildlifeTokenBag;
 
 public class NatureTokenController {
-    public static void natureTokenSelectOption(Player activePlayer){
+    public static boolean natureTokenSelectOption(Player activePlayer){
         int userSelect = -1;
         do {
             try {
@@ -32,8 +32,10 @@ public class NatureTokenController {
 
         if (userSelect == 1) {
             selectSpecificTileAndToken(activePlayer);
+            return true;
         } else {
             wipeAnyWildlifeTokens();
+            return false;
         }
     }
 
@@ -106,7 +108,7 @@ public class NatureTokenController {
         boolean inputInvalid = true;
         while (inputInvalid) {
             try { //creates array of ints from user input
-                selectedNums = Arrays.stream(GameView.askUserForInput().split(",|, "))
+                selectedNums = Arrays.stream(GameView.askUserForInput().split(", |,"))
                         .mapToInt(Integer::parseInt).toArray();
                 inputInvalid = false;
                 if (selectedNums.length > 4) {
@@ -115,8 +117,11 @@ public class NatureTokenController {
                     inputInvalid = true;
                 }
 
-                HashSet numSet = new HashSet(Arrays.asList(selectedNums));
-                if (numSet.size() < 4) {
+                HashSet numSet = new HashSet();
+                for (int i = 0; i < selectedNums.length; i++) {
+                    numSet.add(selectedNums[i]);
+                }
+                if (numSet.size() > 4) {
                     GameView.setPreviousInputDisallowedMessage(String.format("%sA duplicate number has been entered, " +
                             "please only enter unique numbers between 1 and 4%s\n> ",
                             GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
@@ -139,6 +144,12 @@ public class NatureTokenController {
                 }
 
                 System.out.println("Selected tokens replaced, proceeding to selection now...");
+                System.out.println("\n");;
+                GameUiView.printPageBorder();
+                System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
+                System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+                System.out.println("      (1)            (2)            (3)            (4)      \n");
+
             } catch (NumberFormatException ex) {
                 GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter number(s) " +
                         "between 1 and 4 separated by a comma%s\n> ", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));

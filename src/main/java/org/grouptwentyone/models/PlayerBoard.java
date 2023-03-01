@@ -297,6 +297,14 @@ public class PlayerBoard {
         this.numOfNatureTokens++;
     }
 
+    public int getNumOfNatureTokens() {
+        return numOfNatureTokens;
+    }
+
+    public void spendNatureToken() {
+        this.numOfNatureTokens--;
+    }
+
     public void setSelectedToken(WildlifeToken selectedToken) {
         this.selectedToken = selectedToken;
     }

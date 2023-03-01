@@ -13,8 +13,8 @@ public class Player {
     int playerId;
     final String userName;
     int Score = 0;
-    int numOfNatureTokens = 0;
-    ArrayList<ArrayList<Tile>> playerBoard;
+    //int numOfNatureTokens = 0;
+    //ArrayList<ArrayList<Tile>> playerBoard;
 
     PlayerBoard playerBoardObject = new PlayerBoard();
 
@@ -26,7 +26,7 @@ public class Player {
     public Player(String userName) {
         setPlayerIdFromCounterAndIncrement();
         this.userName = userName;
-        this.numOfNatureTokens = 0;
+        //this.numOfNatureTokens = 0;
 //        setupPlayerBoard();
         this.getPlayerBoardObject().setupPlayerBoard();
     }
@@ -54,10 +54,10 @@ public class Player {
     }
 
     public void spendNatureToken() {
-        this.numOfNatureTokens--;
+        playerBoardObject.spendNatureToken();
     }
 
     public int getNumOfNatureTokens() {
-        return numOfNatureTokens;
+        return playerBoardObject.getNumOfNatureTokens();
     }
 }
