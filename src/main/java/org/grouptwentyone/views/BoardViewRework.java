@@ -8,7 +8,7 @@ import java.util.Hashtable;
 
 import java.util.ArrayList;
 
-public class BoardView {
+public class BoardViewRework {
 
 
     //gave these hashtables a private scope for use in helper methods
@@ -66,10 +66,10 @@ public class BoardView {
         //iterate over each ArrayList in the ArrayList (rows)
         for (int row = 0; row < playerBoard.size(); row++) {
             //iterate over each row of each tile (tiles size is 6)
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < 7; i++) {
 
                 if (row % 2 == 0) { //slight offset for even columns
-                    pattern.append("       ");
+                    pattern.append("        ");
                 }
 
                 //iterate over each Tile
@@ -87,26 +87,18 @@ public class BoardView {
                         }
                     }
                     if (currTile.getHabitatTile().isNull() & isCurrentTileAdjacentToActiveTile) {
-                        if (i == 0 || i == 5) {
-                            pattern.append(greyCode + "    *  *  *    " + endString);
-                        } else if (i == 1 || i == 4) {
-                            pattern.append(greyCode + "  *         *  " + endString);
-                        } else if (i == 3){
+                        if (i == 0 || i == 6) {
+                            pattern.append(greyCode + "     * ** *     " + endString);
+                        } else if (i == 1 || i == 5) {
+                            pattern.append(greyCode + "   *        *   " + endString);
+                        } else if (i == 4){
                             pattern.append(greyCode +  " *   " + currTile.getHexCoordinate().toString() + "   * " + endString);
                         } else  {
-                            pattern.append(greyCode + " *           * " + endString);
+                            pattern.append(greyCode + " *            * " + endString);
                         }
                     }
                     else if (currTile.getHabitatTile().isNull()) {
-                        if (i == 0 || i == 5) {
-                            pattern.append(greyCode + "               " + endString);
-                        } else if (i == 1 || i == 4) {
-                            pattern.append(greyCode + "               " + endString);
-                        } else if (i == 3){
-                            pattern.append(greyCode +  "          " + "     " + endString);
-                        } else  {
-                            pattern.append(greyCode + "               " + endString);
-                        }
+                        pattern.append(greyCode + "                " + endString);
                     }
 
 
@@ -128,28 +120,30 @@ public class BoardView {
 
 
                     if (currOrientation == 3 || currOrientation == 4 || currOrientation == 5) {
-                            tempString = colourOne;
-                            colourOne = colourTwo;
-                            colourTwo = tempString;
+                        tempString = colourOne;
+                        colourOne = colourTwo;
+                        colourTwo = tempString;
                     }
 
                     if (currTile.getTileOrientation() == 0 || //print horizontal tile
-                    currTile.getTileOrientation() == 3) {
+                            currTile.getTileOrientation() == 3) {
                         //if tile is not placed, just print spaces
                         if (!playerBoard.get(row).get(col).isActive()) {
                             //pattern.append("               ");
                         } else if (i == 0) {
-                            pattern.append(colourOne + "     *****     " + endString);
+                            pattern.append(colourOne + "     ***" + colourTwo + "***     " + endString);
                         } else if (i == 1) {
-                            pattern.append(colourOne + "   *********   " + endString);
+                            pattern.append(colourOne + "   *****" + colourTwo + "*****   " + endString);
                         } else if (i == 2) {
-                            pattern.append(colourOne + " ****" + placeTokenInfo(0, currTile) + colourOne + "**** " + endString);
+                            pattern.append(colourOne + " **** " + placeTokenInfo(0, currTile) + colourTwo + "**** " + endString);
                         } else if (i == 3) {
-                            pattern.append(colourTwo + " ****" + placeTokenInfo(1, currTile) + colourTwo + "**** " + endString);
+                            pattern.append(colourOne + " ****" + "      " + colourTwo + "**** ");
                         } else if (i == 4) {
-                            pattern.append(colourTwo + "   *********   " + endString);
+                            pattern.append(colourOne + " ****" + placeTokenInfo(1, currTile) + colourTwo + "**** " + endString);
+                        } else if (i == 5) {
+                            pattern.append(colourOne + "   *****" + colourTwo + "*****   " + endString);
                         } else {
-                            pattern.append(colourTwo + "     *****     " + endString);
+                            pattern.append(colourOne + "     ***" + colourTwo + "***     " + endString);
                         }
                     }
                     else if (currOrientation == 1 || currOrientation == 4) { //print diagonal tile
@@ -157,33 +151,37 @@ public class BoardView {
                         if (!playerBoard.get(row).get(col).isActive()) {
                             //pattern.append("               ");
                         } else if (i == 0) {
-                            pattern.append(colourTwo + "    *" + colourOne + "******    " + endString);
+                            pattern.append(colourTwo + "    *" + colourOne + "*******    " + endString);
                         } else if (i == 1) {
-                            pattern.append(colourTwo + "  ****" + colourOne + "*******  " + endString);
+                            pattern.append(colourTwo + "  *****" + colourOne + "*******  " + endString);
                         } else if (i == 2) {
-                            pattern.append(colourTwo + " ****" + placeTokenInfo(0, currTile) + colourOne + "**** " + endString);
+                            pattern.append(colourTwo + " **** " + placeTokenInfo(0, currTile) + colourOne + "**** " + endString);
                         } else if (i == 3) {
-                            pattern.append(colourTwo + " ****" + placeTokenInfo(1, currTile) + colourOne + "**** " + endString);
+                            pattern.append(colourOne + " ****" + "      " + colourTwo + "**** ");
                         } else if (i == 4) {
-                            pattern.append(colourTwo + "  *******" + colourOne + "****  " + endString);
+                            pattern.append(colourTwo + " ****" + placeTokenInfo(1, currTile) + colourOne + "**** " + endString);
+                        } else if (i == 5) {
+                            pattern.append(colourTwo + "  *******" + colourOne + "*****  " + endString);
                         } else {
-                            pattern.append(colourTwo + "    ******" + colourOne + "*    " + endString);
+                            pattern.append(colourTwo + "    *******" + colourOne + "*    " + endString);
                         }
                     } else {
                         if (!playerBoard.get(row).get(col).isActive()) {
                             //pattern.append("               ");
                         } else if (i == 0) {
-                            pattern.append(colourTwo + "    ******" + colourOne + "*    " + endString);
+                            pattern.append(colourTwo + "    *******" + colourOne + "*    " + endString);
                         } else if (i == 1) {
-                            pattern.append(colourTwo + "  *******" + colourOne + "****  " + endString);
+                            pattern.append(colourTwo + "  *******" + colourOne + "*****  " + endString);
                         } else if (i == 2) {
-                            pattern.append(colourTwo + " ****"  + placeTokenInfo(0, currTile) + colourOne + "**** " + endString);
+                            pattern.append(colourTwo + " **** "  + placeTokenInfo(0, currTile) + colourOne + "**** " + endString);
+                        } else if (i == 3) {
+                            pattern.append(colourTwo + " ****" + "      " + colourOne + "**** ");
                         } else if (i == 3) {
                             pattern.append(colourTwo + " ****" + placeTokenInfo(1, currTile) + colourOne + "**** " + endString);
                         } else if (i == 4) {
-                            pattern.append(colourTwo + "  ****" + colourOne + "*******  " + endString);
+                            pattern.append(colourTwo + "  *****" + colourOne + "*******  " + endString);
                         } else {
-                            pattern.append(colourTwo + "    *" + colourOne + "******    " + endString);
+                            pattern.append(colourTwo + "    *" + colourOne + "*******    " + endString);
                         }
                     }
                 }
@@ -237,9 +235,9 @@ public class BoardView {
             String colour = tokenToColourTable.get(currTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType());
 
             if (line == 0) {
-                tokenString = colour +   "*****" + endString;
+                tokenString = colour +   "***&**" + endString;
             } else if (line == 1) {
-                tokenString = colour + "* " + tokenToLetterTable.get(currTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType()) + " *" + endString;
+                tokenString = colour + "*  " + tokenToLetterTable.get(currTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType()) + " *" + endString;
             } else {
                 throw new IllegalArgumentException("invalid line num passed to func");
             }
