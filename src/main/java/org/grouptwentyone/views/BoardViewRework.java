@@ -131,9 +131,9 @@ public class BoardViewRework {
                         if (!playerBoard.get(row).get(col).isActive()) {
                             //pattern.append("               ");
                         } else if (i == 0) {
-                            pattern.append(colourOne + "     ***" + colourTwo + "***     " + endString);
+                            pattern.append(colourOne + "      **" + colourTwo + "**      " + endString);
                         } else if (i == 1) {
-                            pattern.append(colourOne + "   *****" + colourTwo + "*****   " + endString);
+                            pattern.append(colourOne + "    ****" + colourTwo + "****    " + endString);
                         } else if (i == 2) {
                             pattern.append(colourOne + " **** " + placeTokenInfo(0, currTile) + colourTwo + "**** " + endString);
                         } else if (i == 3) {
@@ -141,9 +141,9 @@ public class BoardViewRework {
                         } else if (i == 4) {
                             pattern.append(colourOne + " ****" + placeTokenInfo(1, currTile) + colourTwo + "**** " + endString);
                         } else if (i == 5) {
-                            pattern.append(colourOne + "   *****" + colourTwo + "*****   " + endString);
+                            pattern.append(colourOne + "    ****" + colourTwo + "****    " + endString);
                         } else {
-                            pattern.append(colourOne + "     ***" + colourTwo + "***     " + endString);
+                            pattern.append(colourOne + "      **" + colourTwo + "**      " + endString);
                         }
                     }
                     else if (currOrientation == 1 || currOrientation == 4) { //print diagonal tile
