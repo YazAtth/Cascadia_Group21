@@ -1,12 +1,12 @@
 package org.grouptwentyone;
 
 import org.grouptwentyone.controllers.HabitatTilesController;
-import org.grouptwentyone.models.HabitatTile;
-import org.grouptwentyone.models.HexCoordinate;
-import org.grouptwentyone.models.Player;
-import org.grouptwentyone.models.Tile;
+import org.grouptwentyone.models.*;
+import org.grouptwentyone.views.BoardView;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.jar.JarEntry;
 
 public class TestingSpace {
     //moved code to separate method so main can be used to call specific tests
@@ -59,7 +59,30 @@ public class TestingSpace {
         playerBoard.get(1).set(2, twoOne);
     }
 
+
+
+
+
+
+
+    public static void scoringTest() {
+//        System.out.println("ran");
+//        PlayerBoard pb = new PlayerBoard();
+        Player p1 = new Player("Ton");
+
+        HabitatTile habitatTile1 = new HabitatTile(2);
+
+        p1.getPlayerBoardObject().setSelectedTile(habitatTile1);
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1,0));
+//        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX));
+//        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(0,0));
+
+        System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+    }
+
+
     public static void main(String[] args) {
-        playerBoardBufferTest();
+        scoringTest();
     }
 }
