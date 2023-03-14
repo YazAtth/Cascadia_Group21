@@ -7,7 +7,6 @@ import org.grouptwentyone.models.WildlifeToken;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Scanner;
 
 import static org.grouptwentyone.controllers.HabitatTilesController.habitatTilesBag;
 import static org.grouptwentyone.controllers.WildlifeTokensController.wildlifeTokenBag;
@@ -57,7 +56,6 @@ public class SelectionOptionsView {
         String endString = "\u001B[0m";
         String colourOne, colourTwo, colourThree, colourFour, colourFive, colourSix;
 
-        //iterate through habitat tiles
         //iterate over each row of each tile (tiles size is 6)
         for (int i = 0; i < 6; i++) {
 
@@ -154,7 +152,6 @@ public class SelectionOptionsView {
             }
             pattern.append("\n");
         }
-        //pattern.append("\n");
         return pattern.toString();
     }
 

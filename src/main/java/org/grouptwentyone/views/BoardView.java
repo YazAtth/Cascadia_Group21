@@ -55,16 +55,6 @@ public class BoardView {
 
         GameUiView.printLinePageBorder();
 
-        // Not ideal but once a Playerboard class is moved: this can be refactored.
-//        ArrayList<Tile> activeTiles = new ArrayList<>();
-//        for (int a=0; a<playerBoard.size(); a++) {
-//            for (int b=0; b<playerBoard.get(0).size(); b++) {
-//                if (playerBoard.get(a).get(b).isActive()) {
-//                    activeTiles.add(playerBoard.get(a).get(b));
-//                }
-//            }
-//        }
-
         //iterate over each ArrayList in the ArrayList (rows)
         for (int row = 0; row < playerBoard.size(); row++) {
             //iterate over each row of each tile (tiles size is 6)

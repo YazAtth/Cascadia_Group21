@@ -23,8 +23,6 @@ public class Player {
     public Player(String userName) {
         setPlayerIdFromCounterAndIncrement();
         this.userName = userName;
-        //this.numOfNatureTokens = 0;
-//        setupPlayerBoard();
         this.getPlayerBoardObject().setupPlayerBoard();
     }
 

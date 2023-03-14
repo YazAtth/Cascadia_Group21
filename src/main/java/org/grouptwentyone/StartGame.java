@@ -37,7 +37,6 @@ public class StartGame {
             GameUiView.printPageBorder();
 
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-//            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
             System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
 
 
@@ -73,7 +72,6 @@ public class StartGame {
             //place tile
             GameUiView.printPageBorder();
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-//            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
             System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
             GameUiView.printPageBorder();
 
@@ -90,7 +88,6 @@ public class StartGame {
                     int tileYCoordinate = Integer.parseInt(tilePlacedCoordinates[1]);
                     HexCoordinate newTileHexCoordinate = new HexCoordinate(tileXCoordinate, tileYCoordinate);
 
-//                    activePlayer.addNewTile(newTileHexCoordinate);
                     activePlayer.getPlayerBoardObject().addNewTile(newTileHexCoordinate);
                     GameView.setIsPreviousInputInvalid(false);
                 } catch (ArrayIndexOutOfBoundsException ex) {
@@ -125,7 +122,6 @@ public class StartGame {
                     do {
                         try {
                             int numRotations = Integer.parseInt(GameView.askUserForInput());
-//                            activePlayer.getRecentlyPlacedTile().rotateTile(numRotations);
                             activePlayer.getPlayerBoardObject().getRecentlyPlacedTile().rotateTile(numRotations);
 
                             GameView.setIsPreviousInputInvalid(false);
@@ -166,7 +162,6 @@ public class StartGame {
                         int tokenYCoordinate = Integer.parseInt(tokenPlacedCoordinates.split(coordinateDelim)[1]);
                         HexCoordinate newTokenHexCoordinate = new HexCoordinate(tokenXCoordinate, tokenYCoordinate);
 
-//                        activePlayer.addNewToken(newTokenHexCoordinate);
                         activePlayer.getPlayerBoardObject().addNewToken(newTokenHexCoordinate);
                         GameView.setIsPreviousInputInvalid(false);
                     } catch (ArrayIndexOutOfBoundsException ex) {
@@ -192,11 +187,9 @@ public class StartGame {
                 GameUiView.printPageBorder();
             } else {
                 //return token
-//                WildlifeTokensController.wildlifeTokenBag.add(activePlayer.getSelectedToken());
                 WildlifeTokensController.wildlifeTokenBag.add(activePlayer.getPlayerBoardObject().getSelectedToken());
 
                 //reset selectedToken
-//                activePlayer.getSelectedToken().setWildlifeTokenType(WildlifeToken.WildlifeTokenType.EMPTY);
                 activePlayer.getPlayerBoardObject().getSelectedToken().setWildlifeTokenType(WildlifeToken.WildlifeTokenType.EMPTY);
                 System.out.println("Token returned to token bag");
             }

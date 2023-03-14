@@ -185,25 +185,6 @@ public class PlayerBoard {
 //        }
         Tile newTile = new Tile(this.getSelectedTile(), newTileHexCoordinate);
 
-        boolean isAdjacentToExistingTile = false;
-        // Loop through entire scoreboard and compare the new tile with existing habitatTiles to see if the spot is occupied.
-//        for (int i=0; i<playerBoard.size()-1; i++) {
-//            for (int k=0; k<playerBoard.get(0).size()-1; k++) {
-//                Tile focusedTile = playerBoard.get(i).get(k);
-//
-//                if (focusedTile.isActive() && focusedTile.getHexCoordinate().equals(newTileHexCoordinate)) {
-//                    throw new TilePlacedAtOccupiedPositionException(String.format("Tried to place %s onto existing %s", newTile, focusedTile));
-//                }
-//
-//                // Checks if there's at least one existing tile that is adjacent to the new tile
-//                if (newTile.isAdjacentToTile(focusedTile) && !isAdjacentToExistingTile) {
-//                    isAdjacentToExistingTile = true;
-////                    System.out.printf("%s is adjacent to %s\n", newTile, focusedTile);
-//                }
-//
-//            }
-//        }
-
         //checks if the spot on the playerboard is already occupied
         Tile focusedTile = playerBoard.get(newTileHexCoordinate.getX()).get(newTileHexCoordinate.getY());
         if (focusedTile.isActive()) {
@@ -212,6 +193,7 @@ public class PlayerBoard {
         }
 
         //checks if spot is adjacent to a placed tile
+        boolean isAdjacentToExistingTile = false;
         for (Tile currActiveTile : activeTiles) {
             if (newTile.isAdjacentToTile(currActiveTile)) {
                 isAdjacentToExistingTile = true;
