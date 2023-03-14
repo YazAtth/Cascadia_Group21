@@ -13,9 +13,6 @@ public class Player {
     int playerId;
     final String userName;
     int Score = 0;
-    //int numOfNatureTokens = 0;
-    //ArrayList<ArrayList<Tile>> playerBoard;
-
     PlayerBoard playerBoardObject = new PlayerBoard();
 
     public void setPlayerIdFromCounterAndIncrement() {

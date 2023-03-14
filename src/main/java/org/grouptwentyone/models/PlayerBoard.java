@@ -10,6 +10,7 @@ public class PlayerBoard {
     public enum PlayerBoardSide {LEFT, RIGHT, TOP, BOTTOM, MIDDLE}
 
     ArrayList<ArrayList<Tile>> playerBoard = new ArrayList<>();
+    ArrayList<Tile> activeTiles = new ArrayList<>();
     Tile recentlyPlacedTile;
     HabitatTile selectedTile;
     WildlifeToken selectedToken;
@@ -169,6 +170,10 @@ public class PlayerBoard {
         this.playerBoard.get(2).set(1, new Tile(starterTile.get(1), new HexCoordinate(2, 1)));
         this.playerBoard.get(1).set(2, new Tile(starterTile.get(2), new HexCoordinate(1, 2)));
 
+        //add starterTile to activeTiles
+        activeTiles.add(this.playerBoard.get(1).get(1));
+        activeTiles.add(this.playerBoard.get(2).get(1));
+        activeTiles.add(this.playerBoard.get(1).get(2));
     }
 
     public void addNewTile(HexCoordinate newTileHexCoordinate) {
@@ -182,20 +187,35 @@ public class PlayerBoard {
 
         boolean isAdjacentToExistingTile = false;
         // Loop through entire scoreboard and compare the new tile with existing habitatTiles to see if the spot is occupied.
-        for (int i=0; i<playerBoard.size()-1; i++) {
-            for (int k=0; k<playerBoard.get(0).size()-1; k++) {
-                Tile focusedTile = playerBoard.get(i).get(k);
+//        for (int i=0; i<playerBoard.size()-1; i++) {
+//            for (int k=0; k<playerBoard.get(0).size()-1; k++) {
+//                Tile focusedTile = playerBoard.get(i).get(k);
+//
+//                if (focusedTile.isActive() && focusedTile.getHexCoordinate().equals(newTileHexCoordinate)) {
+//                    throw new TilePlacedAtOccupiedPositionException(String.format("Tried to place %s onto existing %s", newTile, focusedTile));
+//                }
+//
+//                // Checks if there's at least one existing tile that is adjacent to the new tile
+//                if (newTile.isAdjacentToTile(focusedTile) && !isAdjacentToExistingTile) {
+//                    isAdjacentToExistingTile = true;
+////                    System.out.printf("%s is adjacent to %s\n", newTile, focusedTile);
+//                }
+//
+//            }
+//        }
 
-                if (focusedTile.isActive() && focusedTile.getHexCoordinate().equals(newTileHexCoordinate)) {
-                    throw new TilePlacedAtOccupiedPositionException(String.format("Tried to place %s onto existing %s", newTile, focusedTile));
-                }
+        //checks if the spot on the playerboard is already occupied
+        Tile focusedTile = playerBoard.get(newTileHexCoordinate.getX()).get(newTileHexCoordinate.getY());
+        if (focusedTile.isActive()) {
+            throw new TilePlacedAtOccupiedPositionException(String.format("Tried to place %s onto existing %s",
+                    newTile, focusedTile));
+        }
 
-                // Checks if there's at least one existing tile that is adjacent to the new tile
-                if (newTile.isAdjacentToTile(focusedTile) && !isAdjacentToExistingTile) {
-                    isAdjacentToExistingTile = true;
-//                    System.out.printf("%s is adjacent to %s\n", newTile, focusedTile);
-                }
-
+        //checks if spot is adjacent to a placed tile
+        for (Tile currActiveTile : activeTiles) {
+            if (newTile.isAdjacentToTile(currActiveTile)) {
+                isAdjacentToExistingTile = true;
+                break;
             }
         }
 
@@ -203,8 +223,9 @@ public class PlayerBoard {
             throw new TileNotPlacedAdjacentlyException(String.format("Tried to place tile at %s of which there are no adjacent tiles", newTile));
         }
 
-        // Adds the new tile
+        // Adds the new tile to board and then activeTiles
         this.playerBoard.get(newTile.getHexCoordinate().getX()).set(newTile.getHexCoordinate().getY(), newTile);
+        activeTiles.add(newTile);
 
         // Checks to see if the returned array has a "middle" in it signifying it's not on the edge.
         ArrayList<PlayerBoard.PlayerBoardSide> tilePosition = this.getPartOfBoardCoordinateIsOn(newTile.getHexCoordinate());
@@ -227,14 +248,7 @@ public class PlayerBoard {
         }
 
         //makes reference to placed tile so user can choose to rotate tile
-        for (int i = 0; i < playerBoard.size()-1; i++) {
-            for (int j = 0; j < playerBoard.get(0).size()-1; j++) {
-                if (playerBoard.get(i).get(j) == newTile) {
-                    this.recentlyPlacedTile = playerBoard.get(i).get(j);
-                    break;
-                }
-            }
-        }
+        this.recentlyPlacedTile = this.playerBoard.get(newTile.getHexCoordinate().getX()).get(newTile.getHexCoordinate().getY());
 
         //reset selectedTile to an empty tile
         this.setSelectedTile(new HabitatTile());
@@ -311,4 +325,7 @@ public class PlayerBoard {
         this.selectedToken = selectedToken;
     }
 
+    public ArrayList<Tile> getActiveTiles() {
+        return activeTiles;
+    }
 }

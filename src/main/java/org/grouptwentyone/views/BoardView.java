@@ -1,6 +1,7 @@
 package org.grouptwentyone.views;
 
 import org.grouptwentyone.models.HabitatTile;
+import org.grouptwentyone.models.PlayerBoard;
 import org.grouptwentyone.models.Tile;
 import org.grouptwentyone.models.WildlifeToken;
 
@@ -16,7 +17,8 @@ public class BoardView {
     private static Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToStringTable = new Hashtable<>();
 
     //static method to display tiles
-    public static String displayTiles(ArrayList<ArrayList<Tile>> playerBoard) {
+    public static String displayTiles(PlayerBoard playerBoardObject) {
+        ArrayList<ArrayList<Tile>> playerBoard = playerBoardObject.getPlayerBoardAs2dArray();
 
         StringBuilder pattern = new StringBuilder();
 
@@ -54,14 +56,14 @@ public class BoardView {
         GameUiView.printLinePageBorder();
 
         // Not ideal but once a Playerboard class is moved: this can be refactored.
-        ArrayList<Tile> activeTiles = new ArrayList<>();
-        for (int a=0; a<playerBoard.size(); a++) {
-            for (int b=0; b<playerBoard.get(0).size(); b++) {
-                if (playerBoard.get(a).get(b).isActive()) {
-                    activeTiles.add(playerBoard.get(a).get(b));
-                }
-            }
-        }
+//        ArrayList<Tile> activeTiles = new ArrayList<>();
+//        for (int a=0; a<playerBoard.size(); a++) {
+//            for (int b=0; b<playerBoard.get(0).size(); b++) {
+//                if (playerBoard.get(a).get(b).isActive()) {
+//                    activeTiles.add(playerBoard.get(a).get(b));
+//                }
+//            }
+//        }
 
         //iterate over each ArrayList in the ArrayList (rows)
         for (int row = 0; row < playerBoard.size(); row++) {
@@ -80,35 +82,12 @@ public class BoardView {
 
                     // Not ideal
                     boolean isCurrentTileAdjacentToActiveTile = false;
-                    for (Tile focusedTile: activeTiles) {
+                    for (Tile focusedTile: playerBoardObject.getActiveTiles()) {
                         if (currTile.isEmptyTileAdjacentToTile(focusedTile)) {
                             isCurrentTileAdjacentToActiveTile = true;
 
                         }
                     }
-                    if (currTile.getHabitatTile().isNull() & isCurrentTileAdjacentToActiveTile) {
-                        if (i == 0 || i == 5) {
-                            pattern.append(greyCode + "    *  *  *    " + endString);
-                        } else if (i == 1 || i == 4) {
-                            pattern.append(greyCode + "  *         *  " + endString);
-                        } else if (i == 3){
-                            pattern.append(greyCode +  " *   " + currTile.getHexCoordinate().toString() + "   * " + endString);
-                        } else  {
-                            pattern.append(greyCode + " *           * " + endString);
-                        }
-                    }
-                    else if (currTile.getHabitatTile().isNull()) {
-                        if (i == 0 || i == 5) {
-                            pattern.append(greyCode + "               " + endString);
-                        } else if (i == 1 || i == 4) {
-                            pattern.append(greyCode + "               " + endString);
-                        } else if (i == 3){
-                            pattern.append(greyCode +  "          " + "     " + endString);
-                        } else  {
-                            pattern.append(greyCode + "               " + endString);
-                        }
-                    }
-
 
                     if (!currTile.getHabitatTile().isNull()) {
 
@@ -133,12 +112,29 @@ public class BoardView {
                             colourTwo = tempString;
                     }
 
-                    if (currTile.getTileOrientation() == 0 || //print horizontal tile
+                    if (currTile.getHabitatTile().isNull() & isCurrentTileAdjacentToActiveTile) {
+                        if (i == 0 || i == 5) {
+                            pattern.append(greyCode + "    *  *  *    " + endString);
+                        } else if (i == 1 || i == 4) {
+                            pattern.append(greyCode + "  *         *  " + endString);
+                        } else if (i == 3){
+                            pattern.append(greyCode +  " *   " + currTile.getHexCoordinate().toString() + "   * " + endString);
+                        } else  {
+                            pattern.append(greyCode + " *           * " + endString);
+                        }
+                    } else if (currTile.getHabitatTile().isNull()) {
+                        if (i == 0 || i == 5) {
+                            pattern.append(greyCode + "               " + endString);
+                        } else if (i == 1 || i == 4) {
+                            pattern.append(greyCode + "               " + endString);
+                        } else if (i == 3){
+                            pattern.append(greyCode +  "          " + "     " + endString);
+                        } else  {
+                            pattern.append(greyCode + "               " + endString);
+                        }
+                    } else if (currTile.getTileOrientation() == 0 || //print horizontal tile
                     currTile.getTileOrientation() == 3) {
-                        //if tile is not placed, just print spaces
-                        if (!playerBoard.get(row).get(col).isActive()) {
-                            //pattern.append("               ");
-                        } else if (i == 0) {
+                        if (i == 0) {
                             pattern.append(colourOne + "    *******    " + endString);
                         } else if (i == 1) {
                             pattern.append(colourOne + "  ***********  " + endString);
@@ -153,10 +149,7 @@ public class BoardView {
                         }
                     }
                     else if (currOrientation == 1 || currOrientation == 4) { //print diagonal tile
-                        //if tile is not placed, just print spaces
-                        if (!playerBoard.get(row).get(col).isActive()) {
-                            //pattern.append("               ");
-                        } else if (i == 0) {
+                        if (i == 0) {
                             pattern.append(colourTwo + "    *" + colourOne + "******    " + endString);
                         } else if (i == 1) {
                             pattern.append(colourTwo + "  ****" + colourOne + "*******  " + endString);
@@ -170,9 +163,7 @@ public class BoardView {
                             pattern.append(colourTwo + "    ******" + colourOne + "*    " + endString);
                         }
                     } else {
-                        if (!playerBoard.get(row).get(col).isActive()) {
-                            //pattern.append("               ");
-                        } else if (i == 0) {
+                        if (i == 0) {
                             pattern.append(colourTwo + "    ******" + colourOne + "*    " + endString);
                         } else if (i == 1) {
                             pattern.append(colourTwo + "  *******" + colourOne + "****  " + endString);

@@ -34,7 +34,7 @@ public class Dev_StartGame {
             GameUiView.printPageBorder();
 
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
 
             GameUiView.printPageBorder();
 
@@ -68,7 +68,7 @@ public class Dev_StartGame {
             //place tile
             GameUiView.printPageBorder();
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
             GameUiView.printPageBorder();
 
             //display selected tile below
@@ -106,7 +106,7 @@ public class Dev_StartGame {
 
             GameUiView.printPageBorder();
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
             GameUiView.printPageBorder();
 
             //rotate tile
@@ -131,7 +131,7 @@ public class Dev_StartGame {
 
                     GameUiView.printPageBorder();
                     System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-                    System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+                    System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
                     GameUiView.printPageBorder();
 
                     finishedRotation = !GameView.getUserConfirmation("continue rotating the tile you just placed");
@@ -144,7 +144,7 @@ public class Dev_StartGame {
             //place token
             GameUiView.printPageBorder();
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
             GameUiView.printPageBorder();
 
             //display selected token below
@@ -182,7 +182,7 @@ public class Dev_StartGame {
                 } while (GameView.isIsPreviousInputInvalid());
                 GameUiView.printPageBorder();
                 System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-                System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+                System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
                 GameUiView.printPageBorder();
             } else {
                 //return token
