@@ -74,8 +74,8 @@ public class TestingSpace {
 
         p1.getPlayerBoardObject().setSelectedTile(habitatTile1);
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1,0));
-//        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX));
-//        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(0,0));
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(0,0));
 
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
         System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
