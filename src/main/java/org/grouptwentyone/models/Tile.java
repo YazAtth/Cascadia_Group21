@@ -14,12 +14,20 @@ public class Tile {
         this.tileOrientation = 0;
     }
 
-    //constructor for debugging
+
     public Tile (HabitatTile habitatTile, HexCoordinate hexCoordinate) {
         this.habitatTile = habitatTile;
         this.hexCoordinate = hexCoordinate;
         this.tileOrientation = 0;
         this.isActive = true;
+    }
+
+    //constructor for debugging
+    public Tile (HexCoordinate hexCoordinate, boolean debug) {
+        this.habitatTile = new HabitatTile(debug);
+        this.hexCoordinate = hexCoordinate;
+        this.isActive = false; //changes to true once the tile is adjacent to a tile that has a habitat tile
+        this.tileOrientation = 0;
     }
 
     public HabitatTile getHabitatTile() {
