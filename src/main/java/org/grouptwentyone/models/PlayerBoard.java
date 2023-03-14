@@ -14,6 +14,7 @@ public class PlayerBoard {
     HabitatTile selectedTile;
     WildlifeToken selectedToken;
     int numOfNatureTokens = 0;
+    int score = 0;
 
 
 
@@ -275,6 +276,32 @@ public class PlayerBoard {
         //reset selectedToken
         this.setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY));
     }
+
+
+
+
+    public void scoreFoxes() {
+        for (ArrayList<Tile> row: getPlayerBoardAs2dArray()) {
+            for (Tile tile: row) {
+                //TODO: here
+                boolean tileHasFoxToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.FOX;
+                if (tileHasFoxToken) {
+                    System.out.println("FOUND FOX");
+                } else {
+                    System.out.println("NO FOX HERE");
+                }
+            }
+        }
+    }
+
+    public int getScore() {
+        scoreFoxes();
+
+        return this.score;
+    }
+
+
+
 
 
     public ArrayList<ArrayList<Tile>> getPlayerBoardAs2dArray() {

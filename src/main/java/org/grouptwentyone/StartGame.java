@@ -35,6 +35,7 @@ public class StartGame {
         while (tilesRemain) {
 
             GameUiView.printPageBorder();
+            System.out.printf("Player Score: %d\n",activePlayer.getPlayerBoardObject().getScore());
 
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
 //            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));

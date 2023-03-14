@@ -27,7 +27,8 @@ public class GameSetupView {
             try {
                 numberOfPlayers = Integer.parseInt(userInput);
 
-                if (numberOfPlayers > 4 || numberOfPlayers < 2) {
+//                if (numberOfPlayers > 4 || numberOfPlayers < 2) {
+                if (numberOfPlayers > 4 || numberOfPlayers < 1) { //TODO: Allowed 1 player games for debugging
                     GameUiView.printLargeSpace();
                     GameUiView.printPageBorder();
 

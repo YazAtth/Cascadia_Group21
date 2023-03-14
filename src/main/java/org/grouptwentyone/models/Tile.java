@@ -4,6 +4,7 @@ public class Tile {
     HabitatTile habitatTile;
     HexCoordinate hexCoordinate;
     boolean isActive; //this will determine whether coordinates get displayed
+    boolean isIncludedInScoring = true;
     int tileOrientation; // Defaults to 0 and is between 0-5 inclusive (so 6 states).
 
     public Tile (HexCoordinate hexCoordinate) {
@@ -63,4 +64,8 @@ public class Tile {
 
     //rotate tile by custom number
     public void rotateTile(int numRotations) {this.tileOrientation = (this.tileOrientation + numRotations) % 6;}
+
+    public void setIncludedInScoring(boolean includedInScoring) {
+        isIncludedInScoring = includedInScoring;
+    }
 }
