@@ -12,7 +12,7 @@ public class Player {
 
     int playerId;
     final String userName;
-    int Score = 0;
+//    int Score = 0;
     //int numOfNatureTokens = 0;
     //ArrayList<ArrayList<Tile>> playerBoard;
 
@@ -45,7 +45,7 @@ public class Player {
     }
 
     public int getScore() {
-        return Score;
+        return this.playerBoardObject.getScore();
     }
 
 

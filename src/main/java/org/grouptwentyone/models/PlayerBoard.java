@@ -1,9 +1,12 @@
 package org.grouptwentyone.models;
 
+import org.grouptwentyone.controllers.ScoringController;
 import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.models.Exceptions.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PlayerBoard {
 
@@ -210,7 +213,7 @@ public class PlayerBoard {
         // Checks to see if the returned array has a "middle" in it signifying it's not on the edge.
         ArrayList<PlayerBoard.PlayerBoardSide> tilePosition = this.getPartOfBoardCoordinateIsOn(newTile.getHexCoordinate());
         boolean isNewTileOnEdge = !tilePosition.contains(PlayerBoard.PlayerBoardSide.MIDDLE);
-        System.out.printf("Is the new tile on the edge? %s\n", isNewTileOnEdge);
+//        System.out.printf("Is the new tile on the edge? %s\n", isNewTileOnEdge);
 
         if (isNewTileOnEdge) {
             if (tilePosition.contains(PlayerBoard.PlayerBoardSide.LEFT)) {
@@ -277,27 +280,49 @@ public class PlayerBoard {
         this.setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY));
     }
 
+    public ArrayList<Tile> getAdjacentTileList(Tile inputTile) {
+        ArrayList<Tile> adjacentTileList = new ArrayList<>();
 
-
-
-    public void scoreFoxes() {
         for (ArrayList<Tile> row: getPlayerBoardAs2dArray()) {
             for (Tile tile: row) {
-                //TODO: here
-                boolean tileHasFoxToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.FOX;
-                if (tileHasFoxToken) {
-                    System.out.println("FOUND FOX");
-                } else {
-                    System.out.println("NO FOX HERE");
+                if (inputTile.isAdjacentToTile(tile)) {
+                    adjacentTileList.add(tile);
                 }
             }
         }
+
+        return adjacentTileList;
     }
 
+    public ArrayList<Tile> getAdjacentNonEmptyTileList(Tile inputTile) {
+        ArrayList<Tile> adjacentTileList = new ArrayList<>();
+
+        for (ArrayList<Tile> row: getPlayerBoardAs2dArray()) {
+            for (Tile tile: row) {
+                boolean tileIsNotEmpty = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY;
+                if (inputTile.isAdjacentToTile(tile) && tileIsNotEmpty) {
+                    adjacentTileList.add(tile);
+                }
+            }
+        }
+
+        return adjacentTileList;
+    }
+
+
+
+
+
     public int getScore() {
-        scoreFoxes();
+        incrementScore(ScoringController.scoreFoxScoringCardA(this));
+//        incrementScore(ScoringController.scoreFoxScoringCardB(this));
+//        incrementScore(ScoringController.scoreFoxScoringCardC(this));
 
         return this.score;
+    }
+
+    public void incrementScore(int n) {
+        this.score += n;
     }
 
 
