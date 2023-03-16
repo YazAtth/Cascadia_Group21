@@ -163,7 +163,6 @@ public class StartGame {
                 //display selected token by adding the players selected token to a new arraylist that's passed to displaySelectedTokens
                 System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(new ArrayList<>(Collections.singletonList(activePlayer.getPlayerBoardObject().getSelectedToken()))));
                 GameUiView.printPageBorder();
-
                 placeToken = GameView.getUserConfirmation("place a token");
             } else {
                 System.out.print("Token cannot be placed on your board, therefore, ");
