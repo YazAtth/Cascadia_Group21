@@ -6,7 +6,6 @@ import org.grouptwentyone.models.Exceptions.*;
 import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class StartGame {
@@ -152,12 +151,22 @@ public class StartGame {
             System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
             GameUiView.printPageBorder();
 
-            //display selected token by adding the players selected token to a new arraylist that's passed to displaySelectedTokens
-            System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(new ArrayList<>(Collections.singletonList(activePlayer.getPlayerBoardObject().getSelectedToken()))));
-            GameUiView.printPageBorder();
+            boolean placeToken = false;
 
-            boolean placeToken = GameView.getUserConfirmation("place a token");
+            //check if it's possible to place selected token and then give the player the option of placing it
+            if (activePlayer.getPlayerBoardObject().canPlaceToken()) {
+                //display selected token below
+                //display selected token by adding the players selected token to a new arraylist that's passed to displaySelectedTokens
+                System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(new ArrayList<>(Collections.singletonList(activePlayer.getPlayerBoardObject().getSelectedToken()))));
+                GameUiView.printPageBorder();
 
+
+                placeToken = GameView.getUserConfirmation("place a token");
+            } else {
+                System.out.print("Token cannot be placed on your board, therefore, ");
+            }
+
+            //false by default unless user chooses to when given option
             if (placeToken) {
                 System.out.print("Please enter the coordinates for where you would like to place the token at in the format 'x, y'\n> ");
                 do {
