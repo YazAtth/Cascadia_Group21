@@ -153,10 +153,19 @@ public class StartGame {
             System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
             GameUiView.printPageBorder();
 
-            //display selected token below
+            boolean placeToken = false;
 
-            boolean placeToken = GameView.getUserConfirmation("place a token");
+            //check if it's possible to place selected token and then give the player the option of placing it
+            if (activePlayer.getPlayerBoardObject().canPlaceToken()) {
+                //display selected token below
 
+
+                placeToken = GameView.getUserConfirmation("place a token");
+            } else {
+                System.out.print("Token cannot be placed on your board, therefore, ");
+            }
+
+            //false by default unless user chooses to when given option
             if (placeToken) {
                 System.out.print("Please enter the coordinates for where you would like to place the token at in the format 'x, y'\n> ");
                 do {

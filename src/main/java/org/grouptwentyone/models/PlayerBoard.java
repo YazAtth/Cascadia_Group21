@@ -4,12 +4,14 @@ import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.models.Exceptions.*;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class PlayerBoard {
 
     public enum PlayerBoardSide {LEFT, RIGHT, TOP, BOTTOM, MIDDLE}
 
     ArrayList<ArrayList<Tile>> playerBoard = new ArrayList<>();
+    TokenOptions tokenOptions = new TokenOptions();
     Tile recentlyPlacedTile;
     HabitatTile selectedTile;
     WildlifeToken selectedToken;
@@ -169,6 +171,10 @@ public class PlayerBoard {
         this.playerBoard.get(2).set(1, new Tile(starterTile.get(1), new HexCoordinate(2, 1)));
         this.playerBoard.get(1).set(2, new Tile(starterTile.get(2), new HexCoordinate(1, 2)));
 
+        //increment tiles' token types within tokenOptions
+        for (HabitatTile tile : starterTile) {
+            this.incrementTileTokenOption(tile.getWildlifeTokenTypeList());
+        }
     }
 
     public void addNewTile(HexCoordinate newTileHexCoordinate) {
@@ -205,6 +211,9 @@ public class PlayerBoard {
 
         // Adds the new tile
         this.playerBoard.get(newTile.getHexCoordinate().getX()).set(newTile.getHexCoordinate().getY(), newTile);
+
+        //increment tile's token types within tokenOptions
+        this.incrementTileTokenOption(newTile.getHabitatTile().getWildlifeTokenTypeList());
 
         // Checks to see if the returned array has a "middle" in it signifying it's not on the edge.
         ArrayList<PlayerBoard.PlayerBoardSide> tilePosition = this.getPartOfBoardCoordinateIsOn(newTile.getHexCoordinate());
@@ -266,6 +275,9 @@ public class PlayerBoard {
         //place token on selected tile
         focusedTile.getHabitatTile().setWildlifeToken(this.getSelectedToken());
 
+        //decrement tile's token types within tokenOptions
+        this.decrementTileTokenOption(focusedTile.getHabitatTile().getWildlifeTokenTypeList());
+
         //check if habitat tile is keystone and if so, increase numOfNatureTokens by 1
         if (focusedTile.getHabitatTile().isKeystone()) {
             this.addToNumOfNatureTokens();
@@ -276,6 +288,21 @@ public class PlayerBoard {
         this.setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY));
     }
 
+    //increments the wildlife token types of the list's token(s) within the NumTokenOptions hashtable
+    private void incrementTileTokenOption(ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeList) {
+        for (WildlifeToken.WildlifeTokenType tokenType : wildlifeTokenTypeList) {
+            int value = this.tokenOptions.getNumOfTokenOption(tokenType);
+            this.tokenOptions.setNumOfTokenOption(tokenType, ++value);
+        }
+    }
+
+    //decrements the wildlife token types of the list's token(s) within the NumTokenOptions hashtable
+    private void decrementTileTokenOption(ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeList) {
+        for (WildlifeToken.WildlifeTokenType tokenType : wildlifeTokenTypeList) {
+            int value = this.tokenOptions.getNumOfTokenOption(tokenType);
+            this.tokenOptions.setNumOfTokenOption(tokenType, --value);
+        }
+    }
 
     public ArrayList<ArrayList<Tile>> getPlayerBoardAs2dArray() {
         return playerBoard;
@@ -311,4 +338,29 @@ public class PlayerBoard {
         this.selectedToken = selectedToken;
     }
 
+    public boolean canPlaceToken() {
+        return tokenOptions.getNumOfTokenOption(this.selectedToken.wildlifeTokenType) > 0;
+    }
+
+    //nested class that will store the number of options for each type of token on a player's board
+    protected class TokenOptions {
+        Hashtable<WildlifeToken.WildlifeTokenType, Integer> numTokenOptions;
+
+        public TokenOptions() {
+            this.numTokenOptions = new Hashtable<>();
+            this.numTokenOptions.put(WildlifeToken.WildlifeTokenType.BEAR, 0);
+            this.numTokenOptions.put(WildlifeToken.WildlifeTokenType.ELK, 0);
+            this.numTokenOptions.put(WildlifeToken.WildlifeTokenType.FOX, 0);
+            this.numTokenOptions.put(WildlifeToken.WildlifeTokenType.SALMON, 0);
+            this.numTokenOptions.put(WildlifeToken.WildlifeTokenType.HAWK, 0);
+        }
+
+        private Integer getNumOfTokenOption(WildlifeToken.WildlifeTokenType tokenType) {
+            return numTokenOptions.get(tokenType);
+        }
+
+        private void setNumOfTokenOption(WildlifeToken.WildlifeTokenType tokenType, Integer value) {
+            this.numTokenOptions.replace(tokenType, value);
+        }
+    }
 }
