@@ -151,7 +151,7 @@ public class PlayerBoard {
     }
 
     public void setupPlayerBoard() {
-        //these for loops initialise the board with null habitat tiles
+        //these for loops initialise the board with empty habitat tiles
         this.playerBoard = new ArrayList<>();
         int sizeX = 4, sizeY = 4;
         for (int i = 0; i < sizeX; i++) {

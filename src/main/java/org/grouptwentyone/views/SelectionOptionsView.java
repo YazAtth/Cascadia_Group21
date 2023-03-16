@@ -67,7 +67,6 @@ public class SelectionOptionsView {
                 HabitatTile currTile = selectedHabitatTiles.get(col);
 
 
-                //current row of tiles
                 ArrayList<HabitatTile.HabitatTileType> currHabitatTileTypeList = currTile.getHabitatTileTypeList();
 
                 //tokenString should always length 5, hence the different if statements
@@ -132,13 +131,12 @@ public class SelectionOptionsView {
         //iterate through wildlife tokens
         for (int i = 0; i < 3; i++) {
 
-            //iterate over each Tile
+            //iterate over each Token
             for (int j = 0; j < selectedWildlifeTokens.size(); j++) {
 
                 WildlifeToken currToken = selectedWildlifeTokens.get(j);
 
 
-                //current row of tiles
                 WildlifeToken.WildlifeTokenType currWildlifeTokenType = currToken.getWildlifeTokenType();
 
                 colour = tokenToColourTable.get(currWildlifeTokenType);

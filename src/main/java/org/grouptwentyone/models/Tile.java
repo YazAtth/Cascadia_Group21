@@ -7,9 +7,9 @@ public class Tile {
     int tileOrientation; // Defaults to 0 and is between 0-5 inclusive (so 6 states).
 
     public Tile (HexCoordinate hexCoordinate) {
-        this.habitatTile = new HabitatTile(); //need to switch to empty habitat tile
+        this.habitatTile = new HabitatTile();
         this.hexCoordinate = hexCoordinate;
-        this.isActive = false; //changes to true once the tile is adjacent to a tile that has a habitat tile
+        this.isActive = false; //changes to true once a habitat tile is placed on tile
         this.tileOrientation = 0;
     }
 
