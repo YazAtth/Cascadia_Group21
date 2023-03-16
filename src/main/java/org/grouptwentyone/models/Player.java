@@ -1,11 +1,5 @@
 package org.grouptwentyone.models;
 
-import org.grouptwentyone.models.Exceptions.*;
-
-import java.util.ArrayList;
-
-import org.grouptwentyone.controllers.StarterHabitatTilesController;
-
 public class Player {
 
     private static int playerIdCounter = 0;
@@ -42,7 +36,6 @@ public class Player {
     public int getScore() {
         return Score;
     }
-
 
     public PlayerBoard getPlayerBoardObject() {
         return playerBoardObject;
