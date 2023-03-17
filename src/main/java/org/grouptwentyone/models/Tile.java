@@ -1,6 +1,8 @@
 package org.grouptwentyone.models;
 
 public class Tile {
+    private static int tileIdCounter = 0;
+    private int tileId;
     HabitatTile habitatTile;
     HexCoordinate hexCoordinate;
     boolean isActive; //this will determine whether coordinates get displayed
@@ -12,6 +14,7 @@ public class Tile {
         this.hexCoordinate = hexCoordinate;
         this.isActive = false; //changes to true once the tile is adjacent to a tile that has a habitat tile
         this.tileOrientation = 0;
+        this.tileId = tileIdCounter++;
     }
 
 
@@ -20,6 +23,7 @@ public class Tile {
         this.hexCoordinate = hexCoordinate;
         this.tileOrientation = 0;
         this.isActive = true;
+        this.tileId = tileIdCounter++;
     }
 
     //constructor for debugging
@@ -28,6 +32,7 @@ public class Tile {
         this.hexCoordinate = hexCoordinate;
         this.isActive = false; //changes to true once the tile is adjacent to a tile that has a habitat tile
         this.tileOrientation = 0;
+        this.tileId = tileIdCounter++;
     }
 
     public HabitatTile getHabitatTile() {
