@@ -40,7 +40,6 @@ public class StartGame {
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
             System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
 
-
             GameUiView.printPageBorder();
 
             System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(selectedTiles));
@@ -77,7 +76,8 @@ public class StartGame {
             GameUiView.printPageBorder();
 
             //display selected tile by adding the players selected tile to a temp arraylist and passing that to displaySelectedTiles
-            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(new ArrayList<>(Collections.singletonList(activePlayer.getPlayerBoardObject().getSelectedTile()))));
+            System.out.printf("\n%s",
+                    SelectionOptionsView.displaySelectedHabitatTiles(new ArrayList<>(Collections.singletonList(activePlayer.getPlayerBoardObject().getSelectedTile()))));
             GameUiView.printPageBorder();
 
             System.out.print("Please enter the coordinates for where you would like to place the tile at in the format 'x, y'\n> ");
@@ -155,15 +155,15 @@ public class StartGame {
 
             //check if it's possible to place selected token and then give the player the option of placing it
             if (activePlayer.getPlayerBoardObject().canPlaceToken()) {
-                //display selected token below
                 //display selected token by adding the players selected token to a new arraylist that's passed to displaySelectedTokens
-                System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(new ArrayList<>(Collections.singletonList(activePlayer.getPlayerBoardObject().getSelectedToken()))));
+                System.out.printf("\n%s",
+                        SelectionOptionsView.displaySelectedWildlifeTokens(new ArrayList<>(Collections.singletonList(activePlayer.getPlayerBoardObject().getSelectedToken()))));
                 GameUiView.printPageBorder();
 
 
                 placeToken = GameView.getUserConfirmation("place a token");
             } else {
-                System.out.print("Token cannot be placed on your board, therefore, ");
+                System.out.print("Token cannot be placed on your board, therefore ");
             }
 
             //false by default unless user chooses to when given option
