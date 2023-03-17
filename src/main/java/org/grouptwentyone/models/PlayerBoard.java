@@ -314,9 +314,14 @@ public class PlayerBoard {
 
 
     public int getScore() {
-        incrementScore(ScoringController.scoreFoxScoringCardA(this));
-//        incrementScore(ScoringController.scoreFoxScoringCardB(this));
+        //TODO: Switch statement without breaks so all the relevant cases run.
+
+//        incrementScore(ScoringController.scoreFoxScoringCardA(this));
+        incrementScore(ScoringController.scoreFoxScoringCardB(this));
 //        incrementScore(ScoringController.scoreFoxScoringCardC(this));
+//        incrementScore(ScoringController.scoreBearScoringCardA(this));
+//        incrementScore(ScoringController.scoreBearScoringCardB(this));
+//        incrementScore(ScoringController.scoreBearScoringCardC(this));
 
         return this.score;
     }
