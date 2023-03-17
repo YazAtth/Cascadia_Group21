@@ -1,5 +1,7 @@
 package org.grouptwentyone.views;
 
+import org.grouptwentyone.models.Player;
+
 public class GameUiView {
 
     // Colours
@@ -40,6 +42,9 @@ public class GameUiView {
         System.out.println(LINE_PAGE_BORDER_NO_COLOUR);
     }
 
-
+    public static void printPlayerHeader(Player player) {
+        System.out.printf("%s⏺ %s ⏺ Nature Tokens: %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT,
+                player.getUserName(), player.getNumOfNatureTokens(), GameUiView.RESET_COLOUR);
+    }
 
 }
