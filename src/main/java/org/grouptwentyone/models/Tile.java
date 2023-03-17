@@ -2,7 +2,7 @@ package org.grouptwentyone.models;
 
 public class Tile {
     private static int tileIdCounter = 0;
-    private int tileId;
+    final private int tileId;
     HabitatTile habitatTile;
     HexCoordinate hexCoordinate;
     boolean isActive; //this will determine whether coordinates get displayed
@@ -80,5 +80,9 @@ public class Tile {
 
     public void setIncludedInScoring(boolean includedInScoring) {
         isIncludedInScoring = includedInScoring;
+    }
+
+    public int getTileId() {
+        return tileId;
     }
 }
