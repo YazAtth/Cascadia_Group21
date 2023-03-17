@@ -165,7 +165,7 @@ public class StartGame {
                 GameUiView.printPageBorder();
                 placeToken = GameView.getUserConfirmation("place a token");
             } else {
-                System.out.print("Token cannot be placed on your board, therefore, ");
+                System.out.print("Token cannot be placed on your board, therefore ");
             }
 
             //false by default unless user chooses to when given option
