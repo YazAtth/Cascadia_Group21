@@ -18,7 +18,7 @@ public class NatureTokenController {
         do {
             try {
                 System.out.print("Please enter\n1: to select any combo of habitat tile and Wildlife token.\n" +
-                        "2: to wipe any number of wildlife tokens\n>");
+                        "2: to wipe any number of wildlife tokens\n> ");
                 userSelect = Integer.parseInt(GameView.askUserForInput());
 
             } catch (NumberFormatException ex) {
@@ -44,7 +44,7 @@ public class NatureTokenController {
         System.out.print(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
         System.out.println("      (1)            (2)            (3)            (4)      \n");
 
-        System.out.print("Please select one of the above habitat tiles by entering the associated number: \n>");
+        System.out.print("Please select one of the above habitat tiles by entering the associated number: \n> ");
         int userNum = -1;
 
         while (userNum < 1 || userNum > 4) {
@@ -74,7 +74,7 @@ public class NatureTokenController {
         System.out.print(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
         System.out.println("      (1)            (2)            (3)            (4)      \n");
 
-        System.out.print("Please select one of the above wildlife tokens by entering the associated number: \n>");
+        System.out.print("Please select one of the above wildlife tokens by entering the associated number: \n> ");
         userNum = -1;
 
         while (userNum < 1 || userNum > 4) {
@@ -102,7 +102,7 @@ public class NatureTokenController {
         System.out.print(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
         System.out.println("      (1)            (2)            (3)            (4)      \n");
         System.out.print("Please enter the number(s) of the Wildlife tokens you wish to replace, " +
-                "separated by a comma please\n>");
+                "separated by a comma please\n> ");
 
         int[] selectedNums;
         boolean inputInvalid = true;
