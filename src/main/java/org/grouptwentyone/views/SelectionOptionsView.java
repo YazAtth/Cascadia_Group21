@@ -7,7 +7,6 @@ import org.grouptwentyone.models.WildlifeToken;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.Scanner;
 
 import static org.grouptwentyone.controllers.HabitatTilesController.habitatTilesBag;
 import static org.grouptwentyone.controllers.WildlifeTokensController.wildlifeTokenBag;
@@ -157,7 +156,7 @@ public class SelectionOptionsView {
     }
 
     public static void selectTileAndToken(Player activePlayer) {
-        System.out.print("Please select one of the above pairs by entering the associated number: \n>");
+        System.out.print("Please select one of the above pairs by entering the associated number: \n> ");
         int userNum = -1;
 
         while (userNum < 1 || userNum > 4) {

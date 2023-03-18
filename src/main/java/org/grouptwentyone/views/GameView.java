@@ -21,7 +21,7 @@ public class GameView {
     }
 
     public static boolean getUserConfirmation(String option) {
-        System.out.print("Would you like to " + option + "? (y/n):\n>");
+        System.out.print("Would you like to " + option + "? (y/n):\n> ");
         while (true) {
             Scanner sc = new Scanner(System.in);
             String userInput = sc.nextLine();
@@ -31,7 +31,7 @@ public class GameView {
             } else if (userInput.equalsIgnoreCase("n")) {
                 return false;
             } else {
-                System.out.print("Invalid input, please re-enter either y or n for yes or no respectively:\n>");
+                System.out.print("Invalid input, please re-enter either y or n for yes or no respectively:\n> ");
             }
         }
     }
