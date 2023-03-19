@@ -214,7 +214,7 @@ public class TestingSpaceYasith {
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3,2));
-        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.HAWK));
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
         p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3,2));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
