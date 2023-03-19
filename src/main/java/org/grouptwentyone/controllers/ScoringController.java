@@ -671,15 +671,24 @@ public class ScoringController {
     public static int scoreElkScoringCardA(PlayerBoard playerBoard) {
         int localScore = 0;
         int maxScore = 0;
+        Set<Tile> usedElkTiles = new HashSet<>();
 
         for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
             for (Tile tile : row) {
                 boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
 
-                if (hasElkToken) {
+                if (hasElkToken && !usedElkTiles.contains(tile)) {
                     ArrayList<Tile> tilesEast = playerBoard.getConnectedSameTilesEast(tile, playerBoard);
                     ArrayList<Tile> tilesSouthEast = playerBoard.getConnectedSameTilesSouthEast(tile, playerBoard);
                     ArrayList<Tile> tilesSouthWest = playerBoard.getConnectedSameTilesSouthWest(tile, playerBoard);
+
+                    for (Tile tileInEast: tilesEast) {
+                        usedElkTiles.add(tileInEast);
+                    } for (Tile tileInSouthEast: tilesSouthEast) {
+                        usedElkTiles.add(tileInSouthEast);
+                    } for (Tile tileInSouthWest : tilesSouthWest) {
+                        usedElkTiles.add(tileInSouthWest);
+                    }
 
                     int maxLine = Math.max(tilesEast.size(), Math.max(tilesSouthEast.size(), tilesSouthWest.size()));
 
@@ -711,7 +720,6 @@ public class ScoringController {
 
     public static int scoreElkScoringCardB(PlayerBoard playerBoard) {
         int localScore = 0;
-        int maxScore = 0;
         Set<Tile> usedElkTiles = new HashSet<>();
 
         for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
@@ -731,17 +739,13 @@ public class ScoringController {
                     }
 
                     if (groupSize == 1) {
-                        localScore = 2;
+                        localScore += 2;
                     } else if (groupSize == 2) {
-                        localScore = 5;
+                        localScore += 5;
                     } else if (groupSize == 3) {
-                        localScore = 9;
+                        localScore += 9;
                     } else if (groupSize == 4) {
-                        localScore = 13;
-                    }
-
-                    if (localScore > maxScore) {
-                        maxScore = localScore;
+                        localScore += 13;
                     }
 
 
@@ -749,7 +753,7 @@ public class ScoringController {
             }
         }
 
-        return maxScore;
+        return localScore;
     }
 
     public static int scoreElkScoringCardC(PlayerBoard playerBoard) {
@@ -779,27 +783,17 @@ public class ScoringController {
                 validSizes.add(size);
             }
         }
-        int sizeToFind = 4;
-        for (int size: validSizes) {
-            if (sizeToFind <= 0) {
-                break;
-            }
-            if (size == sizeToFind) {
-                localScore += 13;
-                sizeToFind--;
-                continue;  
-            } else if (size == sizeToFind) {
+
+        if (validSizes.contains(4)) {
+            localScore += 13;
+            if (validSizes.contains(3)) {
                 localScore += 9;
-                sizeToFind--;
-                continue;
-            } else if (size == sizeToFind) {
-                localScore += 5;
-                sizeToFind--;
-                continue;
-            } else if (size == sizeToFind) {
-                localScore += 2;
-                sizeToFind--;
-                continue;
+                if (validSizes.contains(2)) {
+                    localScore += 5;
+                    if (validSizes.contains(1)) {
+                        localScore += 2;
+                    }
+                }
             }
         }
 
