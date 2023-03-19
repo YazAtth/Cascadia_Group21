@@ -682,6 +682,6 @@ public class TestingSpaceDom {
         System.out.printf("You have a score of: %d\n", p1.getScore());
     }
     public static void main(String[] args) {
-       testHawkCardB();
+       testHawkCardC();
     }
 }

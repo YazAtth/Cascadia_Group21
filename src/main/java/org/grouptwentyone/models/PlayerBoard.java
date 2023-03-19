@@ -329,8 +329,8 @@ public class PlayerBoard {
 //        incrementScore(ScoringController.scoreSalmonScoringCardB(this));
 //        incrementScore(ScoringController.scoreSalmonScoringCardC(this));
 //        incrementScore(ScoringController.scoreHawkScoringCardA(this));
-        incrementScore(ScoringController.scoreHawkScoringCardB(this));
-//        incrementScore(ScoringController.scoreHawkScoringCardC(this));
+//        incrementScore(ScoringController.scoreHawkScoringCardB(this));
+        incrementScore(ScoringController.scoreHawkScoringCardC(this));
         return this.score;
     }
 
