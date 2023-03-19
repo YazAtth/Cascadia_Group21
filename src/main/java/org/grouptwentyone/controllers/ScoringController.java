@@ -943,7 +943,7 @@ public class ScoringController {
     public static int scoreHawkScoringCardB(PlayerBoard playerBoard) {
         int localScore = 0;
         Set<Tile> discardedHawkTiles = new HashSet<>();
-        int adjacentHawkPairCounter = 1;
+        int adjacentHawkPairCounter = 0;
 
         for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
             for (Tile tile : row) {
@@ -961,54 +961,17 @@ public class ScoringController {
                     int xCoord = tile.getHexCoordinate().getX();
                     int yCoord = tile.getHexCoordinate().getY();
 
-                    try {
-                        if (playerBoard.getTileByCoordinate(xCoord, yCoord + 2).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
-                                == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord, yCoord + 1).getHabitatTile().
-                                getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
-                            adjacentHawkPairCounter++;
-                        }
-                    } catch (Exception e) {;}
-
-                    try {
-                        if (xCoord % 2 == 0) {
-
-                            if (playerBoard.getTileByCoordinate(xCoord + 2, yCoord + 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
-                                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord + 1).getHabitatTile().
-                                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
-                                adjacentHawkPairCounter++;
-                            }
-
-                        } else {
-                            if (playerBoard.getTileByCoordinate(xCoord + 2, yCoord + 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
-                                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord).getHabitatTile().
-                                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
-                                adjacentHawkPairCounter++;
-
-                            }
-                        }
-                    } catch (Exception e) {;}
-
-                    try {
-                        if (xCoord % 2 == 0) {
-
-                            if (playerBoard.getTileByCoordinate(xCoord + 2, yCoord - 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
-                                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord).getHabitatTile().
-                                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
-                                adjacentHawkPairCounter++;
-                            }
-
-                        } else {
-                            if (playerBoard.getTileByCoordinate(xCoord + 2, yCoord - 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
-                                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord - 1).getHabitatTile().
-                                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
-                                adjacentHawkPairCounter++;
-                            }
-                        }
-                    } catch (Exception e) {;}
+                    if (hasDirectLineOfSight(xCoord, yCoord, playerBoard)) {
+                        adjacentHawkPairCounter++;
+                        System.out.println(xCoord + "   " + yCoord);
+                    }
 
                 }
             }
         }
+
+
+
         if (adjacentHawkPairCounter == 2) {
             localScore = 5;
         } else if (adjacentHawkPairCounter == 3) {
@@ -1026,6 +989,100 @@ public class ScoringController {
         }
 
         return localScore;
+    }
+
+    public static boolean hasDirectLineOfSight(int row, int col, PlayerBoard playerBoard) {
+        try {
+            if (playerBoard.getTileByCoordinate(row, col + 2).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(row, col + 1).getHabitatTile().
+                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                    return true;
+            }
+        } catch (Exception e) {;}
+
+        try {
+            if (row % 2 == 0) {
+
+                if (playerBoard.getTileByCoordinate(row + 2, col + 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                        == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(row + 1, col + 1).getHabitatTile().
+                        getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                        return true;
+                }
+
+            } else {
+                if (playerBoard.getTileByCoordinate(row + 2, col + 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                        == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(row + 1, col).getHabitatTile().
+                        getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                        return true;
+                }
+            }
+        } catch (Exception e) {;}
+
+        try {
+            if (row % 2 == 0) {
+
+                if (playerBoard.getTileByCoordinate(row + 2, col - 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                        == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(row + 1, col).getHabitatTile().
+                        getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                       return true;
+                }
+
+            } else {
+                if (playerBoard.getTileByCoordinate(row + 2, col - 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                        == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(row + 1, col - 1).getHabitatTile().
+                        getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                        return true;
+                }
+            }
+        } catch (Exception e) {;}
+
+        //north east
+        try {
+            if (row % 2 == 0) {
+
+                if (playerBoard.getTileByCoordinate(row - 2, col + 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                        == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(row - 1, col + 1).getHabitatTile().
+                        getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                    return true;
+                }
+
+            } else {
+                if (playerBoard.getTileByCoordinate(row - 2, col + 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                        == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(row - 2, col + 1).getHabitatTile().
+                        getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {;}
+
+        //north west
+        try {
+            if (row % 2 == 0) {
+
+                if (playerBoard.getTileByCoordinate(row - 2, col - 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                        == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(row - 1, col).getHabitatTile().
+                        getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                    return true;
+                }
+
+            } else {
+                if (playerBoard.getTileByCoordinate(row - 2, col - 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                        == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(row - 2, col - 1).getHabitatTile().
+                        getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                    return true;
+                }
+            }
+        } catch (Exception e) {;}
+
+        try {
+            if (playerBoard.getTileByCoordinate(row, col - 2).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(row, col - 1).getHabitatTile().
+                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                return true;
+            }
+        } catch (Exception e) {;}
+
+        return false;
     }
 
     public static int scoreHawkScoringCardC(PlayerBoard playerBoard) {
