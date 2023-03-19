@@ -71,7 +71,6 @@ public class TestingSpaceYasith {
 //        PlayerBoard pb = new PlayerBoard();
         Player p1 = new Player("Ton");
 
-
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1,0));
 

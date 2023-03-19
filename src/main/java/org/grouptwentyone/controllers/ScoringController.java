@@ -2,13 +2,14 @@ package org.grouptwentyone.controllers;
 
 import org.grouptwentyone.models.*;
 
+import javax.crypto.AEADBadTagException;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
+import java.security.spec.ECField;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ScoringController {
+
 
     public static int scoreFoxScoringCardA(PlayerBoard playerBoard) {
 
@@ -42,14 +43,13 @@ public class ScoringController {
         return localScore;
     }
 
-
     public static int scoreFoxScoringCardB(PlayerBoard playerBoard) {
 
         int localScore = 0;
         HashMap<Integer, Integer> scoringCard = new HashMap<>();
-        scoringCard.put(1,3);
-        scoringCard.put(2,5);
-        scoringCard.put(3,7);
+        scoringCard.put(1, 3);
+        scoringCard.put(2, 5);
+        scoringCard.put(3, 7);
 
         ArrayList<WildlifeToken.WildlifeTokenType> adjacentWildlifeTokensWithOneOccurrence = new ArrayList<>();
         ArrayList<WildlifeToken.WildlifeTokenType> adjacentWildlifeTokensWithPairOccurrence = new ArrayList<>();
@@ -95,7 +95,6 @@ public class ScoringController {
 
         return localScore;
     }
-
 
     public static int scoreFoxScoringCardC(PlayerBoard playerBoard) {
 
@@ -159,7 +158,7 @@ public class ScoringController {
 
                     // Ignore tiles that are excluded from scoring.
                     ArrayList<Tile> tilesToRemove = new ArrayList<>();
-                    for (Tile groupTile: tileGroupList) {
+                    for (Tile groupTile : tileGroupList) {
                         if (tilesExcludedFromScoring.contains(groupTile)) tilesToRemove.add(groupTile);
                     }
                     tileGroupList.removeAll(tilesToRemove);
@@ -178,8 +177,8 @@ public class ScoringController {
 
                         // Now check all of the remaining items in the group to see if they're adjacent to the pair.
                         // If they are: they should be excluded from scoring
-                        for (Tile groupTile: tileGroupList) {
-                            for (Tile pairTile: tilePairList) {
+                        for (Tile groupTile : tileGroupList) {
+                            for (Tile pairTile : tilePairList) {
                                 if (groupTile.isAdjacentToTile(pairTile)) {
                                     tilesExcludedFromScoring.add(groupTile);
                                 }
@@ -205,8 +204,6 @@ public class ScoringController {
         int localScore = scoringTable.get((int) numberOfPairs);
         return localScore;
     }
-
-
 
     public static int scoreBearScoringCardA_V1(PlayerBoard playerBoard) {
         double numberOfPairs = 0;
@@ -341,7 +338,6 @@ public class ScoringController {
         System.out.printf("Looking at %s\n", inputTile);
 
 
-
         ArrayList<Tile> adjacentTileListWithSameWildlifeTokenList = playerBoard.getAdjacentNonEmptyTileList(inputTile)
                 .stream().filter(adjacentTile -> adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == requiredWildlifeTokenType)
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -357,7 +353,6 @@ public class ScoringController {
         }
 
 
-
         // Base Case: If there are no more new unrecorded adjacent tiles
         if (newAdjacentTileList.size() == 0) return;
         if (listOfTilesInGroup.size() >= 3 && distanceLeftToTravel < 0) {
@@ -367,11 +362,9 @@ public class ScoringController {
         listOfTilesInGroup.addAll(newAdjacentTileList);
 
         for (Tile adjacentTile : newAdjacentTileList) {
-            traverseTileGroupNDistance_V1(playerBoard, listOfTilesInGroup, adjacentTile.getHexCoordinate(), distanceLeftToTravel-1);
+            traverseTileGroupNDistance_V1(playerBoard, listOfTilesInGroup, adjacentTile.getHexCoordinate(), distanceLeftToTravel - 1);
         }
     }
-
-
 
 
     public static ArrayList<Tile> getTileGroupOfSizeNFromTile_V1(PlayerBoard playerBoard, HexCoordinate hexCoordinate, int distanceToTravel) {
@@ -386,7 +379,7 @@ public class ScoringController {
         outputList.add(inputTile);
         outputList.addAll(adjacentTileListWithSameWildlifeTokenList);
 
-        for (Tile adjacentTile: adjacentTileListWithSameWildlifeTokenList) {
+        for (Tile adjacentTile : adjacentTileListWithSameWildlifeTokenList) {
             System.out.println("started traversal");
             traverseTileGroupNDistance_V1(playerBoard, outputList, adjacentTile.getHexCoordinate(), distanceToTravel);
         }
@@ -404,7 +397,7 @@ public class ScoringController {
         ArrayList<Tile> tilesRemovedFromScoring = new ArrayList<>();
 
 
-        for (ArrayList<Tile> row: playerBoard.getPlayerBoardAs2dArray()) {
+        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
             for (Tile tile : row) {
                 boolean tileHasBearToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.BEAR;
                 if (tileHasBearToken) {
@@ -430,8 +423,8 @@ public class ScoringController {
 
                     // List of the triple and the adjacent tiles (we remove any tiles not adjacent to the triple).
                     ArrayList<Tile> localTileGroupWithAdjacentTiles = new ArrayList<>(localTileGroupTriple);
-                    for (Tile localTile: localTileGroupWithoutTriple) {
-                        for (Tile localTripleTile: localTileGroupTriple) {
+                    for (Tile localTile : localTileGroupWithoutTriple) {
+                        for (Tile localTripleTile : localTileGroupTriple) {
                             if (localTile.isAdjacentToTile(localTripleTile)) {
                                 localTileGroupWithAdjacentTiles.add(localTile);
                             }
@@ -446,7 +439,7 @@ public class ScoringController {
 
 
                     boolean isLocalTileGroupRecorded = false;
-                    for (Tile tileInGroup: localTileGroupWithAdjacentTiles) {
+                    for (Tile tileInGroup : localTileGroupWithAdjacentTiles) {
                         boolean tileNotYetRecorded = !tilesRemovedFromScoring.contains(tileInGroup);
                         if (tileNotYetRecorded) {
                             tilesRemovedFromScoring.add(tileInGroup);
@@ -475,7 +468,7 @@ public class ScoringController {
 //        ArrayList<Tile> tilesRemovedFromScoring = new ArrayList<>();
 
 
-        for (ArrayList<Tile> row: playerBoard.getPlayerBoardAs2dArray()) {
+        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
             for (Tile tile : row) {
                 boolean tileHasBearToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.BEAR;
                 if (tileHasBearToken) {
@@ -483,7 +476,7 @@ public class ScoringController {
                     // Add local tile group to records if not already added
                     ArrayList<Tile> localTileGroup = getTileGroupOfSizeNFromTile_V1(playerBoard, tile.getHexCoordinate(), 4);
                     boolean isLocalTileGroupUnrecorded = true;
-                    for (ArrayList<Tile> tileGroup: tileGroupList) {
+                    for (ArrayList<Tile> tileGroup : tileGroupList) {
                         if (areGroupsEqual(tileGroup, localTileGroup)) {
                             isLocalTileGroupUnrecorded = false;
                             break;
@@ -534,7 +527,7 @@ public class ScoringController {
                         continue;
                     }
 
-                    groupSizeFrequency.put(3, groupSizeFrequency.get(3)+1);
+                    groupSizeFrequency.put(3, groupSizeFrequency.get(3) + 1);
                     foundTriple = true;
 
                     ArrayList<Tile> tripleGroupList = new ArrayList<>(tileGroupList.subList(0, 3));
@@ -546,8 +539,8 @@ public class ScoringController {
                     tileGroupList.remove(0);
 
                     // Identify and place adjacent tiles to the triple into the excluded from scoring list
-                    for (Tile groupTile: tileGroupList) {
-                        for (Tile tripleTile: tripleGroupList) {
+                    for (Tile groupTile : tileGroupList) {
+                        for (Tile tripleTile : tripleGroupList) {
                             boolean isTileAdjacentToTriple = groupTile.isAdjacentToTile(tripleTile);
                             if (isTileAdjacentToTriple) {
                                 excludedTilesFromScoring.add(groupTile);
@@ -582,7 +575,7 @@ public class ScoringController {
                         continue;
                     }
 
-                    groupSizeFrequency.put(2, groupSizeFrequency.get(2)+1);
+                    groupSizeFrequency.put(2, groupSizeFrequency.get(2) + 1);
                     foundDouble = true;
 
                     ArrayList<Tile> tripleGroupList = new ArrayList<>(tileGroupList.subList(0, 2));
@@ -593,8 +586,8 @@ public class ScoringController {
                     tileGroupList.remove(0);
 
                     // Identify and place adjacent tiles to the triple into the excluded from scoring list
-                    for (Tile groupTile: tileGroupList) {
-                        for (Tile tripleTile: tripleGroupList) {
+                    for (Tile groupTile : tileGroupList) {
+                        for (Tile tripleTile : tripleGroupList) {
                             boolean isTileAdjacentToTriple = groupTile.isAdjacentToTile(tripleTile);
                             if (isTileAdjacentToTriple) {
                                 excludedTilesFromScoring.add(groupTile);
@@ -628,7 +621,7 @@ public class ScoringController {
                         continue;
                     }
 
-                    groupSizeFrequency.put(1, groupSizeFrequency.get(1)+1);
+                    groupSizeFrequency.put(1, groupSizeFrequency.get(1) + 1);
                     foundSingle = true;
 
                     ArrayList<Tile> tripleGroupList = new ArrayList<>(tileGroupList.subList(0, 1));
@@ -638,8 +631,8 @@ public class ScoringController {
                     tileGroupList.remove(0);
 
                     // Identify and place adjacent tiles to the triple into the excluded from scoring list
-                    for (Tile groupTile: tileGroupList) {
-                        for (Tile tripleTile: tripleGroupList) {
+                    for (Tile groupTile : tileGroupList) {
+                        for (Tile tripleTile : tripleGroupList) {
                             boolean isTileAdjacentToTriple = groupTile.isAdjacentToTile(tripleTile);
                             if (isTileAdjacentToTriple) {
                                 excludedTilesFromScoring.add(groupTile);
@@ -670,18 +663,450 @@ public class ScoringController {
         }
 
 
-
 //        System.out.printf(groupSizeFrequency.toString());
 
         return localScore;
     }
 
+    public static int scoreElkScoringCardA(PlayerBoard playerBoard) {
+        int localScore = 0;
+        int maxScore = 0;
+
+        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
+            for (Tile tile : row) {
+                boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
+
+                if (hasElkToken) {
+                    ArrayList<Tile> tilesEast = playerBoard.getConnectedSameTilesEast(tile, playerBoard);
+                    ArrayList<Tile> tilesSouthEast = playerBoard.getConnectedSameTilesSouthEast(tile, playerBoard);
+                    ArrayList<Tile> tilesSouthWest = playerBoard.getConnectedSameTilesSouthWest(tile, playerBoard);
+
+                    int maxLine = Math.max(tilesEast.size(), Math.max(tilesSouthEast.size(), tilesSouthWest.size()));
+
+                    if (maxLine > 4) {
+                        maxLine = 4;
+                    }
+
+                    if (maxLine == 1) {
+                        localScore = 2;
+                    } else if (maxLine == 2) {
+                        localScore = 5;
+                    } else if (maxLine == 3) {
+                        localScore = 9;
+                    } else if (maxLine == 4) {
+                        localScore = 13;
+                    }
+
+                    if (localScore >= maxScore) {
+                        maxScore = localScore;
+                    }
+                }
 
 
+            }
+        }
+
+        return maxScore;
+    }
+
+    public static int scoreElkScoringCardB(PlayerBoard playerBoard) {
+        int localScore = 0;
+        int maxScore = 0;
+        Set<Tile> usedElkTiles = new HashSet<>();
+
+        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
+            for (Tile tile : row) {
+                boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
+
+                if (hasElkToken && !usedElkTiles.contains(tile)) {
+                    usedElkTiles.add(tile);
+                    ArrayList<Tile> group = getTileGroupFromTile(playerBoard, tile.getHexCoordinate());
+
+                    usedElkTiles.addAll(group);
+
+                    int groupSize = group.size();
+
+                    if (groupSize > 4) {
+                        groupSize = 4;
+                    }
+
+                    if (groupSize == 1) {
+                        localScore = 2;
+                    } else if (groupSize == 2) {
+                        localScore = 5;
+                    } else if (groupSize == 3) {
+                        localScore = 9;
+                    } else if (groupSize == 4) {
+                        localScore = 13;
+                    }
+
+                    if (localScore > maxScore) {
+                        maxScore = localScore;
+                    }
 
 
+                }
+            }
+        }
 
+        return maxScore;
+    }
 
+    public static int scoreSalmonScoringCardA(PlayerBoard playerBoard) {
+        int localScore = 0;
+        Set<Tile> usedSalmonTiles = new HashSet<>();
+
+        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
+            for (Tile tile : row) {
+                boolean hasSalmonToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.SALMON;
+
+                if (hasSalmonToken && !usedSalmonTiles.contains(tile)) {
+
+                    ArrayList<Tile> runOfSalmon = new ArrayList<>();
+                    getRunOfSalmon(tile, playerBoard, runOfSalmon, usedSalmonTiles);
+
+                    int runSize = runOfSalmon.size();
+
+                    if (runSize == 1) {
+                        localScore += 2;
+                    } else if (runSize == 2) {
+                        localScore += 5;
+                    } else if (runSize == 3) {
+                        localScore += 8;
+                    } else if (runSize == 4) {
+                        localScore += 12;
+                    } else if (runSize == 5) {
+                        localScore += 16;
+                    } else if (runSize == 6) {
+                        localScore += 20;
+                    } else if (runSize >= 7) {
+                        localScore += 25;
+                    }
+
+                }
+            }
+        }
+        return localScore;
+    }
+
+    public static int scoreSalmonScoringCardB(PlayerBoard playerBoard) {
+        int localScore = 0;
+        Set<Tile> usedSalmonTiles = new HashSet<>();
+
+        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
+            for (Tile tile : row) {
+                boolean hasSalmonToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.SALMON;
+
+                if (hasSalmonToken && !usedSalmonTiles.contains(tile)) {
+
+                    ArrayList<Tile> runOfSalmon = new ArrayList<>();
+                    getRunOfSalmon(tile, playerBoard, runOfSalmon, usedSalmonTiles);
+
+                    int runSize = runOfSalmon.size();
+
+                    if (runSize == 1) {
+                        localScore += 2;
+                    } else if (runSize == 2) {
+                        localScore += 4;
+                    } else if (runSize == 3) {
+                        localScore += 9;
+                    } else if (runSize >= 4) {
+                        localScore += 11;
+                    }
+                }
+            }
+        }
+        return localScore;
+    }
+
+    public static int scoreSalmonScoringCardC(PlayerBoard playerBoard) {
+        int localScore = 0;
+        Set<Tile> usedSalmonTiles = new HashSet<>();
+
+        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
+            for (Tile tile : row) {
+                boolean hasSalmonToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.SALMON;
+
+                if (hasSalmonToken && !usedSalmonTiles.contains(tile)) {
+
+                    ArrayList<Tile> runOfSalmon = new ArrayList<>();
+                    getRunOfSalmon(tile, playerBoard, runOfSalmon, usedSalmonTiles);
+
+                    int runSize = runOfSalmon.size();
+
+                    if (runSize == 3) {
+                        localScore += 10;
+                    } else if (runSize == 4) {
+                        localScore += 12;
+                    } else if (runSize >= 5) {
+                        localScore += 15;
+                    }
+                }
+            }
+        }
+        return localScore;
+    }
+
+    public static int scoreHawkScoringCardA(PlayerBoard playerBoard) {
+        int localScore = 0;
+        Set<Tile> discardedHawks = new HashSet<>();
+        Set<Tile> hawks = new HashSet<>();
+
+        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
+            for (Tile tile : row) {
+                boolean hasHawkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.HAWK;
+
+                if (hasHawkToken && !discardedHawks.contains(tile)) {
+
+                    ArrayList<Tile> adjacentTiles = playerBoard.getAdjacentTileList(tile);
+                    for (Tile adjacentTile : adjacentTiles) {
+                        if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.HAWK) {
+                            discardedHawks.add(adjacentTile);
+                        }
+                    }
+
+                    hawks.add(tile);
+
+                }
+            }
+        }
+
+        if (hawks.size() == 1) {
+            localScore = 2;
+        } else if (hawks.size() == 2) {
+            localScore = 5;
+        } else if (hawks.size() == 3) {
+            localScore = 8;
+        } else if (hawks.size() == 4) {
+            localScore = 11;
+        } else if (hawks.size() == 5) {
+            localScore = 14;
+        } else if (hawks.size() == 6) {
+            localScore = 18;
+        } else if (hawks.size() == 7) {
+            localScore = 22;
+        } else if (hawks.size() >= 8) {
+            localScore = 26;
+        }
+
+        return localScore;
+    }
+
+    public static int scoreHawkScoringCardB(PlayerBoard playerBoard) {
+        int localScore = 0;
+        Set<Tile> discardedHawkTiles = new HashSet<>();
+        int adjacentHawkPairCounter = 1;
+
+        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
+            for (Tile tile : row) {
+                boolean hasHawkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                        == WildlifeToken.WildlifeTokenType.HAWK;
+
+                if (hasHawkToken && !discardedHawkTiles.contains(tile)) {
+                    ArrayList<Tile> adjacentTiles = playerBoard.getAdjacentTileList(tile);
+                    for (Tile adjacentTile : adjacentTiles) {
+                        if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.HAWK) {
+                            discardedHawkTiles.add(adjacentTile);
+                        }
+                    }
+
+                    int xCoord = tile.getHexCoordinate().getX();
+                    int yCoord = tile.getHexCoordinate().getY();
+
+                    try {
+                        if (playerBoard.getTileByCoordinate(xCoord, yCoord + 2).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                                == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord, yCoord + 1).getHabitatTile().
+                                getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                            adjacentHawkPairCounter++;
+                        }
+                    } catch (Exception e) {;}
+
+                    try {
+                        if (xCoord % 2 == 0) {
+
+                            if (playerBoard.getTileByCoordinate(xCoord + 2, yCoord + 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord + 1).getHabitatTile().
+                                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                                adjacentHawkPairCounter++;
+                            }
+
+                        } else {
+                            if (playerBoard.getTileByCoordinate(xCoord + 2, yCoord + 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord).getHabitatTile().
+                                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                                adjacentHawkPairCounter++;
+
+                            }
+                        }
+                    } catch (Exception e) {;}
+
+                    try {
+                        if (xCoord % 2 == 0) {
+
+                            if (playerBoard.getTileByCoordinate(xCoord + 2, yCoord - 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord).getHabitatTile().
+                                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                                adjacentHawkPairCounter++;
+                            }
+
+                        } else {
+                            if (playerBoard.getTileByCoordinate(xCoord + 2, yCoord - 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord - 1).getHabitatTile().
+                                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                                adjacentHawkPairCounter++;
+                            }
+                        }
+                    } catch (Exception e) {;}
+
+                }
+            }
+        }
+        if (adjacentHawkPairCounter == 2) {
+            localScore = 5;
+        } else if (adjacentHawkPairCounter == 3) {
+            localScore = 9;
+        } else if (adjacentHawkPairCounter == 4) {
+            localScore = 12;
+        } else if (adjacentHawkPairCounter == 5) {
+            localScore = 16;
+        } else if (adjacentHawkPairCounter == 6) {
+            localScore = 20;
+        } else if (adjacentHawkPairCounter == 7) {
+            localScore = 24;
+        } else if (adjacentHawkPairCounter >= 8) {
+            localScore = 28;
+        }
+
+        return localScore;
+    }
+
+    public static int scoreHawkScoringCardC(PlayerBoard playerBoard) {
+        int localScore = 0;
+        Set<Tile> discardedHawkTiles = new HashSet<>();
+        int adjacentHawkPairCounter = 0;
+        String scoreTable = " ____________________________________________________________________\n" +
+                            "| \033[1;36mHAWK SCORING CARD C    \033[0m                                            |\n" +
+                            "| - score 3 points for each direct line of sight between two hawks   |\n" +
+                            "| - tile in between the hawks must have no wildlife                  |\n" +
+                            "| \033[4;33mYOUR SCORE\033[0m                                                         |\n";
+                ;
+        //System.out.println("\u2502" + "   \u2514   \u2510"  +  "  \u250C\u2518" + "│"); // └ ┐ ┌ ┘ ─
+
+        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
+            for (Tile tile : row) {
+                boolean hasHawkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                        == WildlifeToken.WildlifeTokenType.HAWK;
+
+                if (hasHawkToken && !discardedHawkTiles.contains(tile)) {
+                    ArrayList<Tile> adjacentTiles = playerBoard.getAdjacentTileList(tile);
+                    for (Tile adjacentTile : adjacentTiles) {
+                        if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.HAWK) {
+                            discardedHawkTiles.add(adjacentTile);
+                        }
+                    }
+
+                    int xCoord = tile.getHexCoordinate().getX();
+                    int yCoord = tile.getHexCoordinate().getY();
+
+                    try {
+                        if (playerBoard.getTileByCoordinate(xCoord, yCoord + 2).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                                == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord, yCoord + 1).getHabitatTile().
+                                getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                            adjacentHawkPairCounter++;
+                            //update score table
+                            scoreTable += "|\033[0;37m LINE OF SIGHT " + adjacentHawkPairCounter + "\033[0m :    (" + xCoord + ", " + yCoord + ")"
+                        + "   =>   " + "(" + xCoord + ", " + (yCoord + 2) + ")" +  "         \033[1;93m+3\033[0m               |\n";
+                        }
+                    } catch (Exception e) {;}
+
+                    try {
+                        if (xCoord % 2 == 0) {
+
+                            if (playerBoard.getTileByCoordinate(xCoord + 2, yCoord + 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord + 1).getHabitatTile().
+                                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                                adjacentHawkPairCounter++;
+                                scoreTable += "|\033[0;37m LINE OF SIGHT " + adjacentHawkPairCounter + "\033[0m :    (" + xCoord + ", " + yCoord + ")"
+                                        + "   =>   " + "(" + (xCoord + 2) + ", " + (yCoord + 1) + ")" +  "         \033[1;93m+3\033[0m               |\n";
+                            }
+
+                        } else {
+                            if (playerBoard.getTileByCoordinate(xCoord + 2, yCoord + 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord).getHabitatTile().
+                                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                                adjacentHawkPairCounter++;
+                                scoreTable += "|\033[0;37m LINE OF SIGHT " + adjacentHawkPairCounter + "\033[0m :    (" + xCoord + ", " + yCoord + ")"
+                                        + "   =>   " + "(" + (xCoord + 2) + ", " + (yCoord + 1) + ")" +  "         \033[1;93m+3\033[0m               |\n";
+                            }
+                        }
+                    } catch (Exception e) {;}
+
+                    try {
+                        if (xCoord % 2 == 0) {
+
+                            if (playerBoard.getTileByCoordinate(xCoord + 2, yCoord - 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord).getHabitatTile().
+                                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                                adjacentHawkPairCounter++;
+                                scoreTable += "|\033[0;37m LINE OF SIGHT " + adjacentHawkPairCounter + "\033[0m :    (" + xCoord + ", " + yCoord + ")"
+                                        + "   =>   " + "(" + (xCoord + 2) + ", " + (yCoord - 1) + ")" +  "         \033[1;93m+3\033[0m               |\n";
+                            }
+
+                        } else {
+                            if (playerBoard.getTileByCoordinate(xCoord + 2, yCoord - 1).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                                    == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord - 1).getHabitatTile().
+                                    getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                                adjacentHawkPairCounter++;
+                                scoreTable += "|\033[0;37m LINE OF SIGHT " + adjacentHawkPairCounter + "\033[0m :    (" + xCoord + ", " + yCoord + ")"
+                                        + "   =>   " + "(" + (xCoord + 2) + ", " + (yCoord - 1) + ")" +  "         \033[1;93m+3\033[0m               |\n";
+                            }
+                        }
+                    } catch (Exception e) {;}
+
+                }
+            }
+        }
+
+        System.out.println(scoreTable);
+        return adjacentHawkPairCounter * 3;
+    }
+
+    public static ArrayList<Tile> getRunOfSalmon (Tile root, PlayerBoard
+            playerBoard, ArrayList < Tile > run, Set < Tile > usedTiles){
+
+        if (root == null) {
+            return run;
+        }
+
+        ArrayList<Tile> adjacentSalmonTiles = new ArrayList<>();
+        ArrayList<Tile> adjacentTiles = playerBoard.getAdjacentTileList(root);
+        usedTiles.add(root);
+
+        for (Tile adjacentTile : adjacentTiles) {
+            if ((adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.SALMON)) {
+
+                adjacentSalmonTiles.add(adjacentTile);
+            }
+        }
+
+        Tile nextSalmon = null;
+        if (adjacentSalmonTiles.size() > 0) {
+            for (Tile tile : adjacentSalmonTiles) {
+                if (!run.contains(tile)) {
+                    nextSalmon = tile;
+                }
+            }
+        }
+
+        if (adjacentSalmonTiles.size() > 2) {
+            return run;
+        } else {
+            run.add(root);
+            getRunOfSalmon(nextSalmon, playerBoard, run, usedTiles);
+        }
+
+        return run;
+    }
 }
 
 
