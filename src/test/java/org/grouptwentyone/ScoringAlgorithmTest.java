@@ -414,10 +414,28 @@ class ScoringAlgorithmTest {
 
             int score = ScoringController.scoreBearScoringCardC(p1.getPlayerBoardObject());
             assertEquals(18, score);
-
-
         }
     }
+
+
+    @Nested
+    @DisplayName("Test Hawk Cards")
+    class TestHawkCards {
+
+    }
+
+    @Nested
+    @DisplayName("Test Elk Cards")
+    class TestElkCards {
+
+    }
+
+    @Nested
+    @DisplayName("Test Salmon Cards")
+    class TestSalmonCards {
+
+    }
+
 
 
 
