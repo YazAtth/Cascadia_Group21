@@ -64,7 +64,7 @@ public class ScoringCards {
                         case A: return "Fox (A): Score a point for each unique wildlife type adjacent to the fox, " +
                                 "including another fox.";
                         case B: return "Fox (B): Score points for each unique pair of wildlife types adjacent to the fox," +
-                                " excluding other foxes. The pairs themselves don't need to be adjacent to eachother. " +
+                                " excluding other foxes. The pairs themselves don't need to be adjacent to eachother.\n" +
                                 "Points are: 3 for 1 pair, 5 for 2 pairs, 7 for 3.";
                         case C: return "Fox (C): Score a point for each token of the most abundant wildlife type " +
                                 "adjacent to the fox. Other adjacent foxes are excluded from scoring.";
@@ -73,10 +73,10 @@ public class ScoringCards {
                 case ELK:
                     switch (scoreType) {
                         case A: return "Elk (A): Score points for each straight line (doesn't need to be horizontal), " +
-                                "of elk. Lines may be adjacent to eachother, but each elk may only be part of 1 line. " +
+                                "of elk. Lines may be adjacent to eachother, but each elk may only be part of 1 line.\n" +
                                 "Points earned per elk: 2, 5, 9, 13.";
-                        case B: return "Elk (B): Score points for each contiguous group of adjacent elk in any shape." +
-                                "Points score for each elk in group: 2, 4, 7, 10, 14, 18, 23, 28.";
+                        case B: return "Elk (B): Score points for each contiguous group of adjacent elk in any shape.\n" +
+                                "Points for each elk in group: 2, 4, 7, 10, 14, 18, 23, 28.";
                         case C: return "Elk (C): Score points per group of elk in following shapes (adjacent groups are " +
                                 "allowed but each elk can only be part of 1 group.\n13 points for 4 elk in a diamond shape." +
                                 "9 points for a group of 3 elk (not in a line). 5 points for a group of 2 elk. 2 points " +
@@ -86,7 +86,7 @@ public class ScoringCards {
                 case HAWK:
                     switch (scoreType) {
                         case A: return "Hawk (A): Score points for each hawk (hawks adjacent to other hawks do not count" +
-                                " towards score). Points: 2, 5, 8, 11, 14, 18, 22, 26.";
+                                " towards score).\nPoints: 2, 5, 8, 11, 14, 18, 22, 26.";
                         case B: return "Hawk (B): Get points for each pair of hawks with direct line of sight. The hawks " +
                                 "must be separated by exactly 1 habitat tile that has no placed wildlife token.\n" +
                                 "Points per pair: 2, 5, 9, 12, 16, 20, 24, 28.";
