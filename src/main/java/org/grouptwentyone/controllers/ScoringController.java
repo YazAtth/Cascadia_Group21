@@ -673,14 +673,17 @@ public class ScoringController {
         int maxScore = 0;
         Set<Tile> usedElkTiles = new HashSet<>();
 
-        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
-            for (Tile tile : row) {
+        for (int i = 0; i < playerBoard.getPlayerBoardAs2dArray().size(); i++) {
+            for (int j = 0; j < playerBoard.getPlayerBoardAs2dArray().get(0).size(); j++) {
+
+                Tile tile = playerBoard.getPlayerBoardAs2dArray().get(i).get(j);
                 boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
 
                 if (hasElkToken && !usedElkTiles.contains(tile)) {
                     ArrayList<Tile> tilesEast = playerBoard.getConnectedSameTilesEast(tile, playerBoard);
                     ArrayList<Tile> tilesSouthEast = playerBoard.getConnectedSameTilesSouthEast(tile, playerBoard);
                     ArrayList<Tile> tilesSouthWest = playerBoard.getConnectedSameTilesSouthWest(tile, playerBoard);
+                    ArrayList<Tile> maxGroup = new ArrayList<>();
 
                     for (Tile tileInEast: tilesEast) {
                         usedElkTiles.add(tileInEast);

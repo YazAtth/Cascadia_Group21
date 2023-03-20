@@ -61,9 +61,10 @@ public class TestingSpaceDom {
     public static void testElkCardA() {
         Player p1 = new Player("Ton");
 
-
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1,0));
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,1));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1,0));
@@ -72,7 +73,7 @@ public class TestingSpaceDom {
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1,0));
-        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
         p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,1));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
@@ -82,7 +83,7 @@ public class TestingSpaceDom {
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2,1));
-        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.HAWK));
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
         p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2,1));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
@@ -112,23 +113,21 @@ public class TestingSpaceDom {
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3,5));
-        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON));
         p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3,5));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3,6));
-        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
         p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3,6));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2,6));
-        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
         p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2,6));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(4,1));
-        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
-        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(4,1));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(5,1));
@@ -682,6 +681,6 @@ public class TestingSpaceDom {
         System.out.printf("You have a score of: %d\n", p1.getScore());
     }
     public static void main(String[] args) {
-       testHawkCardC();
+       testElkCardA();
     }
 }

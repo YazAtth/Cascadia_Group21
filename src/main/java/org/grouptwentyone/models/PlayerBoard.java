@@ -322,7 +322,7 @@ public class PlayerBoard {
 //        incrementScore(ScoringController.scoreBearScoringCardA(this));
 //        incrementScore(ScoringController.scoreBearScoringCardB(this));
 //        incrementScore(ScoringController.scoreBearScoringCardC(this));
-//        incrementScore(ScoringController.scoreElkScoringCardA(this));
+        incrementScore(ScoringController.scoreElkScoringCardA(this));
 //        incrementScore(ScoringController.scoreElkScoringCardB(this));
 //        incrementScore(ScoringController.scoreElkScoringCardC(this));
 //        incrementScore(ScoringController.scoreSalmonScoringCardA(this));
@@ -330,7 +330,7 @@ public class PlayerBoard {
 //        incrementScore(ScoringController.scoreSalmonScoringCardC(this));
 //        incrementScore(ScoringController.scoreHawkScoringCardA(this));
 //        incrementScore(ScoringController.scoreHawkScoringCardB(this));
-        incrementScore(ScoringController.scoreHawkScoringCardC(this));
+//        incrementScore(ScoringController.scoreHawkScoringCardC(this));
         return this.score;
     }
 
