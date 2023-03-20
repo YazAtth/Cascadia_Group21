@@ -1,6 +1,7 @@
 package org.grouptwentyone.views;
 
 import org.grouptwentyone.models.Player;
+import org.grouptwentyone.models.ScoringCards;
 
 public class GameUiView {
 
@@ -45,6 +46,13 @@ public class GameUiView {
     public static void printPlayerHeader(Player player) {
         System.out.printf("%s⏺ %s ⏺ Nature Tokens: %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT,
                 player.getUserName(), player.getNumOfNatureTokens(), GameUiView.RESET_COLOUR);
+        printLinePageBorder();
+        //print scoring card rules
+        System.out.println("Scoring card rules:");
+        for (ScoringCards.ScoreCard card : ScoringCards.getScoreCardsList()) {
+            System.out.println(card.getCardInfo());
+        }
+        printLinePageBorder();
     }
 
 }
