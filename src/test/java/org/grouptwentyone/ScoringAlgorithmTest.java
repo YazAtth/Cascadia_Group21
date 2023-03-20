@@ -1,10 +1,10 @@
-package org.grouptwentyone.models;
+package org.grouptwentyone;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.grouptwentyone.controllers.ScoringController;
 import org.grouptwentyone.controllers.StarterHabitatTilesController;
-import org.grouptwentyone.views.BoardView;
+import org.grouptwentyone.models.*;
 import org.junit.jupiter.api.*;
 
 class ScoringAlgorithmTest {
