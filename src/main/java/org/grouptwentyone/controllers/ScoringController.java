@@ -663,60 +663,70 @@ public class ScoringController {
         }
 
 
-//        System.out.printf(groupSizeFrequency.toString());
-
         return localScore;
     }
 
     public static int scoreElkScoringCardA(PlayerBoard playerBoard) {
-        int localScore = 0;
-        int maxScore = 0;
-        Set<Tile> usedElkTiles = new HashSet<>();
+     int localScore = 0;
+
+     Set<Tile> usedElkTiles = new HashSet<>();
+
+     // call recursive function to get score
+     localScore = getLargestGroup(playerBoard, localScore, usedElkTiles);
+
+     return localScore;
+    }
+
+    public static int getLargestGroup(PlayerBoard playerBoard, int totalScore, Set<Tile> usedElkTiles) {
+        ArrayList<Tile> largestLine = new ArrayList<>();
 
         for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
             for (Tile tile : row) {
                 boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
 
                 if (hasElkToken && !usedElkTiles.contains(tile)) {
+                    //get lines of elk (if any)
                     ArrayList<Tile> tilesEast = playerBoard.getConnectedSameTilesEast(tile, playerBoard);
                     ArrayList<Tile> tilesSouthEast = playerBoard.getConnectedSameTilesSouthEast(tile, playerBoard);
                     ArrayList<Tile> tilesSouthWest = playerBoard.getConnectedSameTilesSouthWest(tile, playerBoard);
 
-                    for (Tile tileInEast: tilesEast) {
-                        usedElkTiles.add(tileInEast);
-                    } for (Tile tileInSouthEast: tilesSouthEast) {
-                        usedElkTiles.add(tileInSouthEast);
-                    } for (Tile tileInSouthWest : tilesSouthWest) {
-                        usedElkTiles.add(tileInSouthWest);
+                    //find largest line of elk in the board
+                    if (tilesEast.size() >= largestLine.size()) {
+                        largestLine = tilesEast;
                     }
-
-                    int maxLine = Math.max(tilesEast.size(), Math.max(tilesSouthEast.size(), tilesSouthWest.size()));
-
-                    if (maxLine > 4) {
-                        maxLine = 4;
+                    if (tilesSouthEast.size() >= largestLine.size()) {
+                        largestLine = tilesSouthEast;
                     }
-
-                    if (maxLine == 1) {
-                        localScore = 2;
-                    } else if (maxLine == 2) {
-                        localScore = 5;
-                    } else if (maxLine == 3) {
-                        localScore = 9;
-                    } else if (maxLine == 4) {
-                        localScore = 13;
-                    }
-
-                    if (localScore >= maxScore) {
-                        maxScore = localScore;
+                    if (tilesSouthWest.size() >= largestLine.size()) {
+                        largestLine = tilesSouthWest;
                     }
                 }
-
-
             }
         }
+        //base case : there are no more lines of elk
+        if (largestLine.size() == 0) {
+            return 0;
+        }
 
-        return maxScore;
+        //recursive case : there is at least one line of elk of size 1 or more
+        else {
+            //add elk in largest line to remove them in the next recursive call
+            usedElkTiles.addAll(largestLine);
+
+            //set score
+            if (largestLine.size() == 1) {
+                totalScore = 2;
+            } else if (largestLine.size() == 2) {
+                totalScore = 5;
+            } else if (largestLine.size() == 3) {
+                totalScore = 9;
+            } else if (largestLine.size() >= 4) {
+                totalScore = 13;
+            }
+            return totalScore + getLargestGroup(playerBoard, totalScore, usedElkTiles);
+        }
     }
+
 
     public static int scoreElkScoringCardB(PlayerBoard playerBoard) {
         int localScore = 0;
@@ -728,12 +738,16 @@ public class ScoringController {
 
                 if (hasElkToken && !usedElkTiles.contains(tile)) {
                     usedElkTiles.add(tile);
+
+                    //get all elk tiles that are in the same group as the tile in iteration
                     ArrayList<Tile> group = getTileGroupFromTile(playerBoard, tile.getHexCoordinate());
 
+                    //add this group in usedElkTiles so the next iteration skips over these tiles
                     usedElkTiles.addAll(group);
 
                     int groupSize = group.size();
 
+                    //increment score
                     if (groupSize > 4) {
                         groupSize = 4;
                     }
@@ -747,8 +761,6 @@ public class ScoringController {
                     } else if (groupSize == 4) {
                         localScore += 13;
                     }
-
-
                 }
             }
         }
@@ -759,24 +771,28 @@ public class ScoringController {
     public static int scoreElkScoringCardC(PlayerBoard playerBoard) {
         int localScore = 0;
         Set<Tile> usedElkTiles = new HashSet<>();
+
+        //list to store all sizes we found in the board
         ArrayList<Integer> sizes = new ArrayList<>();
         int groupSizeToFind = 4;
-
-
 
         for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
             for (Tile tile : row) {
                 boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
 
                 if (hasElkToken && !usedElkTiles.contains(tile)) {
+                    //get group of elk in board and add the size of that group to the sizes list
                     ArrayList<Tile> group = getTileGroupFromTile(playerBoard, tile.getHexCoordinate());
                     sizes.add(group.size());
-                    for (Tile tileInGroup : group) {
-                        usedElkTiles.add(tileInGroup);
-                    }
+
+                    usedElkTiles.addAll(group);
                 }
             }
         }
+
+        //remove sizes greater than 4, since they will yield no points
+        // function assumes 'group' means an independent cluster of animals, i.e, a cluster of 5 elk
+        // is not a group of 1 elk and a group of 4 elk
         ArrayList<Integer> validSizes = new ArrayList<>();
         for (int size: sizes) {
             if (size < 5) {
@@ -784,6 +800,7 @@ public class ScoringController {
             }
         }
 
+        //increment points
         if (validSizes.contains(4)) {
             localScore += 13;
             if (validSizes.contains(3)) {
@@ -811,10 +828,13 @@ public class ScoringController {
                 if (hasSalmonToken && !usedSalmonTiles.contains(tile)) {
 
                     ArrayList<Tile> runOfSalmon = new ArrayList<>();
+
+                    //get run of salmon
                     getRunOfSalmon(tile, playerBoard, runOfSalmon, usedSalmonTiles);
 
                     int runSize = runOfSalmon.size();
 
+                    //increment size
                     if (runSize == 1) {
                         localScore += 2;
                     } else if (runSize == 2) {
@@ -848,10 +868,12 @@ public class ScoringController {
                 if (hasSalmonToken && !usedSalmonTiles.contains(tile)) {
 
                     ArrayList<Tile> runOfSalmon = new ArrayList<>();
+                    //get run of salmon
                     getRunOfSalmon(tile, playerBoard, runOfSalmon, usedSalmonTiles);
 
                     int runSize = runOfSalmon.size();
 
+                    //increment score
                     if (runSize == 1) {
                         localScore += 2;
                     } else if (runSize == 2) {
@@ -878,10 +900,12 @@ public class ScoringController {
                 if (hasSalmonToken && !usedSalmonTiles.contains(tile)) {
 
                     ArrayList<Tile> runOfSalmon = new ArrayList<>();
+                    //get run of salmon
                     getRunOfSalmon(tile, playerBoard, runOfSalmon, usedSalmonTiles);
 
                     int runSize = runOfSalmon.size();
 
+                    //increment size
                     if (runSize == 3) {
                         localScore += 10;
                     } else if (runSize == 4) {
@@ -897,8 +921,8 @@ public class ScoringController {
 
     public static int scoreHawkScoringCardA(PlayerBoard playerBoard) {
         int localScore = 0;
-        Set<Tile> discardedHawks = new HashSet<>();
-        Set<Tile> hawks = new HashSet<>();
+        Set<Tile> discardedHawks = new HashSet<>(); //set of removed hawks
+        Set<Tile> validHawks = new HashSet<>();  //set of valid hawks
 
         for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
             for (Tile tile : row) {
@@ -906,34 +930,39 @@ public class ScoringController {
 
                 if (hasHawkToken && !discardedHawks.contains(tile)) {
 
+                    //get all adjacent tiles to the hawk in iteration
                     ArrayList<Tile> adjacentTiles = playerBoard.getAdjacentTileList(tile);
+
+                    //if hawk is adjacent to another hawk, add that hawk to discardedHawks so that it is not counted in scoring
                     for (Tile adjacentTile : adjacentTiles) {
                         if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.HAWK) {
                             discardedHawks.add(adjacentTile);
                         }
                     }
 
-                    hawks.add(tile);
+                    //add hawk to validHawks for scoring
+                    validHawks.add(tile);
 
                 }
             }
         }
 
-        if (hawks.size() == 1) {
+        //set score
+        if (validHawks.size() == 1) {
             localScore = 2;
-        } else if (hawks.size() == 2) {
+        } else if (validHawks.size() == 2) {
             localScore = 5;
-        } else if (hawks.size() == 3) {
+        } else if (validHawks.size() == 3) {
             localScore = 8;
-        } else if (hawks.size() == 4) {
+        } else if (validHawks.size() == 4) {
             localScore = 11;
-        } else if (hawks.size() == 5) {
+        } else if (validHawks.size() == 5) {
             localScore = 14;
-        } else if (hawks.size() == 6) {
+        } else if (validHawks.size() == 6) {
             localScore = 18;
-        } else if (hawks.size() == 7) {
+        } else if (validHawks.size() == 7) {
             localScore = 22;
-        } else if (hawks.size() >= 8) {
+        } else if (validHawks.size() >= 8) {
             localScore = 26;
         }
 
@@ -951,6 +980,8 @@ public class ScoringController {
                         == WildlifeToken.WildlifeTokenType.HAWK;
 
                 if (hasHawkToken && !discardedHawkTiles.contains(tile)) {
+
+                    //shortlist hawks that are adjacent to other hawks so that they are ignored for scoring
                     ArrayList<Tile> adjacentTiles = playerBoard.getAdjacentTileList(tile);
                     for (Tile adjacentTile : adjacentTiles) {
                         if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.HAWK) {
@@ -961,17 +992,15 @@ public class ScoringController {
                     int xCoord = tile.getHexCoordinate().getX();
                     int yCoord = tile.getHexCoordinate().getY();
 
+                    //verify if a direct line of sight exists
                     if (hasDirectLineOfSight(xCoord, yCoord, playerBoard)) {
                         adjacentHawkPairCounter++;
-                        System.out.println(xCoord + "   " + yCoord);
                     }
-
                 }
             }
         }
 
-
-
+        //set score
         if (adjacentHawkPairCounter == 2) {
             localScore = 5;
         } else if (adjacentHawkPairCounter == 3) {
@@ -991,7 +1020,15 @@ public class ScoringController {
         return localScore;
     }
 
+    //helper function to find direct line of sight between two hawks
     public static boolean hasDirectLineOfSight(int row, int col, PlayerBoard playerBoard) {
+
+        //there are six try-catch statements, one for each direction of a tile - north-east, east, south-east, south-west, west and north-west
+        //each try-catch looks for a hawk two tiles forward in that direction and an empty tile one tile in that direction
+        //for north-east, north-west, south-east and south-west, we also need to check if the row index is odd or even, since the column index
+        //will depend on this parity
+
+        //east
         try {
             if (playerBoard.getTileByCoordinate(row, col + 2).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
                     == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(row, col + 1).getHabitatTile().
@@ -1000,6 +1037,7 @@ public class ScoringController {
             }
         } catch (Exception e) {;}
 
+        //south-east
         try {
             if (row % 2 == 0) {
 
@@ -1018,6 +1056,7 @@ public class ScoringController {
             }
         } catch (Exception e) {;}
 
+        //south-west
         try {
             if (row % 2 == 0) {
 
@@ -1036,7 +1075,7 @@ public class ScoringController {
             }
         } catch (Exception e) {;}
 
-        //north east
+        //north-east
         try {
             if (row % 2 == 0) {
 
@@ -1055,7 +1094,7 @@ public class ScoringController {
             }
         } catch (Exception e) {;}
 
-        //north west
+        //north-west
         try {
             if (row % 2 == 0) {
 
@@ -1074,6 +1113,7 @@ public class ScoringController {
             }
         } catch (Exception e) {;}
 
+        //west
         try {
             if (playerBoard.getTileByCoordinate(row, col - 2).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
                     == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(row, col - 1).getHabitatTile().
@@ -1104,6 +1144,8 @@ public class ScoringController {
 
                 if (hasHawkToken && !discardedHawkTiles.contains(tile)) {
                     ArrayList<Tile> adjacentTiles = playerBoard.getAdjacentTileList(tile);
+
+                    //short-list hawks that are adjacent to other hawks
                     for (Tile adjacentTile : adjacentTiles) {
                         if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.HAWK) {
                             discardedHawkTiles.add(adjacentTile);
@@ -1113,6 +1155,8 @@ public class ScoringController {
                     int xCoord = tile.getHexCoordinate().getX();
                     int yCoord = tile.getHexCoordinate().getY();
 
+
+                    //check if line of sight exists in east direction
                     try {
                         if (playerBoard.getTileByCoordinate(xCoord, yCoord + 2).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
                                 == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord, yCoord + 1).getHabitatTile().
@@ -1124,6 +1168,7 @@ public class ScoringController {
                         }
                     } catch (Exception e) {;}
 
+                    //check if line of sight exists in south-west direction
                     try {
                         if (xCoord % 2 == 0) {
 
@@ -1146,6 +1191,7 @@ public class ScoringController {
                         }
                     } catch (Exception e) {;}
 
+                    //check if line of sight exists in south-east direction
                     try {
                         if (xCoord % 2 == 0) {
 
@@ -1173,28 +1219,36 @@ public class ScoringController {
         }
 
 //        System.out.println(scoreTable);
+        //each line of sight yields 3 points
         return adjacentHawkPairCounter * 3;
     }
 
-    public static ArrayList<Tile> getRunOfSalmon (Tile root, PlayerBoard
-            playerBoard, ArrayList < Tile > run, Set < Tile > usedTiles){
+    //helper function for salmon scoring cards to get runs of salmon
+    public static ArrayList<Tile> getRunOfSalmon (Tile root, PlayerBoard playerBoard, ArrayList < Tile > run, Set < Tile > usedTiles) {
 
+        //base case : there are no more salmon in the run, i.e, we have reached a null tile
         if (root == null) {
             return run;
         }
 
+        //recursive case
+
         ArrayList<Tile> adjacentSalmonTiles = new ArrayList<>();
+
+        //get adjacent tiles to the salmon in the recursive call to see if there are any other salmon in the existing run
         ArrayList<Tile> adjacentTiles = playerBoard.getAdjacentTileList(root);
         usedTiles.add(root);
 
         for (Tile adjacentTile : adjacentTiles) {
+            //add all adjacent salmon to the adjacentSalmonTile list
             if ((adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.SALMON)) {
-
                 adjacentSalmonTiles.add(adjacentTile);
             }
         }
-
+        //assume we have reached the end of our run by setting the next salmon to null
         Tile nextSalmon = null;
+
+        //if there is at salmon still in the run, assign it to the next salmon
         if (adjacentSalmonTiles.size() > 0) {
             for (Tile tile : adjacentSalmonTiles) {
                 if (!run.contains(tile)) {
@@ -1203,9 +1257,11 @@ public class ScoringController {
             }
         }
 
+        //if there are more than 2 adjacent salmon, that is not a run, so return the valid run up until this point, if any
         if (adjacentSalmonTiles.size() > 2) {
             return run;
         } else {
+            //add current salmon to run and call the recursive function
             run.add(root);
             getRunOfSalmon(nextSalmon, playerBoard, run, usedTiles);
         }
