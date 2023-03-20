@@ -14,7 +14,7 @@ public class StarterHabitatTilesController {
     public static ArrayList<ArrayList<HabitatTile>> starterHabitatTilesBag = createBagOfStarterHabitatTiles();
 
     //need to change function so that the wildlife types are more random, while still being unique
-    private static ArrayList<ArrayList<HabitatTile>> createBagOfStarterHabitatTiles() {
+    public static ArrayList<ArrayList<HabitatTile>> createBagOfStarterHabitatTiles() {
         ArrayList<ArrayList<HabitatTile>> starterTilesBag = new ArrayList<>();
         ArrayList<HabitatTile> newStarterTile = new ArrayList<>();
 
