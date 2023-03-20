@@ -1,10 +1,13 @@
 package org.grouptwentyone.models;
 
+import org.grouptwentyone.controllers.ScoringController;
 import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.models.Exceptions.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.HashMap;
 
 public class PlayerBoard {
 
@@ -16,6 +19,7 @@ public class PlayerBoard {
     HabitatTile selectedTile;
     WildlifeToken selectedToken;
     int numOfNatureTokens = 0;
+    int score = 0;
 
 
 
@@ -218,7 +222,7 @@ public class PlayerBoard {
         // Checks to see if the returned array has a "middle" in it signifying it's not on the edge.
         ArrayList<PlayerBoard.PlayerBoardSide> tilePosition = this.getPartOfBoardCoordinateIsOn(newTile.getHexCoordinate());
         boolean isNewTileOnEdge = !tilePosition.contains(PlayerBoard.PlayerBoardSide.MIDDLE);
-        System.out.printf("Is the new tile on the edge? %s\n", isNewTileOnEdge);
+//        System.out.printf("Is the new tile on the edge? %s\n", isNewTileOnEdge);
 
         if (isNewTileOnEdge) {
             if (tilePosition.contains(PlayerBoard.PlayerBoardSide.LEFT)) {
@@ -303,6 +307,70 @@ public class PlayerBoard {
             this.tokenOptions.setNumOfTokenOption(tokenType, --value);
         }
     }
+    public ArrayList<Tile> getAdjacentTileList(Tile inputTile) {
+        ArrayList<Tile> adjacentTileList = new ArrayList<>();
+
+        for (ArrayList<Tile> row: getPlayerBoardAs2dArray()) {
+            for (Tile tile: row) {
+                if (inputTile.isAdjacentToTile(tile)) {
+                    adjacentTileList.add(tile);
+                }
+            }
+        }
+
+        return adjacentTileList;
+    }
+
+    public ArrayList<Tile> getAdjacentNonEmptyTileList(Tile inputTile) {
+        ArrayList<Tile> adjacentTileList = new ArrayList<>();
+
+        for (ArrayList<Tile> row: getPlayerBoardAs2dArray()) {
+            for (Tile tile: row) {
+                boolean tileIsNotEmpty = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY;
+                if (inputTile.isAdjacentToTile(tile) && tileIsNotEmpty) {
+                    adjacentTileList.add(tile);
+                }
+            }
+        }
+
+        return adjacentTileList;
+    }
+
+
+
+
+
+    public int getScore() {
+        //TODO: Switch statement without breaks so all the relevant cases run.
+
+//        incrementScore(ScoringController.scoreFoxScoringCardA(this));
+//        incrementScore(ScoringController.scoreFoxScoringCardB(this));
+//        incrementScore(ScoringController.scoreFoxScoringCardC(this));
+//        incrementScore(ScoringController.scoreBearScoringCardA(this));
+//        incrementScore(ScoringController.scoreBearScoringCardB(this));
+//        incrementScore(ScoringController.scoreBearScoringCardC(this));
+//        incrementScore(ScoringController.scoreElkScoringCardA(this));
+//        incrementScore(ScoringController.scoreElkScoringCardB(this));
+//        incrementScore(ScoringController.scoreElkScoringCardC(this));
+//        incrementScore(ScoringController.scoreSalmonScoringCardA(this));
+//        incrementScore(ScoringController.scoreSalmonScoringCardB(this));
+//        incrementScore(ScoringController.scoreSalmonScoringCardC(this));
+//        incrementScore(ScoringController.scoreHawkScoringCardA(this));
+//        incrementScore(ScoringController.scoreHawkScoringCardB(this));
+        incrementScore(ScoringController.scoreHawkScoringCardC(this));
+        return this.score;
+    }
+
+    public void incrementScore(int n) {
+        this.score += n;
+    }
+
+
+    public Tile getTileByCoordinate(int row, int col) {
+
+        return getPlayerBoardAs2dArray().get(row).get(col);
+    }
+
 
     public ArrayList<ArrayList<Tile>> getPlayerBoardAs2dArray() {
         return playerBoard;
@@ -363,4 +431,63 @@ public class PlayerBoard {
             this.numTokenOptions.replace(tokenType, value);
         }
     }
+    public ArrayList<Tile> getConnectedSameTilesEast(Tile tile, PlayerBoard playerBoard) {
+        ArrayList<Tile> sameTilesEast = new ArrayList<Tile>();
+
+        boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
+
+        int moveOneEast = 0;
+        int xCoord = tile.getHexCoordinate().getX();
+        int yCord =  tile.getHexCoordinate().getY();
+
+        while(playerBoard.getTileByCoordinate(xCoord, yCord + moveOneEast).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                == WildlifeToken.WildlifeTokenType.ELK) {
+                sameTilesEast.add(playerBoard.getTileByCoordinate(xCoord, yCord + moveOneEast));
+            moveOneEast++;
+        }
+        return sameTilesEast;
+    }
+    public ArrayList<Tile> getConnectedSameTilesSouthEast(Tile tile, PlayerBoard playerBoard) {
+        ArrayList<Tile> sameTilesSouthEast = new ArrayList<Tile>();
+
+        boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
+
+        int moveOneEast = 0;
+        int moveOneSouth = 0;
+        int xCoord = tile.getHexCoordinate().getX();
+        int yCord =  tile.getHexCoordinate().getY();
+
+        while(playerBoard.getTileByCoordinate(xCoord + moveOneSouth, yCord + moveOneEast).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                == WildlifeToken.WildlifeTokenType.ELK) {
+            sameTilesSouthEast.add(playerBoard.getTileByCoordinate(xCoord + moveOneSouth, yCord + moveOneEast));
+            if (((xCoord + moveOneSouth) % 2 == 0)) {
+                moveOneEast++;
+            }
+            moveOneSouth++;
+
+        }
+        return sameTilesSouthEast;
+    }
+
+    public ArrayList<Tile> getConnectedSameTilesSouthWest(Tile tile, PlayerBoard playerBoard) {
+        ArrayList<Tile> sameTilesSouthEast = new ArrayList<Tile>();
+
+        boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
+
+        int moveOneSouth = 0;
+        int xCoord = tile.getHexCoordinate().getX();
+        int yCord =  tile.getHexCoordinate().getY();
+
+        while(playerBoard.getTileByCoordinate(xCoord + moveOneSouth, yCord).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                == WildlifeToken.WildlifeTokenType.ELK) {
+            sameTilesSouthEast.add(playerBoard.getTileByCoordinate(xCoord + moveOneSouth, yCord));
+            if ((xCoord + moveOneSouth) % 2 == 1 && yCord > 0) {
+                yCord--;
+            }
+            moveOneSouth++;
+
+        }
+        return sameTilesSouthEast;
+    }
+
 }

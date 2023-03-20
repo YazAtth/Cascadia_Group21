@@ -40,6 +40,14 @@ public class HabitatTile {
         this.isNull = true;
     }
 
+    public HabitatTile(boolean debug) {
+        this.habitatTileTypeList = habitatTileTypeListGenerator(2);
+        this.wildlifeTokenTypeList = wildlifeTokenTypeListGenerator(5);
+        this.wildlifeToken = new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY);
+        this.keystone = (habitatTileTypeList.size() == 1);
+        this.isNull = false;
+    }
+
     private static ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeListGenerator(int numWildlifeTypes) {
         HashSet<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeSet = new HashSet<>();
 

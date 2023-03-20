@@ -86,28 +86,7 @@ public class BoardView {
 
                         }
                     }
-                    if (currTile.getHabitatTile().isNull() & isCurrentTileAdjacentToActiveTile) {
-                        if (i == 0 || i == 5) {
-                            pattern.append(greyCode + "    *  *  *    " + endString);
-                        } else if (i == 1 || i == 4) {
-                            pattern.append(greyCode + "  *         *  " + endString);
-                        } else if (i == 3){
-                            pattern.append(greyCode +  " *   " + currTile.getHexCoordinate().toString() + "   * " + endString);
-                        } else  {
-                            pattern.append(greyCode + " *           * " + endString);
-                        }
-                    }
-                    else if (currTile.getHabitatTile().isNull()) {
-                        if (i == 0 || i == 5) {
-                            pattern.append(greyCode + "               " + endString);
-                        } else if (i == 1 || i == 4) {
-                            pattern.append(greyCode + "               " + endString);
-                        } else if (i == 3){
-                            pattern.append(greyCode +  "          " + "     " + endString);
-                        } else  {
-                            pattern.append(greyCode + "               " + endString);
-                        }
-                    }
+
 
 
                     if (!currTile.getHabitatTile().isNull()) {
@@ -133,12 +112,30 @@ public class BoardView {
                             colourTwo = tempString;
                     }
 
-                    if (currTile.getTileOrientation() == 0 || //print horizontal tile
+                    if (currTile.getHabitatTile().isNull() & isCurrentTileAdjacentToActiveTile) {
+                        if (i == 0 || i == 5) {
+                            pattern.append(greyCode + "    *  *  *    " + endString);
+                        } else if (i == 1 || i == 4) {
+                            pattern.append(greyCode + "  *         *  " + endString);
+                        } else if (i == 3){
+                            pattern.append(greyCode +  " *   " + currTile.getHexCoordinate().toString() + "   * " + endString);
+                        } else  {
+                            pattern.append(greyCode + " *           * " + endString);
+                        }
+                    }
+                    else if (currTile.getHabitatTile().isNull()) {
+                        if (i == 0 || i == 5) {
+                            pattern.append(greyCode + "               " + endString);
+                        } else if (i == 1 || i == 4) {
+                            pattern.append(greyCode + "               " + endString);
+                        } else if (i == 3){
+                            pattern.append(greyCode +  "          " + "     " + endString);
+                        } else  {
+                            pattern.append(greyCode + "               " + endString);
+                        }
+                    } else if (currTile.getTileOrientation() == 0 || //print horizontal tile
                     currTile.getTileOrientation() == 3) {
-                        //if tile is not placed, just print spaces
-                        if (!playerBoard.get(row).get(col).isActive()) {
-                            //pattern.append("               ");
-                        } else if (i == 0) {
+                        if (i == 0) {
                             pattern.append(colourOne + "    *******    " + endString);
                         } else if (i == 1) {
                             pattern.append(colourOne + "  ***********  " + endString);
@@ -153,10 +150,7 @@ public class BoardView {
                         }
                     }
                     else if (currOrientation == 1 || currOrientation == 4) { //print diagonal tile
-                        //if tile is not placed, just print spaces
-                        if (!playerBoard.get(row).get(col).isActive()) {
-                            //pattern.append("               ");
-                        } else if (i == 0) {
+                        if (i == 0) {
                             pattern.append(colourTwo + "    *" + colourOne + "******    " + endString);
                         } else if (i == 1) {
                             pattern.append(colourTwo + "  ****" + colourOne + "*******  " + endString);
@@ -170,9 +164,7 @@ public class BoardView {
                             pattern.append(colourTwo + "    ******" + colourOne + "*    " + endString);
                         }
                     } else {
-                        if (!playerBoard.get(row).get(col).isActive()) {
-                            //pattern.append("               ");
-                        } else if (i == 0) {
+                        if (i == 0) {
                             pattern.append(colourTwo + "    ******" + colourOne + "*    " + endString);
                         } else if (i == 1) {
                             pattern.append(colourTwo + "  *******" + colourOne + "****  " + endString);

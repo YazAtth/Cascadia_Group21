@@ -1,9 +1,12 @@
 package org.grouptwentyone.models;
 
 public class Tile {
+    private static int tileIdCounter = 0;
+    final private int tileId;
     HabitatTile habitatTile;
     HexCoordinate hexCoordinate;
     boolean isActive; //this will determine whether coordinates get displayed
+    boolean isIncludedInScoring = true;
     int tileOrientation; // Defaults to 0 and is between 0-5 inclusive (so 6 states).
 
     public Tile (HexCoordinate hexCoordinate) {
@@ -11,14 +14,25 @@ public class Tile {
         this.hexCoordinate = hexCoordinate;
         this.isActive = false; //changes to true once a habitat tile is placed on tile
         this.tileOrientation = 0;
+        this.tileId = tileIdCounter++;
     }
 
-    //constructor for debugging
+
     public Tile (HabitatTile habitatTile, HexCoordinate hexCoordinate) {
         this.habitatTile = habitatTile;
         this.hexCoordinate = hexCoordinate;
         this.tileOrientation = 0;
         this.isActive = true;
+        this.tileId = tileIdCounter++;
+    }
+
+    //constructor for debugging
+    public Tile (HexCoordinate hexCoordinate, boolean debug) {
+        this.habitatTile = new HabitatTile(debug);
+        this.hexCoordinate = hexCoordinate;
+        this.isActive = false; //changes to true once the tile is adjacent to a tile that has a habitat tile
+        this.tileOrientation = 0;
+        this.tileId = tileIdCounter++;
     }
 
     public HabitatTile getHabitatTile() {
@@ -63,4 +77,12 @@ public class Tile {
 
     //rotate tile by custom number
     public void rotateTile(int numRotations) {this.tileOrientation = (this.tileOrientation + numRotations) % 6;}
+
+    public void setIncludedInScoring(boolean includedInScoring) {
+        isIncludedInScoring = includedInScoring;
+    }
+
+    public int getTileId() {
+        return tileId;
+    }
 }

@@ -37,6 +37,7 @@ public class StartGame {
         while (tilesRemain) {
 
             GameUiView.printPageBorder();
+            System.out.printf("Player Score: %d\n",activePlayer.getPlayerBoardObject().getScore());
 
             GameUiView.printPlayerHeader(activePlayer);
 //            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
@@ -223,6 +224,17 @@ public class StartGame {
         }
 
         System.out.println("No tiles remain so play is finished, calculating player score...");
+
+//        WildlifeToken.WildlifeTokenType scoreToken = ScoringCards.getScoreCardsList().get(0).getTokenType();
+//        switch (scoreToken) {
+//            case BEAR:
+//                switch (ScoringCards.getScoreCardsList().get(0).getScoreType()) {
+//                    case A: //call scoreBearTypeA()
+//                        break;
+//                    case B: //call scoreBearTypeB()
+//                        break;
+//                }
+//        }
 
         //end program
         UserTerminationController.endProgram();
