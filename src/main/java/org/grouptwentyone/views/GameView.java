@@ -1,5 +1,6 @@
 package org.grouptwentyone.views;
 
+import org.grouptwentyone.dev.DebugController;
 import org.grouptwentyone.models.Player;
 
 import java.util.Scanner;
@@ -17,7 +18,16 @@ public class GameView {
 
         Scanner sc = new Scanner(System.in);
 
-        return sc.nextLine().toLowerCase().trim();
+        String userInput = sc.nextLine().toLowerCase().trim();
+
+        while (userInput.contains("debug")) {
+//            System.out.print("Debug Action Registered\n> ");
+            DebugController.registerDebugCommand(userInput);
+
+            userInput = sc.nextLine().toLowerCase().trim();
+        }
+
+        return userInput;
     }
 
     public static boolean getUserConfirmation(String option) {
