@@ -4,10 +4,8 @@ import org.grouptwentyone.controllers.ScoringController;
 import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.models.Exceptions.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.HashMap;
 
 public class PlayerBoard {
 
@@ -338,9 +336,12 @@ public class PlayerBoard {
 
 
 
-
-
     public int getScore() {
+        return this.score;
+    }
+
+
+    public int tallyUpScore() {
         //TODO: Switch statement without breaks so all the relevant cases run.
 
         ArrayList<ScoringCards.ScoreCard> scoreCardList = ScoringCards.getScoreCardsList();
