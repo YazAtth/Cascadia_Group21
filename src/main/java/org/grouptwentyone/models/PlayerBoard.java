@@ -19,7 +19,7 @@ public class PlayerBoard {
     HabitatTile selectedTile;
     WildlifeToken selectedToken;
     int numOfNatureTokens = 0;
-    int score = 0;
+    public int score = 0;
 
 
 
