@@ -1,6 +1,8 @@
 package org.grouptwentyone.models;
 
-public class Player {
+import org.jetbrains.annotations.NotNull;
+
+public class Player implements Comparable<Player>{
 
     private static int playerIdCounter = 0;
 
@@ -23,6 +25,10 @@ public class Player {
         //this.numOfNatureTokens = 0;
 //        setupPlayerBoard();
         this.getPlayerBoardObject().setupPlayerBoard();
+    }
+
+    public int compareTo(@NotNull Player p) {
+            return Integer.compare(this.getScore(), p.getScore());
     }
 
 
