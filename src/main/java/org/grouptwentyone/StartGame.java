@@ -6,7 +6,6 @@ import org.grouptwentyone.models.Exceptions.*;
 import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class StartGame {
@@ -224,6 +223,9 @@ public class StartGame {
         }
 
         System.out.println("No tiles remain so play is finished, calculating player score...");
+
+        playerController.tallyUpAllScores();
+        ScoreDisplayView.displayScorePage(playerController);
 
 //        WildlifeToken.WildlifeTokenType scoreToken = ScoringCards.getScoreCardsList().get(0).getTokenType();
 //        switch (scoreToken) {

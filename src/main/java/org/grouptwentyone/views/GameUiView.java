@@ -13,7 +13,15 @@ public class GameUiView {
 
     public static final String GREEN_BOLD = "\033[1;32m";
     public static final String RED_BOLD = "\033[1;31m";
+    public static final String YELLOW_BOLD = "\033[1;33m"; // YELLOW
+    public static final String SILVER_BOLD = "\u001B[1m\033[38;5;245m";
+    public static final String BRONZE_BOLD = "\u001B[1m\033[38;5;130m";
+
+
     public static final String WHITE_BOLD_BRIGHT = "\033[1;97m";
+    public static final String YELLOW_BOLD_BRIGHT = "\033[1;93m";// YELLOW
+
+
 
 
     // Page Items
@@ -24,6 +32,8 @@ public class GameUiView {
             "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
     public static String SMALL_SPACE = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
     public static String LINE_PAGE_BORDER_NO_COLOUR = "------------------------------------------------------------------------------------------";
+
+    public static String targetCircle = "\uD800\uDF48";
 
 
 

@@ -6,6 +6,7 @@ import org.grouptwentyone.controllers.ScoringController;
 import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.models.*;
 import org.grouptwentyone.views.BoardView;
+import org.grouptwentyone.views.ScoreDisplayView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -459,11 +460,27 @@ public class TestingSpaceYasith {
             Player player = new Player("ton");
             player.getScore();
         }
+    }
 
+    public static void scoreDisplayViewTest() {
+        Player p1 = new Player("Dom");
+        Player p2 = new Player("Colm");
+        Player p3 = new Player("Yas");
+        Player p4 = new Player("Barack Obama");
+
+
+        p3.getPlayerBoardObject().score = 50;
+        p2.getPlayerBoardObject().score = 100;
+        p1.getPlayerBoardObject().score = 150;
+
+        ArrayList<Player> playerList = new ArrayList<>(List.of(p1, p2, p3, p4));
+        PlayerController playerController = new PlayerController(playerList);
+
+        ScoreDisplayView.displayScorePage(playerController);
     }
 
 
     public static void main(String[] args) {
-        creatingLotsOfPlayers();
+        scoreDisplayViewTest();
     }
 }

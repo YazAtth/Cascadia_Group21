@@ -4,10 +4,8 @@ import org.grouptwentyone.controllers.ScoringController;
 import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.models.Exceptions.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.HashMap;
 
 public class PlayerBoard {
 
@@ -19,7 +17,7 @@ public class PlayerBoard {
     HabitatTile selectedTile;
     WildlifeToken selectedToken;
     int numOfNatureTokens = 0;
-    int score = 0;
+    public int score = 0;
 
 
 
@@ -337,7 +335,16 @@ public class PlayerBoard {
     }
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 49bedd72ed27c800b2d292d8873c306e0cd08ac9
     public int getScore() {
+        return this.score;
+    }
+
+
+    public int tallyUpScore() {
         //TODO: Switch statement without breaks so all the relevant cases run.
 
         ArrayList<ScoringCards.ScoreCard> scoreCardList = ScoringCards.getScoreCardsList();

@@ -46,4 +46,11 @@ public class PlayerController {
     public void setPlayerList(ArrayList<Player> playerList) {
         this.playerList = playerList;
     }
+
+    public void tallyUpAllScores() {
+        for (Player player: getPlayerList()) {
+            player.getPlayerBoardObject().tallyUpScore();
+        }
+    }
+
 }
