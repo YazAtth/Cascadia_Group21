@@ -343,21 +343,50 @@ public class PlayerBoard {
     public int getScore() {
         //TODO: Switch statement without breaks so all the relevant cases run.
 
-//        incrementScore(ScoringController.scoreFoxScoringCardA(this));
-//        incrementScore(ScoringController.scoreFoxScoringCardB(this));
-//        incrementScore(ScoringController.scoreFoxScoringCardC(this));
-//        incrementScore(ScoringController.scoreBearScoringCardA(this));
-//        incrementScore(ScoringController.scoreBearScoringCardB(this));
-//        incrementScore(ScoringController.scoreBearScoringCardC(this));
-        incrementScore(ScoringController.scoreElkScoringCardA(this));
-//        incrementScore(ScoringController.scoreElkScoringCardB(this));
-//        incrementScore(ScoringController.scoreElkScoringCardC(this));
-//        incrementScore(ScoringController.scoreSalmonScoringCardA(this));
-//        incrementScore(ScoringController.scoreSalmonScoringCardB(this));
-//        incrementScore(ScoringController.scoreSalmonScoringCardC(this));
-//        incrementScore(ScoringController.scoreHawkScoringCardA(this));
-//        incrementScore(ScoringController.scoreHawkScoringCardB(this));
-//        incrementScore(ScoringController.scoreHawkScoringCardC(this));
+        ArrayList<ScoringCards.ScoreCard> scoreCardList = ScoringCards.getScoreCardsList();
+        ScoringCards.ScoreCard bearScoringCard = scoreCardList.get(0);
+        ScoringCards.ScoreCard foxScoringCard = scoreCardList.get(1);
+        ScoringCards.ScoreCard elkScoringCard = scoreCardList.get(2);
+        ScoringCards.ScoreCard hawkScoringCard = scoreCardList.get(3);
+        ScoringCards.ScoreCard salmonScoringCard = scoreCardList.get(4);
+
+        // Score Bear Card
+        switch(bearScoringCard.getScoreType()) {
+            case A -> incrementScore(ScoringController.scoreBearScoringCardA(this));
+            case B -> incrementScore(ScoringController.scoreBearScoringCardB(this));
+            case C -> incrementScore(ScoringController.scoreBearScoringCardC(this));
+        }
+
+        // Score Fox Card
+        switch(foxScoringCard.getScoreType()) {
+            case A -> incrementScore(ScoringController.scoreFoxScoringCardA(this));
+            case B -> incrementScore(ScoringController.scoreFoxScoringCardB(this));
+            case C -> incrementScore(ScoringController.scoreFoxScoringCardC(this));
+
+        }
+
+        // Score Elk Card
+        switch(elkScoringCard.getScoreType()) {
+            case A -> incrementScore(ScoringController.scoreElkScoringCardA(this));
+            case B -> incrementScore(ScoringController.scoreElkScoringCardB(this));
+            case C -> incrementScore(ScoringController.scoreElkScoringCardC(this));
+        }
+
+        // Score Hawk Card
+        switch(hawkScoringCard.getScoreType()) {
+            case A -> incrementScore(ScoringController.scoreHawkScoringCardA(this));
+            case B -> incrementScore(ScoringController.scoreHawkScoringCardB(this));
+            case C -> incrementScore(ScoringController.scoreHawkScoringCardC(this));
+        }
+
+        // Score Salmon Card
+        switch (salmonScoringCard.getScoreType()) {
+            case A -> incrementScore(ScoringController.scoreSalmonScoringCardA(this));
+            case B -> incrementScore(ScoringController.scoreSalmonScoringCardB(this));
+            case C -> incrementScore(ScoringController.scoreSalmonScoringCardC(this));
+        }
+
+
         return this.score;
     }
 
