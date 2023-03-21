@@ -335,10 +335,7 @@ public class PlayerBoard {
     }
 
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 49bedd72ed27c800b2d292d8873c306e0cd08ac9
     public int getScore() {
         return this.score;
     }
