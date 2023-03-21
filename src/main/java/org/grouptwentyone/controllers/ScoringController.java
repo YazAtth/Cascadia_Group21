@@ -207,73 +207,6 @@ public class ScoringController {
         return localScore;
     }
 
-    public static int scoreBearScoringCardA_V1(PlayerBoard playerBoard) {
-        double numberOfPairs = 0;
-
-        /*
-         *
-         * 1. First player board loop: identify bear tiles that have 2 or more adjacent tiles.
-         * 2. Second player board loop: identify bear tiles that have 1 adjacent bear tile and not adjacent to any of the tiles found in loop one.
-         *
-         * */
-
-        ArrayList<Tile> bearTilesWithDegreeGreaterThanOneList = new ArrayList<>();
-
-        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
-            for (Tile tile : row) {
-                boolean tileHasBearToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.BEAR;
-
-                if (tileHasBearToken) {
-
-                    ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentNonEmptyTileList(tile);
-
-                    int numberOfAdjacentBearTokens = (int) adjacentTileList.stream().filter(adjacentTile -> {
-                        return adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.BEAR;
-                    }).count();
-
-                    if (numberOfAdjacentBearTokens > 1) {
-                        bearTilesWithDegreeGreaterThanOneList.add(tile);
-                    }
-
-                }
-            }
-        }
-
-        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
-            for (Tile tile : row) {
-                boolean tileHasBearToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.BEAR;
-
-                if (tileHasBearToken) {
-                    ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentNonEmptyTileList(tile);
-                    int numberOfAdjacentBearTokens = (int) adjacentTileList.stream().filter(adjacentTile -> {
-                        return adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.BEAR;
-                    }).count();
-
-                    boolean tileIsAdjacentToMultidegreeTile = !Collections.disjoint(adjacentTileList, bearTilesWithDegreeGreaterThanOneList);
-
-                    if (numberOfAdjacentBearTokens == 1 && !tileIsAdjacentToMultidegreeTile) {
-                        numberOfPairs += 0.5; // Each of the two in the pair count for 0.5 so together they make 1 pair
-                    }
-                }
-            }
-        }
-
-        // More than 4 pairs are treated the same as 4 pairs.
-        if (numberOfPairs > 4) numberOfPairs = 4;
-
-        HashMap<Integer, Integer> scoringTable = new HashMap<>();
-        scoringTable.put(0, 0);
-        scoringTable.put(1, 4);
-        scoringTable.put(2, 11);
-        scoringTable.put(3, 19);
-        scoringTable.put(4, 27);
-
-        int localScore = scoringTable.get((int) numberOfPairs);
-        return localScore;
-
-
-    }
-
     public static void traverseTileGroup(PlayerBoard playerBoard, ArrayList<Tile> listOfTilesInGroup, HexCoordinate hexCoordinate) {
 
         Tile inputTile = playerBoard.getPlayerBoardAs2dArray().get(hexCoordinate.getX()).get(hexCoordinate.getY());
@@ -302,9 +235,6 @@ public class ScoringController {
         }
 
 
-//        for (Tile adjacentTile: adjacentTileListWithSameWildlifeTokenList) {
-//            traverseTileGroup(playerBoard, )
-//        }
 
     }
 
@@ -328,71 +258,7 @@ public class ScoringController {
         return outputList;
     }
 
-    public static void traverseTileGroupNDistance_V1(PlayerBoard playerBoard, ArrayList<Tile> listOfTilesInGroup, HexCoordinate hexCoordinate, int distanceLeftToTravel) {
 
-        System.out.println(listOfTilesInGroup);
-        if (listOfTilesInGroup.size() == 3) {
-            System.out.println("Found three");
-        }
-
-        Tile inputTile = playerBoard.getPlayerBoardAs2dArray().get(hexCoordinate.getX()).get(hexCoordinate.getY());
-        WildlifeToken.WildlifeTokenType requiredWildlifeTokenType = inputTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType();
-
-        System.out.printf("Looking at %s\n", inputTile);
-
-
-        ArrayList<Tile> adjacentTileListWithSameWildlifeTokenList = playerBoard.getAdjacentNonEmptyTileList(inputTile)
-                .stream().filter(adjacentTile -> adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == requiredWildlifeTokenType)
-                .collect(Collectors.toCollection(ArrayList::new));
-
-        // Make list of new unrecorded adjacent tiles with same animal token
-        ArrayList<Tile> newAdjacentTileList = new ArrayList<>();
-        for (Tile adjacentTile : adjacentTileListWithSameWildlifeTokenList) {
-//            System.out.printf("\tLooking at %s\n", adjacentTile);
-            boolean tileNotInTileGroup = !listOfTilesInGroup.contains(adjacentTile);
-            if (tileNotInTileGroup) {
-                newAdjacentTileList.add(adjacentTile);
-            }
-        }
-
-
-        // Base Case: If there are no more new unrecorded adjacent tiles
-        if (newAdjacentTileList.size() == 0) return;
-        if (listOfTilesInGroup.size() >= 3 && distanceLeftToTravel < 0) {
-            return;
-        }
-
-        listOfTilesInGroup.addAll(newAdjacentTileList);
-
-        for (Tile adjacentTile : newAdjacentTileList) {
-            traverseTileGroupNDistance_V1(playerBoard, listOfTilesInGroup, adjacentTile.getHexCoordinate(), distanceLeftToTravel - 1);
-        }
-    }
-
-
-    public static ArrayList<Tile> getTileGroupOfSizeNFromTile_V1(PlayerBoard playerBoard, HexCoordinate hexCoordinate, int distanceToTravel) {
-        Tile inputTile = playerBoard.getPlayerBoardAs2dArray().get(hexCoordinate.getX()).get(hexCoordinate.getY());
-        ArrayList<Tile> outputList = new ArrayList<>();
-        WildlifeToken.WildlifeTokenType requiredWildlifeTokenType = inputTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType();
-
-        ArrayList<Tile> adjacentTileListWithSameWildlifeTokenList = playerBoard.getAdjacentNonEmptyTileList(inputTile)
-                .stream().filter(adjacentTile -> adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == requiredWildlifeTokenType)
-                .collect(Collectors.toCollection(ArrayList::new));
-
-        outputList.add(inputTile);
-        outputList.addAll(adjacentTileListWithSameWildlifeTokenList);
-
-        for (Tile adjacentTile : adjacentTileListWithSameWildlifeTokenList) {
-            System.out.println("started traversal");
-            traverseTileGroupNDistance_V1(playerBoard, outputList, adjacentTile.getHexCoordinate(), distanceToTravel);
-        }
-
-        return outputList;
-    }
-
-    public static boolean areGroupsEqual(ArrayList<Tile> group1, ArrayList<Tile> group2) {
-        return group1.containsAll(group2) && group2.containsAll(group1);
-    }
 
     public static int scoreBearScoringCardB(PlayerBoard playerBoard) {
         int numberOfTriples = 0;
@@ -434,13 +300,6 @@ public class ScoringController {
                         }
                     }
 
-//                    tilesRemovedFromScoring.addAll(localTileGroupWithAdjacentTiles);
-
-
-//                    System.out.printf("Looking at tile group: %s\n", localTileGroup);
-//                    System.out.printf("Tiles removed from scoring: %s\n\n", tilesRemovedFromScoring);
-
-
                     boolean isLocalTileGroupRecorded = false;
                     for (Tile tileInGroup : localTileGroupWithAdjacentTiles) {
                         boolean tileNotYetRecorded = !tilesRemovedFromScoring.contains(tileInGroup);
@@ -464,42 +323,6 @@ public class ScoringController {
         return localScore;
     }
 
-    public static int scoreBearScoringCardB_V1(PlayerBoard playerBoard) {
-        int numberOfTriples = 0;
-
-        ArrayList<ArrayList<Tile>> tileGroupList = new ArrayList<>();
-//        ArrayList<Tile> tilesRemovedFromScoring = new ArrayList<>();
-
-
-        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
-            for (Tile tile : row) {
-                boolean tileHasBearToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.BEAR;
-                if (tileHasBearToken) {
-
-                    // Add local tile group to records if not already added
-                    ArrayList<Tile> localTileGroup = getTileGroupOfSizeNFromTile_V1(playerBoard, tile.getHexCoordinate(), 4);
-                    boolean isLocalTileGroupUnrecorded = true;
-                    for (ArrayList<Tile> tileGroup : tileGroupList) {
-                        if (areGroupsEqual(tileGroup, localTileGroup)) {
-                            isLocalTileGroupUnrecorded = false;
-                            break;
-                        }
-                    }
-
-                    if (isLocalTileGroupUnrecorded) {
-                        if (localTileGroup.size() >= 3) {
-                            numberOfTriples++;
-                        }
-                        tileGroupList.add(localTileGroup);
-                    }
-
-                }
-            }
-        }
-
-        int localScore = numberOfTriples * 10;
-        return localScore;
-    }
 
     public static int scoreBearScoringCardC(PlayerBoard playerBoard) {
         HashMap<Integer, Integer> groupSizeFrequency = new HashMap<>();
