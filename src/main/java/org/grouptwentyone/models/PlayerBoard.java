@@ -337,9 +337,6 @@ public class PlayerBoard {
     }
 
 
-
-
-
     public int getScore() {
         //TODO: Switch statement without breaks so all the relevant cases run.
 
@@ -362,7 +359,6 @@ public class PlayerBoard {
             case A -> incrementScore(ScoringController.scoreFoxScoringCardA(this));
             case B -> incrementScore(ScoringController.scoreFoxScoringCardB(this));
             case C -> incrementScore(ScoringController.scoreFoxScoringCardC(this));
-
         }
 
         // Score Elk Card
@@ -385,7 +381,6 @@ public class PlayerBoard {
             case B -> incrementScore(ScoringController.scoreSalmonScoringCardB(this));
             case C -> incrementScore(ScoringController.scoreSalmonScoringCardC(this));
         }
-
 
         return this.score;
     }
