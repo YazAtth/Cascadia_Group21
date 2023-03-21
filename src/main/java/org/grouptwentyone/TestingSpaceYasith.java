@@ -1,7 +1,9 @@
 package org.grouptwentyone;
 
 import org.grouptwentyone.controllers.HabitatTilesController;
+import org.grouptwentyone.controllers.PlayerController;
 import org.grouptwentyone.controllers.ScoringController;
+import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.models.*;
 import org.grouptwentyone.views.BoardView;
 
@@ -448,16 +450,20 @@ public class TestingSpaceYasith {
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
         System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
         System.out.printf("You have a score of: %d\n", p1.getScore());
+    }
+
+    public static void creatingLotsOfPlayers() {
+
+        for (int i=0; i<100000; i++) {
+            StarterHabitatTilesController.starterHabitatTilesBag = StarterHabitatTilesController.createBagOfStarterHabitatTiles();
+            Player player = new Player("ton");
+            player.getScore();
+        }
 
     }
 
 
     public static void main(String[] args) {
-        testFoxCardB();
-//        ArrayList<Integer> l1 = new ArrayList<>(List.of(1,2,3));
-//        ArrayList<Integer> l2 = new ArrayList<>(List.of(3,2,1));
-//
-//        System.out.println(l1.containsAll(l2) && l2.containsAll(l1));
-
+        creatingLotsOfPlayers();
     }
 }

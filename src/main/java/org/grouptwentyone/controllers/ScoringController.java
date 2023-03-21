@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ScoringController {
-
+    // TODO: Forgot to account for 0 cases in my hashtables.
 
     public static int scoreFoxScoringCardA(PlayerBoard playerBoard) {
 
@@ -47,6 +47,7 @@ public class ScoringController {
 
         int localScore = 0;
         HashMap<Integer, Integer> scoringCard = new HashMap<>();
+        scoringCard.put(0, 0);
         scoringCard.put(1, 3);
         scoringCard.put(2, 5);
         scoringCard.put(3, 7);
@@ -196,6 +197,7 @@ public class ScoringController {
         if (numberOfPairs > 4) numberOfPairs = 4;
 
         HashMap<Integer, Integer> scoringTable = new HashMap<>();
+        scoringTable.put(0, 0);
         scoringTable.put(1, 4);
         scoringTable.put(2, 11);
         scoringTable.put(3, 19);
@@ -260,6 +262,7 @@ public class ScoringController {
         if (numberOfPairs > 4) numberOfPairs = 4;
 
         HashMap<Integer, Integer> scoringTable = new HashMap<>();
+        scoringTable.put(0, 0);
         scoringTable.put(1, 4);
         scoringTable.put(2, 11);
         scoringTable.put(3, 19);
