@@ -83,10 +83,10 @@ public class GameSetupView {
         StringBuilder output = new StringBuilder();
         GameUiView.printPageBorder();
 
-        System.out.println("Players will play in this order:");
+        System.out.print("Players will play in this order:");
 
         for (int i=0; i<playerList.size(); i++) {
-            output.append(String.format("%d. %s\n", i+1, playerList.get(i).getUserName()));
+            output.append(String.format("\n%d. %s", i+1, playerList.get(i).getUserName()));
         }
 
         System.out.println(output);

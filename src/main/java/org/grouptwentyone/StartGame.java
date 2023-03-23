@@ -7,6 +7,7 @@ import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class StartGame {
     public static ArrayList<HabitatTile> selectedTiles = SelectionOptionsView.getFourHabitatTiles();
@@ -20,17 +21,20 @@ public class StartGame {
         int numOfPlayers = GameSetupView.getNumberOfPlayersFromUser();
         ArrayList<Player> playerList = GameSetupView.getPlayerNamesFromUser(numOfPlayers);
 
+
+        PlayerController playerController = new PlayerController(playerList);
+        playerController.shufflePlayerList();
+
+        GameUiView.printPageBorder();
+        GameUiView.printScoreCardRules();
+        GameSetupView.displayPlayerOrder(playerList);
+
         //remove habitat tiles depending on number of players
         int tilesToRemove = (((numOfPlayers-4)*-1)*20)+2;
         if (tilesToRemove > 0)
             HabitatTilesController.habitatTilesBag.subList(0, tilesToRemove).clear();
 
-        PlayerController playerController = new PlayerController(playerList);
-        playerController.shufflePlayerList();
-        GameSetupView.displayPlayerOrder(playerList);
-
         Player activePlayer = playerController.getFirstPlayer();
-
         String coordinateDelim = ", |,";
 
         while (tilesRemain) {
@@ -46,8 +50,6 @@ public class StartGame {
             System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(selectedTiles));
             System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(selectedTokens));
             System.out.println("      (1)            (2)            (3)            (4)      \n");
-
-            //GameUiView.printPageBorder();
 
             //check for cull before user turn
             CullingController.checkForCull();
@@ -209,8 +211,13 @@ public class StartGame {
                 System.out.println("Token returned to token bag");
             }
 
-            //quit game option
-            if (UserInputView.getUserConfirmation("quit the game")) UserTerminationController.endProgram();
+            //quit game option (proceeds to scoring from current game state
+            System.out.print("Press enter to continue to next player's turn, or type quit to go to display score and quit\n> ");
+            Scanner sc = new Scanner(System.in);
+            String userInput = sc.nextLine().trim();
+            if (userInput.equals("quit") || userInput.equals("exit")) {
+                break;
+            }
 
             //next player
             System.out.println("Moving to next player");

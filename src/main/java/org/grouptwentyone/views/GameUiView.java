@@ -54,15 +54,18 @@ public class GameUiView {
     }
 
     public static void printPlayerHeader(Player player) {
-        System.out.printf("%s⏺ %s ⏺ Nature Tokens: %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT,
+        System.out.printf("%s⏺ Player Name: %s ⏺ Nature Tokens: %s ⏺\n%s", GameUiView.WHITE_BOLD_BRIGHT,
                 player.getUserName(), player.getNumOfNatureTokens(), GameUiView.RESET_COLOUR);
+        //print scorecard rules below player header for player convenience
         printLinePageBorder();
-        //print scoring card rules
+        printScoreCardRules();
+        printLinePageBorder();
+    }
+
+    public static void printScoreCardRules() {
         System.out.println("Scoring card rules:");
         for (ScoringCards.ScoreCard card : ScoringCards.getScoreCardsList()) {
             System.out.println(card.getCardInfo());
         }
-        printLinePageBorder();
     }
-
 }
