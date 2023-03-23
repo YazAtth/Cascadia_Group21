@@ -7,6 +7,7 @@ import org.grouptwentyone.models.Exceptions.*;
 import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Dev_StartGame {
     //public static ArrayList<HabitatTile> selectedTiles = SelectionOptionsView.getFourHabitatTiles();
@@ -21,6 +22,12 @@ public class Dev_StartGame {
         ArrayList<Player> playerList = new ArrayList<>();
         playerList.add(new Player("TON"));
 
+        //remove habitat tiles depending on number of players
+        int tilesToRemove = (((numOfPlayers-4)*-1)*20)+2;
+        if (tilesToRemove > 0)
+            HabitatTilesController.habitatTilesBag.subList(0, tilesToRemove).clear();
+
+
         PlayerController playerController = new PlayerController(playerList);
         //playerController.shufflePlayerList();
         //GameSetupView.displayPlayerOrder(playerList);
@@ -34,7 +41,7 @@ public class Dev_StartGame {
             GameUiView.printPageBorder();
 
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
 
             GameUiView.printPageBorder();
 
@@ -68,11 +75,13 @@ public class Dev_StartGame {
             //place tile
             GameUiView.printPageBorder();
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
             GameUiView.printPageBorder();
 
-            //display selected tile below
-
+            //display selected tile by adding the players selected tile to a temp arraylist and passing that to displaySelectedTiles
+            System.out.printf("\n%s",
+                    SelectionOptionsView.displaySelectedHabitatTiles(new ArrayList<>(Collections.singletonList(activePlayer.getPlayerBoardObject().getSelectedTile()))));
+            GameUiView.printPageBorder();
 
             System.out.print("Please enter the coordinates for where you would like to place the tile at in the format 'x, y'\n> ");
 
@@ -84,7 +93,6 @@ public class Dev_StartGame {
                     int tileYCoordinate = Integer.parseInt(tilePlacedCoordinates[1]);
                     HexCoordinate newTileHexCoordinate = new HexCoordinate(tileXCoordinate, tileYCoordinate);
 
-//                    activePlayer.addNewTile(newTileHexCoordinate);
                     activePlayer.getPlayerBoardObject().addNewTile(newTileHexCoordinate);
                     GameView.setIsPreviousInputInvalid(false);
                 } catch (ArrayIndexOutOfBoundsException ex) {
@@ -106,7 +114,7 @@ public class Dev_StartGame {
 
             GameUiView.printPageBorder();
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
             GameUiView.printPageBorder();
 
             //rotate tile
@@ -119,7 +127,6 @@ public class Dev_StartGame {
                     do {
                         try {
                             int numRotations = Integer.parseInt(GameView.askUserForInput());
-//                            activePlayer.getRecentlyPlacedTile().rotateTile(numRotations);
                             activePlayer.getPlayerBoardObject().getRecentlyPlacedTile().rotateTile(numRotations);
 
                             GameView.setIsPreviousInputInvalid(false);
@@ -131,7 +138,7 @@ public class Dev_StartGame {
 
                     GameUiView.printPageBorder();
                     System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-                    System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+                    System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
                     GameUiView.printPageBorder();
 
                     finishedRotation = !GameView.getUserConfirmation("continue rotating the tile you just placed");
@@ -144,13 +151,25 @@ public class Dev_StartGame {
             //place token
             GameUiView.printPageBorder();
             System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
             GameUiView.printPageBorder();
 
-            //display selected token below
+            boolean placeToken = false;
 
-            boolean placeToken = GameView.getUserConfirmation("place a token");
+            //check if it's possible to place selected token and then give the player the option of placing it
+            if (activePlayer.getPlayerBoardObject().canPlaceToken()) {
+                //display selected token by adding the players selected token to a new arraylist that's passed to displaySelectedTokens
+                System.out.printf("\n%s",
+                        SelectionOptionsView.displaySelectedWildlifeTokens(new ArrayList<>(Collections.singletonList(activePlayer.getPlayerBoardObject().getSelectedToken()))));
+                GameUiView.printPageBorder();
 
+
+                placeToken = GameView.getUserConfirmation("place a token");
+            } else {
+                System.out.print("Token cannot be placed on your board, therefore ");
+            }
+
+            //false by default unless user chooses to when given option
             if (placeToken) {
                 System.out.print("Please enter the coordinates for where you would like to place the token at in the format 'x, y'\n> ");
                 do {
@@ -160,7 +179,6 @@ public class Dev_StartGame {
                         int tokenYCoordinate = Integer.parseInt(tokenPlacedCoordinates.split(coordinateDelim)[1]);
                         HexCoordinate newTokenHexCoordinate = new HexCoordinate(tokenXCoordinate, tokenYCoordinate);
 
-//                        activePlayer.addNewToken(newTokenHexCoordinate);
                         activePlayer.getPlayerBoardObject().addNewToken(newTokenHexCoordinate);
                         GameView.setIsPreviousInputInvalid(false);
                     } catch (ArrayIndexOutOfBoundsException ex) {
@@ -182,14 +200,13 @@ public class Dev_StartGame {
                 } while (GameView.isIsPreviousInputInvalid());
                 GameUiView.printPageBorder();
                 System.out.printf("%s⏺ %s ⏺\n\n%s", GameUiView.WHITE_BOLD_BRIGHT, activePlayer.getUserName(), GameUiView.RESET_COLOUR);
-                System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+                System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
                 GameUiView.printPageBorder();
             } else {
                 //return token
-//                WildlifeTokensController.wildlifeTokenBag.add(activePlayer.getSelectedToken());
                 WildlifeTokensController.wildlifeTokenBag.add(activePlayer.getPlayerBoardObject().getSelectedToken());
+
                 //reset selectedToken
-//                activePlayer.getSelectedToken().setWildlifeTokenType(WildlifeToken.WildlifeTokenType.EMPTY);
                 activePlayer.getPlayerBoardObject().getSelectedToken().setWildlifeTokenType(WildlifeToken.WildlifeTokenType.EMPTY);
                 System.out.println("Token returned to token bag");
             }
@@ -202,6 +219,8 @@ public class Dev_StartGame {
             activePlayer = playerController.cycleToNextPlayer();
             GameUiView.printLargeSpace();
         }
+
+        System.out.println("No tiles remain so play is finished, calculating player score...");
 
         //end program
         UserTerminationController.endProgram();

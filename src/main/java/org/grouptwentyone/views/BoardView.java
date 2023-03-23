@@ -1,6 +1,7 @@
 package org.grouptwentyone.views;
 
 import org.grouptwentyone.models.HabitatTile;
+import org.grouptwentyone.models.PlayerBoard;
 import org.grouptwentyone.models.Tile;
 import org.grouptwentyone.models.WildlifeToken;
 
@@ -12,11 +13,12 @@ public class BoardView {
 
 
     //gave these hashtables a private scope for use in helper methods
-    private static Hashtable<HabitatTile.HabitatTileType, String> tileToColourTable = new Hashtable<>();
-    private static Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToStringTable = new Hashtable<>();
+    private static final Hashtable<HabitatTile.HabitatTileType, String> tileToColourTable = new Hashtable<>();
+    private static final Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToStringTable = new Hashtable<>();
 
     //static method to display tiles
-    public static String displayTiles(ArrayList<ArrayList<Tile>> playerBoard) {
+    public static String displayTiles(PlayerBoard playerBoardObject) {
+        ArrayList<ArrayList<Tile>> playerBoard = playerBoardObject.getPlayerBoardAs2dArray();
 
         StringBuilder pattern = new StringBuilder();
 
@@ -53,16 +55,6 @@ public class BoardView {
 
         GameUiView.printLinePageBorder();
 
-        // Not ideal but once a Playerboard class is moved: this can be refactored.
-        ArrayList<Tile> activeTiles = new ArrayList<>();
-        for (int a=0; a<playerBoard.size(); a++) {
-            for (int b=0; b<playerBoard.get(0).size(); b++) {
-                if (playerBoard.get(a).get(b).isActive()) {
-                    activeTiles.add(playerBoard.get(a).get(b));
-                }
-            }
-        }
-
         //iterate over each ArrayList in the ArrayList (rows)
         for (int row = 0; row < playerBoard.size(); row++) {
             //iterate over each row of each tile (tiles size is 6)
@@ -80,14 +72,12 @@ public class BoardView {
 
                     // Not ideal
                     boolean isCurrentTileAdjacentToActiveTile = false;
-                    for (Tile focusedTile: activeTiles) {
+                    for (Tile focusedTile: playerBoardObject.getActiveTiles()) {
                         if (currTile.isEmptyTileAdjacentToTile(focusedTile)) {
                             isCurrentTileAdjacentToActiveTile = true;
 
                         }
                     }
-
-
 
                     if (!currTile.getHabitatTile().isNull()) {
 
@@ -122,8 +112,7 @@ public class BoardView {
                         } else  {
                             pattern.append(greyCode + " *           * " + endString);
                         }
-                    }
-                    else if (currTile.getHabitatTile().isNull()) {
+                    } else if (currTile.getHabitatTile().isNull()) {
                         if (i == 0 || i == 5) {
                             pattern.append(greyCode + "               " + endString);
                         } else if (i == 1 || i == 4) {

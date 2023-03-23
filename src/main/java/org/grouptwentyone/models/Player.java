@@ -9,9 +9,6 @@ public class Player implements Comparable<Player>{
     int playerId;
     final String userName;
 //    int Score = 0;
-    //int numOfNatureTokens = 0;
-    //ArrayList<ArrayList<Tile>> playerBoard;
-
     PlayerBoard playerBoardObject = new PlayerBoard();
 
     public void setPlayerIdFromCounterAndIncrement() {
@@ -22,8 +19,6 @@ public class Player implements Comparable<Player>{
     public Player(String userName) {
         setPlayerIdFromCounterAndIncrement();
         this.userName = userName;
-        //this.numOfNatureTokens = 0;
-//        setupPlayerBoard();
         this.getPlayerBoardObject().setupPlayerBoard();
     }
 

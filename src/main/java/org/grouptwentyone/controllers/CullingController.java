@@ -5,8 +5,6 @@ import org.grouptwentyone.models.WildlifeToken;
 import org.grouptwentyone.views.GameView;
 import org.grouptwentyone.views.SelectionOptionsView;
 
-import java.util.Scanner;
-
 public class CullingController {
     private static boolean haveCulled = false;
     public static void checkForCull() {

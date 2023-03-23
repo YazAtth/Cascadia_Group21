@@ -39,9 +39,7 @@ public class StartGame {
             System.out.printf("Player Score: %d\n",activePlayer.getPlayerBoardObject().getScore());
 
             GameUiView.printPlayerHeader(activePlayer);
-//            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
-
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
 
             GameUiView.printPageBorder();
 
@@ -75,12 +73,12 @@ public class StartGame {
             //place tile
             GameUiView.printPageBorder();
             GameUiView.printPlayerHeader(activePlayer);
-//            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoard()));
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
             GameUiView.printPageBorder();
 
             //display selected tile by adding the players selected tile to a temp arraylist and passing that to displaySelectedTiles
-            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(new ArrayList<>(Collections.singletonList(activePlayer.getPlayerBoardObject().getSelectedTile()))));
+            System.out.printf("\n%s",
+                    SelectionOptionsView.displaySelectedHabitatTiles(new ArrayList<>(Collections.singletonList(activePlayer.getPlayerBoardObject().getSelectedTile()))));
             GameUiView.printPageBorder();
 
             System.out.print("Please enter the coordinates for where you would like to place the tile at in the format 'x, y'\n> ");
@@ -93,14 +91,13 @@ public class StartGame {
                     int tileYCoordinate = Integer.parseInt(tilePlacedCoordinates[1]);
                     HexCoordinate newTileHexCoordinate = new HexCoordinate(tileXCoordinate, tileYCoordinate);
 
-//                    activePlayer.addNewTile(newTileHexCoordinate);
                     activePlayer.getPlayerBoardObject().addNewTile(newTileHexCoordinate);
                     GameView.setIsPreviousInputInvalid(false);
                 } catch (ArrayIndexOutOfBoundsException ex) {
                     GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y%s\n> ",
                             GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                 } catch (NumberFormatException ex) {
-                    GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y%s\n> ",
+                    GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y%s \n> ",
                             GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                 } catch (TilePlacedAtOccupiedPositionException ex) {
                     GameView.setPreviousInputDisallowedMessage(String.format("%sTile Already Exists at that position! Try again.%s\n> ",
@@ -115,7 +112,7 @@ public class StartGame {
 
             GameUiView.printPageBorder();
             GameUiView.printPlayerHeader(activePlayer);
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
             GameUiView.printPageBorder();
 
             //rotate tile
@@ -128,7 +125,6 @@ public class StartGame {
                     do {
                         try {
                             int numRotations = Integer.parseInt(GameView.askUserForInput());
-//                            activePlayer.getRecentlyPlacedTile().rotateTile(numRotations);
                             activePlayer.getPlayerBoardObject().getRecentlyPlacedTile().rotateTile(numRotations);
 
                             GameView.setIsPreviousInputInvalid(false);
@@ -140,7 +136,7 @@ public class StartGame {
 
                     GameUiView.printPageBorder();
                     GameUiView.printPlayerHeader(activePlayer);
-                    System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+                    System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
                     GameUiView.printPageBorder();
 
                     finishedRotation = !GameView.getUserConfirmation("continue rotating the tile you just placed");
@@ -153,7 +149,7 @@ public class StartGame {
             //place token
             GameUiView.printPageBorder();
             GameUiView.printPlayerHeader(activePlayer);
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
             GameUiView.printPageBorder();
 
             boolean placeToken = false;
@@ -161,8 +157,10 @@ public class StartGame {
             //check if it's possible to place selected token and then give the player the option of placing it
             if (activePlayer.getPlayerBoardObject().canPlaceToken()) {
                 //display selected token by adding the players selected token to a new arraylist that's passed to displaySelectedTokens
-                System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(new ArrayList<>(Collections.singletonList(activePlayer.getPlayerBoardObject().getSelectedToken()))));
+                System.out.printf("\n%s",
+                        SelectionOptionsView.displaySelectedWildlifeTokens(new ArrayList<>(Collections.singletonList(activePlayer.getPlayerBoardObject().getSelectedToken()))));
                 GameUiView.printPageBorder();
+
                 placeToken = GameView.getUserConfirmation("place a token");
             } else {
                 System.out.print("Token cannot be placed on your board, therefore ");
@@ -178,14 +176,13 @@ public class StartGame {
                         int tokenYCoordinate = Integer.parseInt(tokenPlacedCoordinates.split(coordinateDelim)[1]);
                         HexCoordinate newTokenHexCoordinate = new HexCoordinate(tokenXCoordinate, tokenYCoordinate);
 
-//                        activePlayer.addNewToken(newTokenHexCoordinate);
                         activePlayer.getPlayerBoardObject().addNewToken(newTokenHexCoordinate);
                         GameView.setIsPreviousInputInvalid(false);
                     } catch (ArrayIndexOutOfBoundsException ex) {
                         GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y%s\n> ",
                                 GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     } catch (NumberFormatException ex) {
-                        GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y%s\n> ",
+                        GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter coordinates in the format x,y %s\n> ",
                                 GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     } catch (TokenPlacedAtOccupiedPositionException ex) {
                         GameView.setPreviousInputDisallowedMessage(String.format("%sTried to place Wildlife Token on an already occupied Habitat Tile%s\n> ",
@@ -200,15 +197,13 @@ public class StartGame {
                 } while (GameView.isIsPreviousInputInvalid());
                 GameUiView.printPageBorder();
                 GameUiView.printPlayerHeader(activePlayer);
-                System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+                System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
                 GameUiView.printPageBorder();
             } else {
                 //return token
-//                WildlifeTokensController.wildlifeTokenBag.add(activePlayer.getSelectedToken());
                 WildlifeTokensController.wildlifeTokenBag.add(activePlayer.getPlayerBoardObject().getSelectedToken());
 
                 //reset selectedToken
-//                activePlayer.getSelectedToken().setWildlifeTokenType(WildlifeToken.WildlifeTokenType.EMPTY);
                 activePlayer.getPlayerBoardObject().getSelectedToken().setWildlifeTokenType(WildlifeToken.WildlifeTokenType.EMPTY);
                 System.out.println("Token returned to token bag");
             }
