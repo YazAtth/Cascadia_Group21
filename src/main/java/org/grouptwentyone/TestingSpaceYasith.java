@@ -114,7 +114,7 @@ public class TestingSpaceYasith {
 
 
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
-        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
         System.out.printf("You have a score of: %d", p1.getScore());
     }
 
@@ -171,7 +171,7 @@ public class TestingSpaceYasith {
 
 
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
-        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
         System.out.printf("You have a score of: %d", p1.getScore());
     }
 
@@ -228,7 +228,7 @@ public class TestingSpaceYasith {
 
 
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
-        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
         System.out.printf("You have a score of: %d", p1.getScore());
     }
 
@@ -283,7 +283,7 @@ public class TestingSpaceYasith {
 
 
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
-        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
         System.out.printf("You have a score of: %d\n", p1.getScore());
 
     }
@@ -359,7 +359,7 @@ public class TestingSpaceYasith {
 
 
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
-        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
         System.out.printf("You have a score of: %d\n", p1.getScore());
 
 //        System.out.println(ScoringController.getTileGroupOfSizeNFromTile(p1.getPlayerBoardObject(), new HexCoordinate(2, 6), 1));
@@ -449,7 +449,7 @@ public class TestingSpaceYasith {
 
 
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
-        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
         System.out.printf("You have a score of: %d\n", p1.getScore());
     }
 

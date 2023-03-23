@@ -54,7 +54,7 @@ public class TestingSpaceDom {
 
 
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
-        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
         System.out.printf("You have a score of: %d\n", p1.getScore());
     }
 
@@ -133,7 +133,7 @@ public class TestingSpaceDom {
 
 
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
-        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
         System.out.printf("You have a score of: %d\n", p1.getScore());
 
     }
@@ -216,7 +216,7 @@ public class TestingSpaceDom {
 
 
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
-        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
         System.out.printf("You have a score of: %d\n", p1.getScore());
 
     }
@@ -299,7 +299,7 @@ public class TestingSpaceDom {
 
 
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
-        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
         System.out.printf("You have a score of: %d\n", p1.getScore());
 
     }
@@ -382,7 +382,7 @@ public class TestingSpaceDom {
 
 
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
-        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
         System.out.printf("You have a score of: %d\n", p1.getScore());
     }
 
@@ -464,7 +464,7 @@ public class TestingSpaceDom {
 
 
         System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
-        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
         System.out.printf("You have a score of: %d\n", p1.getScore());
     }
 
