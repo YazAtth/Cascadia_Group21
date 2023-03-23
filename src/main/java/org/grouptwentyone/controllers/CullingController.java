@@ -2,7 +2,7 @@ package org.grouptwentyone.controllers;
 
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.models.WildlifeToken;
-import org.grouptwentyone.views.GameView;
+import org.grouptwentyone.views.UserInputView;
 import org.grouptwentyone.views.SelectionOptionsView;
 
 public class CullingController {
@@ -34,7 +34,7 @@ public class CullingController {
         }
         else if (occurrence1 == 3 && !haveCulled) { //give user option to cull
             System.out.println("3 tokens of type '" + tokenType1 + "' are available in selection.");
-            boolean cullTheseTokens = GameView.getUserConfirmation("cull these tokens");
+            boolean cullTheseTokens = UserInputView.getUserConfirmation("cull these tokens");
             if (cullTheseTokens) {
                 haveCulled = true;
                     cullType(tokenType1);

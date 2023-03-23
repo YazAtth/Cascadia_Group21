@@ -11,7 +11,14 @@ import java.util.Hashtable;
 import static org.grouptwentyone.controllers.HabitatTilesController.habitatTilesBag;
 import static org.grouptwentyone.controllers.WildlifeTokensController.wildlifeTokenBag;
 
+/**
+ * This class manages the display of Habitat Tiles and Wildlife Tokens to the user and the subsequent selection of them.
+ */
 public class SelectionOptionsView {
+    /**
+     * Used to initialise the ArrayList that displays the Habitat Tiles options.
+     * @return An ArrayList of four Habitat Tiles.
+     */
     public static ArrayList<HabitatTile> getFourHabitatTiles() {
         ArrayList<HabitatTile> selectedHabitatTiles = new ArrayList<>();
 
@@ -23,6 +30,10 @@ public class SelectionOptionsView {
         return selectedHabitatTiles;
     }
 
+    /**
+     * Used to initialise the ArrayList that displays the Wildlife Token options.
+     * @return An ArrayList of four Wildlife Tokens
+     */
     public static ArrayList<WildlifeToken> getFourWildlifeTokens() {
         ArrayList<WildlifeToken> selectedWildlifeTokens = new ArrayList<>();
 
@@ -33,6 +44,11 @@ public class SelectionOptionsView {
         return selectedWildlifeTokens;
     }
 
+    /**
+     * Generates a String representation of the four Habitat Tiles that the player can later choose from.
+     * @param selectedHabitatTiles - The ArrayList of Habitat Tiles that the player can choose from.
+     * @return The String representation of Tiles that can then be printed to console.
+     */
     public static String displaySelectedHabitatTiles(ArrayList<HabitatTile> selectedHabitatTiles) {
         StringBuilder pattern = new StringBuilder();
 
@@ -64,7 +80,7 @@ public class SelectionOptionsView {
 
                 ArrayList<HabitatTile.HabitatTileType> currHabitatTileTypeList = currTile.getHabitatTileTypeList();
 
-                //tokenString should always length 5, hence the different if statements
+                //creates a string of the token types that can be placed on the tile
                 if (currHabitatTileTypeList.size() == 1) {
                     colourOne = colourTwo = colourThree = colourFour = colourFive = colourSix = tileToColourTable.get(currHabitatTileTypeList.get(0));
                     tokenString = "  " + tokenToStringTable.get(currTile.getWildlifeTokenTypeList().get(0)) + "  ";
@@ -100,6 +116,11 @@ public class SelectionOptionsView {
         return pattern.toString();
     }
 
+    /**
+     * Generates a String representation of the four Wildlife Tokens that the player can later choose from.
+     * @param selectedWildlifeTokens - The ArrayList of Wildlife Tokens that the player can choose from.
+     * @return The String representation of Tokens that can then be printed to console.
+     */
     public static String displaySelectedWildlifeTokens(ArrayList<WildlifeToken> selectedWildlifeTokens) {
         StringBuilder pattern = new StringBuilder();
 
@@ -147,26 +168,31 @@ public class SelectionOptionsView {
         return pattern.toString();
     }
 
+    /**
+     * Selects a Habitat Tile and Wildlife Token pair from Tiles and Tokens that have already bee displayed to the user.
+     * @param activePlayer - the Player who is selecting the Tile and Token pair and will have the pair assigned to
+     *                     their selectedTile and selectedToken variables.
+     */
     public static void selectTileAndToken(Player activePlayer) {
         System.out.print("Please select one of the above pairs by entering the associated number: \n> ");
         int userNum = -1;
 
         while (userNum < 1 || userNum > 4) {
-            String userInput = GameView.askUserForInput();
+            String userInput = UserInputView.askUserForInput();
             try {
                 userNum = Integer.parseInt(userInput);
             } catch (NumberFormatException ex) {
-                GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
+                UserInputView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
                         "between 1 and 4 to select an above pair: %s\n> ", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
             }
             if (userNum < 1 || userNum > 4)
-                GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
+                UserInputView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
                         "between 1 and 4 to select an above pair: %s\n> ", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
         }
         userNum--;
 
-        activePlayer.getPlayerBoardObject().setSelectedToken(org.grouptwentyone.StartGame.selectedTokens.remove(userNum));
-        activePlayer.getPlayerBoardObject().setSelectedTile(org.grouptwentyone.StartGame.selectedTiles.remove(userNum));
+        activePlayer.getPlayerBoardObject().setSelectedToken(StartGame.selectedTokens.remove(userNum));
+        activePlayer.getPlayerBoardObject().setSelectedTile(StartGame.selectedTiles.remove(userNum));
 
         //detects that no tiles remain so ends player turns
         if (!replaceTileAndToken()) {
@@ -174,10 +200,15 @@ public class SelectionOptionsView {
         }
     }
 
+    /**
+     * Helper method that replaces a selected Tile and Token with a new one into their respective ArrayLists, using
+     * the ArrayLists that store the generated Tiles and Tokens for the game.
+     * @return Returns true if Tile and Token are successfully replaced.
+     */
     private static boolean replaceTileAndToken() {
         if (habitatTilesBag.size() > 0 && wildlifeTokenBag.size() > 0) {
-            org.grouptwentyone.StartGame.selectedTiles.add(habitatTilesBag.remove(0));
-            org.grouptwentyone.StartGame.selectedTokens.add(wildlifeTokenBag.remove(0));
+            StartGame.selectedTiles.add(habitatTilesBag.remove(0));
+            StartGame.selectedTokens.add(wildlifeTokenBag.remove(0));
             return true;
         } else {
             return false;

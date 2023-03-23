@@ -3,7 +3,7 @@ package org.grouptwentyone.controllers;
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.models.Player;
 import org.grouptwentyone.views.GameUiView;
-import org.grouptwentyone.views.GameView;
+import org.grouptwentyone.views.UserInputView;
 import org.grouptwentyone.views.SelectionOptionsView;
 
 import java.util.Arrays;
@@ -22,10 +22,10 @@ public class NatureTokenController {
                         1: to select any combo of habitat tile and Wildlife token.
                         2: to wipe any number of wildlife tokens
                         > \s""");
-                userSelect = Integer.parseInt(GameView.askUserForInput());
+                userSelect = Integer.parseInt(UserInputView.askUserForInput());
 
             } catch (NumberFormatException ex) {
-                GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter number 1 or 2:%s\n> ",
+                UserInputView.setPreviousInputDisallowedMessage(String.format("%sInvalid input, please enter number 1 or 2:%s\n> ",
                         GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
             }
 
@@ -52,13 +52,13 @@ public class NatureTokenController {
 
         while (userNum < 1 || userNum > 4) {
             try {
-                userNum = Integer.parseInt(GameView.askUserForInput());
+                userNum = Integer.parseInt(UserInputView.askUserForInput());
             } catch (NumberFormatException ex) {
-                GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
+                UserInputView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
                     "between 1 and 4 to select an above tile:%s\n> ", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
             }
             if (userNum < 1 || userNum > 4)
-                GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
+                UserInputView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
                     "between 1 and 4 to select an above tile:%s\n> ", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
         }
         userNum--;
@@ -82,13 +82,13 @@ public class NatureTokenController {
 
         while (userNum < 1 || userNum > 4) {
             try {
-                userNum = Integer.parseInt(GameView.askUserForInput());
+                userNum = Integer.parseInt(UserInputView.askUserForInput());
             } catch (NumberFormatException ex) {
-                GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
+                UserInputView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
                     "between 1 and 4 to select an above token:%s\n> ", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
             }
             if (userNum < 1 || userNum > 4)
-                GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
+                UserInputView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter a number " +
                     "between 1 and 4 to select an above token:%s\n> ", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
         }
         userNum--;
@@ -111,11 +111,11 @@ public class NatureTokenController {
         boolean inputInvalid = true;
         while (inputInvalid) {
             try { //creates array of integers from user input
-                selectedNums = Arrays.stream(GameView.askUserForInput().split(", |,"))
+                selectedNums = Arrays.stream(UserInputView.askUserForInput().split(", |,"))
                         .mapToInt(Integer::parseInt).toArray();
                 inputInvalid = false;
                 if (selectedNums.length > 4) {
-                    GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid amount of numbers," +
+                    UserInputView.setPreviousInputDisallowedMessage(String.format("%sInvalid amount of numbers," +
                             " please enter a max of 4 numbers%s\n> ", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     inputInvalid = true;
                 }
@@ -125,7 +125,7 @@ public class NatureTokenController {
                     numSet.add(selectedNum);
                 }
                 if (numSet.size() > 4) {
-                    GameView.setPreviousInputDisallowedMessage(String.format("%sA duplicate number has been entered, " +
+                    UserInputView.setPreviousInputDisallowedMessage(String.format("%sA duplicate number has been entered, " +
                             "please only enter unique numbers between 1 and 4%s\n> ",
                             GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     inputInvalid = true;
@@ -134,7 +134,7 @@ public class NatureTokenController {
 
                 for (int num : selectedNums) {
                     if (num < 1 || num > 4){
-                        GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid number %s, please enter number(s) " +
+                        UserInputView.setPreviousInputDisallowedMessage(String.format("%sInvalid number %s, please enter number(s) " +
                                 "between 1 and 4 separated by a comma%s\n> ", GameUiView.RED_BOLD, num, GameUiView.RESET_COLOUR));
                         inputInvalid = true;
                         break;
@@ -154,7 +154,7 @@ public class NatureTokenController {
                 System.out.println("      (1)            (2)            (3)            (4)      \n");
 
             } catch (NumberFormatException ex) {
-                GameView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter number(s) " +
+                UserInputView.setPreviousInputDisallowedMessage(String.format("%sInvalid argument, please enter number(s) " +
                         "between 1 and 4 separated by a comma%s\n> ", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                 inputInvalid = true;
             }

@@ -4,7 +4,7 @@ import org.grouptwentyone.dev.DebugController;
 
 import java.util.Scanner;
 
-public class GameView {
+public class UserInputView {
     static boolean isPreviousInputInvalid = false;
     static String previousInputDisallowedMessage = "";
 
@@ -50,11 +50,11 @@ public class GameView {
     }
 
     public static void setIsPreviousInputInvalid(boolean isPreviousInputInvalid) {
-        GameView.isPreviousInputInvalid = isPreviousInputInvalid;
+        UserInputView.isPreviousInputInvalid = isPreviousInputInvalid;
     }
 
     public static void setPreviousInputDisallowedMessage(String previousInputDisallowedMessage) {
-        GameView.previousInputDisallowedMessage = previousInputDisallowedMessage;
+        UserInputView.previousInputDisallowedMessage = previousInputDisallowedMessage;
         isPreviousInputInvalid = true;
     }
 }
