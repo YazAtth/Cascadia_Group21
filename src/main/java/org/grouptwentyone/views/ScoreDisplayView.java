@@ -8,10 +8,6 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class ScoreDisplayView {
-
-
-
-
     public static void displayScorePage(PlayerController playerController) {
 
         HashMap<Integer, String> positionColours = new HashMap<>();

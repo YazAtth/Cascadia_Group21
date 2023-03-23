@@ -16,7 +16,7 @@ public class GameSetupView {
         System.out.println("Enter Number of Players");
 
         String userInput;
-        int numberOfPlayers = -1;
+        int numberOfPlayers;
 
         // Keep asking until user enters a valid int or exit program (returns -1).
         while (true) {

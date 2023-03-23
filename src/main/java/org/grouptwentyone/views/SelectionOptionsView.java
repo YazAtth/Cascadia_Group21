@@ -60,10 +60,7 @@ public class SelectionOptionsView {
         for (int i = 0; i < 6; i++) {
 
             //iterate over each Tile
-            for (int col = 0; col < selectedHabitatTiles.size(); col++) {
-
-                HabitatTile currTile = selectedHabitatTiles.get(col);
-
+            for (HabitatTile currTile : selectedHabitatTiles) {
 
                 ArrayList<HabitatTile.HabitatTileType> currHabitatTileTypeList = currTile.getHabitatTileTypeList();
 
@@ -84,17 +81,17 @@ public class SelectionOptionsView {
                     }
                 }
                 if (i == 0) {
-                    pattern.append(colourOne +   "    *******    " + endString);
+                    pattern.append(colourOne + "    *******    " + endString);
                 } else if (i == 1) {
-                    pattern.append(colourTwo +   "  ***********  " + endString);
+                    pattern.append(colourTwo + "  ***********  " + endString);
                 } else if (i == 2) {
-                    pattern.append(colourThree + " ****" + tokenString +  endString + colourThree + "**** " + endString);
+                    pattern.append(colourThree + " ****" + tokenString + endString + colourThree + "**** " + endString);
                 } else if (i == 3) {
-                    pattern.append(colourFour +  " ****     **** " + endString);
+                    pattern.append(colourFour + " ****     **** " + endString);
                 } else if (i == 4) {
-                    pattern.append(colourFive +  "  ***********  " + endString);
+                    pattern.append(colourFive + "  ***********  " + endString);
                 } else {
-                    pattern.append(colourSix +   "    *******    " + endString);
+                    pattern.append(colourSix + "    *******    " + endString);
                 }
             }
             pattern.append("\n");
@@ -130,10 +127,7 @@ public class SelectionOptionsView {
         for (int i = 0; i < 3; i++) {
 
             //iterate over each Token
-            for (int j = 0; j < selectedWildlifeTokens.size(); j++) {
-
-                WildlifeToken currToken = selectedWildlifeTokens.get(j);
-
+            for (WildlifeToken currToken : selectedWildlifeTokens) {
 
                 WildlifeToken.WildlifeTokenType currWildlifeTokenType = currToken.getWildlifeTokenType();
 
@@ -141,11 +135,11 @@ public class SelectionOptionsView {
                 tokenString = " " + tokenToLetterTable.get(currWildlifeTokenType) + " ";
 
                 if (i == 0) {
-                    pattern.append(colour +   "     *****     " + endString);
+                    pattern.append(colour + "     *****     " + endString);
                 } else if (i == 1) {
                     pattern.append(colour + "     *" + tokenString + "*     " + endString);
                 } else {
-                    pattern.append(colour +   "     *****     " + endString);
+                    pattern.append(colour + "     *****     " + endString);
                 }
             }
             pattern.append("\n");

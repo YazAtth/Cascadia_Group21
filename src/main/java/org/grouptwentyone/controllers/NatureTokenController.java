@@ -17,8 +17,11 @@ public class NatureTokenController {
         int userSelect = -1;
         do {
             try {
-                System.out.print("Please enter\n1: to select any combo of habitat tile and Wildlife token.\n" +
-                        "2: to wipe any number of wildlife tokens\n> ");
+                System.out.print("""
+                        Please enter
+                        1: to select any combo of habitat tile and Wildlife token.
+                        2: to wipe any number of wildlife tokens
+                        > \s""");
                 userSelect = Integer.parseInt(GameView.askUserForInput());
 
             } catch (NumberFormatException ex) {
@@ -107,7 +110,7 @@ public class NatureTokenController {
         int[] selectedNums;
         boolean inputInvalid = true;
         while (inputInvalid) {
-            try { //creates array of ints from user input
+            try { //creates array of integers from user input
                 selectedNums = Arrays.stream(GameView.askUserForInput().split(", |,"))
                         .mapToInt(Integer::parseInt).toArray();
                 inputInvalid = false;
@@ -117,9 +120,9 @@ public class NatureTokenController {
                     inputInvalid = true;
                 }
 
-                HashSet numSet = new HashSet();
-                for (int i = 0; i < selectedNums.length; i++) {
-                    numSet.add(selectedNums[i]);
+                HashSet<Integer> numSet = new HashSet<>();
+                for (int selectedNum : selectedNums) {
+                    numSet.add(selectedNum);
                 }
                 if (numSet.size() > 4) {
                     GameView.setPreviousInputDisallowedMessage(String.format("%sA duplicate number has been entered, " +
@@ -144,7 +147,7 @@ public class NatureTokenController {
                 }
 
                 System.out.println("Selected tokens replaced, proceeding to selection now...");
-                System.out.println("\n");;
+                System.out.println("\n");
                 GameUiView.printPageBorder();
                 System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
                 System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));

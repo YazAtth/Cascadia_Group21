@@ -5,10 +5,10 @@ import java.util.HashSet;
 
 public class HabitatTile {
     public enum HabitatTileType {MOUNTAINS, FORESTS, PRAIRIES, WETLANDS, RIVERS}
-    private ArrayList<HabitatTileType> habitatTileTypeList;
-    private ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeList;
+    private final ArrayList<HabitatTileType> habitatTileTypeList;
+    private final ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeList;
     private WildlifeToken wildlifeToken;
-    private boolean keystone;
+    private final boolean keystone;
     private boolean isNull;
 
     //keystone tile constructor

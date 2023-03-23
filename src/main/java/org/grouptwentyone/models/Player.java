@@ -6,8 +6,8 @@ public class Player implements Comparable<Player>{
 
     private static int playerIdCounter = 0;
 
-    int playerId;
-    final String userName;
+    private int playerId;
+    private final String userName;
 //    int Score = 0;
     PlayerBoard playerBoardObject = new PlayerBoard();
 

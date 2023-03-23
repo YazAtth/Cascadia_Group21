@@ -1,7 +1,6 @@
 package org.grouptwentyone.views;
 
 import org.grouptwentyone.dev.DebugController;
-import org.grouptwentyone.models.Player;
 
 import java.util.Scanner;
 
@@ -44,10 +43,6 @@ public class GameView {
                 System.out.print("Invalid input, please re-enter either y or n for yes or no respectively:\n> ");
             }
         }
-    }
-
-    public static void displaySelectedTile(Player activePlayer) {
-
     }
 
     public static boolean isIsPreviousInputInvalid() {

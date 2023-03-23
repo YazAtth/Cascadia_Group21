@@ -22,19 +22,19 @@ public class PlayerBoard {
 
 
 
-    public void printPlayerBoard() {
-
-//        System.out.println(playerBoard.size());
-//        System.out.println(playerBoard.get(0).size());
-
-        for (int i=0; i<playerBoard.size(); i++) {
-            for (int k=0; k<playerBoard.get(0).size(); k++) {
-//                System.out.printf("%d, %d\n", i, k);
-                System.out.printf("[%s]", playerBoard.get(i).get(k));
-            }
-            System.out.println();
-        }
-    }
+//    public void printPlayerBoard() {
+//
+////        System.out.println(playerBoard.size());
+////        System.out.println(playerBoard.get(0).size());
+//
+//        for (int i=0; i<playerBoard.size(); i++) {
+//            for (int k=0; k<playerBoard.get(0).size(); k++) {
+////                System.out.printf("%d, %d\n", i, k);
+//                System.out.printf("[%s]", playerBoard.get(i).get(k));
+//            }
+//            System.out.println();
+//        }
+//    }
 
 
     public void addPlayerBoardBuffer(PlayerBoard.PlayerBoardSide playerBoardSide) {
@@ -124,8 +124,6 @@ public class PlayerBoard {
         int coordinateXVal = coordinate.getX();
 
         // Checks if coordinate is on the board.
-//        System.out.printf("y-val: %d > lastColumn: %d...x-val: %d > lastRow: %d\n", coordinateYVal, lastColumn, coordinateXVal, lastRow);
-//        System.out.println(lastRow);
         if (coordinateXVal < 0 || coordinateXVal > lastRow || coordinateYVal < 0 || coordinateYVal > lastColumn) {
             throw new IllegalArgumentException("Entered coordinate in not on the board");
         }
@@ -186,15 +184,9 @@ public class PlayerBoard {
     }
 
     public void addNewTile(HexCoordinate newTileHexCoordinate) {
-        //legacy code
-//        // changed this so that the habitat tile is the one selected in an earlier select command
-//        if (this.getSelectedTile().isNull()) {
-//            System.out.println("No tile has been selected. Please select a tile first.");
-//            return;
-//        }
         Tile newTile = new Tile(this.getSelectedTile(), newTileHexCoordinate);
 
-        //checks if the spot on the playerboard is already occupied
+        //checks if the spot on the playerBoard is already occupied
         Tile focusedTile = playerBoard.get(newTileHexCoordinate.getX()).get(newTileHexCoordinate.getY());
         if (focusedTile.isActive()) {
             throw new TilePlacedAtOccupiedPositionException(String.format("Tried to place %s onto existing %s",
@@ -250,12 +242,6 @@ public class PlayerBoard {
 
 
     public void addNewToken(HexCoordinate newTokenHexCoordinate) {
-        //legacy code
-//        //check that player has selected a token
-//        if (this.getSelectedToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
-//            System.out.println("No token has been selected. Please select a token first.");
-//            return;
-//        }
 
         Tile focusedTile;
         try {
@@ -461,7 +447,7 @@ public class PlayerBoard {
         }
     }
     public ArrayList<Tile> getConnectedSameTilesEast(Tile tile, PlayerBoard playerBoard) {
-        ArrayList<Tile> sameTilesEast = new ArrayList<Tile>();
+        ArrayList<Tile> sameTilesEast = new ArrayList<>();
 
         boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
 
@@ -477,7 +463,7 @@ public class PlayerBoard {
         return sameTilesEast;
     }
     public ArrayList<Tile> getConnectedSameTilesSouthEast(Tile tile, PlayerBoard playerBoard) {
-        ArrayList<Tile> sameTilesSouthEast = new ArrayList<Tile>();
+        ArrayList<Tile> sameTilesSouthEast = new ArrayList<>();
 
         boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
 
@@ -499,7 +485,7 @@ public class PlayerBoard {
     }
 
     public ArrayList<Tile> getConnectedSameTilesSouthWest(Tile tile, PlayerBoard playerBoard) {
-        ArrayList<Tile> sameTilesSouthEast = new ArrayList<Tile>();
+        ArrayList<Tile> sameTilesSouthEast = new ArrayList<>();
 
         boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
 
