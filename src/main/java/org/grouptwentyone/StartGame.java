@@ -18,6 +18,7 @@ public class StartGame {
 
     public static void start() {
 
+        GameUiView.printLargeSpace();
         LandingPageView.show();
         GameUiView.printLargeSpace();
 
