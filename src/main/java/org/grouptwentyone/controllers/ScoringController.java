@@ -9,8 +9,15 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ScoringController {
-    // TODO: Forgot to account for 0 cases in my hashtables.
 
+
+    /**
+     * Scans the board for each tile with a fox token. A point is added for each unique wildlife token adjacent to the fox token.
+     * <br><br>Adjacent fox tokens are included in scoring.
+     *
+     * @param playerBoard of current Player
+     * @return local score as integer
+     */
     public static int scoreFoxScoringCardA(PlayerBoard playerBoard) {
 
         int localScore = 0;
@@ -43,6 +50,21 @@ public class ScoringController {
         return localScore;
     }
 
+    /**
+     * Scans the board for each tile with a fox token. Points are added for each unique wildlife token pair adjacent to the fox token.
+     * The pair does not have to be adjacent to each other.
+     * <br><br>Adjacent fox tokens are <b>not</b> included in scoring.
+     * <br><br>
+     * <u>Scoring Table</u>
+     * <br> 1 pair -> 3 points
+     * <br> 2 pairs -> 5 points
+     * <br> 3 pairs -> 7 points
+     *
+     *
+     *
+     * @param playerBoard of current Player
+     * @return local score as integer
+     */
     public static int scoreFoxScoringCardB(PlayerBoard playerBoard) {
 
         int localScore = 0;
@@ -97,6 +119,17 @@ public class ScoringController {
         return localScore;
     }
 
+
+    /**
+     * Scans the board for each tile with a fox token. Identify the most common adjacent wildlife token.
+     * 1 point is added for every adjacent wildlife token which was identified as the most common.
+     * <br><br>Adjacent fox tokens are <b>not</b> included in scoring.
+     * <br><br>
+     *
+     *
+     * @param playerBoard of current Player
+     * @return local score as integer
+     */
     public static int scoreFoxScoringCardC(PlayerBoard playerBoard) {
 
         int localScore = 0;
@@ -145,6 +178,14 @@ public class ScoringController {
         return localScore;
     }
 
+    /**
+     * Scans the board for each tile with a bear token. 1 point is added for every pair of bears.
+     * Once a pair of bears has been scored: they must be removed from further scoring.
+     * <br><br>
+     *
+     * @param playerBoard - of current Player
+     * @return local score as integer
+     */
     public static int scoreBearScoringCardA(PlayerBoard playerBoard) {
 
         double numberOfPairs = 0;
@@ -260,6 +301,14 @@ public class ScoringController {
 
 
 
+    /**
+     * Scans the board for each tile with a bear token. 10 points are added for every group of three bears.
+     * Every time a triple of bears is scored: it must be removed from further scoring.
+     * <br><br>
+     *
+     * @param playerBoard of current Player
+     * @return local score as integer
+     */
     public static int scoreBearScoringCardB(PlayerBoard playerBoard) {
         int numberOfTriples = 0;
 
@@ -324,6 +373,16 @@ public class ScoringController {
     }
 
 
+    /**
+     * Scans the board for each tile with a bear token.
+     * <br><br> 1. Find a group of three bears. If one is found: add 8 points and exclude the group from further scoring.
+     * <br> 2. Find a group of two bears. If one is found: add 5 points and exclude the group from further scoring.
+     * <br> 3. Find a single tile with a bear token: If one is found: add 2 points.
+     * <br> 4. If all three types have been found: add 3 points.
+     *
+     * @param playerBoard of current Player
+     * @return local score as integer
+     */
     public static int scoreBearScoringCardC(PlayerBoard playerBoard) {
         HashMap<Integer, Integer> groupSizeFrequency = new HashMap<>();
         groupSizeFrequency.put(3, 0);
