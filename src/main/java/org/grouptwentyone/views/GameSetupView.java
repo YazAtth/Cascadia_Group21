@@ -63,8 +63,22 @@ public class GameSetupView {
             System.out.printf("Enter \"Player %d\" name: ", i + 1);
             playerName = sc.nextLine().trim();
 
+            boolean invalidPlayerName = false;
+
             if (Objects.equals(playerName, "")) {
-                System.out.printf("\n%sInvalid Input:%s A player cannot have an empty name%s\n", GameUiView.RED_BOLD, GameUiView.RED, GameUiView.RESET_COLOUR);
+                System.out.printf("\n%sInvalid Input:%s A player cannot have an empty name!%s\n", GameUiView.RED_BOLD, GameUiView.RED, GameUiView.RESET_COLOUR);
+                invalidPlayerName = true;
+            }
+
+            // Ensure two players can't have the same name
+            for (Player existingPlayer: playerList) {
+                if (Objects.equals(playerName, existingPlayer.getUserName())) {
+                    System.out.printf("\n%sInvalid Input:%s Player name already exists!%s\n", GameUiView.RED_BOLD, GameUiView.RED, GameUiView.RESET_COLOUR);
+                    invalidPlayerName = true;
+                }
+            }
+
+            if (invalidPlayerName) {
                 i--;
                 continue;
             }
