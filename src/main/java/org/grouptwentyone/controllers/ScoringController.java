@@ -612,7 +612,6 @@ public class ScoringController {
         }
     }
 
-
     public static int scoreElkScoringCardB(PlayerBoard playerBoard) {
         int localScore = 0;
         Set<Tile> usedElkTiles = new HashSet<>();
@@ -640,11 +639,19 @@ public class ScoringController {
                     if (groupSize == 1) {
                         localScore += 2;
                     } else if (groupSize == 2) {
-                        localScore += 5;
+                        localScore += 4;
                     } else if (groupSize == 3) {
-                        localScore += 9;
+                        localScore += 7;
                     } else if (groupSize == 4) {
-                        localScore += 13;
+                        localScore += 10;
+                    } else if (groupSize == 5) {
+                        localScore += 14;
+                    } else if (groupSize == 6) {
+                        localScore += 18;
+                    } else if (groupSize == 7) {
+                        localScore += 23;
+                    } else if (groupSize >= 8) {
+                        localScore += 28;
                     }
                 }
             }
@@ -723,17 +730,17 @@ public class ScoringController {
                     if (runSize == 1) {
                         localScore += 2;
                     } else if (runSize == 2) {
-                        localScore += 5;
+                        localScore += 4;
                     } else if (runSize == 3) {
-                        localScore += 8;
+                        localScore += 7;
                     } else if (runSize == 4) {
-                        localScore += 12;
+                        localScore += 11;
                     } else if (runSize == 5) {
-                        localScore += 16;
+                        localScore += 15;
                     } else if (runSize == 6) {
                         localScore += 20;
                     } else if (runSize >= 7) {
-                        localScore += 25;
+                        localScore += 26;
                     }
 
                 }
@@ -764,9 +771,9 @@ public class ScoringController {
                     } else if (runSize == 2) {
                         localScore += 4;
                     } else if (runSize == 3) {
-                        localScore += 9;
+                        localScore += 8;
                     } else if (runSize >= 4) {
-                        localScore += 11;
+                        localScore += 12;
                     }
                 }
             }
@@ -790,13 +797,17 @@ public class ScoringController {
 
                     int runSize = runOfSalmon.size();
 
-                    //increment size
-                    if (runSize == 3) {
-                        localScore += 10;
+                    //increment score
+                    if (runSize == 1) {
+                        localScore += 2;
+                    } else if (runSize == 2) {
+                        localScore += 4;
+                    } else if (runSize == 3) {
+                        localScore += 9;
                     } else if (runSize == 4) {
-                        localScore += 12;
+                        localScore += 11;
                     } else if (runSize >= 5) {
-                        localScore += 15;
+                        localScore += 17;
                     }
                 }
             }
