@@ -468,14 +468,14 @@ public class TestingSpaceYasith {
         Player p4 = new Player("Barack Obama");
 
 
-        p3.getPlayerBoardObject().score = 50;
-        p2.getPlayerBoardObject().score = 100;
-        p1.getPlayerBoardObject().score = 150;
+//        p3.getPlayerBoardObject().getScore() = 50;
+//        p2.getPlayerBoardObject().score = 100;
+//        p1.getPlayerBoardObject().score = 150;
 
-        ArrayList<Player> playerList = new ArrayList<>(List.of(p1, p2, p3, p4));
-        PlayerManager playerManager = new PlayerManager(playerList);
-
-        ScoreDisplayView.displayScorePage(playerManager);
+//        ArrayList<Player> playerList = new ArrayList<>(List.of(p1, p2, p3, p4));
+//        PlayerManager playerManager = new PlayerManager(playerList);
+//
+//        ScoreDisplayView.displayScorePage(playerManager);
     }
 
     public static void testLandingPage() {

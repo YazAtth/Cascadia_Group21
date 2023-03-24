@@ -47,7 +47,7 @@ public class PlayerManager {
 
     public void tallyUpAllScores() {
         for (Player player: getPlayerList()) {
-            player.getPlayerBoardObject().tallyUpScore();
+            player.getPlayerBoardObject().getScore();
         }
     }
 

@@ -18,7 +18,6 @@ public class PlayerBoard {
     HabitatTile selectedTile;
     WildlifeToken selectedToken;
     int numOfNatureTokens = 0;
-    public int score = 0;
 
 
 
@@ -318,14 +317,9 @@ public class PlayerBoard {
     }
 
 
-
     public int getScore() {
-        return this.score;
-    }
 
-
-    public int tallyUpScore() {
-        //TODO: Switch statement without breaks so all the relevant cases run.
+        int score = 0;
 
         ArrayList<ScoringCards.ScoreCard> scoreCardList = ScoringCards.getScoreCardsList();
         ScoringCards.ScoreCard bearScoringCard = scoreCardList.get(0);
@@ -336,46 +330,42 @@ public class PlayerBoard {
 
         // Score Bear Card
         switch(bearScoringCard.getScoreType()) {
-            case A -> incrementScore(ScoringController.scoreBearScoringCardA(this));
-            case B -> incrementScore(ScoringController.scoreBearScoringCardB(this));
-            case C -> incrementScore(ScoringController.scoreBearScoringCardC(this));
+            case A -> score += ScoringController.scoreBearScoringCardA(this);
+            case B -> score += ScoringController.scoreBearScoringCardB(this);
+            case C -> score += ScoringController.scoreBearScoringCardC(this);
         }
 
         // Score Fox Card
         switch(foxScoringCard.getScoreType()) {
-            case A -> incrementScore(ScoringController.scoreFoxScoringCardA(this));
-            case B -> incrementScore(ScoringController.scoreFoxScoringCardB(this));
-            case C -> incrementScore(ScoringController.scoreFoxScoringCardC(this));
+            case A -> score += ScoringController.scoreFoxScoringCardA(this);
+            case B -> score += ScoringController.scoreFoxScoringCardB(this);
+            case C -> score += ScoringController.scoreFoxScoringCardC(this);
         }
 
         // Score Elk Card
         switch(elkScoringCard.getScoreType()) {
-            case A -> incrementScore(ScoringController.scoreElkScoringCardA(this));
-            case B -> incrementScore(ScoringController.scoreElkScoringCardB(this));
-            case C -> incrementScore(ScoringController.scoreElkScoringCardC(this));
+            case A -> score += ScoringController.scoreElkScoringCardA(this);
+            case B -> score += ScoringController.scoreElkScoringCardB(this);
+            case C -> score += ScoringController.scoreElkScoringCardC(this);
         }
 
         // Score Hawk Card
         switch(hawkScoringCard.getScoreType()) {
-            case A -> incrementScore(ScoringController.scoreHawkScoringCardA(this));
-            case B -> incrementScore(ScoringController.scoreHawkScoringCardB(this));
-            case C -> incrementScore(ScoringController.scoreHawkScoringCardC(this));
+            case A -> score += ScoringController.scoreHawkScoringCardA(this);
+            case B -> score += ScoringController.scoreHawkScoringCardB(this);
+            case C -> score += ScoringController.scoreHawkScoringCardC(this);
         }
 
         // Score Salmon Card
         switch (salmonScoringCard.getScoreType()) {
-            case A -> incrementScore(ScoringController.scoreSalmonScoringCardA(this));
-            case B -> incrementScore(ScoringController.scoreSalmonScoringCardB(this));
-            case C -> incrementScore(ScoringController.scoreSalmonScoringCardC(this));
+            case A -> score += ScoringController.scoreSalmonScoringCardA(this);
+            case B -> score += ScoringController.scoreSalmonScoringCardB(this);
+            case C -> score += ScoringController.scoreSalmonScoringCardC(this);
         }
 
-        return this.score;
-    }
+        return score;
 
-    public void incrementScore(int n) {
-        this.score += n;
     }
-
 
     public Tile getTileByCoordinate(int row, int col) {
 
