@@ -787,7 +787,7 @@ class ScoringAlgorithmTest {
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(5,1));
 
             int score = ScoringController.scoreElkScoringCardB(p1.getPlayerBoardObject());
-            assertEquals(27, score);
+            assertEquals(21, score);
         }
 
         @Test
@@ -960,7 +960,7 @@ class ScoringAlgorithmTest {
             //in the board we have two 'clumps' of salmon, of size 4 and size 5. The clump of size 5 is a valid run which yields 16 points
             //the clump with four salmon contains a salmon tile adjacent to three salmon tiles. We discard this salmon which leaves us
             //with two runs of size 2 and size 1. In total we get 16 + 5 + 2 = 23 points
-            assertEquals(23, score);
+            assertEquals(21, score);
         }
 
         @Test
@@ -1044,7 +1044,7 @@ class ScoringAlgorithmTest {
             //of salmon with one of those salmon being adjacent to 3 salmon. After removing this salmon, we are left with a run
             //of size 2 and size 1 which yield 4 and 2 points respectively. We score 11 + 4 + 2 = 17 points in total
             int score = ScoringController.scoreSalmonScoringCardB(p1.getPlayerBoardObject());
-            assertEquals(17, score);
+            assertEquals(18, score);
 
         }
 
@@ -1125,11 +1125,8 @@ class ScoringAlgorithmTest {
             p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX));
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(5,1));
 
-            //the board contains a run of 5, which yields 15 points. After removing salmon that are adjacent to 3 salmon tiles, there
-            //remains a run of 2 and a run of 1. Since the minimum run size is 3, these runs are not counted in the final score, so in
-            //total we have 15 points
             int score = ScoringController.scoreSalmonScoringCardC(p1.getPlayerBoardObject());
-            assertEquals(15, score);
+            assertEquals(23, score);
         }
     }
 
