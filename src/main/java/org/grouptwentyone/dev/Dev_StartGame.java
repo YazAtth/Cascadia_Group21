@@ -24,11 +24,11 @@ public class Dev_StartGame {
         HabitatTilesController.habitatTilesBag.subList(0, tilesToRemove).clear();
 
 
-        PlayerController playerController = new PlayerController(playerList);
+        PlayerManager playerManager = new PlayerManager(playerList);
         //playerController.shufflePlayerList();
         //GameSetupView.displayPlayerOrder(playerList);
 
-        Player activePlayer = playerController.getFirstPlayer();
+        Player activePlayer = playerManager.getFirstPlayer();
         String coordinateDelim = ",|, ";
 
         while (tilesRemain) {
@@ -215,13 +215,13 @@ public class Dev_StartGame {
 
             //next player
             System.out.println("Moving to next player");
-            activePlayer = playerController.cycleToNextPlayer();
+            activePlayer = playerManager.cycleToNextPlayer();
             GameUiView.printLargeSpace();
         }
         System.out.println("No tiles remain so play is finished, calculating player score...");
 
-        playerController.tallyUpAllScores();
-        ScoreDisplayView.displayScorePage(playerController);
+        playerManager.tallyUpAllScores();
+        ScoreDisplayView.displayScorePage(playerManager);
 
 //        WildlifeToken.WildlifeTokenType scoreToken = ScoringCards.getScoreCardsList().get(0).getTokenType();
 //        switch (scoreToken) {

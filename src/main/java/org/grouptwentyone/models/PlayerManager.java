@@ -1,18 +1,16 @@
-package org.grouptwentyone.controllers;
-
-import org.grouptwentyone.models.Player;
+package org.grouptwentyone.models;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class PlayerController {
+public class PlayerManager {
 
     private ArrayList<Player> playerList;
     private int playerIndexCycle = 0;
 
 
 
-    public PlayerController(ArrayList<Player> inputPlayerList) {
+    public PlayerManager(ArrayList<Player> inputPlayerList) {
         setPlayerList(inputPlayerList);
     }
 

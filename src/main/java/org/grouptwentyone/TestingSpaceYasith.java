@@ -1,14 +1,12 @@
 package org.grouptwentyone;
 
 import org.grouptwentyone.controllers.HabitatTilesController;
-import org.grouptwentyone.controllers.PlayerController;
-import org.grouptwentyone.controllers.ScoringController;
+import org.grouptwentyone.models.PlayerManager;
 import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.models.*;
 import org.grouptwentyone.views.BoardView;
 import org.grouptwentyone.views.ScoreDisplayView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -474,9 +472,9 @@ public class TestingSpaceYasith {
         p1.getPlayerBoardObject().score = 150;
 
         ArrayList<Player> playerList = new ArrayList<>(List.of(p1, p2, p3, p4));
-        PlayerController playerController = new PlayerController(playerList);
+        PlayerManager playerManager = new PlayerManager(playerList);
 
-        ScoreDisplayView.displayScorePage(playerController);
+        ScoreDisplayView.displayScorePage(playerManager);
     }
 
 

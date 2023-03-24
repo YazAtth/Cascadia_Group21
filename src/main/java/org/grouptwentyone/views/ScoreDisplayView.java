@@ -1,6 +1,6 @@
 package org.grouptwentyone.views;
 
-import org.grouptwentyone.controllers.PlayerController;
+import org.grouptwentyone.models.PlayerManager;
 import org.grouptwentyone.models.Player;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 public class ScoreDisplayView {
-    public static void displayScorePage(PlayerController playerController) {
+    public static void displayScorePage(PlayerManager playerManager) {
 
         HashMap<Integer, String> positionColours = new HashMap<>();
         positionColours.put(1, GameUiView.YELLOW_BOLD_BRIGHT);
@@ -18,7 +18,7 @@ public class ScoreDisplayView {
         GameUiView.printPageBorder();
         System.out.printf("%s Scoring %s \n\n", GameUiView.targetCircle, GameUiView.targetCircle);
 
-        ArrayList<Player> playerListInOrder = playerController.getPlayerList();
+        ArrayList<Player> playerListInOrder = playerManager.getPlayerList();
 
         // Sorts the list of players from first to last based off their score.
         Collections.sort(playerListInOrder);
