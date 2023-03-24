@@ -45,6 +45,18 @@ public class UserInputView {
         }
     }
 
+    public static void showPressEnterToContinuePrompt(String promptText) {
+        System.out.println(promptText);
+        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
+    }
+
+    public static void showPressEnterToContinuePrompt() {
+        System.out.println("Press \"ENTER\" on your keyboard to continue");
+        Scanner sc = new Scanner(System.in);
+        sc.nextLine();
+    }
+
     public static boolean isIsPreviousInputInvalid() {
         return isPreviousInputInvalid;
     }
