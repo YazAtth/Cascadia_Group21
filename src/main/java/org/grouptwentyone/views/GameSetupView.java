@@ -24,6 +24,10 @@ public class GameSetupView {
 
             UserTerminationController.checkUserInputForProgramTermination(userInput);
 
+            if (Objects.equals(userInput.toLowerCase(), "quit")) {
+                UserTerminationController.endProgram();
+            }
+
             try {
                 numberOfPlayers = Integer.parseInt(userInput);
 
