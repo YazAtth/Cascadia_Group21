@@ -18,6 +18,9 @@ public class StartGame {
 
     public static void start() {
 
+        LandingPageView.show();
+        GameUiView.printLargeSpace();
+
         int numOfPlayers = GameSetupView.getNumberOfPlayersFromUser();
         ArrayList<Player> playerList = GameSetupView.getPlayerNamesFromUser(numOfPlayers);
 

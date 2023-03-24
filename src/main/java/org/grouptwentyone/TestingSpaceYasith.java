@@ -5,6 +5,7 @@ import org.grouptwentyone.models.PlayerManager;
 import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.models.*;
 import org.grouptwentyone.views.BoardView;
+import org.grouptwentyone.views.LandingPageView;
 import org.grouptwentyone.views.ScoreDisplayView;
 
 import java.util.ArrayList;
@@ -477,8 +478,13 @@ public class TestingSpaceYasith {
         ScoreDisplayView.displayScorePage(playerManager);
     }
 
+    public static void testLandingPage() {
+
+        LandingPageView.show();
+    }
+
 
     public static void main(String[] args) {
-        scoreDisplayViewTest();
+        testLandingPage();
     }
 }
