@@ -28,24 +28,24 @@ public class HexCoordinate {
     }
 
     public int getX() {
-        return X;
+        return this.X;
     }
 
     public int getY() {
-        return Y;
+        return this.Y;
     }
 
     public void setX(int x) {
-        X = x;
+        this.X = x;
     }
 
     public void setY(int y) {
-        Y = y;
+        this.Y = y;
     }
 
     //removed space after comma for use in playerBoard printing
     public String toString() {
-        return String.format("(%d,%d)", getX(), getY());
+        return String.format("(%d,%d)", this.getX(), this.getY());
     }
 
     public boolean equals(HexCoordinate o) {

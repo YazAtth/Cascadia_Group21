@@ -32,11 +32,11 @@ public class Player implements Comparable<Player>{
     }
 
     public int getPlayerId() {
-        return playerId;
+        return this.playerId;
     }
 
     public String getUserName() {
-        return userName;
+        return this.userName;
     }
 
     public int getScore() {
@@ -44,14 +44,14 @@ public class Player implements Comparable<Player>{
     }
 
     public PlayerBoard getPlayerBoardObject() {
-        return playerBoardObject;
+        return this.playerBoardObject;
     }
 
     public void spendNatureToken() {
-        playerBoardObject.spendNatureToken();
+        this.playerBoardObject.spendNatureToken();
     }
 
     public int getNumOfNatureTokens() {
-        return playerBoardObject.getNumOfNatureTokens();
+        return this.playerBoardObject.getNumOfNatureTokens();
     }
 }

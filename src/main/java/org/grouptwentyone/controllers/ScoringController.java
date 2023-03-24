@@ -360,7 +360,7 @@ public class ScoringController {
                     }
 //
                     if (!isLocalTileGroupRecorded) {
-//                        System.out.println("INCREMENENTED SCORE");
+//                        System.out.println("INCREMENTED SCORE");
                         numberOfTriples++;
                     }
 

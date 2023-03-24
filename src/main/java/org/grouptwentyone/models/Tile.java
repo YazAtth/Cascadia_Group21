@@ -36,15 +36,15 @@ public class Tile {
     }
 
     public HabitatTile getHabitatTile() {
-        return habitatTile;
+        return this.habitatTile;
     }
 
     public HexCoordinate getHexCoordinate() {
-        return hexCoordinate;
+        return this.hexCoordinate;
     }
 
     public boolean isActive() {
-        return isActive;
+        return this.isActive;
     }
 
     // This requires both the host tile and the argument tile to be non-empty
@@ -61,7 +61,7 @@ public class Tile {
     }
 
     public int getTileOrientation() {
-        return tileOrientation;
+        return this.tileOrientation;
     }
 
     public String toString() {
@@ -76,10 +76,10 @@ public class Tile {
     public void rotateTile(int numRotations) {this.tileOrientation = (this.tileOrientation + numRotations) % 6;}
 
     public void setIncludedInScoring(boolean includedInScoring) {
-        isIncludedInScoring = includedInScoring;
+        this.isIncludedInScoring = includedInScoring;
     }
 
     public int getTileId() {
-        return tileId;
+        return this.tileId;
     }
 }

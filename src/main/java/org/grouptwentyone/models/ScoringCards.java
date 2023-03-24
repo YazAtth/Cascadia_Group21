@@ -111,15 +111,15 @@ public class ScoringCards {
         }
 
         public String getCardInfo() {
-            return cardInfo;
+            return this.cardInfo;
         }
 
         public ScoreType getScoreType() {
-            return scoreType;
+            return this.scoreType;
         }
 
         public WildlifeToken.WildlifeTokenType getTokenType() {
-            return tokenType;
+            return this.tokenType;
         }
     }
 }

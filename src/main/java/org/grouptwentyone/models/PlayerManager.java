@@ -16,7 +16,7 @@ public class PlayerManager {
 
 
     public Player getFirstPlayer() {
-        return playerList.get(0);
+        return this.playerList.get(0);
     }
 
     public Player cycleToNextPlayer() {
@@ -33,12 +33,12 @@ public class PlayerManager {
     }
 
     public void shufflePlayerList() {
-        Collections.shuffle(playerList);
+        Collections.shuffle(this.playerList);
     }
 
 
     public ArrayList<Player> getPlayerList() {
-        return playerList;
+        return this.playerList;
     }
 
     public void setPlayerList(ArrayList<Player> playerList) {

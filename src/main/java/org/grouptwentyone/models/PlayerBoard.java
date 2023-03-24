@@ -369,23 +369,23 @@ public class PlayerBoard {
 
     public Tile getTileByCoordinate(int row, int col) {
 
-        return getPlayerBoardAs2dArray().get(row).get(col);
+        return this.getPlayerBoardAs2dArray().get(row).get(col);
     }
 
 
     public ArrayList<ArrayList<Tile>> getPlayerBoardAs2dArray() {
-        return playerBoard;
+        return this.playerBoard;
     }
     public Tile getRecentlyPlacedTile() {
-        return recentlyPlacedTile;
+        return this.recentlyPlacedTile;
     }
 
     public WildlifeToken getSelectedToken() {
-        return selectedToken;
+        return this.selectedToken;
     }
 
     public HabitatTile getSelectedTile() {
-        return selectedTile;
+        return this.selectedTile;
     }
     public void setSelectedTile(HabitatTile selectedTile) {
         this.selectedTile = selectedTile;
@@ -396,7 +396,7 @@ public class PlayerBoard {
     }
 
     public int getNumOfNatureTokens() {
-        return numOfNatureTokens;
+        return this.numOfNatureTokens;
     }
 
     public void spendNatureToken() {
@@ -408,11 +408,11 @@ public class PlayerBoard {
     }
 
     public ArrayList<Tile> getActiveTiles() {
-        return activeTiles;
+        return this.activeTiles;
     }
 
     public boolean canPlaceToken() {
-        return tokenOptions.getNumOfTokenOption(this.selectedToken.wildlifeTokenType) > 0;
+        return this.tokenOptions.getNumOfTokenOption(this.selectedToken.wildlifeTokenType) > 0;
     }
 
     //nested class that will store the number of options for each type of token on a player's board
@@ -429,7 +429,7 @@ public class PlayerBoard {
         }
 
         private Integer getNumOfTokenOption(WildlifeToken.WildlifeTokenType tokenType) {
-            return numTokenOptions.get(tokenType);
+            return this.numTokenOptions.get(tokenType);
         }
 
         private void setNumOfTokenOption(WildlifeToken.WildlifeTokenType tokenType, Integer value) {

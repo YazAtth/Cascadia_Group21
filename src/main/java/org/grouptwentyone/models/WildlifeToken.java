@@ -20,7 +20,7 @@ public class WildlifeToken {
     @Override
     public String toString() {
         return "WildlifeToken: " +
-                "Type = " + wildlifeTokenType;
+                "Type = " + this.wildlifeTokenType;
     }
 
 }

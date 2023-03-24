@@ -27,7 +27,7 @@ public class HabitatTile {
         this.habitatTileTypeList = habitatTileTypeListGenerator(2);
         this.wildlifeTokenTypeList = wildlifeTokenTypeListGenerator(numTypes);
         this.wildlifeToken = new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY);
-        this.keystone = (habitatTileTypeList.size() == 1);
+        this.keystone = (this.habitatTileTypeList.size() == 1);
         this.isNull = false;
     }
 
@@ -44,7 +44,7 @@ public class HabitatTile {
         this.habitatTileTypeList = habitatTileTypeListGenerator(2);
         this.wildlifeTokenTypeList = wildlifeTokenTypeListGenerator(5);
         this.wildlifeToken = new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY);
-        this.keystone = (habitatTileTypeList.size() == 1);
+        this.keystone = (this.habitatTileTypeList.size() == 1);
         this.isNull = false;
     }
 
@@ -86,19 +86,19 @@ public class HabitatTile {
     }
 
     public ArrayList<HabitatTileType> getHabitatTileTypeList() {
-        return habitatTileTypeList;
+        return this.habitatTileTypeList;
     }
 
     public ArrayList<WildlifeToken.WildlifeTokenType> getWildlifeTokenTypeList() {
-        return wildlifeTokenTypeList;
+        return this.wildlifeTokenTypeList;
     }
 
     public WildlifeToken getWildlifeToken() {
-        return wildlifeToken;
+        return this.wildlifeToken;
     }
 
     public boolean isKeystone() {
-        return keystone;
+        return this.keystone;
     }
 
     public void setWildlifeToken(WildlifeToken wildlifeToken) {
@@ -106,15 +106,15 @@ public class HabitatTile {
     }
 
     public boolean isNull() {
-        return isNull;
+        return this.isNull;
     }
 
 
     @Override
     public String toString() {
         return "HabitatTile\n" +
-                "Habitat Type(s): " + habitatTileTypeList.toString() +
-                ", Wildlife Token Types: " + wildlifeTokenTypeList.toString() +
-                ", wildlife Token: " + wildlifeToken.toString();
+                "Habitat Type(s): " + this.habitatTileTypeList.toString() +
+                ", Wildlife Token Types: " + this.wildlifeTokenTypeList.toString() +
+                ", wildlife Token: " + this.wildlifeToken.toString();
     }
 }
