@@ -51,7 +51,8 @@ public class ScoringCards {
                 case BEAR:
                     switch (scoreType) {
                         case A: return "Bear (A): Score points on the number of pairs of bears " +
-                                "(not adjacent to any other pairs of bears)";
+                                "(not adjacent to any other pairs of bears)\n\t" +
+                                "Points per number of pairs: 4, 11, 19, 27";
                         case B: return "Bear (B): Score 10 points per group of 3 bears " +
                                 "(not adjacent to any other bears)";
                         case C: return "Bear (C): First get 8 points for group of 3 bears, then 5 points for a group of " +
@@ -61,7 +62,7 @@ public class ScoringCards {
                     }
                 case FOX:
                     switch (scoreType) {
-                        case A: return "Fox (A): Score a point for each unique wildlife type adjacent to the fox, " +
+                        case A: return "Fox (A): Score one point for each unique wildlife type adjacent to the fox, " +
                                 "including another fox.";
                         case B: return "Fox (B): Score points for each unique pair of wildlife types adjacent to the fox," +
                                 " excluding other foxes. The pairs themselves don't need to be adjacent to each other.\n\t" +
