@@ -46,28 +46,7 @@ public class ScoringCards {
             }
         }
 
-
-//                .-------.
-//                | BEAR  |
-//                |   ^   |
-//                |  ---  |
-//                | /   \ |
-//                `-------'
-//                .-------.
-//                | BEAR  |
-//                |  __   |
-//                | |__ ) |
-//                | |__ ) |
-//                `-------'
-//                .-------.
-//                | BEAR  |
-//                |  ___  |
-//                | |     |
-//                | |___  |
-//                `-------'
-
-
-
+        //Strings storing rules of each scoring cards
         private String assignCardInfo(WildlifeToken.WildlifeTokenType tokenType, ScoreCard.ScoreType scoreType) {
             switch (tokenType) {
                 case BEAR:
@@ -135,8 +114,8 @@ public class ScoringCards {
                         case B: return
                                 ".-------.\n"    +
                                 "| ELK   |   Elk (B): Score points for each contiguous group of adjacent elk in any shape.\n" +
-                                "|  __   |   Points for each elk in group: 2, 4, 7, 10, 14, 18, 23, 28.\n"
-                                + "| |__ ) |\n" +
+                                "|  __   |   Points for each elk in group: 2, 4, 7, 10, 14, 18, 23, 28.\n" +
+                                "| |__ ) |\n" +
                                 "| |__ ) |\n" +
                                 "`-------'";
 //                        "Elk (C): Score points per group of elk in following shapes (adjacent groups are " +
@@ -147,8 +126,8 @@ public class ScoringCards {
                                 ".-------.\n"   +
                                 "| ELK   |   Elk (C): Score points per group of elk in following shapes (adjacent groups are\n" +
                                 "|  ___  |   allowed but each elk can only be part of 1 group.\\n\\t13 points for 4 elk in a\n" +
-                                "| |     |   diamond shape. 9 points for a group of 3 elk (not in a line). 5 points for a\n"
-                                + "| |___  | group of 2 elk. 2 points for 1 elk.\n"
+                                "| |     |   diamond shape. 9 points for a group of 3 elk (not in a line). 5 points for a\n" +
+                                "| |___  |   group of 2 elk. 2 points for 1 elk.\n"
                                         +  "`-------'";
                         default: throw new IllegalArgumentException("Invalid ScoreType passed to method");
                     }
@@ -163,21 +142,51 @@ public class ScoringCards {
                                         "| /   \\ |\n" +
                                         "`-------'"
                                 ;
-                        case B: return "Hawk (B): Get points for each pair of hawks with direct line of sight. The hawks " +
-                                "must be separated by exactly 1 habitat tile that has no placed wildlife token.\n\t" +
-                                "Points per pair: 2, 5, 9, 12, 16, 20, 24, 28.";
-                        case C: return "Hawk (C): Score 3 points for each pair of hawks in direct line of sight. Hawks " +
-                                "can be members of multiple pairs. Habitat tiles in between must be empty.";
+
+                        case B: return
+                                ".-------.\n"    +
+                                "| HAWK  |   Get points for each pair of hawks with direct line of sight. The hawks\n" +
+                                "|  __   |   must be separated by exactly 1 habitat tile that has no placed wildlife token.\n" +
+                                "| |__ ) |   Points per pair: 2, 5, 9, 12, 16, 20, 24, 28.\n" +
+                                "| |__ ) |\n" +
+                                "`-------'";
+
+
+                        case C: return
+                                ".-------.\n"   +
+                                "| HAWK  |   Score 3 points for each pair of hawks in direct line of sight. Hawks\n" +
+                                "|  ___  |   can be members of multiple pairs. Habitat tiles in between must be empty.\n" +
+                                "| |     |\n" +
+                                "| |___  |\n" +
+                                "`-------'";
                         default: throw new IllegalArgumentException("Invalid ScoreType passed to method");
                     }
                 case SALMON:
                     switch (scoreType) {
-                        case A: return "Salmon (A): For each run of salmon, score points for each salmon that's a part of " +
-                                "it. 7 or more salmon fetch the same score score.\n\tPoints: 2, 4, 7, 11, 15, 20, 26.";
-                        case B: return "Salmon (B): For each run of salmon, score points for each salmon that's a part of " +
-                                "it. 4 or more salmon fetch the same score score.\n\tPoints: 2, 4, 8, 12.";
-                        case C: return "Salmon (C): For each run of salmon, score points for each salmon that's a part of " +
-                                "it. 5 or more salmon fetch the same score score.\n\tPoints: 2, 4, 9, 11, 17.";
+                        case A: return
+                                ".-------.\n"    +
+                                "|SALMON |   Salmon (A): For each run of salmon, score points for each salmon that's a part of\n" +
+                                "|   ^   |   it. 7 or more salmon fetch the same score score.Points: 2, 4, 7, 11, 15, 20, 26.\n" +
+                                "|  ---  |\n"  +
+                                "| /   \\ |\n" +
+                                "`-------'"
+                                ;
+
+                        case B: return
+                                ".-------.\n"    +
+                                "|SALMON |   Salmon (B): For each run of salmon, score points for each salmon that's a part of\n" +
+                                "|  __   |   it. 4 or more salmon fetch the same score score.Points: 2, 4, 8, 12\n" +
+                                "| |__ ) |\n" +
+                                "| |__ ) |\n" +
+                                "`-------'";
+
+                        case C: return
+                                ".-------.\n"   +
+                                "|SALMON |   Salmon (C): For each run of salmon, score points for each salmon that's a part of\n" +
+                                "|  ___  |   it. 5 or more salmon fetch the same score score.Points: 2, 4, 9, 11, 17.\n" +
+                                "| |     |\n" +
+                                "| |___  |\n" +
+                                "`-------'";
                         default: throw new IllegalArgumentException("Invalid ScoreType passed to method");
                     }
                 default:

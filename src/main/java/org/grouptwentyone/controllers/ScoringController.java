@@ -551,20 +551,40 @@ public class ScoringController {
         return localScore;
     }
 
+    /**
+     *  1) Stores a local score variable starting at 0.
+     *  2) assigns local score to the getLargestGroup
+     * @param playerBoard
+     * @return local store as integer
+     */
     public static int scoreElkScoringCardA(PlayerBoard playerBoard) {
      int localScore = 0;
 
      Set<Tile> usedElkTiles = new HashSet<>();
 
      // call recursive function to get score
-     localScore = getLargestGroup(playerBoard, localScore, usedElkTiles);
+     localScore = getLargestGroupScores(playerBoard, localScore, usedElkTiles);
 
      return localScore;
     }
 
-    public static int getLargestGroup(PlayerBoard playerBoard, int totalScore, Set<Tile> usedElkTiles) {
+    /**
+     * Recursive helper function for Elk Scoring Card A
+     *
+     *  1) for each elk in the board find its largest line of elk in the east, south-east, and south-west direction
+     *  2) if the size of any line is greater than the maximum size, that line becomes the new maximum
+     *  3) once all elk have been scanned through, yield the score for the maximum line found
+     *  4) remove this line from the playerBoard and recursively scan through again carrying on the score in each call
+     *
+     * @param playerBoard of current Player
+     * @param totalScore to keep track of the final score
+     * @param usedElkTiles to keep track of elks already scored
+     * @return total score as integer
+     */
+    public static int getLargestGroupScores(PlayerBoard playerBoard, int totalScore, Set<Tile> usedElkTiles) {
         ArrayList<Tile> largestLine = new ArrayList<>();
 
+        //traverse through the playBoard
         for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
             for (Tile tile : row) {
                 boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
@@ -608,10 +628,17 @@ public class ScoringController {
             } else if (largestLine.size() >= 4) {
                 totalScore = 13;
             }
-            return totalScore + getLargestGroup(playerBoard, totalScore, usedElkTiles);
+            return totalScore + getLargestGroupScores(playerBoard, totalScore, usedElkTiles);
         }
     }
 
+    /**
+     * 1) we traverse through the playerBoard. When an elk is found, we get it's associated group using getTileGroupFromTile
+     * 2) we add all the elk from this group in usedElk so that they are not double counted in scoring
+     * 3) appropriate scores are added and we terminate the loop until there are no more elk groups
+     * @param playerBoard
+     * @return local store as integer
+     */
     public static int scoreElkScoringCardB(PlayerBoard playerBoard) {
         int localScore = 0;
         Set<Tile> usedElkTiles = new HashSet<>();
@@ -660,6 +687,14 @@ public class ScoringController {
         return localScore;
     }
 
+    /**
+     *  1) traverse through the playerBoard. When an elk is found, record its associated group size
+     *     in an arrayList and proceed in this manner
+     *  2) At the end, score based on whether the right sizes are contained in the list, starting with
+     *     4, then 3 etc.
+     * @param playerBoard
+     * @return local score as integer
+     */
     public static int scoreElkScoringCardC(PlayerBoard playerBoard) {
         int localScore = 0;
         Set<Tile> usedElkTiles = new HashSet<>();
@@ -709,6 +744,13 @@ public class ScoringController {
         return localScore;
     }
 
+    /**
+     * 1) traverse through the playBoard. When a salmon tile is found, call the getRunOfSalmon function
+     *    to get its associated run
+     * 2) increment the score accordingly based on the size of the run
+     * @param playerBoard
+     * @return local score as integer
+     */
     public static int scoreSalmonScoringCardA(PlayerBoard playerBoard) {
         int localScore = 0;
         Set<Tile> usedSalmonTiles = new HashSet<>();
@@ -749,6 +791,13 @@ public class ScoringController {
         return localScore;
     }
 
+    /**
+     * 1) traverse through the playBoard. When a salmon tile is found, call the getRunOfSalmon function
+     *    to get its associated run
+     * 2) increment the score accordingly based on the size of the run
+     * @param playerBoard
+     * @return local score as integer
+     */
     public static int scoreSalmonScoringCardB(PlayerBoard playerBoard) {
         int localScore = 0;
         Set<Tile> usedSalmonTiles = new HashSet<>();
@@ -781,6 +830,14 @@ public class ScoringController {
         return localScore;
     }
 
+
+    /**
+     * 1) traverse through the playBoard. When a salmon tile is found, call the getRunOfSalmon function
+     *    to get its associated run
+     * 2) increment the score accordingly based on the size of the run
+     * @param playerBoard
+     * @return local score as integer
+     */
     public static int scoreSalmonScoringCardC(PlayerBoard playerBoard) {
         int localScore = 0;
         Set<Tile> usedSalmonTiles = new HashSet<>();
@@ -814,6 +871,13 @@ public class ScoringController {
         }
         return localScore;
     }
+
+    /**
+     * traverses through the playBoard until a hawk card is found. We remove any adjacent hawks
+     * with the help of the getAdjacentTile
+     * @param playerBoard
+     * @return
+     */
 
     public static int scoreHawkScoringCardA(PlayerBoard playerBoard) {
         int localScore = 0;
@@ -916,7 +980,18 @@ public class ScoringController {
         return localScore;
     }
 
-    //helper function to find direct line of sight between two hawks
+    /**
+     * helper function for hawk scoring cards to verify if there exists a line of sight.
+     * there are six try-catch statements, one for each direction of a tile - north-east, east, south-east, south-west, west and north-west
+     * each try-catch looks for a hawk two tiles forward in that direction and an empty tile one tile in that direction
+     * for north-east, north-west, south-east and south-west, we also need to check if the row index is odd or even, since the column index
+     * will depend on this parity
+
+     * @param row to let us know what row the hawk is on
+     * @param col to let us know what column the hawk is on
+     * @param playerBoard
+     * @return true if there is a line of sight and false otherwise
+     */
     public static boolean hasDirectLineOfSight(int row, int col, PlayerBoard playerBoard) {
 
         //there are six try-catch statements, one for each direction of a tile - north-east, east, south-east, south-west, west and north-west
@@ -1119,7 +1194,27 @@ public class ScoringController {
         return adjacentHawkPairCounter * 3;
     }
 
-    //helper function for salmon scoring cards to get runs of salmon
+    /**
+     * Recursive function to obtain the run of salmon based on a root salmon tile
+     *
+     *  1) first we check if the root tile is none, indicating that the run has ended or that there was
+     *     no run in the first place
+     *  2) Otherwise, we obtain the adjacentList of tiles around the root. We check if there are any salmon
+     *     in that list.
+     *  3) We initialise a new Tile called nextSalmon to null, assuming the run has reached an end
+     *  4) If there is at least one salmon in the adjacentTiles list, we set that tile to nextSalmon
+     *  5) If the adjacent tile list contains more than 3 salmon, we do not have a valid run anymore, so
+     *     we return the run that existed before, if any.
+     *  6) If there is a next salmon (not null) and we still have a valid run, we call the recursive function with
+     *     this next salmon as the new root.
+     *
+     *
+     * @param root to store the start of the run
+     * @param playerBoard
+     * @param run to store all the tiles in the run
+     * @param usedTiles to store already counted tiles in the run
+     * @return ArrayList of tiles which stores the run of tiles
+     */
     public static ArrayList<Tile> getRunOfSalmon (Tile root, PlayerBoard playerBoard, ArrayList < Tile > run, Set < Tile > usedTiles) {
 
         //base case : there are no more salmon in the run, i.e, we have reached a null tile
