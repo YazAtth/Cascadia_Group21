@@ -13,8 +13,17 @@ public class LandingPageView {
                 \\|_______|\\|__|\\|__|\\_________\\|_______|\\|__|\\|__|\\|_______|\\|__|\\|__|\\|__|
                                    \\|_________|                                           \s
             """;
+
+    final private static String asciiInitials = """   
+   __________  __  _______ ___   ____  ____  __________ 
+  / ____/ __ \\/  |/  / __ \\__ \\ / __ \\/ __ \\/ ____/ __ \\    DOMINYKAS JAKUBAUSKAS
+ / /   / / / / /|_/ / /_/ /_/ // / / / / / /___ \\/ / / /    YASITH ATTHANAYAKE
+/ /___/ /_/ / /  / / ____/ __// /_/ / /_/ /___/ / /_/ /     COLM HENNESSY
+\\____/\\____/_/  /_/_/   /____/\\____/\\____/_____/\\____/  
+                                                        
+            """;
     public static void show() {
-        System.out.println(asciiTitleText);
+        System.out.println(asciiTitleText + asciiInitials);
         UserInputView.showPressEnterToContinuePrompt();
     }
 }

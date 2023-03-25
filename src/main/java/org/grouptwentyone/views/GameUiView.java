@@ -16,15 +16,14 @@ public class GameUiView {
     public static final String YELLOW_BOLD = "\033[1;33m"; // YELLOW
     public static final String SILVER_BOLD = "\u001B[1m\033[38;5;245m";
     public static final String BRONZE_BOLD = "\u001B[1m\033[38;5;130m";
-
+    public static final String BLUE_UNDERLINED = "\033[4;34m";
 
     public static final String WHITE_BOLD_BRIGHT = "\033[1;97m";
     public static final String YELLOW_BOLD_BRIGHT = "\033[1;93m";// YELLOW
 
 
-
-
     // Page Items
+    public  static String PAGE_BORDER_THIN_NO_COLOUR = "------------------------------------------------------------------------------------------";
     public static String PAGE_BORDER_NO_COLOUR = "==========================================================================================";
     public static String PAGE_BORDER = "\033[1;90m" + PAGE_BORDER_NO_COLOUR + RESET_COLOUR;
     public static String PAGE_BORDER_BOTTOM = "\n====================================================\n\n";
@@ -35,14 +34,11 @@ public class GameUiView {
 
     public static String targetCircle = "\uD800\uDF48";
 
-
-
-
-
-
-
     public static void printLargeSpace() {
         System.out.println(LARGE_SPACE);
+    }
+    public static void printThinBorder() {
+        System.out.println(PAGE_BORDER_THIN_NO_COLOUR);
     }
 
     public static void printPageBorder() {
