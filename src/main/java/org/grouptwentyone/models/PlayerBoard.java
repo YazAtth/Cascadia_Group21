@@ -363,6 +363,9 @@ public class PlayerBoard {
             case C -> score += ScoringController.scoreSalmonScoringCardC(this);
         }
 
+        //add nature tokens to score, if any
+        score += this.numOfNatureTokens;
+
         return score;
 
     }
