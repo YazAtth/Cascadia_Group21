@@ -11,9 +11,6 @@ package org.grouptwentyone.controllers;
 
 import org.grouptwentyone.models.*;
 
-import javax.crypto.AEADBadTagException;
-import java.lang.reflect.Array;
-import java.security.spec.ECField;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,7 +32,6 @@ public class ScoringController {
             for (Tile tile : row) {
                 boolean tileHasFoxToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.FOX;
                 if (tileHasFoxToken) {
-//                    System.out.println("FOUND FOX");
                     ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentTileList(tile);
 
                     ArrayList<WildlifeToken.WildlifeTokenType> adjacentWildlifeTokenList = new ArrayList<>();
@@ -43,8 +39,6 @@ public class ScoringController {
                     for (Tile adjacentTile : adjacentTileList) {
                         boolean containsNewAdjacentWildlifeToken = !adjacentWildlifeTokenList.contains(adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType());
                         boolean tileHasWildlifeToken = adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY;
-
-//                        System.out.printf("Tile %s, containsNewAdjacentWildlifeToken: %s, tileHasWildlifeToken: %s\n", adjacentTile, containsNewAdjacentWildlifeToken, tileHasWildlifeToken);
 
                         if (containsNewAdjacentWildlifeToken && tileHasWildlifeToken) {
                             adjacentWildlifeTokenList.add(adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType());
@@ -112,10 +106,6 @@ public class ScoringController {
                         else if (!tokenHasAppearedOnce) {
                             adjacentWildlifeTokensWithOneOccurrence.add(adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType());
                         }
-//                        else {
-//                            System.out.printf("tile: %s, tokenPairExists: %s, tokenHasAppearedOnce: %s\n", adjacentTile, tokenPairExists, tokenHasAppearedOnce);
-//                        }
-
                     }
                     int numberOfUniquePairs = adjacentWildlifeTokensWithPairOccurrence.size();
                     localScore += scoringCard.get(numberOfUniquePairs);
@@ -174,11 +164,7 @@ public class ScoringController {
                     }
 
                     localScore += maxTokenScore;
-//                    System.out.println(maxTokenType);
-
                 }
-
-
             }
         }
 
@@ -240,7 +226,6 @@ public class ScoringController {
             }
         }
 
-
         // More than 4 pairs are treated the same as 4 pairs.
         if (numberOfPairs > 4) numberOfPairs = 4;
 
@@ -251,8 +236,7 @@ public class ScoringController {
         scoringTable.put(3, 19);
         scoringTable.put(4, 27);
 
-        int localScore = scoringTable.get((int) numberOfPairs);
-        return localScore;
+        return scoringTable.get((int) numberOfPairs);
     }
 
     public static void traverseTileGroup(PlayerBoard playerBoard, ArrayList<Tile> listOfTilesInGroup, HexCoordinate hexCoordinate) {
@@ -281,8 +265,6 @@ public class ScoringController {
         for (Tile adjacentTile : newAdjacentTileList) {
             traverseTileGroup(playerBoard, listOfTilesInGroup, adjacentTile.getHexCoordinate());
         }
-
-
 
     }
 
@@ -365,7 +347,6 @@ public class ScoringController {
                     }
 //
                     if (!isLocalTileGroupRecorded) {
-//                        System.out.println("INCREMENTED SCORE");
                         numberOfTriples++;
                     }
 
@@ -373,8 +354,7 @@ public class ScoringController {
             }
         }
 
-        int localScore = numberOfTriples * 10;
-        return localScore;
+        return numberOfTriples * 10;
     }
 
     /**
@@ -558,7 +538,7 @@ public class ScoringController {
     /**
      *  1) Stores a local score variable starting at 0.
      *  2) assigns local score to the getLargestGroup
-     * @param playerBoard
+     * @param playerBoard the playerBoard that is being scored
      * @return local store as integer
      */
     public static int scoreElkScoringCardA(PlayerBoard playerBoard) {
@@ -640,7 +620,7 @@ public class ScoringController {
      * 1) we traverse through the playerBoard. When an elk is found, we get it's associated group using getTileGroupFromTile
      * 2) we add all the elk from this group in usedElk so that they are not double counted in scoring
      * 3) appropriate scores are added and we terminate the loop until there are no more elk groups
-     * @param playerBoard
+     * @param playerBoard the playerBoard that is being scored
      * @return local store as integer
      */
     public static int scoreElkScoringCardB(PlayerBoard playerBoard) {
@@ -663,8 +643,8 @@ public class ScoringController {
                     int groupSize = group.size();
 
                     //increment score
-                    if (groupSize > 4) {
-                        groupSize = 4;
+                    if (groupSize > 8) {
+                        groupSize = 8;
                     }
 
                     if (groupSize == 1) {
@@ -696,7 +676,7 @@ public class ScoringController {
      *     in an arrayList and proceed in this manner
      *  2) At the end, score based on whether the right sizes are contained in the list, starting with
      *     4, then 3 etc.
-     * @param playerBoard
+     * @param playerBoard the playerBoard that is being scored
      * @return local score as integer
      */
     public static int scoreElkScoringCardC(PlayerBoard playerBoard) {
@@ -752,7 +732,7 @@ public class ScoringController {
      * 1) traverse through the playBoard. When a salmon tile is found, call the getRunOfSalmon function
      *    to get its associated run
      * 2) increment the score accordingly based on the size of the run
-     * @param playerBoard
+     * @param playerBoard the playerBoard that is being scored
      * @return local score as integer
      */
     public static int scoreSalmonScoringCardA(PlayerBoard playerBoard) {
@@ -799,7 +779,7 @@ public class ScoringController {
      * 1) traverse through the playBoard. When a salmon tile is found, call the getRunOfSalmon function
      *    to get its associated run
      * 2) increment the score accordingly based on the size of the run
-     * @param playerBoard
+     * @param playerBoard the playerBoard that is being scored
      * @return local score as integer
      */
     public static int scoreSalmonScoringCardB(PlayerBoard playerBoard) {
@@ -838,7 +818,7 @@ public class ScoringController {
      * 1) traverse through the playBoard. When a salmon tile is found, call the getRunOfSalmon function
      *    to get its associated run
      * 2) increment the score accordingly based on the size of the run
-     * @param playerBoard
+     * @param playerBoard the playerBoard that is being scored
      * @return local score as integer
      */
 
@@ -879,8 +859,8 @@ public class ScoringController {
     /**
      * traverses through the playBoard until a hawk card is found. We remove any adjacent hawks
      * with the help of the getAdjacentTile
-     * @param playerBoard
-     * @return
+     * @param playerBoard the playerBoard that is being scored
+     * @return localScore as an integer
      */
 
     public static int scoreHawkScoringCardA(PlayerBoard playerBoard) {
@@ -992,7 +972,7 @@ public class ScoringController {
 
      * @param row to let us know what row the hawk is on
      * @param col to let us know what column the hawk is on
-     * @param playerBoard
+     * @param playerBoard  the playerBoard that is being scored
      * @return true if there is a line of sight and false otherwise
      */
     public static boolean hasDirectLineOfSight(int row, int col, PlayerBoard playerBoard) {
@@ -1103,13 +1083,6 @@ public class ScoringController {
         int localScore = 0;
         Set<Tile> discardedHawkTiles = new HashSet<>();
         int adjacentHawkPairCounter = 0;
-//        String scoreTable = " ____________________________________________________________________\n" +
-//                            "| \033[1;36mHAWK SCORING CARD C    \033[0m                                            |\n" +
-//                            "| - score 3 points for each direct line of sight between two hawks   |\n" +
-//                            "| - tile in between the hawks must have no wildlife                  |\n" +
-//                            "| \033[4;33mYOUR SCORE\033[0m                                                         |\n";
-                ;
-        //System.out.println("\u2502" + "   \u2514   \u2510"  +  "  \u250C\u2518" + "│"); // └ ┐ ┌ ┘ ─
 
         for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
             for (Tile tile : row) {
@@ -1137,8 +1110,6 @@ public class ScoringController {
                                 getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
                             adjacentHawkPairCounter++;
                             //update score table
-//                            scoreTable += "|\033[0;37m LINE OF SIGHT " + adjacentHawkPairCounter + "\033[0m :    (" + xCoord + ", " + yCoord + ")"
-//                        + "   =>   " + "(" + xCoord + ", " + (yCoord + 2) + ")" +  "         \033[1;93m+3\033[0m               |\n";
                         }
                     } catch (Exception e) {;}
 
@@ -1150,8 +1121,6 @@ public class ScoringController {
                                     == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord + 1).getHabitatTile().
                                     getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
                                 adjacentHawkPairCounter++;
-//                                scoreTable += "|\033[0;37m LINE OF SIGHT " + adjacentHawkPairCounter + "\033[0m :    (" + xCoord + ", " + yCoord + ")"
-//                                        + "   =>   " + "(" + (xCoord + 2) + ", " + (yCoord + 1) + ")" +  "         \033[1;93m+3\033[0m               |\n";
                             }
 
                         } else {
@@ -1159,8 +1128,6 @@ public class ScoringController {
                                     == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord).getHabitatTile().
                                     getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
                                 adjacentHawkPairCounter++;
-//                                scoreTable += "|\033[0;37m LINE OF SIGHT " + adjacentHawkPairCounter + "\033[0m :    (" + xCoord + ", " + yCoord + ")"
-//                                        + "   =>   " + "(" + (xCoord + 2) + ", " + (yCoord + 1) + ")" +  "         \033[1;93m+3\033[0m               |\n";
                             }
                         }
                     } catch (Exception e) {;}
@@ -1173,8 +1140,6 @@ public class ScoringController {
                                     == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord).getHabitatTile().
                                     getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
                                 adjacentHawkPairCounter++;
-//                                scoreTable += "|\033[0;37m LINE OF SIGHT " + adjacentHawkPairCounter + "\033[0m :    (" + xCoord + ", " + yCoord + ")"
-//           + "   =>   " + "(" + (xCoord + 2) + ", " + (yCoord - 1) + ")" +  "         \033[1;93m+3\033[0m               |\n";
                                                          }
 
                         } else {
@@ -1182,8 +1147,6 @@ public class ScoringController {
                                     == WildlifeToken.WildlifeTokenType.HAWK && playerBoard.getTileByCoordinate(xCoord + 1, yCoord - 1).getHabitatTile().
                                     getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
                                 adjacentHawkPairCounter++;
-//                                scoreTable += "|\033[0;37m LINE OF SIGHT " + adjacentHawkPairCounter + "\033[0m :    (" + xCoord + ", " + yCoord + ")"
-//                                        + "   =>   " + "(" + (xCoord + 2) + ", " + (yCoord - 1) + ")" +  "         \033[1;93m+3\033[0m               |\n";
                             }
                         }
                     } catch (Exception e) {;}
@@ -1213,7 +1176,7 @@ public class ScoringController {
      *
      *
      * @param root to store the start of the run
-     * @param playerBoard
+     * @param playerBoard the playerBoard that is being scored
      * @param run to store all the tiles in the run
      * @param usedTiles to store already counted tiles in the run
      * @return ArrayList of tiles which stores the run of tiles

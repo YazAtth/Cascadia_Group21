@@ -36,8 +36,6 @@ public class StarterHabitatTilesController {
             //creates a keystone tile
             newStarterTile.add(new HabitatTile(habitatTileTypeSelector(i), wildlifeTokenTypeSelector(i)));
 
-
-
             //creates 2 tiles, on with 2 wildlife types, another with 3, all with unique animals
             Collections.shuffle(wildlifeTokenTypeList);
             ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeList1 = new ArrayList<>(),

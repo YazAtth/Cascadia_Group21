@@ -127,10 +127,7 @@ public class ScoringCards {
                                 "| |__ ) |\n" +
                                 "| |__ ) |\n" +
                                 "`-------'";
-//                        "Elk (C): Score points per group of elk in following shapes (adjacent groups are " +
-//                                "allowed but each elk can only be part of 1 group.\n\t13 points for 4 elk in a diamond shape." +
-//                                "9 points for a group of 3 elk (not in a line). 5 points for a group of 2 elk. 2 points " +
-//                                "for 1 elk.";
+
                         case C: return
                                 ".-------.\n"   +
                                 "| ELK   |   Elk (C): Score points per group of elk in following shapes (adjacent groups are\n" +

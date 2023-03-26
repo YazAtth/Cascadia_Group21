@@ -17,6 +17,7 @@ import java.util.Collections;
 public class WildlifeTokensController {
     public static ArrayList<WildlifeToken> wildlifeTokenBag = createBagOfWildlifeTokens();
 
+    //creates 20 tokens of each wildlife type
     public static ArrayList<WildlifeToken> createBagOfWildlifeTokens() {
         ArrayList<WildlifeToken> wildlifeTokenBag = new ArrayList<>();
 

@@ -74,7 +74,7 @@ public class NatureTokenController {
 
         activePlayer.getPlayerBoardObject().setSelectedTile(org.grouptwentyone.StartGame.selectedTiles.remove(userNum));
 
-        //checks that tiles still remain in bag, else ends the game
+        //checks that tiles still remain in bag, else starts end of game process
         if (habitatTilesBag.size() > 0) {
             org.grouptwentyone.StartGame.selectedTiles.add(userNum, habitatTilesBag.remove(0));
             System.out.printf("Habitat tile number %s has been selected\n", userNum+1);
@@ -123,12 +123,13 @@ public class NatureTokenController {
                 selectedNums = Arrays.stream(UserInputView.askUserForInput().split(", |,"))
                         .mapToInt(Integer::parseInt).toArray();
                 inputInvalid = false;
+
+                //error checking to check for correct input
                 if (selectedNums.length > 4) {
                     UserInputView.setPreviousInputDisallowedMessage(String.format("%sInvalid amount of numbers," +
                             " please enter a max of 4 numbers%s\n> ", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     inputInvalid = true;
                 }
-
                 HashSet<Integer> numSet = new HashSet<>();
                 for (int selectedNum : selectedNums) {
                     numSet.add(selectedNum);
@@ -140,7 +141,6 @@ public class NatureTokenController {
                     inputInvalid = true;
                     continue;
                 }
-
                 for (int num : selectedNums) {
                     if (num < 1 || num > 4){
                         UserInputView.setPreviousInputDisallowedMessage(String.format("%sInvalid number %s, please enter number(s) " +
@@ -149,6 +149,7 @@ public class NatureTokenController {
                         break;
                     }
                 }
+
                 for (int num : selectedNums) {
                     //returns the selected token to wildlifeTokenBag and replaces it with another wildlife token
                     WildlifeTokensController.wildlifeTokenBag.add(StartGame.selectedTokens

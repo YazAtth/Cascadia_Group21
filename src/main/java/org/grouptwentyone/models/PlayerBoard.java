@@ -28,23 +28,6 @@ public class PlayerBoard {
     WildlifeToken selectedToken;
     int numOfNatureTokens = 0;
 
-
-
-//    public void printPlayerBoard() {
-//
-////        System.out.println(playerBoard.size());
-////        System.out.println(playerBoard.get(0).size());
-//
-//        for (int i=0; i<playerBoard.size(); i++) {
-//            for (int k=0; k<playerBoard.get(0).size(); k++) {
-////                System.out.printf("%d, %d\n", i, k);
-//                System.out.printf("[%s]", playerBoard.get(i).get(k));
-//            }
-//            System.out.println();
-//        }
-//    }
-
-
     public void addPlayerBoardBuffer(PlayerBoard.PlayerBoardSide playerBoardSide) {
 
         ArrayList<Tile> newRow = new ArrayList<>();
@@ -108,16 +91,12 @@ public class PlayerBoard {
         int lastRow = this.getPlayerBoardAs2dArray().size()-1;
         int lastColumn = this.getPlayerBoardAs2dArray().get(0).size()-1;
 
-//        System.out.printf("%d and %d\n", lastRow-1, lastColumn-1);
-
         int coordinateYVal = coordinate.getY();
         int coordinateXVal = coordinate.getX();
 
         boolean isCoordinateOnFirstOrLastRow = coordinateXVal == 0 || coordinateXVal == lastRow;
         boolean isCoordinateOnFirstOrLastColumn = coordinateYVal == 0 || coordinateYVal == lastColumn;
 
-
-//        System.out.printf("y-val: %d > lastRow: %d...x-val: %d > lastColumn: %d\n", coordinateYVal, lastRow, coordinateXVal, lastColumn);
         if (coordinateXVal < 0 || coordinateXVal > lastRow || coordinateYVal < 0 || coordinateYVal > lastColumn) {
             throw new IllegalArgumentException("Entered coordinate in not on the board");
         }
@@ -224,7 +203,6 @@ public class PlayerBoard {
         // Checks to see if the returned array has a "middle" in it signifying it's not on the edge.
         ArrayList<PlayerBoard.PlayerBoardSide> tilePosition = this.getPartOfBoardCoordinateIsOn(newTile.getHexCoordinate());
         boolean isNewTileOnEdge = !tilePosition.contains(PlayerBoard.PlayerBoardSide.MIDDLE);
-//        System.out.printf("Is the new tile on the edge? %s\n", isNewTileOnEdge);
 
         if (isNewTileOnEdge) {
             if (tilePosition.contains(PlayerBoard.PlayerBoardSide.LEFT)) {

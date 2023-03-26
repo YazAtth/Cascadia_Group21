@@ -29,8 +29,9 @@ public class StartGame {
 
         GameUiView.printLargeSpace();
 
+        //print opening logo
         LandingPageView.show();
-        GameUiView.printLargeSpace();   //print opening logo
+        GameUiView.printLargeSpace();
 
         int numOfPlayers = GameSetupView.getNumberOfPlayersFromUser();
         ArrayList<Player> playerList = GameSetupView.getPlayerNamesFromUser(numOfPlayers);
@@ -241,17 +242,6 @@ public class StartGame {
 
         playerManager.tallyUpAllScores();
         ScoreDisplayView.displayScorePage(playerManager);
-
-//        WildlifeToken.WildlifeTokenType scoreToken = ScoringCards.getScoreCardsList().get(0).getTokenType();
-//        switch (scoreToken) {
-//            case BEAR:
-//                switch (ScoringCards.getScoreCardsList().get(0).getScoreType()) {
-//                    case A: //call scoreBearTypeA()
-//                        break;
-//                    case B: //call scoreBearTypeB()
-//                        break;
-//                }
-//        }
 
         //end program
         UserTerminationController.endProgram();

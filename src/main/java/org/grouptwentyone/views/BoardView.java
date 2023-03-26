@@ -32,7 +32,6 @@ public class BoardView {
         StringBuilder pattern = new StringBuilder();
 
         //link HabitatTileTypes to a colour
-        //Hashtable<HabitatTile.HabitatTileType, String> tileToColourTable = new Hashtable<HabitatTile.HabitatTileType, String>();
         tileToColourTable.put(HabitatTile.HabitatTileType.FORESTS, "\033[1;92m");
         tileToColourTable.put(HabitatTile.HabitatTileType.MOUNTAINS, "\033[1;97m");
         tileToColourTable.put(HabitatTile.HabitatTileType.PRAIRIES, "\033[1;93m");
@@ -40,7 +39,6 @@ public class BoardView {
         tileToColourTable.put(HabitatTile.HabitatTileType.WETLANDS, "\033[1;96m");
 
         //link WildLifeTokenType to a coloured letter
-//        Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToStringTable = new Hashtable<WildlifeToken.WildlifeTokenType, String>();
         tokenToStringTable.put(WildlifeToken.WildlifeTokenType.BEAR, "\033[1;38;5;94m" + "B" + "\u001B[0m");
         tokenToStringTable.put(WildlifeToken.WildlifeTokenType.ELK, "\033[1;90m" + "E" + "\u001B[0m");
         tokenToStringTable.put(WildlifeToken.WildlifeTokenType.SALMON, "\033[1;91m" + "S" + "\u001B[0m");

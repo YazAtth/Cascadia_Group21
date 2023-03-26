@@ -28,8 +28,8 @@ public class UserInputView {
 
         String userInput = sc.nextLine().toLowerCase().trim();
 
+        //debug parameter
         while (userInput.contains("debug")) {
-//            System.out.print("Debug Action Registered\n> ");
             DebugController.registerDebugCommand(userInput);
 
             userInput = sc.nextLine().toLowerCase().trim();

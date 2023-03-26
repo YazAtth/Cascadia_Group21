@@ -22,6 +22,7 @@ public class CullingController {
         WildlifeToken.WildlifeTokenType tokenType2 = WildlifeToken.WildlifeTokenType.EMPTY;
         int occurrence2 = 0;
 
+//        gets the occurrence of the most common token
         for (int i = 1; i < StartGame.selectedTokens.size(); i++) {
             if (StartGame.selectedTokens.get(i).getWildlifeTokenType() == tokenType1) occurrence1++;
             else if(occurrence2 == 0) {

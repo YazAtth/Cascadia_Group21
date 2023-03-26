@@ -49,6 +49,7 @@ public class HabitatTile {
         this.isNull = true;
     }
 
+    //debug constructor used in testing
     public HabitatTile(boolean debug) {
         this.habitatTileTypeList = habitatTileTypeListGenerator(2);
         this.wildlifeTokenTypeList = wildlifeTokenTypeListGenerator(5);
