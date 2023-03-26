@@ -18,7 +18,8 @@ public class ScoreDisplayView {
 
         GameUiView.printPageBorder();
         GameUiView.printPageBorder();
-        System.out.printf("    _                     _             \n" +
+        System.out.printf(
+                "    _                     _             \n" +
                 "   | |                   (_)            \n" +
                 "    \\ \\   ____ ___   ____ _ ____   ____ \n" +
                 "     \\ \\ / ___) _ \\ / ___) |  _ \\ / _  |\n" +

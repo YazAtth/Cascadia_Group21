@@ -60,8 +60,6 @@ public class ScoringController {
      * <br> 2 pairs -> 5 points
      * <br> 3 pairs -> 7 points
      *
-     *
-     *
      * @param playerBoard of current Player
      * @return local score as integer
      */
@@ -299,8 +297,6 @@ public class ScoringController {
         return outputList;
     }
 
-
-
     /**
      * Scans the board for each tile with a bear token. 10 points are added for every group of three bears.
      * Every time a triple of bears is scored: it must be removed from further scoring.
@@ -371,7 +367,6 @@ public class ScoringController {
         int localScore = numberOfTriples * 10;
         return localScore;
     }
-
 
     /**
      * Scans the board for each tile with a bear token.
@@ -802,7 +797,7 @@ public class ScoringController {
         int localScore = 0;
         Set<Tile> usedSalmonTiles = new HashSet<>();
 
-        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
+        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray())  {
             for (Tile tile : row) {
                 boolean hasSalmonToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.SALMON;
 
@@ -830,7 +825,6 @@ public class ScoringController {
         return localScore;
     }
 
-
     /**
      * 1) traverse through the playBoard. When a salmon tile is found, call the getRunOfSalmon function
      *    to get its associated run
@@ -838,6 +832,7 @@ public class ScoringController {
      * @param playerBoard
      * @return local score as integer
      */
+
     public static int scoreSalmonScoringCardC(PlayerBoard playerBoard) {
         int localScore = 0;
         Set<Tile> usedSalmonTiles = new HashSet<>();
@@ -902,7 +897,6 @@ public class ScoringController {
 
                     //add hawk to validHawks for scoring
                     validHawks.add(tile);
-
                 }
             }
         }
