@@ -1,3 +1,12 @@
+/*
+ * Cascadia
+ * 21: Group 21
+ * Student name:            GitHub ID:
+ * Yasith Atthanayake       YazAtth
+ * Colm Ó hAonghusa         C0hAongha
+ * Dominykas Jakubauskas    dominicjk
+ */
+
 package org.grouptwentyone.views;
 
 public class LandingPageView {
@@ -18,7 +27,7 @@ public class LandingPageView {
    __________  __  _______ ___   ____  ____  __________ 
   / ____/ __ \\/  |/  / __ \\__ \\ / __ \\/ __ \\/ ____/ __ \\    DOMINYKAS JAKUBAUSKAS
  / /   / / / / /|_/ / /_/ /_/ // / / / / / /___ \\/ / / /    YASITH ATTHANAYAKE
-/ /___/ /_/ / /  / / ____/ __// /_/ / /_/ /___/ / /_/ /     COLM HENNESSY
+/ /___/ /_/ / /  / / ____/ __// /_/ / /_/ /___/ / /_/ /     COLM Ó HAONGHUSA
 \\____/\\____/_/  /_/_/   /____/\\____/\\____/_____/\\____/  
                                                         
             """;

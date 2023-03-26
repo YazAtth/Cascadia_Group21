@@ -1,3 +1,12 @@
+/*
+ * Cascadia
+ * 21: Group 21
+ * Student name:            GitHub ID:
+ * Yasith Atthanayake       YazAtth
+ * Colm Ó hAonghusa         C0hAongha
+ * Dominykas Jakubauskas    dominicjk
+ */
+
 package org.grouptwentyone;
 
 import org.grouptwentyone.controllers.*;
@@ -45,8 +54,6 @@ public class StartGame {
         while (tilesRemain) {
 
             GameUiView.printPageBorder();
-            System.out.printf("Player Score: %d\n",activePlayer.getPlayerBoardObject().getScore());
-
             GameUiView.printPlayerHeader(activePlayer);
             System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
 
@@ -249,9 +256,5 @@ public class StartGame {
         //end program
         UserTerminationController.endProgram();
         GameUiView.printLargeSpace();
-    }
-
-    public static void main(String[] args) {
-        start();
     }
 }
