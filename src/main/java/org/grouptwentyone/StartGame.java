@@ -42,6 +42,7 @@ public class StartGame {
 
         GameUiView.printPageBorder();
         GameUiView.printScoreCardRules();
+        PlayerBoardInstructions.displayBoardInstructions();
         GameSetupView.displayPlayerOrder(playerList);
 
         //remove habitat tiles depending on number of players
