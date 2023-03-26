@@ -20,28 +20,12 @@ public class PlayerBoard {
     int numOfNatureTokens = 0;
 
 
-
-//    public void printPlayerBoard() {
-//
-////        System.out.println(playerBoard.size());
-////        System.out.println(playerBoard.get(0).size());
-//
-//        for (int i=0; i<playerBoard.size(); i++) {
-//            for (int k=0; k<playerBoard.get(0).size(); k++) {
-////                System.out.printf("%d, %d\n", i, k);
-//                System.out.printf("[%s]", playerBoard.get(i).get(k));
-//            }
-//            System.out.println();
-//        }
-//    }
-
-
     public void addPlayerBoardBuffer(PlayerBoard.PlayerBoardSide playerBoardSide) {
 
         ArrayList<Tile> newRow = new ArrayList<>();
 
         // Add empty tiles for the specified row/column based on user input of side.
-        switch(playerBoardSide) {
+        switch  (playerBoardSide) {
             case LEFT:
                 for (int i=0; i<playerBoard.size(); i++) {
                     for (int k=0; k<playerBoard.get(0).size(); k++) {

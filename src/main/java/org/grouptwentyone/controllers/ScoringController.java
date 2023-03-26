@@ -549,7 +549,7 @@ public class ScoringController {
     /**
      *  1) Stores a local score variable starting at 0.
      *  2) assigns local score to the getLargestGroup
-     * @param playerBoard
+     * @param playerBoard which is the player's board
      * @return local store as integer
      */
     public static int scoreElkScoringCardA(PlayerBoard playerBoard) {
@@ -631,7 +631,7 @@ public class ScoringController {
      * 1) we traverse through the playerBoard. When an elk is found, we get it's associated group using getTileGroupFromTile
      * 2) we add all the elk from this group in usedElk so that they are not double counted in scoring
      * 3) appropriate scores are added and we terminate the loop until there are no more elk groups
-     * @param playerBoard
+     * @param playerBoard which is the player's board
      * @return local store as integer
      */
     public static int scoreElkScoringCardB(PlayerBoard playerBoard) {
@@ -687,7 +687,7 @@ public class ScoringController {
      *     in an arrayList and proceed in this manner
      *  2) At the end, score based on whether the right sizes are contained in the list, starting with
      *     4, then 3 etc.
-     * @param playerBoard
+     * @param playerBoard which is the player's board
      * @return local score as integer
      */
     public static int scoreElkScoringCardC(PlayerBoard playerBoard) {
@@ -743,7 +743,7 @@ public class ScoringController {
      * 1) traverse through the playBoard. When a salmon tile is found, call the getRunOfSalmon function
      *    to get its associated run
      * 2) increment the score accordingly based on the size of the run
-     * @param playerBoard
+     * @param playerBoard which is the player's board
      * @return local score as integer
      */
     public static int scoreSalmonScoringCardA(PlayerBoard playerBoard) {
@@ -790,7 +790,7 @@ public class ScoringController {
      * 1) traverse through the playBoard. When a salmon tile is found, call the getRunOfSalmon function
      *    to get its associated run
      * 2) increment the score accordingly based on the size of the run
-     * @param playerBoard
+     * @param playerBoard which is the player's board
      * @return local score as integer
      */
     public static int scoreSalmonScoringCardB(PlayerBoard playerBoard) {
@@ -829,7 +829,7 @@ public class ScoringController {
      * 1) traverse through the playBoard. When a salmon tile is found, call the getRunOfSalmon function
      *    to get its associated run
      * 2) increment the score accordingly based on the size of the run
-     * @param playerBoard
+     * @param playerBoard which is the player's board
      * @return local score as integer
      */
 
@@ -870,8 +870,8 @@ public class ScoringController {
     /**
      * traverses through the playBoard until a hawk card is found. We remove any adjacent hawks
      * with the help of the getAdjacentTile
-     * @param playerBoard
-     * @return
+     * @param playerBoard which is the player's board
+     * @return local score as an integer
      */
 
     public static int scoreHawkScoringCardA(PlayerBoard playerBoard) {
@@ -983,7 +983,7 @@ public class ScoringController {
 
      * @param row to let us know what row the hawk is on
      * @param col to let us know what column the hawk is on
-     * @param playerBoard
+     * @param playerBoard which is the player's board
      * @return true if there is a line of sight and false otherwise
      */
     public static boolean hasDirectLineOfSight(int row, int col, PlayerBoard playerBoard) {
@@ -1204,7 +1204,7 @@ public class ScoringController {
      *
      *
      * @param root to store the start of the run
-     * @param playerBoard
+     * @param playerBoard which is the player's board
      * @param run to store all the tiles in the run
      * @param usedTiles to store already counted tiles in the run
      * @return ArrayList of tiles which stores the run of tiles
