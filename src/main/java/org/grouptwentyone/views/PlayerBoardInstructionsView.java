@@ -1,13 +1,19 @@
 package org.grouptwentyone.views;
 
-public class PlayerBoardInstructions {
+public class PlayerBoardInstructionsView {
     String r = GameUiView.RED;
     String g = GameUiView.GREEN_BOLD;
     String y = GameUiView.YELLOW_BOLD_BRIGHT;
     public static void displayBoardInstructions() {
-        System.out.println("Each tile will have the possibility of being connect to at most 6 other tiles");
-        System.out.println("A tile is adjacent to another tile if and only their corners touch\n" +
-                            "Below is sample board which marks all the adjacent tiles of position (2, 1) in green ");
+
+        GameUiView.printPageBorder();
+
+        System.out.println("- Each tile will have the possibility of being connected to at most 6 other tiles");
+
+        System.out.println("- A tile is adjacent to another tile if and only their corners touch\n\n" +
+                            "- Below is sample board which marks all the adjacent tiles of the yellow tile in position (1, 2) in green\n" +
+                "and non-adjacent tiles in red.\n");
+
         System.out.println(  GameUiView.RED +   "           *  *  *    "  + GameUiView.GREEN +  "   *  *  *        *  *  *                   \n" +
                              GameUiView.RED +   "         *         *  "  + GameUiView.GREEN+   " *         *    *         *                 \n" +
                              GameUiView.RED +   "        *           * "  + GameUiView.GREEN+   "*           *  *           *                \n" +
@@ -23,7 +29,7 @@ public class PlayerBoardInstructions {
                             GameUiView.RED +    "           *  *  *    "  + GameUiView.GREEN +  "    *  *  *                   \n" +
                             GameUiView.RED +    "         *         *  "  + GameUiView.GREEN +  "  *         *                 \n" +
                             GameUiView.RED +    "        *           * "  + GameUiView.GREEN +  " *           *                \n" +
-                            GameUiView.RED +    "        *   (2,0)   * "  + GameUiView.GREEN +  " *   (2,2)   *                \n" +
+                            GameUiView.RED +    "        *   (2,0)   * "  + GameUiView.GREEN +  " *   (2,1)   *                \n" +
                             GameUiView.RED +    "         *         *  "  + GameUiView.GREEN +  "  *         *                 \n" +
                             GameUiView.RED +    "           *  *  *    "  + GameUiView.GREEN +  "    *  *  *                   \n" +
                             GameUiView.RED +    "                   *  *  *        *  *  *                   \n" +
@@ -32,5 +38,7 @@ public class PlayerBoardInstructions {
                                                 "                *   (3,1)   *  *   (3,2)   *                \n" +
                                                 "                 *         *    *         *                 \n" +
                                                 "                   *  *  *        *  *  *         ");
+
+        System.out.println();
     }
 }
