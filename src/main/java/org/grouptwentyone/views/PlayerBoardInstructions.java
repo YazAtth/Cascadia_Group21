@@ -13,13 +13,13 @@ public class PlayerBoardInstructions {
                              GameUiView.RED +   "        *           * "  + GameUiView.GREEN+   "*           *  *           *                \n" +
                              GameUiView.RED +   "        *   (0,0)   * "  + GameUiView.GREEN+   "*   (0,1)   *  *   (0,2)   *                \n" +
                              GameUiView.RED +   "         *         *  "  + GameUiView.GREEN+   " *         *    *         *                 \n" +
-                             GameUiView.RED +   "           *  *  *      "  + GameUiView.GREEN+ "   *  *  *        *  *  *                   \n" +
-                                                "                   * * * *    "  + GameUiView.YELLOW_BOLD_BRIGHT+ "    * * * * "   + GameUiView.GREEN+ "     *  *  *    \n" +
-                                                "                 *         *  "  + GameUiView.YELLOW_BOLD_BRIGHT+ "  *         * " + GameUiView.GREEN+ "   *         *  \n" +
-                                                "                *           * "  + GameUiView.YELLOW_BOLD_BRIGHT+ " *           * " + GameUiView.GREEN+ " *           * \n" +
-                                                "                *   (1,1)   * "  + GameUiView.YELLOW_BOLD_BRIGHT+ " *   (1,2)   * " + GameUiView.GREEN+ " *   (1,3)   * \n" +
-                                                "                 *         *  "  + GameUiView.YELLOW_BOLD_BRIGHT+ "  *         *  " + GameUiView.GREEN+ "  *         *  \n" +
-                                                "                   * * * *    "  + GameUiView.YELLOW_BOLD_BRIGHT+ "    * * * *       " + GameUiView.GREEN+ " *  *  *    \n" +
+                             GameUiView.RED +   "           *  *  *    "  + GameUiView.GREEN+   "   *  *  *        *  *  *                   \n" +
+                                                "                   * * * *    "  + GameUiView.YELLOW_BOLD_BRIGHT+ "    * * * *    "   + GameUiView.GREEN+ "     *  *  *    \n" +
+                                                "                 *         *  "  + GameUiView.YELLOW_BOLD_BRIGHT+ "  *         *  " + GameUiView.GREEN+   "   *         *  \n" +
+                                                "                *           * "  + GameUiView.YELLOW_BOLD_BRIGHT+ " *           * " + GameUiView.GREEN+   "  *           * \n" +
+                                                "                *   (1,1)   * "  + GameUiView.YELLOW_BOLD_BRIGHT+ " *   (1,2)   * " + GameUiView.GREEN+   "  *   (1,3)   * \n" +
+                                                "                 *         *  "  + GameUiView.YELLOW_BOLD_BRIGHT+ "  *         *  " + GameUiView.GREEN+   "   *         *  \n" +
+                                                "                   * * * *    "  + GameUiView.YELLOW_BOLD_BRIGHT+ "    * * * *    " + GameUiView.GREEN+   "     *  *  *    \n" +
                             GameUiView.RED +    "           *  *  *    "  + GameUiView.GREEN +  "    *  *  *                   \n" +
                             GameUiView.RED +    "         *         *  "  + GameUiView.GREEN +  "  *         *                 \n" +
                             GameUiView.RED +    "        *           * "  + GameUiView.GREEN +  " *           *                \n" +
