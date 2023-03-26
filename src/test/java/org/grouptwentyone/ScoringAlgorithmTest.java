@@ -809,22 +809,22 @@ class ScoringAlgorithmTest {
 
             p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
             p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1,0));
-            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON));
+            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,1));
 
             p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
             p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1,0));
-            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON));
+            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,1));
 
             p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
             p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1,0));
-            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON));
+            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,1));
 
             p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
             p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2,1));
-            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON));
+            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2,1));
 
             p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
@@ -839,48 +839,46 @@ class ScoringAlgorithmTest {
 
             p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
             p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3,2));
-            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
+            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX));
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3,2));
 
             p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
             p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3,3));
-            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON));
+            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3,3));
 
             p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
             p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3,4));
-            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON));
+            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3,4));
 
             p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
             p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3,5));
-            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON));
+            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3,5));
 
             p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
             p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3,6));
-            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON));
+            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3,6));
 
             p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
             p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2,6));
-            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON));
+            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2,6));
 
             p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
             p1.getPlayerBoardObject().addNewTile(new HexCoordinate(4,1));
-            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
+            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(4,1));
 
             p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
             p1.getPlayerBoardObject().addNewTile(new HexCoordinate(5,1));
-            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX));
+            p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
             p1.getPlayerBoardObject().addNewToken(new HexCoordinate(5,1));
 
-
-//            System.out.println(p1.getPlayerBoardObject().getPlayerBoardAs2dArray());
-//            System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject().getPlayerBoardAs2dArray()));
-//            System.out.printf("You have a score of: %d\n", p1.getScore());
+            int score = ScoringController.scoreElkScoringCardC(p1.getPlayerBoardObject());
+            assertEquals(27, score);
         }
     }
 
