@@ -45,8 +45,6 @@ public class StartGame {
         while (tilesRemain) {
 
             GameUiView.printPageBorder();
-            System.out.printf("Player Score: %d\n",activePlayer.getPlayerBoardObject().getScore());
-
             GameUiView.printPlayerHeader(activePlayer);
             System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
 
