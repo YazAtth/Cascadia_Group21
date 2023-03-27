@@ -800,7 +800,6 @@ class ScoringAlgorithmTest {
         }
 
         @Test
-        //TODO
         void testElkCardC() {
             Player p1 = new Player("Ton");
 
