@@ -129,6 +129,7 @@ public class NatureTokenController {
                     UserInputView.setPreviousInputDisallowedMessage(String.format("%sInvalid amount of numbers," +
                             " please enter a max of 4 numbers%s\n> ", GameUiView.RED_BOLD, GameUiView.RESET_COLOUR));
                     inputInvalid = true;
+                    continue;
                 }
                 HashSet<Integer> numSet = new HashSet<>();
                 for (int selectedNum : selectedNums) {
@@ -149,6 +150,7 @@ public class NatureTokenController {
                         break;
                     }
                 }
+                if(inputInvalid) continue;
 
                 for (int num : selectedNums) {
                     //returns the selected token to wildlifeTokenBag and replaces it with another wildlife token
