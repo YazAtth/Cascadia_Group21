@@ -485,4 +485,54 @@ public class PlayerBoard {
         return sameTilesSouthEast;
     }
 
+    public ArrayList<Tile> getPlacedTilesList() {
+        ArrayList<Tile> placedTileList = new ArrayList<>();
+        for (ArrayList<Tile> row: this.getPlayerBoardAs2dArray()) {
+            for (Tile tile: row) {
+                if (!tile.getHabitatTile().isNull()) {
+                    placedTileList.add(tile);
+                }
+            }
+        }
+
+        return placedTileList;
+    }
+
+    public ArrayList<Tile> getAllAdjacentPositions(Tile o) {
+        ArrayList<Tile> output = new ArrayList<>();
+
+        for (ArrayList<Tile> row: this.getPlayerBoardAs2dArray()) {
+            for (Tile tile: row) {
+                if (tile.getHexCoordinate().isAdjacentToHexCoordinate(o.getHexCoordinate())) {
+                    output.add(tile);
+                }
+            }
+        }
+
+        return output;
+    }
+
+    // Gets us a list of options for where we can place the tiles
+    public ArrayList<Tile> getPlaceableTileOptionList() {
+        ArrayList<Tile> placeableTileOptionsList = new ArrayList<>();
+        ArrayList<Tile> placedTileList = this.getPlacedTilesList();
+
+        for (Tile tile: placedTileList) {
+            ArrayList<Tile> adjacentTiles = this.getAllAdjacentPositions(tile);
+//            System.out.println(adjacentTiles);
+
+            for (Tile adjacentTile: adjacentTiles) {
+
+                boolean alreadyInOutputList = placeableTileOptionsList.contains(adjacentTile);
+                boolean tileIsAlreadyPlaced = placedTileList.contains(adjacentTile);
+
+
+                if (!alreadyInOutputList && !tileIsAlreadyPlaced) {
+                    placeableTileOptionsList.add(adjacentTile);
+                }
+            }
+        }
+        return placeableTileOptionsList;
+    }
+
 }

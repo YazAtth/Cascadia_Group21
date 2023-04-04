@@ -12,10 +12,11 @@ public class TestingSpaceYasith {
     public static void testingCascadiaBot1() {
 
         ArrayList<Player> playerList = new ArrayList<>(List.of(
-                new Player("Colm"),
-                new CascadiaBot("CascadiaBot"),
-                new Player("Dom"),
-                new Player("Yasith")));
+//                new Player("Colm"),
+                new CascadiaBot("CascadiaBot")
+//                new Player("Dom"),
+//                new Player("Yasith")
+                ));
 
         PlayerManager playerManager = new PlayerManager(playerList);
         Player activePlayer = playerManager.getFirstPlayer();
