@@ -30,6 +30,7 @@ public class PlayerBoard {
     WildlifeToken selectedToken;
     int numOfNatureTokens = 0;
     ArrayList<BoardShift> lastBoardShift = new ArrayList<>(List.of(BoardShift.NO_SHIFT));
+    boolean verbose = true;
 
     public void addPlayerBoardBuffer(PlayerBoard.PlayerBoardSide playerBoardSide) {
 
@@ -263,7 +264,7 @@ public class PlayerBoard {
         this.decrementTileTokenOption(focusedTile.getHabitatTile().getWildlifeTokenTypeList());
 
         //check if habitat tile is keystone and if so, increase numOfNatureTokens by 1
-        if (focusedTile.getHabitatTile().isKeystone()) {
+        if (focusedTile.getHabitatTile().isKeystone() && this.isVerbose()) {
             this.addToNumOfNatureTokens();
             System.out.println("You have just received 1 nature token for placing a token on a keystone tile");
         }
@@ -657,6 +658,7 @@ public class PlayerBoard {
         newPlayerBoard.setNumOfNatureTokens(this.getNumOfNatureTokens());
         newPlayerBoard.setTokenOptions(this.getTokenOptions());
         newPlayerBoard.setLastBoardShift(this.getLastBoardShift());
+        newPlayerBoard.setVerbose(this.isVerbose());
 
 
 
@@ -786,5 +788,13 @@ public class PlayerBoard {
 
         return output;
 
+    }
+
+    public boolean isVerbose() {
+        return verbose;
+    }
+
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
     }
 }

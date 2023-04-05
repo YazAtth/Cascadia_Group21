@@ -11,6 +11,7 @@ public class CascadiaBot extends Player{
 
     public CascadiaBot(String userName) {
         super(userName);
+        this.getPlayerBoardObject().setVerbose(false);
     }
 
 
@@ -55,11 +56,11 @@ public class CascadiaBot extends Player{
         for (int i=0; i<4; i++) {
 
             for (Tile placeableTilePosition : placeableTileOptionsList) {
-                System.out.printf("Looking at placeable tile %s\n", placeableTilePosition);
-                System.out.println(placeableTileOptionsList);
+//                System.out.printf("Looking at placeable tile %s\n", placeableTilePosition);
+//                System.out.println(placeableTileOptionsList);
 
                 PlayerBoard duplicateBoard = this.getPlayerBoardObject().getDuplicate();
-                System.out.printf("Duplicate Board 1: %s\n", duplicateBoard.getPlayerBoard());
+//                System.out.printf("Duplicate Board 1: %s\n", duplicateBoard.getPlayerBoard());
 
 
 //                duplicateBoard.setSelectedToken(wildlifeTokensOptionList.get(i));
@@ -70,20 +71,20 @@ public class CascadiaBot extends Player{
                 duplicateBoard.addNewTile(new HexCoordinate(placeableTileHexCoord.getX(), placeableTileHexCoord.getY()));
 
                 ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> placeableWildlifeTokenList = this.getPlayerBoardObject().getPlaceableWildlifeTokenList();
-                System.out.println(placeableWildlifeTokenList);
+//                System.out.println(placeableWildlifeTokenList);
 
                 for (CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType> placeableToken: placeableWildlifeTokenList) {
 
                     PlayerBoard duplicateBoard2 = duplicateBoard.getDuplicate();
 
-                    System.out.printf("Duplicate Board 2: %s\n", duplicateBoard2.getPlayerBoard());
+//                    System.out.printf("Duplicate Board 2: %s\n", duplicateBoard2.getPlayerBoard());
                     duplicateBoard2.setSelectedToken(new WildlifeToken(placeableToken.getField2()));
-                    System.out.println(BoardView.displayTiles(duplicateBoard2));
+//                    System.out.println(BoardView.displayTiles(duplicateBoard2));
 
                     HexCoordinate newTokenPosition = duplicateBoard2.getHexCoordinateAfterBoardShift(placeableToken.getField1());
-                    System.out.printf("Placing wildlife token %s to position %s\n", placeableToken.getField2(), newTokenPosition);
+//                    System.out.printf("Placing wildlife token %s to position %s\n", placeableToken.getField2(), newTokenPosition);
                     duplicateBoard2.addNewToken(newTokenPosition);
-                    System.out.println(BoardView.displayTiles(duplicateBoard2));
+//                    System.out.println(BoardView.displayTiles(duplicateBoard2));
 
 
 
