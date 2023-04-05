@@ -589,13 +589,19 @@ public class PlayerBoard {
                     oldHabitatTile.isNull()
                 );
 
-            newActiveTiles.add(new Tile(
+            Tile newTile = new Tile(
                     newHabitatTile,
-                    new HexCoordinate(tile.getHexCoordinate().getY(), tile.getHexCoordinate().getX()),
+                    new HexCoordinate(tile.getHexCoordinate().getX(), tile.getHexCoordinate().getY()),
                     tile.getTileOrientation(),
                     tile.isActive(),
                     tile.getTileId(),
-                    tile.isIncludedInScoring()));
+                    tile.isIncludedInScoring());
+
+            System.out.println(tile);
+            System.out.println(newTile);
+            System.out.println("\n");
+
+            newActiveTiles.add(newTile);
         }
         newPlayerBoard.setActiveTiles(newActiveTiles);
 
@@ -611,7 +617,7 @@ public class PlayerBoard {
             );
             Tile newRecentlyPlacedTile = new Tile(
                     newHabitatTile,
-                    new HexCoordinate(this.getRecentlyPlacedTile().getHexCoordinate().getY(), this.getRecentlyPlacedTile().getHexCoordinate().getX()),
+                    new HexCoordinate(this.getRecentlyPlacedTile().getHexCoordinate().getX(), this.getRecentlyPlacedTile().getHexCoordinate().getY()),
                     oldRecentlyPlacedTile.getTileOrientation(),
                     oldRecentlyPlacedTile.isActive(),
                     oldRecentlyPlacedTile.getTileId(),
@@ -686,17 +692,46 @@ public class PlayerBoard {
         }
 
 
-        System.out.printf("Equivalence: %s\n", this.getActiveTiles().equals(o.getActiveTiles()));
+//        System.out.printf("Equivalence: %s\n", this.getActiveTiles().equals(o.getActiveTiles()));
+        System.out.printf("Equivalence: %s\n", this.getActiveTiles().containsAll(o.getActiveTiles()) && o.getActiveTiles().containsAll(this.getActiveTiles()));
 
-        System.out.printf("to1: %s\nto2: %s\n\n",this.getActiveTiles(), o.getActiveTiles());
+//        System.out.printf("to1: %s\nto2: %s\n\n",this.getActiveTiles(), o.getActiveTiles());
+
+        Tile ac2 = o.getActiveTiles().get(1);
+        Tile ac4 = this.getActiveTiles().get(2);
+
+//        System.out.printf("Is '%s' and '%s' equal? %s\n\n",ac2, ac4, ac2.equals(ac4));
+
 //        System.out.printf("ActiveTiles1: %s\nActiveTiles2: %s\n", this.getActiveTiles(), o.getActiveTiles());
 
-        return (this.getPlayerBoard().equals(o.getPlayerBoard())) &&
-                (this.getActiveTiles().equals(o.getActiveTiles())) &&
+        boolean isRecentlyPlacedTilesEqual;
+        if (this.getRecentlyPlacedTile() == null || o.getRecentlyPlacedTile() == null) {
+            isRecentlyPlacedTilesEqual = this.getRecentlyPlacedTile() == null && o.getRecentlyPlacedTile() == null;
+        } else {
+            isRecentlyPlacedTilesEqual = this.getRecentlyPlacedTile().equals(o.getRecentlyPlacedTile());
+        }
+
+        boolean isSelectedTilesEqual;
+        if (this.getSelectedTile() == null || o.getSelectedTile() == null) {
+            isSelectedTilesEqual = this.getSelectedTile() == null && o.getSelectedTile() == null;
+        } else {
+            isSelectedTilesEqual = this.getSelectedTile().equals(o.getSelectedTile());
+        }
+
+        boolean isSelectedTokensEqual;
+        if (this.getSelectedToken() == null || o.getSelectedToken() == null) {
+            isSelectedTokensEqual = this.getSelectedToken() == null && o.getSelectedToken() == null;
+        } else {
+            isSelectedTokensEqual = this.getSelectedToken().equals(o.getSelectedToken());
+        }
+
+
+        return (this.getPlayerBoard().containsAll(o.getPlayerBoard()) && o.getPlayerBoard().containsAll(this.getPlayerBoard())) &&
+                (this.getActiveTiles().containsAll(o.getActiveTiles()) && o.getActiveTiles().containsAll(this.getActiveTiles())) &&
                 (this.getTokenOptions().equals(o.getTokenOptions())) &&
-                (this.getRecentlyPlacedTile().equals(o.getRecentlyPlacedTile())) &&
-                (this.getSelectedTile().equals(o.getSelectedTile())) &&
-                (this.getSelectedToken().equals(o.getSelectedToken())) &&
+                isRecentlyPlacedTilesEqual &&
+                isSelectedTilesEqual &&
+                isSelectedTokensEqual &&
                 (this.getNumOfNatureTokens() == o.getNumOfNatureTokens());
 
     }

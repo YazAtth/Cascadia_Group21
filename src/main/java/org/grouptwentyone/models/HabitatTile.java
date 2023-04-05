@@ -133,11 +133,11 @@ public class HabitatTile {
     @Override
     public String toString() {
         return "HabitatTile\n" +
-                "Habitat Type(s): " + this.habitatTileTypeList.toString() +
-                ", Wildlife Token Types: " + this.wildlifeTokenTypeList.toString() +
-                ", Wildlife Token: " + this.wildlifeToken.toString() +
-                ", isKeyStone: " + this.isKeystone() +
-                ", isNull: " + this.isNull();
+                "\tHabitat Type(s): " + this.habitatTileTypeList.toString() +
+                ",\n\t\tWildlife Token Types: " + this.wildlifeTokenTypeList.toString() +
+                ",\n\t\tWildlife Token: " + this.wildlifeToken.toString() +
+                ",\n\t\tisKeyStone: " + this.isKeystone() +
+                ",\n\t\tisNull: " + this.isNull();
     }
 
     public void setNull(boolean aNull) {
