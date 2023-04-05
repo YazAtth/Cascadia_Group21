@@ -71,7 +71,7 @@ public class TestingSpaceYasith {
 
 
     public static void main(String[] args) {
-//        testingCascadiaBot1();
-        testingDuplication();
+        testingCascadiaBot1();
+//        testingDuplication();
     }
 }
