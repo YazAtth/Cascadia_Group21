@@ -1,6 +1,7 @@
 package org.grouptwentyone.dev;
 
 import org.grouptwentyone.models.*;
+import org.grouptwentyone.views.BoardView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,9 @@ public class TestingSpaceYasith {
         HabitatTile h1 = pb1.getPlayerBoardAs2dArray().get(1).get(2).getHabitatTile();
         HabitatTile h2 = pb2.getPlayerBoardAs2dArray().get(1).get(2).getHabitatTile();
 
-        System.out.println(pb1.equals(pb2));
+//        System.out.println(pb1.equals(pb2));
+
+        System.out.println(BoardView.displayTiles(pb2));
 //        System.out.println(h1.equals(h2));
 
 //        for (int i=0; i<4; i++) {

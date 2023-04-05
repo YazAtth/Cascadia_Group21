@@ -597,9 +597,9 @@ public class PlayerBoard {
                     tile.getTileId(),
                     tile.isIncludedInScoring());
 
-            System.out.println(tile);
-            System.out.println(newTile);
-            System.out.println("\n");
+//            System.out.println(tile);
+//            System.out.println(newTile);
+//            System.out.println("\n");
 
             newActiveTiles.add(newTile);
         }
@@ -695,15 +695,15 @@ public class PlayerBoard {
 //        System.out.printf("Equivalence: %s\n", this.getActiveTiles().equals(o.getActiveTiles()));
         System.out.printf("Equivalence: %s\n", this.getActiveTiles().containsAll(o.getActiveTiles()) && o.getActiveTiles().containsAll(this.getActiveTiles()));
 
-//        System.out.printf("to1: %s\nto2: %s\n\n",this.getActiveTiles(), o.getActiveTiles());
+        System.out.printf("to1: %s\nto2: %s\n\n",this.getActiveTiles(), o.getActiveTiles());
 
         Tile ac2 = o.getActiveTiles().get(1);
-        Tile ac4 = this.getActiveTiles().get(2);
+        Tile ac4 = this.getActiveTiles().get(1);
 
 //        System.out.printf("Is '%s' and '%s' equal? %s\n\n",ac2, ac4, ac2.equals(ac4));
-
 //        System.out.printf("ActiveTiles1: %s\nActiveTiles2: %s\n", this.getActiveTiles(), o.getActiveTiles());
 
+        // Recently placed tiles, selected tiles and selected tokens can be null so we have to deal with those conditions separately
         boolean isRecentlyPlacedTilesEqual;
         if (this.getRecentlyPlacedTile() == null || o.getRecentlyPlacedTile() == null) {
             isRecentlyPlacedTilesEqual = this.getRecentlyPlacedTile() == null && o.getRecentlyPlacedTile() == null;

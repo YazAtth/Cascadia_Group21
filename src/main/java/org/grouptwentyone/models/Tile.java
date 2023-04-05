@@ -85,19 +85,19 @@ public class Tile {
     public String toString() {
 
 
-//        if (this.habitatTile.isNull()) {
-//            return String.format("Empty Tile at %s", this.hexCoordinate);
-//        } else {
-//            return String.format("Habitat Tile at %s", this.hexCoordinate);
-//        }
+        if (this.habitatTile.isNull()) {
+            return String.format("Empty Tile at %s", this.hexCoordinate);
+        } else {
+            return String.format("Habitat Tile at %s", this.hexCoordinate);
+        }
 
-        return String.format("\nTileId: %d\n\tHabitatTile: %s\n\tHexCoordinate: %s\n\tisActive: %s\n\tisIncludedInScoring: %s\n\ttileOrientation: %d\n",
-                this.getTileId(),
-                this.getHabitatTile(),
-                this.getHexCoordinate(),
-                this.isActive(),
-                this.isIncludedInScoring(),
-                this.getTileOrientation());
+//        return String.format("\nTileId: %d\n\tHabitatTile: %s\n\tHexCoordinate: %s\n\tisActive: %s\n\tisIncludedInScoring: %s\n\ttileOrientation: %d\n",
+//                this.getTileId(),
+//                this.getHabitatTile(),
+//                this.getHexCoordinate(),
+//                this.isActive(),
+//                this.isIncludedInScoring(),
+//                this.getTileOrientation());
     }
 
     //rotate tile by custom number
