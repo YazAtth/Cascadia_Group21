@@ -1,5 +1,6 @@
 package org.grouptwentyone.dev;
 
+import org.grouptwentyone.StartGame;
 import org.grouptwentyone.models.*;
 import org.grouptwentyone.views.BoardView;
 import org.grouptwentyone.views.GameUiView;
@@ -23,6 +24,7 @@ public class TestingSpaceYasith {
 
 //        while (true) {
 
+
         for (int i=0; i<5; i++) {
 
 //            if (!activePlayer.playTurn()) {
@@ -30,10 +32,11 @@ public class TestingSpaceYasith {
 //            }
             System.out.printf("TURN %d\n", i);
             activePlayer.playTurn();
-            GameUiView.printLargeSpace();
+//            GameUiView.printLargeSpace();
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
+            GameUiView.printPageBorder();
 
 //            break;
-
 
 
 //            activePlayer = playerManager.cycleToNextPlayer();
