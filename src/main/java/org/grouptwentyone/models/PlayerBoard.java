@@ -429,6 +429,17 @@ public class PlayerBoard {
         private void setNumOfTokenOption(WildlifeToken.WildlifeTokenType tokenType, Integer value) {
             this.numTokenOptions.replace(tokenType, value);
         }
+
+        public Hashtable<WildlifeToken.WildlifeTokenType, Integer> getNumTokenOptions() {
+            return numTokenOptions;
+        }
+
+//        @Override
+//        public boolean equals(Object obj) {
+//            if (!(obj instanceof TokenOptions o)) return false;
+//
+//            return this.getNumTokenOptions().equals(o.getNumTokenOptions());
+//        }
     }
     public ArrayList<Tile> getConnectedSameTilesEast(Tile tile, PlayerBoard playerBoard) {
         ArrayList<Tile> sameTilesEast = new ArrayList<>();
@@ -566,14 +577,46 @@ public class PlayerBoard {
         newPlayerBoard.setPlayerBoard(newPlayerBoardAs2dArray);
 
 
+        //TODO: Not duplicating correctly below
         ArrayList<Tile> newActiveTiles = new ArrayList<>();
         for (Tile tile: this.getActiveTiles()) {
-            newActiveTiles.add(new Tile(new HexCoordinate(tile.getHexCoordinate().getY(), tile.getHexCoordinate().getX())));
+            HabitatTile oldHabitatTile = tile.getHabitatTile();
+            HabitatTile newHabitatTile = new HabitatTile(
+                    oldHabitatTile.getHabitatTileTypeList(),
+                    oldHabitatTile.getWildlifeTokenTypeList(),
+                    oldHabitatTile.getWildlifeToken().getWildlifeTokenType(),
+                    oldHabitatTile.isKeystone(),
+                    oldHabitatTile.isNull()
+                );
+
+            newActiveTiles.add(new Tile(
+                    newHabitatTile,
+                    new HexCoordinate(tile.getHexCoordinate().getY(), tile.getHexCoordinate().getX()),
+                    tile.getTileOrientation(),
+                    tile.isActive(),
+                    tile.getTileId(),
+                    tile.isIncludedInScoring()));
         }
         newPlayerBoard.setActiveTiles(newActiveTiles);
 
         if (this.getRecentlyPlacedTile() != null) {
-            Tile newRecentlyPlacedTile = new Tile(new HexCoordinate(this.getRecentlyPlacedTile().getHexCoordinate().getY(), this.getRecentlyPlacedTile().getHexCoordinate().getX()));
+            Tile oldRecentlyPlacedTile = this.getRecentlyPlacedTile();
+            HabitatTile oldHabitatTile = oldRecentlyPlacedTile.getHabitatTile();
+            HabitatTile newHabitatTile = new HabitatTile(
+                    oldHabitatTile.getHabitatTileTypeList(),
+                    oldHabitatTile.getWildlifeTokenTypeList(),
+                    oldHabitatTile.getWildlifeToken().getWildlifeTokenType(),
+                    oldHabitatTile.isKeystone(),
+                    oldHabitatTile.isNull()
+            );
+            Tile newRecentlyPlacedTile = new Tile(
+                    newHabitatTile,
+                    new HexCoordinate(this.getRecentlyPlacedTile().getHexCoordinate().getY(), this.getRecentlyPlacedTile().getHexCoordinate().getX()),
+                    oldRecentlyPlacedTile.getTileOrientation(),
+                    oldRecentlyPlacedTile.isActive(),
+                    oldRecentlyPlacedTile.getTileId(),
+                    oldRecentlyPlacedTile.isIncludedInScoring()
+            );
             newPlayerBoard.setRecentlyPlacedTile(newRecentlyPlacedTile);
         }
 
@@ -643,9 +686,9 @@ public class PlayerBoard {
         }
 
 
-//        System.out.printf("Equivalence: %s\n", this.getPlayerBoard().equals(o.getPlayerBoard()));
+        System.out.printf("Equivalence: %s\n", this.getActiveTiles().equals(o.getActiveTiles()));
 
-        System.out.printf("pb1: %s\npb2: %s\n\n",this.getPlayerBoard(), o.getPlayerBoard());
+        System.out.printf("to1: %s\nto2: %s\n\n",this.getActiveTiles(), o.getActiveTiles());
 //        System.out.printf("ActiveTiles1: %s\nActiveTiles2: %s\n", this.getActiveTiles(), o.getActiveTiles());
 
         return (this.getPlayerBoard().equals(o.getPlayerBoard())) &&

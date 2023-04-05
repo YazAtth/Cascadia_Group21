@@ -54,7 +54,18 @@ public class TestingSpaceYasith {
 
         System.out.println(pb1.equals(pb2));
 //        System.out.println(h1.equals(h2));
+
+//        for (int i=0; i<4; i++) {
+//            for (int k=0; k<4; k++) {
+//                System.out.printf("%s\nAND\n%s\nIS_EQUAL: %s\n\n",
+//                        pb1.getPlayerBoard().get(i).get(k),
+//                        pb2.getPlayerBoard().get(i).get(k),
+//                        pb1.getPlayerBoard().get(i).get(k).equals(pb2.getPlayerBoard().get(i).get(k)));
+//            }
+//        }
+
     }
+
 
     public static void main(String[] args) {
 //        testingCascadiaBot1();
