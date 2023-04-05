@@ -15,10 +15,12 @@ import org.grouptwentyone.models.Exceptions.*;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 public class PlayerBoard {
 
     public enum PlayerBoardSide {LEFT, RIGHT, TOP, BOTTOM, MIDDLE}
+    public enum BoardShift {LEFT_SHIFT, RIGHT_SHIFT, TOP_SHIFT, BOTTOM_SHIFT, NO_SHIFT}
 
     ArrayList<ArrayList<Tile>> playerBoard = new ArrayList<>();
     ArrayList<Tile> activeTiles = new ArrayList<>();
@@ -27,6 +29,7 @@ public class PlayerBoard {
     HabitatTile selectedTile;
     WildlifeToken selectedToken;
     int numOfNatureTokens = 0;
+    ArrayList<BoardShift> lastBoardShift = new ArrayList<>(List.of(BoardShift.NO_SHIFT));
 
     public void addPlayerBoardBuffer(PlayerBoard.PlayerBoardSide playerBoardSide) {
 
@@ -204,20 +207,30 @@ public class PlayerBoard {
         ArrayList<PlayerBoard.PlayerBoardSide> tilePosition = this.getPartOfBoardCoordinateIsOn(newTile.getHexCoordinate());
         boolean isNewTileOnEdge = !tilePosition.contains(PlayerBoard.PlayerBoardSide.MIDDLE);
 
+        ArrayList<BoardShift> currentBoardShift = new ArrayList<>();
         if (isNewTileOnEdge) {
             if (tilePosition.contains(PlayerBoard.PlayerBoardSide.LEFT)) {
                 addPlayerBoardBuffer(PlayerBoard.PlayerBoardSide.LEFT);
+                currentBoardShift.add(BoardShift.LEFT_SHIFT);
             }
             if (tilePosition.contains(PlayerBoard.PlayerBoardSide.RIGHT)) {
                 addPlayerBoardBuffer(PlayerBoard.PlayerBoardSide.RIGHT);
+                currentBoardShift.add(BoardShift.RIGHT_SHIFT);
             }
             if (tilePosition.contains(PlayerBoard.PlayerBoardSide.TOP)) {
                 addPlayerBoardBuffer(PlayerBoard.PlayerBoardSide.TOP);
+                currentBoardShift.add(BoardShift.TOP_SHIFT);
             }
             if (tilePosition.contains(PlayerBoard.PlayerBoardSide.BOTTOM)) {
                 addPlayerBoardBuffer(PlayerBoard.PlayerBoardSide.BOTTOM);
+                currentBoardShift.add(BoardShift.BOTTOM_SHIFT);
             }
+        } else {
+            currentBoardShift.add(BoardShift.NO_SHIFT);
         }
+
+        this.setLastBoardShift(currentBoardShift);
+
 
         //makes reference to placed tile so user can choose to rotate tile
         this.recentlyPlacedTile = this.playerBoard.get(newTile.getHexCoordinate().getX()).get(newTile.getHexCoordinate().getY());
@@ -643,6 +656,7 @@ public class PlayerBoard {
         // Beware; These below fields could possibly be copied by reference instead of by value.
         newPlayerBoard.setNumOfNatureTokens(this.getNumOfNatureTokens());
         newPlayerBoard.setTokenOptions(this.getTokenOptions());
+        newPlayerBoard.setLastBoardShift(this.getLastBoardShift());
 
 
 
@@ -733,6 +747,44 @@ public class PlayerBoard {
                 isSelectedTilesEqual &&
                 isSelectedTokensEqual &&
                 (this.getNumOfNatureTokens() == o.getNumOfNatureTokens());
+
+    }
+
+    public ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> getPlaceableWildlifeTokenList() {
+
+        ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> output= new ArrayList<>();
+
+        for (ArrayList<Tile> row: this.getPlayerBoardAs2dArray()) {
+            for (Tile tile: row) {
+                for (WildlifeToken.WildlifeTokenType placeableWildlifeToken: tile.getHabitatTile().getWildlifeTokenTypeList()) {
+                    output.add(new CustomPair<>(tile.getHexCoordinate(), placeableWildlifeToken));
+                }
+            }
+        }
+
+        return output;
+    }
+
+    public ArrayList<BoardShift> getLastBoardShift() {
+        return lastBoardShift;
+    }
+
+    public void setLastBoardShift(ArrayList<BoardShift> lastBoardShift) {
+        this.lastBoardShift = lastBoardShift;
+    }
+
+    public HexCoordinate getHexCoordinateAfterBoardShift(HexCoordinate hexCoordinate) {
+        HexCoordinate output = new HexCoordinate(hexCoordinate.getX(), hexCoordinate.getY());
+
+        if (this.getLastBoardShift().contains(BoardShift.TOP_SHIFT)) {
+            output.setX(output.getX()+2);
+        }
+
+        if (this.getLastBoardShift().contains(BoardShift.LEFT_SHIFT)) {
+            output.setY(output.getY()+1);
+        }
+
+        return output;
 
     }
 }

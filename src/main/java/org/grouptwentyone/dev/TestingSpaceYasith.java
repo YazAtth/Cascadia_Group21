@@ -26,6 +26,7 @@ public class TestingSpaceYasith {
 //                break;
 //            }
             activePlayer.playTurn();
+
             break;
 
 
@@ -55,7 +56,7 @@ public class TestingSpaceYasith {
 
 //        System.out.println(pb1.equals(pb2));
 
-        System.out.println(BoardView.displayTiles(pb2));
+//        System.out.println(BoardView.displayTiles(pb2));
 //        System.out.println(h1.equals(h2));
 
 //        for (int i=0; i<4; i++) {
@@ -66,6 +67,9 @@ public class TestingSpaceYasith {
 //                        pb1.getPlayerBoard().get(i).get(k).equals(pb2.getPlayerBoard().get(i).get(k)));
 //            }
 //        }
+
+        System.out.println(pb1.getPlayerBoardAs2dArray());
+        System.out.println(pb2.getPlayerBoardAs2dArray());
 
     }
 
