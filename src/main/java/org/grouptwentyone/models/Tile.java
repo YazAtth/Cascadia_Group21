@@ -44,6 +44,15 @@ public class Tile {
         this.tileId = tileIdCounter++;
     }
 
+    public Tile (HabitatTile habitatTile, HexCoordinate hexCoordinate, int tileOrientation, boolean isActive, int tileId, boolean isIncludedInScoring) {
+        this.habitatTile = habitatTile;
+        this.hexCoordinate = hexCoordinate;
+        this.tileOrientation = tileOrientation;
+        this.isActive = isActive;
+        this.tileId = tileId;
+        this.isIncludedInScoring = isIncludedInScoring;
+    }
+
     public HabitatTile getHabitatTile() {
         return this.habitatTile;
     }
@@ -91,4 +100,13 @@ public class Tile {
     public int getTileId() {
         return this.tileId;
     }
+
+    public static int getTileIdCounter() {
+        return tileIdCounter;
+    }
+
+    public boolean isIncludedInScoring() {
+        return isIncludedInScoring;
+    }
+
 }

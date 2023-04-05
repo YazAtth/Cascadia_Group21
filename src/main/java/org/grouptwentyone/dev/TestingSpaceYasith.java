@@ -23,11 +23,14 @@ public class TestingSpaceYasith {
 
         while (true) {
 
-            if (!activePlayer.playTurn()) {
-                break;
-            }
+//            if (!activePlayer.playTurn()) {
+//                break;
+//            }
+            activePlayer.playTurn();
+            break;
 
-            activePlayer = playerManager.cycleToNextPlayer();
+
+//            activePlayer = playerManager.cycleToNextPlayer();
         }
     }
 

@@ -366,6 +366,10 @@ public class PlayerBoard {
     public ArrayList<ArrayList<Tile>> getPlayerBoardAs2dArray() {
         return this.playerBoard;
     }
+
+    public ArrayList<ArrayList<Tile>> getPlayerBoardAsNew2dArray() {
+        return new ArrayList<>(this.playerBoard);
+    }
     public Tile getRecentlyPlacedTile() {
         return this.recentlyPlacedTile;
     }
@@ -535,4 +539,93 @@ public class PlayerBoard {
         return placeableTileOptionsList;
     }
 
+
+    public PlayerBoard getDuplicate() {
+
+        // Copies the code by value instead of reference.
+        PlayerBoard newPlayerBoard = new PlayerBoard();
+        ArrayList<ArrayList<Tile>> newPlayerBoardAs2dArray = new ArrayList<>();
+        for (ArrayList<Tile> row: this.getPlayerBoardAs2dArray()) {
+
+            ArrayList<Tile> newRow = new ArrayList<>();
+            for (Tile tile: row) {
+                HabitatTile oldHabitatTile = tile.getHabitatTile();
+                HabitatTile newHabitatTile =  new HabitatTile(oldHabitatTile.getHabitatTileTypeList(), oldHabitatTile.getWildlifeTokenTypeList(),
+                        oldHabitatTile.getWildlifeToken().getWildlifeTokenType(), oldHabitatTile.isKeystone(), oldHabitatTile.isNull());
+                newRow.add(new Tile(
+                        newHabitatTile,
+                        new HexCoordinate(tile.getHexCoordinate().getX(), tile.getHexCoordinate().getY()),
+                        tile.getTileOrientation(),
+                        tile.isActive(),
+                        tile.getTileId(),
+                        tile.isIncludedInScoring()
+                ));
+            }
+            newPlayerBoardAs2dArray.add(newRow);
+        }
+        newPlayerBoard.setPlayerBoard(newPlayerBoardAs2dArray);
+
+
+        ArrayList<Tile> newActiveTiles = new ArrayList<>();
+        for (Tile tile: this.getActiveTiles()) {
+            newActiveTiles.add(new Tile(new HexCoordinate(tile.getHexCoordinate().getY(), tile.getHexCoordinate().getX())));
+        }
+        newPlayerBoard.setActiveTiles(newActiveTiles);
+
+        if (this.getRecentlyPlacedTile() != null) {
+            Tile newRecentlyPlacedTile = new Tile(new HexCoordinate(this.getRecentlyPlacedTile().getHexCoordinate().getY(), this.getRecentlyPlacedTile().getHexCoordinate().getX()));
+            newPlayerBoard.setRecentlyPlacedTile(newRecentlyPlacedTile);
+        }
+
+        HabitatTile oldSelectedTile = this.getSelectedTile();
+        if (oldSelectedTile != null) {
+            HabitatTile newSelectedTile = new HabitatTile(oldSelectedTile.getHabitatTileTypeList(), oldSelectedTile.getWildlifeTokenTypeList(),
+                    oldSelectedTile.getWildlifeToken().getWildlifeTokenType(), oldSelectedTile.isKeystone(), oldSelectedTile.isNull());
+            newPlayerBoard.setSelectedTile(newSelectedTile);
+        }
+
+        WildlifeToken oldWildlifeToken = this.getSelectedToken();
+        if (oldWildlifeToken != null) {
+            WildlifeToken newWildlifeToken = new WildlifeToken(oldWildlifeToken.getWildlifeTokenType());
+            newPlayerBoard.setSelectedToken(newWildlifeToken);
+        }
+
+
+        // Beware; These below fields could possibly be copied by reference instead of by value.
+        newPlayerBoard.setNumOfNatureTokens(this.getNumOfNatureTokens());
+        newPlayerBoard.setTokenOptions(this.getTokenOptions());
+
+
+
+
+        return newPlayerBoard;
+    }
+
+    public ArrayList<ArrayList<Tile>> getPlayerBoard() {
+        return playerBoard;
+    }
+
+    public void setPlayerBoard(ArrayList<ArrayList<Tile>> playerBoard) {
+        this.playerBoard = playerBoard;
+    }
+
+    public void setActiveTiles(ArrayList<Tile> activeTiles) {
+        this.activeTiles = activeTiles;
+    }
+
+    public TokenOptions getTokenOptions() {
+        return tokenOptions;
+    }
+
+    public void setTokenOptions(TokenOptions tokenOptions) {
+        this.tokenOptions = tokenOptions;
+    }
+
+    public void setRecentlyPlacedTile(Tile recentlyPlacedTile) {
+        this.recentlyPlacedTile = recentlyPlacedTile;
+    }
+
+    public void setNumOfNatureTokens(int numOfNatureTokens) {
+        this.numOfNatureTokens = numOfNatureTokens;
+    }
 }
