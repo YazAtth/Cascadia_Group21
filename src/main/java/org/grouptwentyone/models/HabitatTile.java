@@ -135,8 +135,26 @@ public class HabitatTile {
         return "HabitatTile\n" +
                 "Habitat Type(s): " + this.habitatTileTypeList.toString() +
                 ", Wildlife Token Types: " + this.wildlifeTokenTypeList.toString() +
-                ", wildlife Token: " + this.wildlifeToken.toString();
+                ", Wildlife Token: " + this.wildlifeToken.toString() +
+                ", isKeyStone: " + this.isKeystone() +
+                ", isNull: " + this.isNull();
     }
 
+    public void setNull(boolean aNull) {
+        isNull = aNull;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (!(o instanceof HabitatTile other)) return false;
+//        System.out.printf("Attribute val: %s (this=%s, other=%s)\n", this.getWildlifeToken().equals(other.getWildlifeToken()), this.getWildlifeToken(), other.getWildlifeToken());
+
+        return (this.getHabitatTileTypeList().equals(other.getHabitatTileTypeList())) &&
+                (this.getWildlifeTokenTypeList().equals(other.getWildlifeTokenTypeList())) &&
+                (this.getWildlifeToken().equals(other.getWildlifeToken())) &&
+                (this.isKeystone() == other.isKeystone()) &&
+                (this.isNull() == other.isNull());
+    }
 
 }

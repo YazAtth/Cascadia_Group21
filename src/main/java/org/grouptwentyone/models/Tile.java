@@ -109,4 +109,37 @@ public class Tile {
         return isIncludedInScoring;
     }
 
+    public static void setTileIdCounter(int tileIdCounter) {
+        Tile.tileIdCounter = tileIdCounter;
+    }
+
+    public void setHabitatTile(HabitatTile habitatTile) {
+        this.habitatTile = habitatTile;
+    }
+
+    public void setHexCoordinate(HexCoordinate hexCoordinate) {
+        this.hexCoordinate = hexCoordinate;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public void setTileOrientation(int tileOrientation) {
+        this.tileOrientation = tileOrientation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (!(o instanceof Tile other)) return false;
+
+        return (this.getTileId() == other.getTileId()) &&
+                (this.getHabitatTile().equals(other.getHabitatTile())) &&
+                (this.getHexCoordinate().equals(other.getHexCoordinate())) &&
+                (this.isActive() == other.isActive()) &&
+                (this.isIncludedInScoring() == other.isIncludedInScoring()) &&
+                (this.getTileOrientation() == other.getTileOrientation());
+    }
+
 }

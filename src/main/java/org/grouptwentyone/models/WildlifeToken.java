@@ -32,4 +32,12 @@ public class WildlifeToken {
                 "Type = " + this.wildlifeTokenType;
     }
 
+    @Override
+    public boolean equals(Object o) {
+
+        if (!(o instanceof WildlifeToken other)) return false;
+
+        return this.getWildlifeTokenType() == other.getWildlifeTokenType();
+    }
+
 }

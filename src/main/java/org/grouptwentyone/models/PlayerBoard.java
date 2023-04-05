@@ -628,4 +628,33 @@ public class PlayerBoard {
     public void setNumOfNatureTokens(int numOfNatureTokens) {
         this.numOfNatureTokens = numOfNatureTokens;
     }
+
+
+
+    @Override
+    public boolean equals(Object inputO) {
+
+        PlayerBoard o;
+
+        if (!(inputO instanceof PlayerBoard)) {
+            return false;
+        } else {
+            o = (PlayerBoard) inputO;
+        }
+
+
+//        System.out.printf("Equivalence: %s\n", this.getPlayerBoard().equals(o.getPlayerBoard()));
+
+        System.out.printf("pb1: %s\npb2: %s\n\n",this.getPlayerBoard(), o.getPlayerBoard());
+//        System.out.printf("ActiveTiles1: %s\nActiveTiles2: %s\n", this.getActiveTiles(), o.getActiveTiles());
+
+        return (this.getPlayerBoard().equals(o.getPlayerBoard())) &&
+                (this.getActiveTiles().equals(o.getActiveTiles())) &&
+                (this.getTokenOptions().equals(o.getTokenOptions())) &&
+                (this.getRecentlyPlacedTile().equals(o.getRecentlyPlacedTile())) &&
+                (this.getSelectedTile().equals(o.getSelectedTile())) &&
+                (this.getSelectedToken().equals(o.getSelectedToken())) &&
+                (this.getNumOfNatureTokens() == o.getNumOfNatureTokens());
+
+    }
 }

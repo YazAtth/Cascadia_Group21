@@ -26,6 +26,10 @@ public class CascadiaBot extends Player{
         System.out.println(duplicateBoard.getPlayerBoardAs2dArray().get(0).get(0).getHabitatTile().toString());
 //        System.out.println(BoardView.displayTiles(duplicateBoard));
         System.out.println(this.getPlayerBoardObject().getPlayerBoardAs2dArray().get(0).get(0).getHabitatTile().toString());
+
+        System.out.println(duplicateBoard.getPlayerBoardAs2dArray().get(0).get(0).getHabitatTile()
+                .equals(this.getPlayerBoardObject().getPlayerBoardAs2dArray().get(0).get(0).getHabitatTile()));
+
 //        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
 
 
