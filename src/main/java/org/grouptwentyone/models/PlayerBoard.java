@@ -575,7 +575,8 @@ public class PlayerBoard {
             ArrayList<Tile> newRow = new ArrayList<>();
             for (Tile tile: row) {
                 HabitatTile oldHabitatTile = tile.getHabitatTile();
-                HabitatTile newHabitatTile =  new HabitatTile(oldHabitatTile.getHabitatTileTypeList(), oldHabitatTile.getWildlifeTokenTypeList(),
+                HabitatTile newHabitatTile =  new HabitatTile(new ArrayList<>(oldHabitatTile.getHabitatTileTypeList()),
+                        new ArrayList<>(oldHabitatTile.getWildlifeTokenTypeList()),
                         oldHabitatTile.getWildlifeToken().getWildlifeTokenType(), oldHabitatTile.isKeystone(), oldHabitatTile.isNull());
                 newRow.add(new Tile(
                         newHabitatTile,
@@ -787,7 +788,20 @@ public class PlayerBoard {
         }
 
         return output;
+    }
 
+    public HexCoordinate getHexCoordinateBeforeBoardShift(HexCoordinate hexCoordinate) {
+        HexCoordinate output = new HexCoordinate(hexCoordinate.getX(), hexCoordinate.getY());
+
+        if (this.getLastBoardShift().contains(BoardShift.TOP_SHIFT)) {
+            output.setX(output.getX()-2);
+        }
+
+        if (this.getLastBoardShift().contains(BoardShift.LEFT_SHIFT)) {
+            output.setY(output.getY()-1);
+        }
+
+        return output;
     }
 
     public boolean isVerbose() {
