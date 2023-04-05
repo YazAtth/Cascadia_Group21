@@ -253,7 +253,7 @@ public class PlayerBoard {
         if (!focusedTile.isActive()) {
             throw new TokenPlacedAtEmptyPositionException("Tried to place Wildlife Token where there is no Habitat Tile");
         } else if (focusedTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY) {
-            throw new TokenPlacedAtOccupiedPositionException("Tried to place Wildlife Token on an already occupied Habitat Tile");
+            throw new TokenPlacedAtOccupiedPositionException(String.format("Tried to place Wildlife Token on an already occupied Habitat Tile at position %s", focusedTile.getHexCoordinate()));
         } else if (!focusedTile.getHabitatTile().getWildlifeTokenTypeList().contains(this.getSelectedToken().getWildlifeTokenType())){
             throw new TokenPlacedAtIllegalTileException("This type of Wildlife Token Type cannot be placed on this Habitat Tile");
         }
@@ -755,16 +755,26 @@ public class PlayerBoard {
 
     public ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> getPlaceableWildlifeTokenList() {
 
-        ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> output= new ArrayList<>();
+        ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> output = new ArrayList<>();
 
         for (ArrayList<Tile> row: this.getPlayerBoardAs2dArray()) {
             for (Tile tile: row) {
                 for (WildlifeToken.WildlifeTokenType placeableWildlifeToken: tile.getHabitatTile().getWildlifeTokenTypeList()) {
-                    output.add(new CustomPair<>(tile.getHexCoordinate(), placeableWildlifeToken));
+
+                    // Ignore tiles where there are already wildlife tokens placed down
+//                    if (!this.getPlayerBoardAs2dArray().get(tile.getHexCoordinate().getX()).get(tile.getHexCoordinate().getY()).getHabitatTile().isNull())
+//                        continue;
+//                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY) continue;
+//                    System.out.println(tile.getHabitatTile().toString(true));
+
+                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                        output.add(new CustomPair<>(tile.getHexCoordinate(), placeableWildlifeToken));
+                    }
                 }
             }
         }
 
+//        System.out.printf("getPlaceableWildlifeTokenList output: %s\n", output);
         return output;
     }
 

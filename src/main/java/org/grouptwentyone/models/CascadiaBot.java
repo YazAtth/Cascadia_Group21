@@ -48,7 +48,12 @@ public class CascadiaBot extends Player{
 
 
         int highestScore = -1;
-        Tile tileThatGivesHighestScore = placeableTileOptionsList.get(0);
+        Tile tilePositionThatGivesHighestScore = placeableTileOptionsList.get(RandomNumberGenerator.getRandomNumberInRange(0, placeableTileOptionsList.size()-1));
+        System.out.println(tilePositionThatGivesHighestScore);
+
+        HexCoordinate wildlifeTokenPositionThatGivesHighestScore =
+                this.getPlayerBoardObject().getPlaceableWildlifeTokenList().get(0).getField1();
+
         HabitatTile habitatTileHighScore = habitatTileOptionList.get(0);
         WildlifeToken wildlifeTokenHighScore = wildlifeTokensOptionList.get(0);
 
@@ -70,7 +75,8 @@ public class CascadiaBot extends Player{
                 HexCoordinate placeableTileHexCoord = placeableTilePosition.getHexCoordinate();
                 duplicateBoard.addNewTile(new HexCoordinate(placeableTileHexCoord.getX(), placeableTileHexCoord.getY()));
 
-                ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> placeableWildlifeTokenList = this.getPlayerBoardObject().getPlaceableWildlifeTokenList();
+                ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> placeableWildlifeTokenList = duplicateBoard.getPlaceableWildlifeTokenList();
+//                System.out.printf("pleaceableWildlifeTokenList: %s\n", placeableWildlifeTokenList);
 //                System.out.println(placeableWildlifeTokenList);
 
                 for (CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType> placeableToken: placeableWildlifeTokenList) {
@@ -81,27 +87,40 @@ public class CascadiaBot extends Player{
                     duplicateBoard2.setSelectedToken(new WildlifeToken(placeableToken.getField2()));
 //                    System.out.println(BoardView.displayTiles(duplicateBoard2));
 
-                    HexCoordinate newTokenPosition = duplicateBoard2.getHexCoordinateAfterBoardShift(placeableToken.getField1());
+//                    HexCoordinate newTokenPosition = duplicateBoard2.getHexCoordinateAfterBoardShift(placeableToken.getField1());
+                    HexCoordinate newTokenPosition = placeableToken.getField1();
+
+//                    System.out.printf("Placeable token %s in placeable list: %s\n", placeableToken, placeableWildlifeTokenList);
 //                    System.out.printf("Placing wildlife token %s to position %s\n", placeableToken.getField2(), newTokenPosition);
+//                    System.out.println(BoardView.displayTiles(duplicateBoard2));
                     duplicateBoard2.addNewToken(newTokenPosition);
 //                    System.out.println(BoardView.displayTiles(duplicateBoard2));
 
 
 
                     int localScore = duplicateBoard2.getScore();
+//                    System.out.println(localScore);
                     if (localScore > highestScore) {
+
+//                        System.out.printf("Score was %d, now is %d\nNew tile was at position %s now at %s\n\n",
+//                                highestScore, localScore, tilePositionThatGivesHighestScore, placeableTilePosition);
                         highestScore = localScore;
 
                         habitatTileHighScore = habitatTileOptionList.get(i);
-                        wildlifeTokenHighScore = wildlifeTokensOptionList.get(i);
-                        tileThatGivesHighestScore = placeableTilePosition;
+                        wildlifeTokenHighScore = new WildlifeToken(placeableToken.getField2());
+                        tilePositionThatGivesHighestScore = placeableTilePosition;
+                        wildlifeTokenPositionThatGivesHighestScore = newTokenPosition;
+
+//                        System.out.printf("New Token Position: %s\n", newTokenPosition);
+//                        System.out.println(duplicateBoard2.getPlaceableWildlifeTokenList());
+//                        System.out.println(BoardView.displayTiles(duplicateBoard2));
 
                     }
 
 
                 }
 
-                System.out.println("");
+//                System.out.println("");
 
 
 
@@ -109,12 +128,25 @@ public class CascadiaBot extends Player{
         }
 
 
-//        System.out.printf("Going to place tile %s at position %s\n", tileThatGivesHighestScore, tileThatGivesHighestScore.getHexCoordinate());
+//        System.out.printf("Going to place tile %s at position %s\n", tilePositionThatGivesHighestScore, tilePositionThatGivesHighestScore.getHexCoordinate());
         this.getPlayerBoardObject().setSelectedTile(habitatTileHighScore);
-        this.getPlayerBoardObject().setSelectedToken(wildlifeTokenHighScore);
-        this.getPlayerBoardObject().addNewTile(tileThatGivesHighestScore.getHexCoordinate());
+        this.getPlayerBoardObject().addNewTile(tilePositionThatGivesHighestScore.getHexCoordinate());
 
-        System.out.printf("Placed %s to %s", tileThatGivesHighestScore, tileThatGivesHighestScore.getHexCoordinate());
+        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
+
+//        System.out.printf("Going to place %s token at position %s\n", wildlifeTokenHighScore.getWildlifeTokenType(), wildlifeTokenPositionThatGivesHighestScore);
+        this.getPlayerBoardObject().setSelectedToken(wildlifeTokenHighScore);
+
+//        System.out.printf("TOKEN: %s\n",
+//                this.getPlayerBoardObject().getPlayerBoard().get(wildlifeTokenPositionThatGivesHighestScore.getX())
+//                        .get(wildlifeTokenPositionThatGivesHighestScore.getY()).getHabitatTile().toString(true));
+
+        this.getPlayerBoardObject().addNewToken(wildlifeTokenPositionThatGivesHighestScore);
+
+
+//        System.out.printf("Placed %s to %s\n", tilePositionThatGivesHighestScore, tilePositionThatGivesHighestScore.getHexCoordinate());
+        GameUiView.printPageBorder();
+        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
 
 
 

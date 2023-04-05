@@ -2,6 +2,7 @@ package org.grouptwentyone.dev;
 
 import org.grouptwentyone.models.*;
 import org.grouptwentyone.views.BoardView;
+import org.grouptwentyone.views.GameUiView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +21,19 @@ public class TestingSpaceYasith {
         PlayerManager playerManager = new PlayerManager(playerList);
         Player activePlayer = playerManager.getFirstPlayer();
 
-        while (true) {
+//        while (true) {
+
+        for (int i=0; i<5; i++) {
 
 //            if (!activePlayer.playTurn()) {
 //                break;
 //            }
+            System.out.printf("TURN %d\n", i);
             activePlayer.playTurn();
+            GameUiView.printLargeSpace();
 
-            break;
+//            break;
+
 
 
 //            activePlayer = playerManager.cycleToNextPlayer();
