@@ -436,6 +436,16 @@ public class PlayerBoard {
             this.numTokenOptions.put(WildlifeToken.WildlifeTokenType.HAWK, 0);
         }
 
+        //constructor for copy by value
+        public TokenOptions(TokenOptions oldTokenOptions) {
+            this.numTokenOptions = new Hashtable<>();
+            this.numTokenOptions.put(WildlifeToken.WildlifeTokenType.BEAR, oldTokenOptions.getNumOfTokenOption(WildlifeToken.WildlifeTokenType.BEAR));
+            this.numTokenOptions.put(WildlifeToken.WildlifeTokenType.ELK, oldTokenOptions.getNumOfTokenOption(WildlifeToken.WildlifeTokenType.ELK));
+            this.numTokenOptions.put(WildlifeToken.WildlifeTokenType.FOX, oldTokenOptions.getNumOfTokenOption(WildlifeToken.WildlifeTokenType.FOX));
+            this.numTokenOptions.put(WildlifeToken.WildlifeTokenType.SALMON, oldTokenOptions.getNumOfTokenOption(WildlifeToken.WildlifeTokenType.SALMON));
+            this.numTokenOptions.put(WildlifeToken.WildlifeTokenType.HAWK, oldTokenOptions.getNumOfTokenOption(WildlifeToken.WildlifeTokenType.HAWK));
+        }
+
         private Integer getNumOfTokenOption(WildlifeToken.WildlifeTokenType tokenType) {
             return this.numTokenOptions.get(tokenType);
         }
@@ -619,11 +629,9 @@ public class PlayerBoard {
             newPlayerBoard.setSelectedToken(newWildlifeToken);
         }
 
-
-        // Beware; These below fields could possibly be copied by reference instead of by value.
+        newPlayerBoard.setTokenOptions(new TokenOptions(this.getTokenOptions()));
+        newPlayerBoard.setLastBoardShift(new ArrayList<>(this.getLastBoardShift()));
         newPlayerBoard.setNumOfNatureTokens(this.getNumOfNatureTokens());
-        newPlayerBoard.setTokenOptions(this.getTokenOptions());
-        newPlayerBoard.setLastBoardShift(this.getLastBoardShift());
         newPlayerBoard.setVerbose(this.isVerbose());
 
 
@@ -723,37 +731,37 @@ public class PlayerBoard {
         ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> output = new ArrayList<>();
 
         //simplified to going thru the activeTiles ArrayList
-//        for (ArrayList<Tile> row: this.getPlayerBoardAs2dArray()) {
-//            for (Tile tile: row) {
-//                for (WildlifeToken.WildlifeTokenType placeableWildlifeToken: tile.getHabitatTile().getWildlifeTokenTypeList()) {
-//
-//                    // Ignore tiles where there are already wildlife tokens placed down
-////                    if (!this.getPlayerBoardAs2dArray().get(tile.getHexCoordinate().getX()).get(tile.getHexCoordinate().getY()).getHabitatTile().isNull())
-////                        continue;
-////                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY) continue;
-////                    System.out.println(tile.getHabitatTile().toString(true));
-//
-//                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
-//                        output.add(new CustomPair<>(tile.getHexCoordinate(), placeableWildlifeToken));
-//                    }
-//                }
-//            }
-//        }
+        for (ArrayList<Tile> row: this.getPlayerBoardAs2dArray()) {
+            for (Tile tile: row) {
+                for (WildlifeToken.WildlifeTokenType placeableWildlifeToken: tile.getHabitatTile().getWildlifeTokenTypeList()) {
 
-        for (Tile tile : activeTiles) {
-            for (WildlifeToken.WildlifeTokenType placeableWildlifeToken: tile.getHabitatTile().getWildlifeTokenTypeList()) {
-
-                // Ignore tiles where there are already wildlife tokens placed down
+                    // Ignore tiles where there are already wildlife tokens placed down
 //                    if (!this.getPlayerBoardAs2dArray().get(tile.getHexCoordinate().getX()).get(tile.getHexCoordinate().getY()).getHabitatTile().isNull())
 //                        continue;
 //                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY) continue;
 //                    System.out.println(tile.getHabitatTile().toString(true));
 
-                if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
-                    output.add(new CustomPair<>(tile.getHexCoordinate(), placeableWildlifeToken));
+                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                        output.add(new CustomPair<>(tile.getHexCoordinate(), placeableWildlifeToken));
+                    }
                 }
             }
         }
+
+//        for (Tile tile : activeTiles) {
+//            for (WildlifeToken.WildlifeTokenType placeableWildlifeToken: tile.getHabitatTile().getWildlifeTokenTypeList()) {
+//
+//                // Ignore tiles where there are already wildlife tokens placed down
+////                    if (!this.getPlayerBoardAs2dArray().get(tile.getHexCoordinate().getX()).get(tile.getHexCoordinate().getY()).getHabitatTile().isNull())
+////                        continue;
+////                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY) continue;
+////                    System.out.println(tile.getHabitatTile().toString(true));
+//
+//                if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+//                    output.add(new CustomPair<>(tile.getHexCoordinate(), placeableWildlifeToken));
+//                }
+//            }
+//        }
 
 //        System.out.printf("getPlaceableWildlifeTokenList output: %s\n", output);
         return output;
