@@ -68,6 +68,15 @@ public class HabitatTile {
         this.isNull = isNull;
     }
 
+    //simplified new habitat tile copy by value
+    public HabitatTile(HabitatTile oldHabitatTile) {
+        this.habitatTileTypeList = new ArrayList<>(oldHabitatTile.getHabitatTileTypeList());
+        this.wildlifeTokenTypeList = new ArrayList<>(oldHabitatTile.getWildlifeTokenTypeList());
+        this.wildlifeToken = new WildlifeToken(oldHabitatTile.getWildlifeToken().getWildlifeTokenType());
+        this.isNull = oldHabitatTile.isNull();
+        this.keystone = oldHabitatTile.isKeystone();
+    }
+
     private static ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeListGenerator(int numWildlifeTypes) {
         HashSet<WildlifeToken.WildlifeTokenType> wildlifeTokenTypeSet = new HashSet<>();
 

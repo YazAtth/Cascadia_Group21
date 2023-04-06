@@ -35,15 +35,9 @@ public class CascadiaBot extends Player{
         HexCoordinate wildlifeTokenPositionThatGivesHighestScore =
                 this.getPlayerBoardObject().getPlaceableWildlifeTokenList().get(0).getField1();
 
-        // We copy the habitat tile by value before playing around with it so the orignal tile is not affected.
+        // We copy the habitat tile by value before playing around with it so the original tile is not affected.
         HabitatTile habitatTileFromSelectedTiles = habitatTileOptionList.get(0);
-        HabitatTile habitatTileHighScore = new HabitatTile(
-                habitatTileFromSelectedTiles.getHabitatTileTypeList(),
-                habitatTileFromSelectedTiles.getWildlifeTokenTypeList(),
-                habitatTileFromSelectedTiles.getWildlifeToken().getWildlifeTokenType(),
-                habitatTileFromSelectedTiles.isKeystone(),
-                habitatTileFromSelectedTiles.isNull()
-        );
+        HabitatTile habitatTileHighScore = new HabitatTile(habitatTileFromSelectedTiles);
 
         // Copying wildlife token by value
         WildlifeToken wildlifeTokenFromSelectedTokens = wildlifeTokensOptionList.get(0);
@@ -57,13 +51,7 @@ public class CascadiaBot extends Player{
 
                 // Place possible tile
                 HabitatTile habitatTileFromSelectedTiles2 = habitatTileOptionList.get(i);
-                HabitatTile selectedHabitatTile = new HabitatTile(
-                        habitatTileFromSelectedTiles2.getHabitatTileTypeList(),
-                        habitatTileFromSelectedTiles2.getWildlifeTokenTypeList(),
-                        habitatTileFromSelectedTiles2.getWildlifeToken().getWildlifeTokenType(),
-                        habitatTileFromSelectedTiles2.isKeystone(),
-                        habitatTileFromSelectedTiles2.isNull()
-                );
+                HabitatTile selectedHabitatTile = new HabitatTile(habitatTileFromSelectedTiles2);
                 duplicateBoard.setSelectedTile(selectedHabitatTile);
 
 

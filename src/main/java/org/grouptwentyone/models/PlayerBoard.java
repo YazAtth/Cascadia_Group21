@@ -575,17 +575,8 @@ public class PlayerBoard {
             ArrayList<Tile> newRow = new ArrayList<>();
             for (Tile tile: row) {
                 HabitatTile oldHabitatTile = tile.getHabitatTile();
-                HabitatTile newHabitatTile =  new HabitatTile(new ArrayList<>(oldHabitatTile.getHabitatTileTypeList()),
-                        new ArrayList<>(oldHabitatTile.getWildlifeTokenTypeList()),
-                        oldHabitatTile.getWildlifeToken().getWildlifeTokenType(), oldHabitatTile.isKeystone(), oldHabitatTile.isNull());
-                newRow.add(new Tile(
-                        newHabitatTile,
-                        new HexCoordinate(tile.getHexCoordinate().getX(), tile.getHexCoordinate().getY()),
-                        tile.getTileOrientation(),
-                        tile.isActive(),
-                        tile.getTileId(),
-                        tile.isIncludedInScoring()
-                ));
+                HabitatTile newHabitatTile =  new HabitatTile(oldHabitatTile);
+                newRow.add(new Tile(newHabitatTile, tile));
             }
             newPlayerBoardAs2dArray.add(newRow);
         }
@@ -596,21 +587,9 @@ public class PlayerBoard {
         ArrayList<Tile> newActiveTiles = new ArrayList<>();
         for (Tile tile: this.getActiveTiles()) {
             HabitatTile oldHabitatTile = tile.getHabitatTile();
-            HabitatTile newHabitatTile = new HabitatTile(
-                    oldHabitatTile.getHabitatTileTypeList(),
-                    oldHabitatTile.getWildlifeTokenTypeList(),
-                    oldHabitatTile.getWildlifeToken().getWildlifeTokenType(),
-                    oldHabitatTile.isKeystone(),
-                    oldHabitatTile.isNull()
-                );
+            HabitatTile newHabitatTile = new HabitatTile(oldHabitatTile);
 
-            Tile newTile = new Tile(
-                    newHabitatTile,
-                    new HexCoordinate(tile.getHexCoordinate().getX(), tile.getHexCoordinate().getY()),
-                    tile.getTileOrientation(),
-                    tile.isActive(),
-                    tile.getTileId(),
-                    tile.isIncludedInScoring());
+            Tile newTile = new Tile(newHabitatTile, tile);
 
 //            System.out.println(tile);
 //            System.out.println(newTile);
@@ -623,28 +602,14 @@ public class PlayerBoard {
         if (this.getRecentlyPlacedTile() != null) {
             Tile oldRecentlyPlacedTile = this.getRecentlyPlacedTile();
             HabitatTile oldHabitatTile = oldRecentlyPlacedTile.getHabitatTile();
-            HabitatTile newHabitatTile = new HabitatTile(
-                    oldHabitatTile.getHabitatTileTypeList(),
-                    oldHabitatTile.getWildlifeTokenTypeList(),
-                    oldHabitatTile.getWildlifeToken().getWildlifeTokenType(),
-                    oldHabitatTile.isKeystone(),
-                    oldHabitatTile.isNull()
-            );
-            Tile newRecentlyPlacedTile = new Tile(
-                    newHabitatTile,
-                    new HexCoordinate(this.getRecentlyPlacedTile().getHexCoordinate().getX(), this.getRecentlyPlacedTile().getHexCoordinate().getY()),
-                    oldRecentlyPlacedTile.getTileOrientation(),
-                    oldRecentlyPlacedTile.isActive(),
-                    oldRecentlyPlacedTile.getTileId(),
-                    oldRecentlyPlacedTile.isIncludedInScoring()
-            );
+            HabitatTile newHabitatTile = new HabitatTile(oldHabitatTile);
+            Tile newRecentlyPlacedTile = new Tile(newHabitatTile, oldRecentlyPlacedTile);
             newPlayerBoard.setRecentlyPlacedTile(newRecentlyPlacedTile);
         }
 
         HabitatTile oldSelectedTile = this.getSelectedTile();
         if (oldSelectedTile != null) {
-            HabitatTile newSelectedTile = new HabitatTile(oldSelectedTile.getHabitatTileTypeList(), oldSelectedTile.getWildlifeTokenTypeList(),
-                    oldSelectedTile.getWildlifeToken().getWildlifeTokenType(), oldSelectedTile.isKeystone(), oldSelectedTile.isNull());
+            HabitatTile newSelectedTile = new HabitatTile(oldSelectedTile);
             newPlayerBoard.setSelectedTile(newSelectedTile);
         }
 
@@ -757,19 +722,35 @@ public class PlayerBoard {
 
         ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> output = new ArrayList<>();
 
-        for (ArrayList<Tile> row: this.getPlayerBoardAs2dArray()) {
-            for (Tile tile: row) {
-                for (WildlifeToken.WildlifeTokenType placeableWildlifeToken: tile.getHabitatTile().getWildlifeTokenTypeList()) {
+        //simplified to going thru the activeTiles ArrayList
+//        for (ArrayList<Tile> row: this.getPlayerBoardAs2dArray()) {
+//            for (Tile tile: row) {
+//                for (WildlifeToken.WildlifeTokenType placeableWildlifeToken: tile.getHabitatTile().getWildlifeTokenTypeList()) {
+//
+//                    // Ignore tiles where there are already wildlife tokens placed down
+////                    if (!this.getPlayerBoardAs2dArray().get(tile.getHexCoordinate().getX()).get(tile.getHexCoordinate().getY()).getHabitatTile().isNull())
+////                        continue;
+////                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY) continue;
+////                    System.out.println(tile.getHabitatTile().toString(true));
+//
+//                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+//                        output.add(new CustomPair<>(tile.getHexCoordinate(), placeableWildlifeToken));
+//                    }
+//                }
+//            }
+//        }
 
-                    // Ignore tiles where there are already wildlife tokens placed down
+        for (Tile tile : activeTiles) {
+            for (WildlifeToken.WildlifeTokenType placeableWildlifeToken: tile.getHabitatTile().getWildlifeTokenTypeList()) {
+
+                // Ignore tiles where there are already wildlife tokens placed down
 //                    if (!this.getPlayerBoardAs2dArray().get(tile.getHexCoordinate().getX()).get(tile.getHexCoordinate().getY()).getHabitatTile().isNull())
 //                        continue;
 //                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY) continue;
 //                    System.out.println(tile.getHabitatTile().toString(true));
 
-                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
-                        output.add(new CustomPair<>(tile.getHexCoordinate(), placeableWildlifeToken));
-                    }
+                if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                    output.add(new CustomPair<>(tile.getHexCoordinate(), placeableWildlifeToken));
                 }
             }
         }

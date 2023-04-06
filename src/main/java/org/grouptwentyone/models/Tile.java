@@ -53,6 +53,16 @@ public class Tile {
         this.isIncludedInScoring = isIncludedInScoring;
     }
 
+    //copy by value to new tile
+    public Tile(HabitatTile habitatTile, Tile oldTile) {
+        this.tileId = oldTile.getTileId();
+        this.habitatTile = habitatTile;
+        this.hexCoordinate = new HexCoordinate(oldTile.getHexCoordinate().getX(), oldTile.getHexCoordinate().getY());
+        this.isActive = oldTile.isActive();
+        this.isIncludedInScoring = oldTile.isIncludedInScoring();
+        this.tileOrientation = oldTile.getTileOrientation();
+    }
+
     public HabitatTile getHabitatTile() {
         return this.habitatTile;
     }
