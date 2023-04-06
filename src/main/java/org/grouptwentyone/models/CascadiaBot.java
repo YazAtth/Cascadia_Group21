@@ -43,6 +43,8 @@ public class CascadiaBot extends Player{
         WildlifeToken wildlifeTokenFromSelectedTokens = wildlifeTokensOptionList.get(0);
         WildlifeToken wildlifeTokenHighScore = new WildlifeToken(wildlifeTokenFromSelectedTokens.getWildlifeTokenType());
 
+        int indexOfSelectedTileAndTokenPair = 0;
+
         // Going to be 4 tile/token pair options so we run the inner loop 4 times.
         for (int i=0; i<4; i++) {
 
@@ -74,7 +76,6 @@ public class CascadiaBot extends Player{
 
                         highestScore = localScore;
 
-
                         // Reset Wildlife Token in Habitat Tile that was placed when testing for the highest score
                         habitatTileOptionList.get(i).setWildlifeToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY));
                         habitatTileHighScore = habitatTileOptionList.get(i);
@@ -83,6 +84,8 @@ public class CascadiaBot extends Player{
 
                         wildlifeTokenHighScore = new WildlifeToken(placeableToken.getField2());
                         wildlifeTokenPositionThatGivesHighestScore = placeableTokenPosition;
+
+                        indexOfSelectedTileAndTokenPair = i;
 
                     }
 
@@ -98,11 +101,15 @@ public class CascadiaBot extends Player{
         this.getPlayerBoardObject().setSelectedTile(habitatTileHighScore);
         this.getPlayerBoardObject().addNewTile(tilePositionThatGivesHighestScore.getHexCoordinate());
 
+
 //        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
 
 //        System.out.printf("Placing token %s at position %s\n", wildlifeTokenHighScore, wildlifeTokenPositionThatGivesHighestScore);
         this.getPlayerBoardObject().setSelectedToken(wildlifeTokenHighScore);
         this.getPlayerBoardObject().addNewToken(wildlifeTokenPositionThatGivesHighestScore);
+
+//        habitatTileOptionList.remove(indexOfSelectedTileAndTokenPair);
+//        wildlifeTokensOptionList.remove(indexOfSelectedTileAndTokenPair);
 
 //        GameUiView.printPageBorder();
 
