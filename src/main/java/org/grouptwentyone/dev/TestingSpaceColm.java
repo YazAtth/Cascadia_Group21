@@ -46,11 +46,14 @@ public class TestingSpaceColm {
         ScoreDisplayView.displayScorePage(playerManager);
 
         //end program
-        UserTerminationController.endProgram();
+        //UserTerminationController.endProgram();
         GameUiView.printLargeSpace();
     }
 
     public static void main(String[] args) {
+        long startTime = System.currentTimeMillis();
         testBotGame();
+        long endTime = System.currentTimeMillis();
+        System.out.println("Time taken: " + (endTime-startTime));
     }
 }

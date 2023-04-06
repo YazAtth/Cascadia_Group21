@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class ScoringCards {
-    final static ArrayList<ScoreCard> scoreCardsList = assignScoringCards();
+//    final static ArrayList<ScoreCard> scoreCardsList = assignScoringCards();
+    //changed the assigning method for the creation of bot
+    final static ArrayList<ScoreCard> scoreCardsList = assignBotScoringCards();
 
     private static ArrayList<ScoreCard> assignScoringCards() {
         ArrayList<ScoreCard> scoreCardsList = new ArrayList<>(5);
@@ -22,6 +24,16 @@ public class ScoringCards {
         scoreCardsList.add(new ScoreCard(WildlifeToken.WildlifeTokenType.ELK));
         scoreCardsList.add(new ScoreCard(WildlifeToken.WildlifeTokenType.HAWK));
         scoreCardsList.add(new ScoreCard(WildlifeToken.WildlifeTokenType.SALMON));
+        return scoreCardsList;
+    }
+
+    private static ArrayList<ScoreCard> assignBotScoringCards() {
+        ArrayList<ScoreCard> scoreCardsList = new ArrayList<>(5);
+        scoreCardsList.add(new ScoreCard(WildlifeToken.WildlifeTokenType.BEAR, ScoreCard.ScoreType.A));
+        scoreCardsList.add(new ScoreCard(WildlifeToken.WildlifeTokenType.FOX, ScoreCard.ScoreType.A));
+        scoreCardsList.add(new ScoreCard(WildlifeToken.WildlifeTokenType.ELK, ScoreCard.ScoreType.A));
+        scoreCardsList.add(new ScoreCard(WildlifeToken.WildlifeTokenType.HAWK, ScoreCard.ScoreType.A));
+        scoreCardsList.add(new ScoreCard(WildlifeToken.WildlifeTokenType.SALMON, ScoreCard.ScoreType.A));
         return scoreCardsList;
     }
 
@@ -41,15 +53,21 @@ public class ScoringCards {
             this.cardInfo = assignCardInfo(tokenType, this.scoreType);
         }
 
-        private ScoreCard.ScoreType randomScoreType() {
+        public ScoreCard(WildlifeToken.WildlifeTokenType tokenType, ScoreType scoreType) {
+            this.tokenType = tokenType;
+            this.scoreType = scoreType;
+            this.cardInfo = assignCardInfo(tokenType, this.scoreType);
+        }
+
+        private ScoreType randomScoreType() {
             int rndNum = new Random().nextInt(3);
             switch (rndNum) {
                 case 0:
-                    return ScoreCard.ScoreType.A;
+                    return ScoreType.A;
                 case 1:
-                    return ScoreCard.ScoreType.B;
+                    return ScoreType.B;
                 case 2:
-                    return ScoreCard.ScoreType.C;
+                    return ScoreType.C;
                 default:
                     throw new ArithmeticException("Random returned unexpected number: " + rndNum);
             }
