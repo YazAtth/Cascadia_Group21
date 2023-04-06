@@ -214,7 +214,7 @@ public class SelectionOptionsView {
      * the ArrayLists that store the generated Tiles and Tokens for the game.
      * @return Returns true if Tile and Token are successfully replaced.
      */
-    private static boolean replaceTileAndToken() {
+    public static boolean replaceTileAndToken() {
         if (habitatTilesBag.size() > 0 && wildlifeTokenBag.size() > 0) {
             StartGame.selectedTiles.add(habitatTilesBag.remove(0));
             StartGame.selectedTokens.add(wildlifeTokenBag.remove(0));

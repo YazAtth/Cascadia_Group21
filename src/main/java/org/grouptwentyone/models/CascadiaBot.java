@@ -3,6 +3,7 @@ package org.grouptwentyone.models;
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.views.BoardView;
 import org.grouptwentyone.views.GameUiView;
+import org.grouptwentyone.views.SelectionOptionsView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,11 +109,30 @@ public class CascadiaBot extends Player{
         this.getPlayerBoardObject().setSelectedToken(wildlifeTokenHighScore);
         this.getPlayerBoardObject().addNewToken(wildlifeTokenPositionThatGivesHighestScore);
 
-//        habitatTileOptionList.remove(indexOfSelectedTileAndTokenPair);
-//        wildlifeTokensOptionList.remove(indexOfSelectedTileAndTokenPair);
+        StartGame.selectedTokens.remove(indexOfSelectedTileAndTokenPair);
+        StartGame.selectedTiles.remove(indexOfSelectedTileAndTokenPair);
 
 //        GameUiView.printPageBorder();
 
+        GameUiView.printPlayerHeader(this);
+        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
+
+
+//        boolean test = false;
+//        for (int i = 0; i < 4; i++) {
+//            if (StartGame.selectedTokens.get(i).equals(wildlifeTokenHighScore) && StartGame.selectedTiles.get(i).equals(habitatTileHighScore)) {
+//                StartGame.selectedTokens.remove(i);
+//                StartGame.selectedTiles.remove(i);
+//                test = true;
+//                break;
+//            }
+//        }
+//        if (test == false) throw new IllegalArgumentException("removal of selected tile/token pair failed");
+
+        //detects that no tiles remain so ends player turns
+        if (!SelectionOptionsView.replaceTileAndToken()) {
+            StartGame.tilesRemain = false;
+        }
 
 
         // Will never return false as the bot will never want to quit the game ... hopefully
