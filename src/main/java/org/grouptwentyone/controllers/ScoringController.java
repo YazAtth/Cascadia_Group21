@@ -108,6 +108,10 @@ public class ScoringController {
                         }
                     }
                     int numberOfUniquePairs = adjacentWildlifeTokensWithPairOccurrence.size();
+
+                    // More than three pairs are treated as 3 pairs.
+                    if (numberOfUniquePairs > 3) numberOfUniquePairs = 3;
+
                     localScore += scoringCard.get(numberOfUniquePairs);
                 }
             }
