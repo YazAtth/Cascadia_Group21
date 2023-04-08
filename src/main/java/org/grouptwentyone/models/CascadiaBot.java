@@ -8,8 +8,11 @@ import org.grouptwentyone.views.UserInputView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class CascadiaBot extends Player{
+
+    static boolean displayBotActions = true;
 
     public CascadiaBot(String userName) {
         super(userName);
@@ -116,7 +119,6 @@ public class CascadiaBot extends Player{
 //        GameUiView.printPageBorder();
 
 //        GameUiView.printPlayerHeader(this);
-        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
 
 
 //        boolean test = false;
@@ -130,36 +132,50 @@ public class CascadiaBot extends Player{
 //        }
 //        if (test == false) throw new IllegalArgumentException("removal of selected tile/token pair failed");
 
+
+        if (displayBotActions) {
+            // Displays the bot's playerboard
+            System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
+
+            // String to display the habitats of the habitat tiles
+            StringBuilder placedHabitatTile = new StringBuilder();
+            if (habitatTileHighScore.getHabitatTileTypeList().size() == 1) {
+                placedHabitatTile.append(habitatTileHighScore.getHabitatTileTypeList().get(0));
+            } else {
+                placedHabitatTile.append(habitatTileHighScore.getHabitatTileTypeList().get(0));
+                placedHabitatTile.append(" & ");
+                placedHabitatTile.append(habitatTileHighScore.getHabitatTileTypeList().get(1));
+            }
+
+            System.out.printf("""
+                            Player "%s" has a score of %d
+                            - placed a %s habitat tile on position %s.
+                            - placed a %s wildlife token on position %s
+                                                    
+                            """,
+                    this.getUserName(),
+                    this.getScore(),
+                    placedHabitatTile,
+                    tilePositionThatGivesHighestScore.getHexCoordinate(),
+                    wildlifeTokenHighScore.getWildlifeTokenType(),
+                    wildlifeTokenPositionThatGivesHighestScore
+            );
+
+            System.out.println("Press \"ENTER\" on your keyboard to continue or press \"1\" to disable bot action description.");
+            Scanner sc = new Scanner(System.in);
+            String userInput = sc.nextLine().toLowerCase().trim();
+
+            if (userInput.equals("1")) {
+                displayBotActions = false;
+            }
+
+            GameUiView.printLargeSpace();
+        }
+
         //detects that no tiles remain so ends player turns
         if (!SelectionOptionsView.replaceTileAndToken()) {
             StartGame.tilesRemain = false;
         }
-
-        StringBuilder placedHabitatTile = new StringBuilder();
-
-        if (habitatTileHighScore.getHabitatTileTypeList().size() == 1) {
-            placedHabitatTile.append(habitatTileHighScore.getHabitatTileTypeList().get(0));
-        } else {
-            placedHabitatTile.append(habitatTileHighScore.getHabitatTileTypeList().get(0));
-            placedHabitatTile.append(" & ");
-            placedHabitatTile.append(habitatTileHighScore.getHabitatTileTypeList().get(1));
-        }
-
-        System.out.printf("""
-                        Player "%s" has a score of %d
-                        - placed a %s habitat tile on position %s.
-                        - placed a %s wildlife token on position %s
-                        
-                        """,
-                this.getUserName(),
-                this.getScore(),
-                placedHabitatTile,
-                tilePositionThatGivesHighestScore.getHexCoordinate(),
-                wildlifeTokenHighScore.getWildlifeTokenType(),
-                wildlifeTokenPositionThatGivesHighestScore
-        );
-
-        UserInputView.showPressEnterToContinuePrompt();
 
 
         // Will never return false as the bot will never want to quit the game ... hopefully

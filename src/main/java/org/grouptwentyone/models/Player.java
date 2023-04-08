@@ -257,10 +257,12 @@ public class Player implements Comparable<Player>{
         System.out.print("Press enter to continue to next player's turn, or type quit to go to display score and quit\n> ");
         Scanner sc = new Scanner(System.in);
         String userInput = sc.nextLine().trim();
+
+        GameUiView.printLargeSpace();
+
         if (userInput.equals("quit") || userInput.equals("exit")) {
             return false;
         }
-
         return true;
     }
 }

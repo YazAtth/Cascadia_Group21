@@ -58,9 +58,9 @@ public class StartGame {
             }
 
             //next player
-            System.out.println("Moving to next player");
+//            System.out.println("Moving to next player");
             activePlayer = playerManager.cycleToNextPlayer();
-            GameUiView.printLargeSpace();
+//            GameUiView.printLargeSpace();
         }
 
         System.out.println("No tiles remain so play is finished, calculating player score...");
