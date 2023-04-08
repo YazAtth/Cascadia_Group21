@@ -4,6 +4,7 @@ import org.grouptwentyone.StartGame;
 import org.grouptwentyone.views.BoardView;
 import org.grouptwentyone.views.GameUiView;
 import org.grouptwentyone.views.SelectionOptionsView;
+import org.grouptwentyone.views.UserInputView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -114,7 +115,7 @@ public class CascadiaBot extends Player{
 
 //        GameUiView.printPageBorder();
 
-        GameUiView.printPlayerHeader(this);
+//        GameUiView.printPlayerHeader(this);
         System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
 
 
@@ -133,6 +134,32 @@ public class CascadiaBot extends Player{
         if (!SelectionOptionsView.replaceTileAndToken()) {
             StartGame.tilesRemain = false;
         }
+
+        StringBuilder placedHabitatTile = new StringBuilder();
+
+        if (habitatTileHighScore.getHabitatTileTypeList().size() == 1) {
+            placedHabitatTile.append(habitatTileHighScore.getHabitatTileTypeList().get(0));
+        } else {
+            placedHabitatTile.append(habitatTileHighScore.getHabitatTileTypeList().get(0));
+            placedHabitatTile.append(" & ");
+            placedHabitatTile.append(habitatTileHighScore.getHabitatTileTypeList().get(1));
+        }
+
+        System.out.printf("""
+                        Player "%s" has a score of %d
+                        - placed a %s habitat tile on position %s.
+                        - placed a %s wildlife token on position %s
+                        
+                        """,
+                this.getUserName(),
+                this.getScore(),
+                placedHabitatTile,
+                tilePositionThatGivesHighestScore.getHexCoordinate(),
+                wildlifeTokenHighScore.getWildlifeTokenType(),
+                wildlifeTokenPositionThatGivesHighestScore
+        );
+
+        UserInputView.showPressEnterToContinuePrompt();
 
 
         // Will never return false as the bot will never want to quit the game ... hopefully
