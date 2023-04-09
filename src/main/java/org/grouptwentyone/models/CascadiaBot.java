@@ -8,7 +8,7 @@ import org.grouptwentyone.views.SelectionOptionsView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class CascadiaBot extends Player{
+public class CascadiaBot extends Player {
 
     public CascadiaBot(String userName) {
         super(userName);
@@ -18,20 +18,17 @@ public class CascadiaBot extends Player{
 
     @Override
     public boolean playTurn() {
-//        System.out.println("Do bot stuff\n\n");
-//        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
-//        System.out.println("\n\n");
 
+        //record the time that the bot starts playing its move
+        long startTime = System.currentTimeMillis();
 
         ArrayList<Tile> placeableTileOptionsList = this.getPlayerBoardObject().getPlaceableTileOptionList();
-
         ArrayList<HabitatTile> habitatTileOptionList = StartGame.selectedTiles;
         ArrayList<WildlifeToken> wildlifeTokensOptionList = StartGame.selectedTokens;
 
-
         int highestScore = -1;
-        Tile tilePositionThatGivesHighestScore = placeableTileOptionsList.get(RandomNumberGenerator.getRandomNumberInRange(0, placeableTileOptionsList.size()-1));
-//        System.out.println(tilePositionThatGivesHighestScore);
+        Tile tilePositionThatGivesHighestScore =
+                placeableTileOptionsList.get(RandomNumberGenerator.getRandomNumberInRange(0, placeableTileOptionsList.size() - 1 ));
 
         HexCoordinate wildlifeTokenPositionThatGivesHighestScore =
                 this.getPlayerBoardObject().getPlaceableWildlifeTokenList().get(0).getField1();
@@ -47,8 +44,9 @@ public class CascadiaBot extends Player{
         int indexOfSelectedTileAndTokenPair = 0;
 
         // Going to be 4 tile/token pair options so we run the inner loop 4 times.
-        for (int i=0; i<4; i++) {
+        for (int i = 0; i < 4; i++) {
 
+            //iterate over all available locations to place a tile
             for (Tile placeableTilePosition : placeableTileOptionsList) {
                 PlayerBoard duplicateBoard = this.getPlayerBoardObject().getDuplicate();
 
@@ -57,11 +55,11 @@ public class CascadiaBot extends Player{
                 HabitatTile selectedHabitatTile = new HabitatTile(habitatTileFromSelectedTiles2);
                 duplicateBoard.setSelectedTile(selectedHabitatTile);
 
-
                 HexCoordinate placeableTileHexCoord = placeableTilePosition.getHexCoordinate();
                 duplicateBoard.addNewTile(new HexCoordinate(placeableTileHexCoord.getX(), placeableTileHexCoord.getY()));
 
-                ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> placeableWildlifeTokenList = duplicateBoard.getPlaceableWildlifeTokenList();
+                ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> placeableWildlifeTokenList
+                        = duplicateBoard.getPlaceableWildlifeTokenList();
 
 
                 for (CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType> placeableToken: placeableWildlifeTokenList) {
@@ -73,6 +71,8 @@ public class CascadiaBot extends Player{
                     duplicateBoard2.addNewToken(placeableTokenPosition);
 
                     int localScore = duplicateBoard2.getScore();
+
+                    //check if tile/token pair yields a higher score than the max score
                     if (localScore > highestScore) {
 
                         highestScore = localScore;
@@ -87,12 +87,8 @@ public class CascadiaBot extends Player{
                         wildlifeTokenPositionThatGivesHighestScore = placeableTokenPosition;
 
                         indexOfSelectedTileAndTokenPair = i;
-
                     }
-
-
                 }
-
             }
         }
 
@@ -102,7 +98,6 @@ public class CascadiaBot extends Player{
         this.getPlayerBoardObject().setSelectedTile(habitatTileHighScore);
         this.getPlayerBoardObject().addNewTile(tilePositionThatGivesHighestScore.getHexCoordinate());
 
-
 //        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
 
 //        System.out.printf("Placing token %s at position %s\n", wildlifeTokenHighScore, wildlifeTokenPositionThatGivesHighestScore);
@@ -111,8 +106,6 @@ public class CascadiaBot extends Player{
 
         StartGame.selectedTokens.remove(indexOfSelectedTileAndTokenPair);
         StartGame.selectedTiles.remove(indexOfSelectedTileAndTokenPair);
-
-//        GameUiView.printPageBorder();
 
         GameUiView.printPlayerHeader(this);
         System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
@@ -134,6 +127,9 @@ public class CascadiaBot extends Player{
             StartGame.tilesRemain = false;
         }
 
+        long endTime = System.currentTimeMillis();
+        //double seconds = ((endTime - startTime) / 1000) % 60;
+        System.out.println("Time taken: " + (endTime - startTime) + " milliseconds");
 
         // Will never return false as the bot will never want to quit the game ... hopefully
         return true;

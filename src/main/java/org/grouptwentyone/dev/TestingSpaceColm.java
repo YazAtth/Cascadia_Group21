@@ -33,7 +33,6 @@ public class TestingSpaceColm {
                 break;
             }
 
-
             //next player
             System.out.println("Moving to next player");
             activePlayer = playerManager.cycleToNextPlayer();
