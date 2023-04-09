@@ -22,10 +22,6 @@ public class CascadiaBot extends Player{
 
     @Override
     public boolean playTurn() {
-//        System.out.println("Do bot stuff\n\n");
-//        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
-//        System.out.println("\n\n");
-
 
         ArrayList<Tile> placeableTileOptionsList = this.getPlayerBoardObject().getPlaceableTileOptionList();
 
@@ -34,8 +30,8 @@ public class CascadiaBot extends Player{
 
 
         int highestScore = -1;
-        Tile tilePositionThatGivesHighestScore = placeableTileOptionsList.get(RandomNumberGenerator.getRandomNumberInRange(0, placeableTileOptionsList.size()-1));
-//        System.out.println(tilePositionThatGivesHighestScore);
+        Tile tilePositionThatGivesHighestScore = placeableTileOptionsList
+                .get(RandomNumberGenerator.getRandomNumberInRange(0, placeableTileOptionsList.size()-1));
 
         HexCoordinate wildlifeTokenPositionThatGivesHighestScore =
                 this.getPlayerBoardObject().getPlaceableWildlifeTokenList().get(0).getField1();
@@ -67,7 +63,8 @@ public class CascadiaBot extends Player{
 
                 ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> placeableWildlifeTokenList = duplicateBoard.getPlaceableWildlifeTokenList();
 
-
+                // Get list of placeable tokens and their corresponding coordinates
+                // Loop through each to try and find the token/coordinate pair that will give the highest score.
                 for (CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType> placeableToken: placeableWildlifeTokenList) {
 
                     PlayerBoard duplicateBoard2 = duplicateBoard.getDuplicate();
@@ -78,61 +75,36 @@ public class CascadiaBot extends Player{
 
                     int localScore = duplicateBoard2.getScore();
                     if (localScore > highestScore) {
-
                         highestScore = localScore;
 
                         // Reset Wildlife Token in Habitat Tile that was placed when testing for the highest score
                         habitatTileOptionList.get(i).setWildlifeToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY));
-                        habitatTileHighScore = habitatTileOptionList.get(i);
-//                        System.out.printf("Habitat Tile has wildlife token of %s\n", habitatTileHighScore.toString(true));
-                        tilePositionThatGivesHighestScore = placeableTilePosition;
 
+                        // Save the tiles and tokens that result in the highest score
+                        habitatTileHighScore = habitatTileOptionList.get(i);
+                        tilePositionThatGivesHighestScore = placeableTilePosition;
                         wildlifeTokenHighScore = new WildlifeToken(placeableToken.getField2());
                         wildlifeTokenPositionThatGivesHighestScore = placeableTokenPosition;
-
                         indexOfSelectedTileAndTokenPair = i;
 
                     }
-
 
                 }
 
             }
         }
 
-//        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
-
-//        System.out.printf("Placing tile %s at position %s\n", habitatTileHighScore, tilePositionThatGivesHighestScore.getHexCoordinate());
+        // Add the tiles and tokens we determined to give the highest score to the actual playerboard
         this.getPlayerBoardObject().setSelectedTile(habitatTileHighScore);
         this.getPlayerBoardObject().addNewTile(tilePositionThatGivesHighestScore.getHexCoordinate());
-
-
-//        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
-
-//        System.out.printf("Placing token %s at position %s\n", wildlifeTokenHighScore, wildlifeTokenPositionThatGivesHighestScore);
         this.getPlayerBoardObject().setSelectedToken(wildlifeTokenHighScore);
         this.getPlayerBoardObject().addNewToken(wildlifeTokenPositionThatGivesHighestScore);
 
+        // Remove the tile and token we placed from the list of selected tiles and tokens
         StartGame.selectedTokens.remove(indexOfSelectedTileAndTokenPair);
         StartGame.selectedTiles.remove(indexOfSelectedTileAndTokenPair);
 
-//        GameUiView.printPageBorder();
-
-//        GameUiView.printPlayerHeader(this);
-
-
-//        boolean test = false;
-//        for (int i = 0; i < 4; i++) {
-//            if (StartGame.selectedTokens.get(i).equals(wildlifeTokenHighScore) && StartGame.selectedTiles.get(i).equals(habitatTileHighScore)) {
-//                StartGame.selectedTokens.remove(i);
-//                StartGame.selectedTiles.remove(i);
-//                test = true;
-//                break;
-//            }
-//        }
-//        if (test == false) throw new IllegalArgumentException("removal of selected tile/token pair failed");
-
-
+        // Display the bot's actiions to the user. Will not display if the user has requested the feature be turned off.
         if (displayBotActions) {
             // Displays the bot's playerboard
             System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
