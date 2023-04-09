@@ -23,6 +23,8 @@ public class CascadiaBot extends Player{
     @Override
     public boolean playTurn() {
 
+        long startime = System.currentTimeMillis();
+
         ArrayList<Tile> placeableTileOptionsList = this.getPlayerBoardObject().getPlaceableTileOptionList();
 
         ArrayList<HabitatTile> habitatTileOptionList = StartGame.selectedTiles;
@@ -88,9 +90,7 @@ public class CascadiaBot extends Player{
                         indexOfSelectedTileAndTokenPair = i;
 
                     }
-
                 }
-
             }
         }
 
@@ -104,9 +104,9 @@ public class CascadiaBot extends Player{
         StartGame.selectedTokens.remove(indexOfSelectedTileAndTokenPair);
         StartGame.selectedTiles.remove(indexOfSelectedTileAndTokenPair);
 
-        // Display the bot's actiions to the user. Will not display if the user has requested the feature be turned off.
+        // Display the bots actiions to the user. Will not display if the user has requested the feature be turned off.
         if (displayBotActions) {
-            // Displays the bot's playerboard
+            // Displays the bots playerboard
             System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
 
             // String to display the habitats of the habitat tiles
@@ -119,18 +119,24 @@ public class CascadiaBot extends Player{
                 placedHabitatTile.append(habitatTileHighScore.getHabitatTileTypeList().get(1));
             }
 
+            long endTime = System.currentTimeMillis();
+
             System.out.printf("""
-                            Player "%s" has a score of %d
+                            STATS
+                            -----------------------------------------
                             - placed a %s habitat tile on position %s.
-                            - placed a %s wildlife token on position %s
-                                                    
+                            - placed a %s wildlife token on position %s                                  
+                            Score       |    %d points
+                            Time Taken  |    %d milliseconds
+                            
                             """,
-                    this.getUserName(),
-                    this.getScore(),
+
                     placedHabitatTile,
                     tilePositionThatGivesHighestScore.getHexCoordinate(),
                     wildlifeTokenHighScore.getWildlifeTokenType(),
-                    wildlifeTokenPositionThatGivesHighestScore
+                    wildlifeTokenPositionThatGivesHighestScore,
+                    this.getScore(),
+                    (endTime - startime)
             );
 
             System.out.println("Press \"ENTER\" on your keyboard to continue or press \"1\" to disable bot action description.");
