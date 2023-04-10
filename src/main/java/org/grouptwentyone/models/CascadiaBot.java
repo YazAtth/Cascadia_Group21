@@ -104,7 +104,7 @@ public class CascadiaBot extends Player{
         StartGame.selectedTokens.remove(indexOfSelectedTileAndTokenPair);
         StartGame.selectedTiles.remove(indexOfSelectedTileAndTokenPair);
 
-        // Display the bots actiions to the user. Will not display if the user has requested the feature be turned off.
+        // Display the bots actions to the user. Will not display if the user has requested the feature be turned off.
         if (displayBotActions) {
             // Displays the bots playerboard
             System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));

@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 public class TestingSpaceColm {
     private static void testBotGame() {
+        long endTime = System.currentTimeMillis();
+
         ArrayList<Player> playerList = new ArrayList<>();
         playerList.add(new CascadiaBot("bot1"));
         playerList.add(new CascadiaBot("bot2"));
@@ -53,7 +55,7 @@ public class TestingSpaceColm {
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
         testBotGame();
-        long endTime = System.currentTimeMillis();
-        System.out.println("Time taken: " + (endTime-startTime));
+       // System.out.println("Time taken: " + (endTime-startTime));
     }
 }
+
