@@ -35,8 +35,8 @@ public class TestingSpaceColm {
                 break;
             }
 
-            GameUiView.printPlayerHeader(activePlayer);
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
+//            GameUiView.printPlayerHeader(activePlayer);
+//            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
             //next player
             System.out.println("Moving to next player");
             activePlayer = playerManager.cycleToNextPlayer();

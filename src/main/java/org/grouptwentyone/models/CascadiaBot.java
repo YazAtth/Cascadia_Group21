@@ -83,7 +83,7 @@ public class CascadiaBot extends Player{
                                 duplicateBoard2.addNewToken(placeableTokenPosition);
 
                                 int localScore = duplicateBoard2.getScore();
-                                if (localScore > highestScore) {
+                                if (localScore > highestScore+2) {//+2 to make sure spending the token was worth it
                                     highestScore = localScore;
 
                                     // Reset Wildlife Token in Habitat Tile that was placed when testing for the highest score
@@ -182,6 +182,7 @@ public class CascadiaBot extends Player{
         // Display the bots actions to the user. Will not display if the user has requested the feature be turned off.
         if (displayBotActions) {
             // Displays the bots playerboard
+            GameUiView.printPlayerHeader(this);
             System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
 
             // String to display the habitats of the habitat tiles
