@@ -11,12 +11,9 @@ package org.grouptwentyone;
 
 import org.grouptwentyone.controllers.*;
 import org.grouptwentyone.models.*;
-import org.grouptwentyone.models.Exceptions.*;
 import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
 
 public class StartGame {
     public static ArrayList<HabitatTile> selectedTiles = SelectionOptionsView.getFourHabitatTiles();
@@ -34,8 +31,7 @@ public class StartGame {
         GameUiView.printLargeSpace();
 
         int numOfPlayers = GameSetupView.getNumberOfPlayersFromUser();
-        ArrayList<Player> playerList = GameSetupView.getPlayerNamesFromUser(numOfPlayers);
-
+        ArrayList<Player> playerList = GameSetupView.getPlayerInformationFromUser(numOfPlayers);
 
         PlayerManager playerManager = new PlayerManager(playerList);
         playerManager.shufflePlayerList();
@@ -62,9 +58,9 @@ public class StartGame {
             }
 
             //next player
-            System.out.println("Moving to next player");
+//            System.out.println("Moving to next player");
             activePlayer = playerManager.cycleToNextPlayer();
-            GameUiView.printLargeSpace();
+//            GameUiView.printLargeSpace();
         }
 
         System.out.println("No tiles remain so play is finished, calculating player score...");

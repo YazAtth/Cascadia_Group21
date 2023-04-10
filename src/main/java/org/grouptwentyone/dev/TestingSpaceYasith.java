@@ -1,8 +1,8 @@
 package org.grouptwentyone.dev;
 
-import org.grouptwentyone.StartGame;
 import org.grouptwentyone.models.*;
 import org.grouptwentyone.views.BoardView;
+import org.grouptwentyone.views.GameSetupView;
 import org.grouptwentyone.views.GameUiView;
 
 import java.util.ArrayList;
@@ -82,9 +82,31 @@ public class TestingSpaceYasith {
 
     }
 
+    public static void testingSetBotPage() {
+//        ArrayList<Player> playerList = new ArrayList<>(List.of(
+//                new Player("Colm"),
+//                new CascadiaBot("CascadiaBot"),
+//                new Player("Dom"),
+//                new Player("Yasith")
+//        ));
+
+//        GameSetupView.setBots(playerList);
+
+//        System.out.println(playerList);
+
+        ArrayList<Player> playerList = GameSetupView.getPlayerInformationFromUser(4);
+
+        for (Player player: playerList) {
+            System.out.println(player.getClass().getSimpleName());
+        }
+
+    }
+
 
     public static void main(String[] args) {
-        testingCascadiaBot1();
+//        testingCascadiaBot1();
 //        testingDuplication();
+
+        testingSetBotPage();
     }
 }

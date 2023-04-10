@@ -9,6 +9,7 @@
 
 package org.grouptwentyone.models;
 
+import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.ScoringController;
 import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.models.Exceptions.*;
@@ -446,7 +447,7 @@ public class PlayerBoard {
             this.numTokenOptions.put(WildlifeToken.WildlifeTokenType.HAWK, oldTokenOptions.getNumOfTokenOption(WildlifeToken.WildlifeTokenType.HAWK));
         }
 
-        private Integer getNumOfTokenOption(WildlifeToken.WildlifeTokenType tokenType) {
+        public Integer getNumOfTokenOption(WildlifeToken.WildlifeTokenType tokenType) {
             return this.numTokenOptions.get(tokenType);
         }
 
@@ -726,11 +727,10 @@ public class PlayerBoard {
 
     }
 
-    public ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> getPlaceableWildlifeTokenList() {
+    public ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> getPlaceableWildlifeTokenList(int tokenIndex) {
 
         ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> output = new ArrayList<>();
 
-        //simplified to going thru the activeTiles ArrayList
         for (ArrayList<Tile> row: this.getPlayerBoardAs2dArray()) {
             for (Tile tile: row) {
                 for (WildlifeToken.WildlifeTokenType placeableWildlifeToken: tile.getHabitatTile().getWildlifeTokenTypeList()) {
@@ -741,7 +741,8 @@ public class PlayerBoard {
 //                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY) continue;
 //                    System.out.println(tile.getHabitatTile().toString(true));
 
-                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
+                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY
+                    && placeableWildlifeToken == StartGame.selectedTokens.get(tokenIndex).getWildlifeTokenType()) {
                         output.add(new CustomPair<>(tile.getHexCoordinate(), placeableWildlifeToken));
                     }
                 }
