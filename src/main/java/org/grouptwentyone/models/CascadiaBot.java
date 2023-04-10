@@ -68,7 +68,6 @@ public class CascadiaBot extends Player{
                 // Get list of placeable tokens and their corresponding coordinates
                 // Loop through each to try and find the token/coordinate pair that will give the highest score.
                 for (CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType> placeableToken: placeableWildlifeTokenList) {
-
                     PlayerBoard duplicateBoard2 = duplicateBoard.getDuplicate();
 
                     duplicateBoard2.setSelectedToken(new WildlifeToken(placeableToken.getField2()));

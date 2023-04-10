@@ -57,7 +57,7 @@ public class HexCoordinate {
         if (this.getX() > 9 && this.getY() < 10) {
             return String.format("%d,%d ", this.getX(), this.getY());
         }
-        if (this.getY() > 9 && this.getX() < 10) {
+        if (this.getX() < 10 && this.getY() > 9) {
             return String.format(" %d,%d", this.getX(), this.getY());
         }
         if (this.getX() > 9 && this.getY() > 9) {
