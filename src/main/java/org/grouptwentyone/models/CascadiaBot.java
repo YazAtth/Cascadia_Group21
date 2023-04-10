@@ -212,7 +212,7 @@ public class CascadiaBot extends Player {
                     wildlifeTokenHighScore.getWildlifeTokenType(),
                     wildlifeTokenPositionThatGivesHighestScore,
                     this.getScore(),
-                    (endTime - startime)
+                    (endTime - startTime)
             );
 
             System.out.println("Press \"ENTER\" on your keyboard to continue or press \"1\" to disable bot action description.");

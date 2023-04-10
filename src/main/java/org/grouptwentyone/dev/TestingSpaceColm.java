@@ -46,7 +46,7 @@ public class TestingSpaceColm {
 
         //end program
         //UserTerminationController.endProgram();
-        GameUiView.printLargeSpace();
+//        GameUiView.printLargeSpace();
     }
 
     public static void main(String[] args) {
