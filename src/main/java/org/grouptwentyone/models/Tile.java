@@ -44,15 +44,6 @@ public class Tile {
         this.tileId = tileIdCounter++;
     }
 
-    public Tile (HabitatTile habitatTile, HexCoordinate hexCoordinate, int tileOrientation, boolean isActive, int tileId, boolean isIncludedInScoring) {
-        this.habitatTile = habitatTile;
-        this.hexCoordinate = hexCoordinate;
-        this.tileOrientation = tileOrientation;
-        this.isActive = isActive;
-        this.tileId = tileId;
-        this.isIncludedInScoring = isIncludedInScoring;
-    }
-
     //copy by value to new tile
     public Tile(HabitatTile habitatTile, Tile oldTile) {
         this.tileId = oldTile.getTileId();

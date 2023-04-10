@@ -35,7 +35,8 @@ public class TestingSpaceColm {
                 break;
             }
 
-
+            GameUiView.printPlayerHeader(activePlayer);
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
             //next player
             System.out.println("Moving to next player");
             activePlayer = playerManager.cycleToNextPlayer();
@@ -49,7 +50,7 @@ public class TestingSpaceColm {
 
         //end program
         //UserTerminationController.endProgram();
-        GameUiView.printLargeSpace();
+        //GameUiView.printLargeSpace();
     }
 
     public static void main(String[] args) {
