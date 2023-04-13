@@ -2,11 +2,23 @@ package org.grouptwentyone.models.ReserveValueMaps;
 
 import java.util.HashMap;
 
+
+/* Hawks are rewarded for being in isolation, the more hawks in isolation the more points (but max is 8)
+   FOR HABITAT TILES
+   We want to place tiles with hawk icons away from existing tiles with hawk icon to reduce having adjacent
+   hawks as much as possible.
+
+   FOR TOKENS
+   We want to place tokens that will result in the hawk token being isolated from other existing hawk token
+
+   SPECIAL CASES
+   we check if we are placing a token next to another hawk token or placing a habitat tile next to an existing habitat
+   tile with a hawk icon. This is allowing the possibility of having adjacent hawks, which is punished
+
+ */
 public class HawkWeightValueMap extends AbstractWeightValueMap {
 
     HashMap<Integer, Double> botScoringMap = new HashMap<>() {{
-        botScoringMap.put(-1, -1.0); // Placing a hawk beside two other hawks.
-        botScoringMap.put(0, 0.0); // Placing a hawk adjacently to another hawk OR if there are 8 hawk (that all yield hawks) all hawk reserves become 0.
         botScoringMap.put(1, 1.0);
         botScoringMap.put(2, 2.0);
         botScoringMap.put(3, 3.0);
@@ -19,11 +31,35 @@ public class HawkWeightValueMap extends AbstractWeightValueMap {
 
     @Override
     public double getWeightValue(int validHawksOnPlayerBoard) {
+
+        //error handling
         if (!botScoringMap.containsKey(validHawksOnPlayerBoard)) {
             throw new IllegalArgumentException(String.format("Key \"%s\" does not exist", validHawksOnPlayerBoard));
         }
 
+        //placing next to a valid hawk yields no extra points, so return weight = 0
+        //we don't get rewarded for having more than 8 hawks, so return weight = 0
+        if (isAdjacentToOneHawk() || validHawksOnPlayerBoard > 8) {
+            return 0;
+        }
+
+        //placing next to two or more hawks may result in weird behaviour in scoring, we punish this with weight = -2
+        if (isAdjacentToMoreThanOneHawk()) {
+            return -2;
+        }
+
         return botScoringMap.get(validHawksOnPlayerBoard);
+    }
+
+    //check to see if placing a hawk on that tile will result in two hawks being beside each other
+    boolean isAdjacentToOneHawk() {
+        //TODO
+        return true; //temporary
+    }
+    //check to see if placing a hawk on that tile will result in three or more hawks being beside each other
+    boolean isAdjacentToMoreThanOneHawk() {
+        //TODO
+        return true; //temporary
     }
 
 
