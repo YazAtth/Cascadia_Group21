@@ -17,14 +17,13 @@ public class HawkReserveValueMap extends AbstractReserveValueMap {
         botScoringMap.put(8, 8.3);
     }};
 
-    //TODO: I have no clue how the reserve system for hawks work
     @Override
-    public double getReserveValue(int n) {
-        if (!botScoringMap.containsKey(n)) {
-            throw new IllegalArgumentException(String.format("Key \"%s\" does not exist", n));
+    public double getReserveValue(int validHawksOnPlayerBoard) {
+        if (!botScoringMap.containsKey(validHawksOnPlayerBoard)) {
+            throw new IllegalArgumentException(String.format("Key \"%s\" does not exist", validHawksOnPlayerBoard));
         }
 
-        return botScoringMap.get(n);
+        return botScoringMap.get(validHawksOnPlayerBoard);
     }
 
 

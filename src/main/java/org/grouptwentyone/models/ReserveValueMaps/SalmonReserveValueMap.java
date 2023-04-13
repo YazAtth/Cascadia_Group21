@@ -24,6 +24,7 @@ public class SalmonReserveValueMap extends AbstractReserveValueMap {
         // If there are more than 7 salmon in a run
         //TODO: Not sure of this calculation
         if (numOfSalmonInRun > 7) {
+            // TODO: Change return to use value instead of key
             int extraSalmon = numOfSalmonInRun - 7;
             return 9+extraSalmon;
         }
