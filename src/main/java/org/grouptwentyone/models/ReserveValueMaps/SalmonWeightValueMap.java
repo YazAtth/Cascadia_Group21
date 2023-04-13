@@ -2,7 +2,7 @@ package org.grouptwentyone.models.ReserveValueMaps;
 
 import java.util.HashMap;
 
-public class SalmonReserveValueMap extends AbstractReserveValueMap {
+public class SalmonWeightValueMap extends AbstractWeightValueMap {
 
     HashMap<Integer, Double> botScoringMap = new HashMap<>() {{
         botScoringMap.put(-2, -2.0); // Placing a salmon that will ruin two or more runs
@@ -19,7 +19,7 @@ public class SalmonReserveValueMap extends AbstractReserveValueMap {
 
 
     @Override
-    double getReserveValue(int numOfSalmonInRun) {
+    double getWeightValue(int numOfSalmonInRun) {
 
         // If there are more than 7 salmon in a run
         //TODO: Not sure of this calculation

@@ -2,8 +2,9 @@ package org.grouptwentyone.models.ReserveValueMaps;
 
 import java.util.HashMap;
 
-public class BearReserveValueMap extends AbstractReserveValueMap{
+public class BearWeightValueMap extends AbstractWeightValueMap {
 
+    //hashtable to associate weig
     HashMap<Integer, Double> botScoringMap = new HashMap<>() {{
         botScoringMap.put(-2, -2.0); // Placing bear will ruin pair.
         botScoringMap.put(1, 1.0);
@@ -13,7 +14,7 @@ public class BearReserveValueMap extends AbstractReserveValueMap{
 
     }};
     @Override
-    double getReserveValue(int numOfPairs) {
+    double getWeightValue(int numOfPairs) {
         // TODO: Case for "If placing a bear will not result in a pair yet."
 
         if (!botScoringMap.containsKey(numOfPairs)) {

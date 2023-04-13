@@ -2,7 +2,7 @@ package org.grouptwentyone.models.ReserveValueMaps;
 
 import java.util.HashMap;
 
-public class FoxReserveValueMap extends AbstractReserveValueMap {
+public class FoxWeightValueMap extends AbstractWeightValueMap {
 
     HashMap<Integer, Double> botScoringMap = new HashMap<>() {{
             botScoringMap.put(1, 0.4);
@@ -13,7 +13,7 @@ public class FoxReserveValueMap extends AbstractReserveValueMap {
     }};
 
     @Override
-    protected double getReserveValue(int numOfUniqueAdjacentWildlifeTokens) {
+    protected double getWeightValue(int numOfUniqueAdjacentWildlifeTokens) {
 
         if (!botScoringMap.containsKey(numOfUniqueAdjacentWildlifeTokens)) {
             throw new IllegalArgumentException(String.format("Key \"%s\" does not exist", numOfUniqueAdjacentWildlifeTokens));

@@ -2,7 +2,7 @@ package org.grouptwentyone.models.ReserveValueMaps;
 
 import java.util.HashMap;
 
-public class HawkReserveValueMap extends AbstractReserveValueMap {
+public class HawkWeightValueMap extends AbstractWeightValueMap {
 
     HashMap<Integer, Double> botScoringMap = new HashMap<>() {{
         botScoringMap.put(-1, -1.0); // Placing a hawk beside two other hawks.
@@ -18,7 +18,7 @@ public class HawkReserveValueMap extends AbstractReserveValueMap {
     }};
 
     @Override
-    public double getReserveValue(int validHawksOnPlayerBoard) {
+    public double getWeightValue(int validHawksOnPlayerBoard) {
         if (!botScoringMap.containsKey(validHawksOnPlayerBoard)) {
             throw new IllegalArgumentException(String.format("Key \"%s\" does not exist", validHawksOnPlayerBoard));
         }

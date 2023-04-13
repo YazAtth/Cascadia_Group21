@@ -2,7 +2,7 @@ package org.grouptwentyone.models.ReserveValueMaps;
 
 import java.util.HashMap;
 
-public class ElkReserveValueMap extends AbstractReserveValueMap {
+public class ElkWeightValueMap extends AbstractWeightValueMap {
 
     HashMap<Integer, Double> botScoringMap = new HashMap<>() {{
         botScoringMap.put(1, 0.9);
@@ -14,7 +14,7 @@ public class ElkReserveValueMap extends AbstractReserveValueMap {
 
 
     @Override
-    double getReserveValue(int numOfElkInLine) {
+    double getWeightValue(int numOfElkInLine) {
 
         //TODO: Case for when "Placing an elk that intersects another line of elk"
 
