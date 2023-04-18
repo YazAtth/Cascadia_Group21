@@ -20,7 +20,6 @@ public class FoxWeightValueMap extends AbstractWeightValueMap {
         }
 
         return botScoringMap.get(numOfUniqueAdjacentWildlifeTokens);
-
     }
 
 }
