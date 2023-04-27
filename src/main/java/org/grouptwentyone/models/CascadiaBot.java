@@ -54,12 +54,14 @@ public class CascadiaBot extends Player {
 
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR))
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.BEAR)) {
-                reserveValueContainer.setWildlifeReserveWeight(
-                        WildlifeToken.WildlifeTokenType.BEAR,
+
+                reserveValueContainer.setBearWildlifeReserveWeight(
                         ReservePopulationController.getNumberOfBearPairsAfterPlacingToken(
-                                this.getPlayerBoardObject()
-                        )
+                                this.getPlayerBoardObject()),
+                        ReservePopulationController.doesPlacingBearRuinPair(this.playerBoardObject, tile.getHexCoordinate()),
+                        ReservePopulationController.doesPlacingBearMakePair(this.playerBoardObject, tile.getHexCoordinate())
                 );
+
             }
 
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK))

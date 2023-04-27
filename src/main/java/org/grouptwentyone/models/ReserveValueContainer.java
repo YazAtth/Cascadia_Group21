@@ -47,6 +47,10 @@ public class ReserveValueContainer {
     public void setWildlifeReserveWeight(WildlifeToken.WildlifeTokenType wildlifeTokenType, double n) {
         wildlifeReserveValueHash.put(wildlifeTokenType, n);
     }
+    public void setBearWildlifeReserveWeight(int bearPairsOnBoard, boolean ruinsExistingPair, boolean createsBear) {
+        //wildlifeReserveValueHash.put(wildlifeTokenType, n);
+    }
+
 
     public void incrementWildlifeReserveWeight(WildlifeToken.WildlifeTokenType wildlifeTokenType, double iterationAmount) {
         wildlifeReserveValueHash.put(wildlifeTokenType, wildlifeReserveValueHash.get(wildlifeTokenType) + iterationAmount);
