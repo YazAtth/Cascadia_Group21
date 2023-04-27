@@ -32,7 +32,7 @@ public class BoardStateAnalyseController {
         return foxScore;
     }
 
-    public static int getNumberOfBearPairsAfterPlacingToken(PlayerBoard playerBoard) {
+    public static int getNumberOfBearPairsBeforePlacingToken(PlayerBoard playerBoard) {
 
         double numberOfPairs = 0;
         ArrayList<Tile> tilesExcludedFromScoring = new ArrayList<>();

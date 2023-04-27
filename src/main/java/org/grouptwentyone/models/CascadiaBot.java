@@ -2,6 +2,8 @@ package org.grouptwentyone.models;
 
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.BoardStateAnalyseController;
+import org.grouptwentyone.controllers.WeightController;
+import org.grouptwentyone.models.WeightValueMaps.BearWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.FoxWeightValueMap;
 import org.grouptwentyone.views.BoardView;
 import org.grouptwentyone.views.SelectionOptionsView;
@@ -64,12 +66,47 @@ public class CascadiaBot extends Player {
 
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR))
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.BEAR)) {
-                wildlifeTokenWeightContainer.setBearWildlifeWeight(
-                        BoardStateAnalyseController.getNumberOfBearPairsAfterPlacingToken(
-                                this.getPlayerBoardObject()),
-                        BoardStateAnalyseController.doesPlacingBearRuinPair(this.playerBoardObject, tile.getHexCoordinate()),
-                        BoardStateAnalyseController.doesPlacingBearMakePair(this.playerBoardObject, tile.getHexCoordinate())
+
+                System.out.printf("Looking at tile at %s\n", tile.getHexCoordinate());
+
+                double bearWeight = 0;
+                BearWeightValueMap bearWeightValueMap = new BearWeightValueMap();
+
+
+                // Get number of bear pairs before placing token
+                int numberOfBearPairsAfterPlacingToken = BoardStateAnalyseController.getNumberOfBearPairsBeforePlacingToken(
+                        this.getPlayerBoardObject()
                 );
+
+                System.out.println("\tNumber of bear pairs before placing token: " + numberOfBearPairsAfterPlacingToken);
+                numberOfBearPairsAfterPlacingToken += 1; // We plus one to account for the fact that there will be an extra pair after placing the token.
+                bearWeight = bearWeightValueMap.getWeightValue(numberOfBearPairsAfterPlacingToken); // Get weight value for that pair from the table.
+
+                // If placing bear makes a pair, get the weight value for that pair.
+                boolean doesPlacingBearMakePair = BoardStateAnalyseController.doesPlacingBearMakePair(this.playerBoardObject, tile.getHexCoordinate());
+                if (!doesPlacingBearMakePair) {
+                    System.out.println("\tDoes not make pair");
+                    // If placing bear doesn't make a pair we subtract "n" (eg. 0.75) as the token will not increase the number of pairs.
+                    // But it will allow for the possibility of a pair being made in the future.
+                    bearWeight -= WeightController.WeightConstants.nonPairBearPlacementReduction;
+                }
+
+                // Custom weight if a bear pair gets ruined.
+                boolean doesPlacingBearRuinPair = BoardStateAnalyseController.doesPlacingBearRuinPair(this.playerBoardObject, tile.getHexCoordinate());
+                if (doesPlacingBearRuinPair) bearWeight = bearWeightValueMap.ruinsPairWeight();
+
+                System.out.println("\tBear weight: " + bearWeight);
+
+
+                wildlifeTokenWeightContainer.setWildlifeWeight(
+                        WildlifeToken.WildlifeTokenType.BEAR,
+                        bearWeight
+                );
+//                wildlifeTokenWeightContainer.setBearWildlifeWeight(
+//                        numberOfBearPairsAfterPlacingToken,
+//                        doesPlacingBearRuinPair,
+//                        doesPlacingBearMakePair
+//                );
 
             }
 
@@ -77,7 +114,7 @@ public class CascadiaBot extends Player {
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.ELK)) {
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.ELK,
-                        BoardStateAnalyseController.getNumberOfBearPairsAfterPlacingToken(
+                        BoardStateAnalyseController.getNumberOfBearPairsBeforePlacingToken(
                                 this.getPlayerBoardObject()
                         )
                 );
@@ -87,7 +124,7 @@ public class CascadiaBot extends Player {
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.SALMON)) {
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.SALMON,
-                        BoardStateAnalyseController.getNumberOfBearPairsAfterPlacingToken(
+                        BoardStateAnalyseController.getNumberOfBearPairsBeforePlacingToken(
                                 this.getPlayerBoardObject()
                         )
                 );
@@ -97,7 +134,7 @@ public class CascadiaBot extends Player {
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.HAWK)) {
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.HAWK,
-                        BoardStateAnalyseController.getNumberOfBearPairsAfterPlacingToken(
+                        BoardStateAnalyseController.getNumberOfBearPairsBeforePlacingToken(
                                 this.getPlayerBoardObject()
                         )
                 );

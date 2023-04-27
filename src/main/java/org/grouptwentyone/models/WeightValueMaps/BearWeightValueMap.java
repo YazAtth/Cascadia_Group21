@@ -18,11 +18,11 @@ public class BearWeightValueMap extends AbstractWeightValueMap {
     }
 
     @Override
-    double getWeightValue(int numOfPairs) {
+    public double getWeightValue(int numOfPairs) {
 
-        if (ruinsPair()) {
-            return -2.0;
-        }
+//        if (ruinsPair()) {
+//            return -2.0;
+//        }
 
         //having more than 4 pairs yields no extra points, so we return a weight of 0
         if (numOfPairs > 4) {
@@ -58,4 +58,10 @@ public class BearWeightValueMap extends AbstractWeightValueMap {
          */
         return true; //temporary
     }
+
+    public double ruinsPairWeight() {
+        return -2.0;
+    }
+
+
 }
