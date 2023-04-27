@@ -2,6 +2,7 @@ package org.grouptwentyone.models;
 
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.ReservePopulationController;
+import org.grouptwentyone.models.ReserveValueMaps.FoxWeightValueMap;
 import org.grouptwentyone.views.BoardView;
 import org.grouptwentyone.views.SelectionOptionsView;
 
@@ -44,17 +45,23 @@ public class CascadiaBot extends Player {
             if (wildlifeTokenOptionList.contains( new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX) )
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.FOX)) {
 
+                // Get state of board
+                int numberOfAdjacentUniquePlacedWildlifeTokensToFox =
+                        ReservePopulationController.getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(this.getPlayerBoardObject()
+                );
+                // Get weight based on state
+                FoxWeightValueMap foxWeightValueMap = new FoxWeightValueMap();
+                double foxWeight = foxWeightValueMap.getWeightValue(numberOfAdjacentUniquePlacedWildlifeTokensToFox);
+
+                // Set weight container based on weight
                 reserveValueContainer.setWildlifeReserveWeight(
                         WildlifeToken.WildlifeTokenType.FOX,
-                        ReservePopulationController.getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(
-                                this.getPlayerBoardObject()
-                        )
+                        foxWeight
                 );
             }
 
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR))
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.BEAR)) {
-
                 reserveValueContainer.setBearWildlifeReserveWeight(
                         ReservePopulationController.getNumberOfBearPairsAfterPlacingToken(
                                 this.getPlayerBoardObject()),

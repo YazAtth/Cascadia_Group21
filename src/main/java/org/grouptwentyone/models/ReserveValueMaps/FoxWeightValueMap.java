@@ -13,7 +13,7 @@ public class FoxWeightValueMap extends AbstractWeightValueMap {
     }};
 
     @Override
-    protected double getWeightValue(int numOfUniqueAdjacentWildlifeTokens) {
+    public double getWeightValue(int numOfUniqueAdjacentWildlifeTokens) {
 
         if (!botScoringMap.containsKey(numOfUniqueAdjacentWildlifeTokens)) {
             throw new IllegalArgumentException(String.format("Key \"%s\" does not exist", numOfUniqueAdjacentWildlifeTokens));
