@@ -5,13 +5,18 @@ import java.util.HashMap;
 public class BearWeightValueMap extends AbstractWeightValueMap {
 
     //hashtable to associate weight with the number of pair of bear in the playerBoard
-    HashMap<Integer, Double> bearWeightMap = new HashMap<>() {{
-        bearWeightMap.put(0, 0.35); //if placing a bear will result in 0 pairs
-        bearWeightMap.put(1, 1.0); //if placing a bear will result in 1 valid pair
-        bearWeightMap.put(2, 4.1); //if placing a bear will result in 2 valid pair
-        bearWeightMap.put(3, 6.8); //if placing a bear will result in 3 valid pair
-        bearWeightMap.put(4, 8.9); //if placing a bear will result in 4 valid pair
-    }};
+    HashMap<Integer, Double> bearWeightTable = new HashMap<>();
+
+    public BearWeightValueMap() {
+        super();
+
+        bearWeightTable.put(0, 0.35); //if placing a bear will result in 0 pairs
+        bearWeightTable.put(1, 1.0); //if placing a bear will result in 1 valid pair
+        bearWeightTable.put(2, 4.1); //if placing a bear will result in 2 valid pair
+        bearWeightTable.put(3, 6.8); //if placing a bear will result in 3 valid pair
+        bearWeightTable.put(4, 8.9); //if placing a bear will result in 4 valid pair
+    }
+
     @Override
     double getWeightValue(int numOfPairs) {
 
@@ -25,12 +30,12 @@ public class BearWeightValueMap extends AbstractWeightValueMap {
         }
 
         //error handling
-        if (!bearWeightMap.containsKey(numOfPairs)) {
+        if (!bearWeightTable.containsKey(numOfPairs)) {
             throw new IllegalArgumentException(String.format("Key \"%s\" does not exist", numOfPairs));
         }
 
         //get weight based on the number of pairs
-        double bearWeight = bearWeightMap.get(numOfPairs);
+        double bearWeight = bearWeightTable.get(numOfPairs);
 
         if (areAllBearsInPairs()) {
             bearWeight -= 0.5;

@@ -42,12 +42,17 @@ import java.util.HashMap;
 
 public class ElkWeightValueMap extends AbstractWeightValueMap {
 
-    HashMap<Integer, Double> elkWeightTable = new HashMap<>() {{
+    HashMap<Integer, Double> elkWeightTable = new HashMap<>();
+
+    public ElkWeightValueMap() {
+        super();
+
+        elkWeightTable.put(0, 0.0);
         elkWeightTable.put(1, 0.9);
         elkWeightTable.put(2, 2.65);
         elkWeightTable.put(3, 4.5);
         elkWeightTable.put(4, 5.5);
-    }};
+    }
 
 
     @Override
