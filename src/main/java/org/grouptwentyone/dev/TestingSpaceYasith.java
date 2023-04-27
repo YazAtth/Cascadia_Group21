@@ -1,9 +1,11 @@
 package org.grouptwentyone.dev;
 
+import org.grouptwentyone.StartGame;
 import org.grouptwentyone.models.*;
 import org.grouptwentyone.views.BoardView;
 import org.grouptwentyone.views.GameSetupView;
 import org.grouptwentyone.views.GameUiView;
+import org.grouptwentyone.views.SelectionOptionsView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,11 +104,29 @@ public class TestingSpaceYasith {
 
     }
 
+    public static void testingReserve() {
+
+        CascadiaBot p1 = new CascadiaBot("Ton");
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
+
+
+        p1.playTurn();
+        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
+        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+
+    }
+
 
     public static void main(String[] args) {
 //        testingCascadiaBot1();
 //        testingDuplication();
 
-        testingSetBotPage();
+//        testingSetBotPage();
+        testingReserve();
     }
 }

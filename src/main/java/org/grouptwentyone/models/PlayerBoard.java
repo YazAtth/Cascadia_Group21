@@ -811,4 +811,9 @@ public class PlayerBoard {
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
     }
+
+    public void setReserveTileValues() {
+
+
+    }
 }
