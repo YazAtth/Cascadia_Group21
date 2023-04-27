@@ -1,8 +1,6 @@
 package org.grouptwentyone.controllers;
 
-import org.grouptwentyone.models.PlayerBoard;
-import org.grouptwentyone.models.Tile;
-import org.grouptwentyone.models.WildlifeToken;
+import org.grouptwentyone.models.*;
 
 import java.util.ArrayList;
 
@@ -62,4 +60,69 @@ public class ReservePopulationController {
         return (int) numberOfPairs;
     }
 
+    public static boolean doesPlacingBearRuinPair(PlayerBoard playerBoard, HexCoordinate tileCord) {
+        Tile tile = playerBoard.getTileByCoordinate(tileCord.getX(), tileCord.getY());
+
+        ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentTileList(tile);
+        int adjacentBears = 0;
+
+        for (Tile adjacentTile : adjacentTileList) {
+
+            if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                    == WildlifeToken.WildlifeTokenType.BEAR) {
+
+                adjacentBears++;
+                if (adjacentBears > 1) return true;
+
+                //check to see if adjacent tile with a bear on it is already in a pair
+                ArrayList<Tile> adjacentTilesOfAdjacentTileList = playerBoard.getAdjacentTileList(adjacentTile);
+
+                for (Tile adjacentTileOfAdjacentTile : adjacentTilesOfAdjacentTileList) {
+
+                    if (adjacentTileOfAdjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                            == WildlifeToken.WildlifeTokenType.BEAR) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean doesPlacingBearMakePair(PlayerBoard playerBoard, HexCoordinate tileCord) {
+        Tile tile = playerBoard.getTileByCoordinate(tileCord.getX(), tileCord.getY());
+        int adjacentBears = 0;
+        int adjacentBearsToAdjacentBear = 0;
+
+        ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentTileList(tile);
+
+        for (Tile adjacentTile : adjacentTileList) {
+
+            if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                    == WildlifeToken.WildlifeTokenType.BEAR) {
+
+                adjacentBears++;
+                if (adjacentBears > 1) return false;
+
+                //check to see if adjacent tile with a bear on it is already in a pair
+                ArrayList<Tile> adjacentTilesOfAdjacentTileList = playerBoard.getAdjacentTileList(adjacentTile);
+
+                for (Tile adjacentTileOfAdjacentTile : adjacentTilesOfAdjacentTileList) {
+
+                    if (adjacentTileOfAdjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                            == WildlifeToken.WildlifeTokenType.BEAR) {
+                        adjacentBearsToAdjacentBear++;
+                        if (adjacentBearsToAdjacentBear >= 1) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        if (adjacentBears == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

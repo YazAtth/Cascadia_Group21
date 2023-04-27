@@ -41,8 +41,9 @@ public class CascadiaBot extends Player {
 
             // Code that will set the reserve values for each wildlife token go here.
             // Only populate reserves of wildlife tokens that are presented as options to bot AND are placeable on placed tile (in outer loop).
-            if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX))
+            if (wildlifeTokenOptionList.contains( new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX) )
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.FOX)) {
+
                 reserveValueContainer.setWildlifeReserveWeight(
                         WildlifeToken.WildlifeTokenType.FOX,
                         ReservePopulationController.getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(
@@ -61,12 +62,40 @@ public class CascadiaBot extends Player {
                 );
             }
 
+            if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK))
+                    && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.ELK)) {
+                reserveValueContainer.setWildlifeReserveWeight(
+                        WildlifeToken.WildlifeTokenType.ELK,
+                        ReservePopulationController.getNumberOfBearPairsAfterPlacingToken(
+                                this.getPlayerBoardObject()
+                        )
+                );
+            }
+
+            if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON))
+                    && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.SALMON)) {
+                reserveValueContainer.setWildlifeReserveWeight(
+                        WildlifeToken.WildlifeTokenType.SALMON,
+                        ReservePopulationController.getNumberOfBearPairsAfterPlacingToken(
+                                this.getPlayerBoardObject()
+                        )
+                );
+            }
+
+            if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.HAWK))
+                    && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.HAWK)) {
+                reserveValueContainer.setWildlifeReserveWeight(
+                        WildlifeToken.WildlifeTokenType.HAWK,
+                        ReservePopulationController.getNumberOfBearPairsAfterPlacingToken(
+                                this.getPlayerBoardObject()
+                        )
+                );
+            }
+
             //TODO: Fill in reserves for Elk, Hawk and Salmon
 
 
             adjacentTileReservePairs.add(new CustomPair<>(tile, reserveValueContainer));
-
-
         }
 
 

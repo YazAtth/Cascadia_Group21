@@ -16,8 +16,6 @@ public class TestingSpaceDom {
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
 
         p1.playTurn();
-
-
     }
 
     public static void main(String[] args) {
