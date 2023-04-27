@@ -114,10 +114,8 @@ public class TestingSpaceYasith {
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
 
-
         p1.playTurn();
-        System.out.println(BoardView.displayTiles(p1.getPlayerBoardObject()));
-        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+
 
     }
 
