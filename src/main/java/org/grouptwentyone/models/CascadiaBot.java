@@ -8,6 +8,8 @@ import org.grouptwentyone.views.SelectionOptionsView;
 
 import java.util.*;
 
+import static java.lang.System.exit;
+
 
 // NOTE: Program will sometimes crash until the elk, salmon and hawk reserve values are implemented.
 
@@ -47,8 +49,10 @@ public class CascadiaBot extends Player {
 
                 // Get state of board
                 int numberOfAdjacentUniquePlacedWildlifeTokensToFox =
-                        ReservePopulationController.getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(this.getPlayerBoardObject()
-                );
+                        ReservePopulationController.getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(this.getPlayerBoardObject(), tile);
+
+//                System.out.printf("Number of adjacent unique wildlife tokens to fox at %s: %d\n", tile.getHexCoordinate(), numberOfAdjacentUniquePlacedWildlifeTokensToFox);
+
                 // Get weight based on state
                 FoxWeightValueMap foxWeightValueMap = new FoxWeightValueMap();
                 double foxWeight = foxWeightValueMap.getWeightValue(numberOfAdjacentUniquePlacedWildlifeTokensToFox);
@@ -145,8 +149,8 @@ public class CascadiaBot extends Player {
         WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = wildlifeTokenTypeAndPositionToPlace.getField1();
         HexCoordinate wildlifeTokenPositionToPlace = wildlifeTokenTypeAndPositionToPlace.getField2();
 
-//        System.out.println(wildlifeTokenTypeToPlace);
-//        System.out.println(wildlifeTokenPositionToPlace);
+        System.out.println(wildlifeTokenTypeToPlace);
+        System.out.println(wildlifeTokenPositionToPlace);
 
         HabitatTile habitatTileToPlace = getOptimalHabitatTileToPlace();
 

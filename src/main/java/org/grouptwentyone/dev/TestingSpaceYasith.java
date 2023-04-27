@@ -2,6 +2,7 @@ package org.grouptwentyone.dev;
 
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.models.*;
+import org.grouptwentyone.models.ReserveValueMaps.FoxWeightValueMap;
 import org.grouptwentyone.views.BoardView;
 import org.grouptwentyone.views.GameSetupView;
 import org.grouptwentyone.views.GameUiView;
@@ -104,6 +105,12 @@ public class TestingSpaceYasith {
 
     }
 
+    public static void foxWeightValueMapTest() {
+
+        FoxWeightValueMap foxWeightValueMap = new FoxWeightValueMap();
+
+    }
+
     public static void testingReserve() {
 
         CascadiaBot p1 = new CascadiaBot("Ton");
@@ -114,6 +121,39 @@ public class TestingSpaceYasith {
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
 
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1,1));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1,0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 1));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2,0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3,3));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3,2));
+
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,3));
+
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,2));
+
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2, 1));
+
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.HAWK));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2, 3));
+
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3,3));
+
         p1.playTurn();
 
 
@@ -121,10 +161,8 @@ public class TestingSpaceYasith {
 
 
     public static void main(String[] args) {
-//        testingCascadiaBot1();
-//        testingDuplication();
 
-//        testingSetBotPage();
         testingReserve();
+//        foxWeightValueMapTest();
     }
 }

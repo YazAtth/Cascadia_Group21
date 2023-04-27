@@ -6,8 +6,30 @@ import java.util.ArrayList;
 
 public class ReservePopulationController {
 
-    public static int getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(PlayerBoard playerBoard) {
-        return ScoringController.scoreFoxScoringCardA(playerBoard);
+    public static int getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(PlayerBoard playerBoard, Tile focusedTile) {
+
+        int foxScore = 0;
+
+
+        boolean tileHasFoxToken = focusedTile.getHabitatTile().getWildlifeTokenTypeList().contains(WildlifeToken.WildlifeTokenType.FOX);
+        if (tileHasFoxToken) {
+            ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentTileList(focusedTile);
+
+            ArrayList<WildlifeToken.WildlifeTokenType> adjacentWildlifeTokenList = new ArrayList<>();
+
+            for (Tile adjacentTile : adjacentTileList) {
+                boolean containsNewAdjacentWildlifeToken = !adjacentWildlifeTokenList.contains(adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType());
+                boolean tileHasWildlifeToken = adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY;
+
+                if (containsNewAdjacentWildlifeToken && tileHasWildlifeToken) {
+                    adjacentWildlifeTokenList.add(adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType());
+                }
+            }
+            int numberOfAdjacentUniqueAnimalTokens = adjacentWildlifeTokenList.size();
+            foxScore += numberOfAdjacentUniqueAnimalTokens;
+        }
+
+        return foxScore;
     }
 
     public static int getNumberOfBearPairsAfterPlacingToken(PlayerBoard playerBoard) {
