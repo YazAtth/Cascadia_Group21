@@ -2,8 +2,13 @@ package org.grouptwentyone.models;
 
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.ReservePopulationController;
+import org.grouptwentyone.views.BoardView;
+import org.grouptwentyone.views.SelectionOptionsView;
 
 import java.util.*;
+
+
+// NOTE: Program will sometimes crash until the elk, salmon and hawk reserve values are implemented.
 
 public class CascadiaBot extends Player {
 
@@ -14,7 +19,7 @@ public class CascadiaBot extends Player {
         this.getPlayerBoardObject().setVerbose(false);
     }
 
-    private WildlifeToken.WildlifeTokenType getOptimalWildlifeTokenTypeToPlace() {
+    private CustomPair<WildlifeToken.WildlifeTokenType, HexCoordinate> getOptimalWildlifeTokenTypeAndPositionToPlace() {
         // Calculate reserve values
         ArrayList<Tile> placedTiles = this.getPlayerBoardObject().getActiveTiles();
 
@@ -27,37 +32,40 @@ public class CascadiaBot extends Player {
 
         // Loop through all the tiles that have been placed on the board and calculate the reserve values for each tile.
         for (Tile tile: placedTiles) {
+
             // Run code to populate reserve values for each tile.
             // Only populate the tiles we need.
-            ArrayList<Tile> adjacentTiles = this.getPlayerBoardObject().getAdjacentTileList(tile);
 
-            for (Tile adjacentTile: adjacentTiles) {
-                ReserveValueContainer reserveValueContainer = new ReserveValueContainer();
+            ReserveValueContainer reserveValueContainer = new ReserveValueContainer(tile.getHabitatTile().getWildlifeTokenTypeList());
+            ArrayList<WildlifeToken.WildlifeTokenType> placeableWildlifeTokenTypes = tile.getHabitatTile().getWildlifeTokenTypeList();
 
-                // Code that will set the reserve values for each wildlife token go here.
-                // Only populate reserves of wildlife tokens that are presented as options to bot.
-                if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX))) {
-                    reserveValueContainer.setWildlifeReserveWeight(
-                            WildlifeToken.WildlifeTokenType.FOX,
-                            ReservePopulationController.getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(
-                                    this.getPlayerBoardObject()
-                            )
-                    );
-                }
-                if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR))) {
-                    reserveValueContainer.setWildlifeReserveWeight(
-                            WildlifeToken.WildlifeTokenType.BEAR,
-                            ReservePopulationController.getNumberOfBearPairsAfterPlacingToken(
-                                    this.getPlayerBoardObject()
-                            )
-                    );
-                }
-
-                //TODO: Fill in reserves for Elk, Hawk and Salmon
-
-
-                adjacentTileReservePairs.add(new CustomPair<>(adjacentTile, reserveValueContainer));
+            // Code that will set the reserve values for each wildlife token go here.
+            // Only populate reserves of wildlife tokens that are presented as options to bot AND are placeable on placed tile (in outer loop).
+            if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX))
+                    && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.FOX)) {
+                reserveValueContainer.setWildlifeReserveWeight(
+                        WildlifeToken.WildlifeTokenType.FOX,
+                        ReservePopulationController.getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(
+                                this.getPlayerBoardObject()
+                        )
+                );
             }
+
+            if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR))
+                    && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.BEAR)) {
+                reserveValueContainer.setWildlifeReserveWeight(
+                        WildlifeToken.WildlifeTokenType.BEAR,
+                        ReservePopulationController.getNumberOfBearPairsAfterPlacingToken(
+                                this.getPlayerBoardObject()
+                        )
+                );
+            }
+
+            //TODO: Fill in reserves for Elk, Hawk and Salmon
+
+
+            adjacentTileReservePairs.add(new CustomPair<>(tile, reserveValueContainer));
+
 
         }
 
@@ -90,7 +98,16 @@ public class CascadiaBot extends Player {
 
     @Override
     public boolean playTurn() {
-        WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = getOptimalWildlifeTokenTypeToPlace();
+        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
+        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+
+        CustomPair<WildlifeToken.WildlifeTokenType, HexCoordinate> wildlifeTokenTypeAndPositionToPlace = getOptimalWildlifeTokenTypeAndPositionToPlace();
+        WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = wildlifeTokenTypeAndPositionToPlace.getField1();
+        HexCoordinate wildlifeTokenPositionToPlace = wildlifeTokenTypeAndPositionToPlace.getField2();
+
+//        System.out.println(wildlifeTokenTypeToPlace);
+//        System.out.println(wildlifeTokenPositionToPlace);
+
         HabitatTile habitatTileToPlace = getOptimalHabitatTileToPlace();
 
 
