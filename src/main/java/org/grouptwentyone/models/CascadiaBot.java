@@ -85,7 +85,9 @@ public class CascadiaBot extends Player {
 
         // Extract the wildlife token type from the best tile/reserve pair and return it.
         WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = bestTileReservePair.getField2().getLargestWildlifeReserveValue().getKey();
-        return wildlifeTokenTypeToPlace;
+        HexCoordinate hexCoordinateToPlaceWildlifeToken = bestTileReservePair.getField1().getHexCoordinate();
+
+        return new CustomPair<>(wildlifeTokenTypeToPlace, hexCoordinateToPlaceWildlifeToken);
 
     }
 
