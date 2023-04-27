@@ -1,4 +1,4 @@
-package org.grouptwentyone.models.ReserveValueMaps;
+package org.grouptwentyone.models.WeightValueMaps;
 
 import java.util.HashMap;
 

@@ -4,7 +4,7 @@ import org.grouptwentyone.models.*;
 
 import java.util.ArrayList;
 
-public class ReservePopulationController {
+public class BoardStateAnalyseController {
 
     public static int getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(PlayerBoard playerBoard, Tile focusedTile) {
 

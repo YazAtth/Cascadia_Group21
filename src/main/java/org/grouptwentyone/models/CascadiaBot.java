@@ -1,14 +1,12 @@
 package org.grouptwentyone.models;
 
 import org.grouptwentyone.StartGame;
-import org.grouptwentyone.controllers.ReservePopulationController;
-import org.grouptwentyone.models.ReserveValueMaps.FoxWeightValueMap;
+import org.grouptwentyone.controllers.BoardStateAnalyseController;
+import org.grouptwentyone.models.WeightValueMaps.FoxWeightValueMap;
 import org.grouptwentyone.views.BoardView;
 import org.grouptwentyone.views.SelectionOptionsView;
 
 import java.util.*;
-
-import static java.lang.System.exit;
 
 
 // NOTE: Program will sometimes crash until the elk, salmon and hawk reserve values are implemented.
@@ -31,7 +29,7 @@ public class CascadiaBot extends Player {
         ArrayList<WildlifeToken> wildlifeTokenOptionList = StartGame.selectedTokens;
 
         WildlifeToken.WildlifeTokenType bestWildlifeTokenToPlace = wildlifeTokenOptionList.get(0).getWildlifeTokenType();
-        ArrayList<CustomPair<Tile, ReserveValueContainer>> adjacentTileReservePairs = new ArrayList<>();
+        ArrayList<CustomPair<Tile, WildlifeTokenWeightContainer>> tileAndWeightPairs = new ArrayList<>();
 
         // Loop through all the tiles that have been placed on the board and calculate the reserve values for each tile.
         for (Tile tile: placedTiles) {
@@ -39,7 +37,7 @@ public class CascadiaBot extends Player {
             // Run code to populate reserve values for each tile.
             // Only populate the tiles we need.
 
-            ReserveValueContainer reserveValueContainer = new ReserveValueContainer(tile.getHabitatTile().getWildlifeTokenTypeList());
+            WildlifeTokenWeightContainer wildlifeTokenWeightContainer = new WildlifeTokenWeightContainer(tile.getHabitatTile().getWildlifeTokenTypeList());
             ArrayList<WildlifeToken.WildlifeTokenType> placeableWildlifeTokenTypes = tile.getHabitatTile().getWildlifeTokenTypeList();
 
             // Code that will set the reserve values for each wildlife token go here.
@@ -49,7 +47,7 @@ public class CascadiaBot extends Player {
 
                 // Get state of board
                 int numberOfAdjacentUniquePlacedWildlifeTokensToFox =
-                        ReservePopulationController.getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(this.getPlayerBoardObject(), tile);
+                        BoardStateAnalyseController.getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(this.getPlayerBoardObject(), tile);
 
 //                System.out.printf("Number of adjacent unique wildlife tokens to fox at %s: %d\n", tile.getHexCoordinate(), numberOfAdjacentUniquePlacedWildlifeTokensToFox);
 
@@ -58,7 +56,7 @@ public class CascadiaBot extends Player {
                 double foxWeight = foxWeightValueMap.getWeightValue(numberOfAdjacentUniquePlacedWildlifeTokensToFox);
 
                 // Set weight container based on weight
-                reserveValueContainer.setWildlifeReserveWeight(
+                wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.FOX,
                         foxWeight
                 );
@@ -66,20 +64,20 @@ public class CascadiaBot extends Player {
 
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR))
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.BEAR)) {
-                reserveValueContainer.setBearWildlifeReserveWeight(
-                        ReservePopulationController.getNumberOfBearPairsAfterPlacingToken(
+                wildlifeTokenWeightContainer.setBearWildlifeWeight(
+                        BoardStateAnalyseController.getNumberOfBearPairsAfterPlacingToken(
                                 this.getPlayerBoardObject()),
-                        ReservePopulationController.doesPlacingBearRuinPair(this.playerBoardObject, tile.getHexCoordinate()),
-                        ReservePopulationController.doesPlacingBearMakePair(this.playerBoardObject, tile.getHexCoordinate())
+                        BoardStateAnalyseController.doesPlacingBearRuinPair(this.playerBoardObject, tile.getHexCoordinate()),
+                        BoardStateAnalyseController.doesPlacingBearMakePair(this.playerBoardObject, tile.getHexCoordinate())
                 );
 
             }
 
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK))
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.ELK)) {
-                reserveValueContainer.setWildlifeReserveWeight(
+                wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.ELK,
-                        ReservePopulationController.getNumberOfBearPairsAfterPlacingToken(
+                        BoardStateAnalyseController.getNumberOfBearPairsAfterPlacingToken(
                                 this.getPlayerBoardObject()
                         )
                 );
@@ -87,9 +85,9 @@ public class CascadiaBot extends Player {
 
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON))
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.SALMON)) {
-                reserveValueContainer.setWildlifeReserveWeight(
+                wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.SALMON,
-                        ReservePopulationController.getNumberOfBearPairsAfterPlacingToken(
+                        BoardStateAnalyseController.getNumberOfBearPairsAfterPlacingToken(
                                 this.getPlayerBoardObject()
                         )
                 );
@@ -97,9 +95,9 @@ public class CascadiaBot extends Player {
 
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.HAWK))
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.HAWK)) {
-                reserveValueContainer.setWildlifeReserveWeight(
+                wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.HAWK,
-                        ReservePopulationController.getNumberOfBearPairsAfterPlacingToken(
+                        BoardStateAnalyseController.getNumberOfBearPairsAfterPlacingToken(
                                 this.getPlayerBoardObject()
                         )
                 );
@@ -108,26 +106,26 @@ public class CascadiaBot extends Player {
             //TODO: Fill in reserves for Elk, Hawk and Salmon
 
 
-            adjacentTileReservePairs.add(new CustomPair<>(tile, reserveValueContainer));
+            tileAndWeightPairs.add(new CustomPair<>(tile, wildlifeTokenWeightContainer));
         }
 
 
         // Identify the largest reserve value that is ALSO available in the wildlife token options
-        CustomPair<Tile, ReserveValueContainer> bestTileReservePair = adjacentTileReservePairs.get(0); // Defaults to the first tile/reserve pair
+        CustomPair<Tile, WildlifeTokenWeightContainer> bestTileWeightPair = tileAndWeightPairs.get(0); // Defaults to the first tile/reserve pair
 
         // Loop through all the tile/reserve pairs and find the one with the largest reserve value.
-        for (CustomPair<Tile, ReserveValueContainer> tileReservePair: adjacentTileReservePairs) {
-            boolean foundReserveValueLargerThanRecorded = tileReservePair.getField2().getLargestWildlifeReserveValue().getValue() >
-                    bestTileReservePair.getField2().getLargestWildlifeReserveValue().getValue();
+        for (CustomPair<Tile, WildlifeTokenWeightContainer> tileWeightPair: tileAndWeightPairs) {
+            boolean foundWeightValueLargerThanRecorded = tileWeightPair.getField2().getLargestWildlifeWeightValue().getValue() >
+                    bestTileWeightPair.getField2().getLargestWildlifeWeightValue().getValue();
 
-            if (foundReserveValueLargerThanRecorded) {
-                bestTileReservePair = tileReservePair;
+            if (foundWeightValueLargerThanRecorded) {
+                bestTileWeightPair = tileWeightPair;
             }
         }
 
         // Extract the wildlife token type from the best tile/reserve pair and return it.
-        WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = bestTileReservePair.getField2().getLargestWildlifeReserveValue().getKey();
-        HexCoordinate hexCoordinateToPlaceWildlifeToken = bestTileReservePair.getField1().getHexCoordinate();
+        WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = bestTileWeightPair.getField2().getLargestWildlifeWeightValue().getKey();
+        HexCoordinate hexCoordinateToPlaceWildlifeToken = bestTileWeightPair.getField1().getHexCoordinate();
 
         return new CustomPair<>(wildlifeTokenTypeToPlace, hexCoordinateToPlaceWildlifeToken);
 

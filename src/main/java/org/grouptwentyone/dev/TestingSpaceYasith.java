@@ -1,12 +1,10 @@
 package org.grouptwentyone.dev;
 
-import org.grouptwentyone.StartGame;
 import org.grouptwentyone.models.*;
-import org.grouptwentyone.models.ReserveValueMaps.FoxWeightValueMap;
+import org.grouptwentyone.models.WeightValueMaps.FoxWeightValueMap;
 import org.grouptwentyone.views.BoardView;
 import org.grouptwentyone.views.GameSetupView;
 import org.grouptwentyone.views.GameUiView;
-import org.grouptwentyone.views.SelectionOptionsView;
 
 import java.util.ArrayList;
 import java.util.List;
