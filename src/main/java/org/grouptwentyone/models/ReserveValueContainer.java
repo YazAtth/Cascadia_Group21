@@ -5,14 +5,18 @@ import java.util.*;
 public class ReserveValueContainer {
 
     private HashMap<WildlifeToken.WildlifeTokenType, Double> wildlifeReserveValueHash = new HashMap<>();
-    private ArrayList<WildlifeToken.WildlifeTokenType> activeWildlifeTokenTypes = new ArrayList<>();
+    private ArrayList<WildlifeToken.WildlifeTokenType> activeWildlifeTokenTypes;
 
-    public ReserveValueContainer() {
+    public ReserveValueContainer(ArrayList<WildlifeToken.WildlifeTokenType> activeWildlifeTokenTypes) {
         wildlifeReserveValueHash.put(WildlifeToken.WildlifeTokenType.BEAR, 0.0);
         wildlifeReserveValueHash.put(WildlifeToken.WildlifeTokenType.ELK, 0.0);
         wildlifeReserveValueHash.put(WildlifeToken.WildlifeTokenType.FOX, 0.0);
         wildlifeReserveValueHash.put(WildlifeToken.WildlifeTokenType.HAWK, 0.0);
         wildlifeReserveValueHash.put(WildlifeToken.WildlifeTokenType.SALMON, 0.0);
+
+        // Marks a certain wildlife token type as active when a weight is set for it.
+        // So if the weights are all 0s, a non-active tile is not returned.
+        this.activeWildlifeTokenTypes = activeWildlifeTokenTypes;
     }
 
     public Map.Entry<WildlifeToken.WildlifeTokenType, Double> getLargestWildlifeReserveValue() {
@@ -41,9 +45,6 @@ public class ReserveValueContainer {
     }
 
     public void setWildlifeReserveWeight(WildlifeToken.WildlifeTokenType wildlifeTokenType, double n) {
-        // Marks a certain wildlife token type as active when a weight is set for it.
-        // So if the weights are all 0s, a non-active tile is not returned.
-        activeWildlifeTokenTypes.add(wildlifeTokenType);
         wildlifeReserveValueHash.put(wildlifeTokenType, n);
     }
 
