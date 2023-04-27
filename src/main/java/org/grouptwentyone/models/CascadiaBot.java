@@ -14,23 +14,21 @@ public class CascadiaBot extends Player {
         this.getPlayerBoardObject().setVerbose(false);
     }
 
-
-    @Override
-    public boolean playTurn() {
-
+    private WildlifeToken.WildlifeTokenType getOptimalWildlifeTokenTypeToPlace() {
         // Calculate reserve values
         ArrayList<Tile> placedTiles = this.getPlayerBoardObject().getActiveTiles();
 
+        // List of habitat tiles and wildlife tokens that are available to the bot
         ArrayList<HabitatTile> habitatTileOptionList = StartGame.selectedTiles;
         ArrayList<WildlifeToken> wildlifeTokenOptionList = StartGame.selectedTokens;
 
         WildlifeToken.WildlifeTokenType bestWildlifeTokenToPlace = wildlifeTokenOptionList.get(0).getWildlifeTokenType();
         ArrayList<CustomPair<Tile, ReserveValueContainer>> adjacentTileReservePairs = new ArrayList<>();
 
+        // Loop through all the tiles that have been placed on the board and calculate the reserve values for each tile.
         for (Tile tile: placedTiles) {
             // Run code to populate reserve values for each tile.
             // Only populate the tiles we need.
-
             ArrayList<Tile> adjacentTiles = this.getPlayerBoardObject().getAdjacentTileList(tile);
 
             for (Tile adjacentTile: adjacentTiles) {
@@ -61,42 +59,13 @@ public class CascadiaBot extends Player {
                 adjacentTileReservePairs.add(new CustomPair<>(adjacentTile, reserveValueContainer));
             }
 
-//            System.out.println(bestTileReservePair);
-
-
-
-
-
-
-
-//            Map.Entry<WildlifeToken.WildlifeTokenType, Double> bestWildlifeTokenReserveValuePairToPlace = wildlifeTokenOptionList.get(0).getWildlifeTokenType();
-
-//            for (CustomPair<Tile, ReserveValueContainer> tileReservePair: adjacentTileReservePairs) {
-//                // Get best reserve within tile
-//                Map.Entry<WildlifeToken.WildlifeTokenType, Double> bestWildlifeTokenReserveValuePairToPlace =
-//                        tileReservePair.getField2().getLargestWildlifeReserveValue();
-//
-//                Map.Entry<WildlifeToken.WildlifeTokenType, Double> wildlifeTokenToPlace =
-//                        tileReservePair.getField2().getLargestWildlifeReserveValue();
-//
-//                boolean isReserveValueLargerThanRecorded = wildlifeTokenToPlace.getValue() > bestWildlifeTokenReserveValuePairToPlace.getValue();
-//                //TODO: Check if the below boolean actually does anything
-//                boolean isWildlifeTokenInOptionList = wildlifeTokenOptionList.contains(new WildlifeToken(wildlifeTokenToPlace.getKey()));
-//
-//                if (isReserveValueLargerThanRecorded && isWildlifeTokenInOptionList) {
-//                    System.out.printf("Changed to %s token", wildlifeTokenToPlace.getKey());
-//                    bestWildlifeTokenReserveValuePairToPlace = wildlifeTokenToPlace;
-//                    bestWildlifeTokenToPlace = bestWildlifeTokenReserveValuePairToPlace.getKey();
-//                }
-//            }
-
-//            bestWildlifeTokenToPlace = bestWildlifeTokenReserveValuePairToPlace.getKey();
         }
 
 
         // Identify the largest reserve value that is ALSO available in the wildlife token options
         CustomPair<Tile, ReserveValueContainer> bestTileReservePair = adjacentTileReservePairs.get(0); // Defaults to the first tile/reserve pair
 
+        // Loop through all the tile/reserve pairs and find the one with the largest reserve value.
         for (CustomPair<Tile, ReserveValueContainer> tileReservePair: adjacentTileReservePairs) {
             boolean foundReserveValueLargerThanRecorded = tileReservePair.getField2().getLargestWildlifeReserveValue().getValue() >
                     bestTileReservePair.getField2().getLargestWildlifeReserveValue().getValue();
@@ -106,9 +75,23 @@ public class CascadiaBot extends Player {
             }
         }
 
+        // Extract the wildlife token type from the best tile/reserve pair and return it.
         WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = bestTileReservePair.getField2().getLargestWildlifeReserveValue().getKey();
+        return wildlifeTokenTypeToPlace;
+
+    }
+
+    private HabitatTile getOptimalHabitatTileToPlace() {
+
+        // Returns empty habitat tile for the time being.
+        return new HabitatTile();
+    }
 
 
+    @Override
+    public boolean playTurn() {
+        WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = getOptimalWildlifeTokenTypeToPlace();
+        HabitatTile habitatTileToPlace = getOptimalHabitatTileToPlace();
 
 
         // Will never return false as the bot will never want to quit the game ... hopefully
