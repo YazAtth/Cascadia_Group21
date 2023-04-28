@@ -10,6 +10,7 @@ import org.grouptwentyone.views.BoardView;
 import org.grouptwentyone.views.SelectionOptionsView;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 // NOTE: Program will sometimes crash until the elk, salmon and hawk reserve values are implemented.
@@ -25,7 +26,15 @@ public class CascadiaBot extends Player {
 
     private CustomPair<WildlifeToken.WildlifeTokenType, HexCoordinate> getOptimalWildlifeTokenTypeAndPositionToPlace() {
         // Calculate reserve values
-        ArrayList<Tile> placedTiles = this.getPlayerBoardObject().getActiveTiles();
+        // Ensure only tiles with empty tokens are collected
+        ArrayList<Tile> placedTiles =
+                this.getPlayerBoardObject().getActiveTiles()
+                        .stream()
+                        .filter(tile -> tile.getHabitatTile().getWildlifeToken().equals(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY)))
+                        .collect(Collectors.toCollection(ArrayList::new));
+
+
+        System.out.println(placedTiles);
 
         // List of habitat tiles and wildlife tokens that are available to the bot
         ArrayList<HabitatTile> habitatTileOptionList = StartGame.selectedTiles;
