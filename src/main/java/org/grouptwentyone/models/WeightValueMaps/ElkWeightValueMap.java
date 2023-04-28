@@ -79,10 +79,10 @@ public class ElkWeightValueMap extends AbstractWeightValueMap {
 
         double elkWeight = elkWeightTable.get(lengthOfPotentialLine);
 
-        boolean doesIntersectLine = potentialLines.size() > 1;
-        if (doesIntersectLine) {
-            elkWeight -= 0.5;
-        }
+//        boolean doesIntersectLine = potentialLines.size() > 1;
+//        if (doesIntersectLine) {
+//            elkWeight -= 0.5;
+//        }
 
         return elkWeight;
     }

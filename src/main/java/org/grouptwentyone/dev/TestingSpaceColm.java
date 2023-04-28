@@ -3,14 +3,54 @@ package org.grouptwentyone.dev;
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.HabitatTilesController;
 import org.grouptwentyone.controllers.UserTerminationController;
-import org.grouptwentyone.models.CascadiaBot;
-import org.grouptwentyone.models.Player;
-import org.grouptwentyone.models.PlayerManager;
+import org.grouptwentyone.models.*;
 import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
 
 public class TestingSpaceColm {
+
+    private static void testPlacingElkTokens() {
+        CascadiaBot p1 = new CascadiaBot("Ton");
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 1));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 1));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3, 3));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3, 2));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(4, 3));
+
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2, 2));
+//
+//        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
+//        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1, 2));
+
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2, 3));
+
+        p1.playTurn();
+    }
     private static void testBotGame() {
         ArrayList<Player> playerList = new ArrayList<>();
         playerList.add(new CascadiaBot("bot1"));
@@ -50,9 +90,11 @@ public class TestingSpaceColm {
     }
 
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
-        testBotGame();
-        long endTime = System.currentTimeMillis();
-        System.out.println("Time taken: " + (endTime-startTime));
+//        long startTime = System.currentTimeMillis();
+//        testBotGame();
+//        long endTime = System.currentTimeMillis();
+//        System.out.println("Time taken: " + (endTime-startTime));
+
+        testPlacingElkTokens();
     }
 }

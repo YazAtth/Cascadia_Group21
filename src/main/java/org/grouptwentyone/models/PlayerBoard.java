@@ -529,8 +529,9 @@ public class PlayerBoard {
     ////////////////////////
     public ArrayList<Tile> getConnectedSameTilesWest(Tile tile, PlayerBoard playerBoard) {
         ArrayList<Tile> sameTilesWest = new ArrayList<>();
+        sameTilesWest.add(tile);
 
-        int moveOneWest = 0;
+        int moveOneWest = -1;
         int xCoord = tile.getHexCoordinate().getX();
         int yCord =  tile.getHexCoordinate().getY();
 
@@ -543,19 +544,23 @@ public class PlayerBoard {
     }
     public ArrayList<Tile> getConnectedSameTilesNorthWest(Tile tile, PlayerBoard playerBoard) {
         ArrayList<Tile> sameTilesNorthWest = new ArrayList<>();
+        sameTilesNorthWest.add(tile);
 
         int moveOneWest = 0;
-        int moveOneNorth = 0;
+        int moveOneNorth = -1;
         int xCoord = tile.getHexCoordinate().getX();
         int yCord =  tile.getHexCoordinate().getY();
+        if (((xCoord + moveOneNorth) % 2 == 0)) {
+            moveOneWest--;
+        }
 
         while(playerBoard.getTileByCoordinate(xCoord + moveOneNorth, yCord + moveOneWest).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
                 == WildlifeToken.WildlifeTokenType.ELK) {
             sameTilesNorthWest.add(playerBoard.getTileByCoordinate(xCoord + moveOneNorth, yCord + moveOneWest));
-            if (((xCoord + moveOneNorth) % 2 == 0)) {
+            moveOneNorth--;
+            if ((xCoord + moveOneNorth) % 2 == 0) {
                 moveOneWest--;
             }
-            moveOneNorth--;
 
         }
         return sameTilesNorthWest;
@@ -563,18 +568,22 @@ public class PlayerBoard {
 
     public ArrayList<Tile> getConnectedSameTilesNorthEast(Tile tile, PlayerBoard playerBoard) {
         ArrayList<Tile> sameTilesNorthEast = new ArrayList<>();
+        sameTilesNorthEast.add(tile);
 
-        int moveOneNorth = 0;
+        int moveOneNorth = -1;
         int xCoord = tile.getHexCoordinate().getX();
         int yCord =  tile.getHexCoordinate().getY();
+        if ((xCoord + moveOneNorth) % 2 == 1 && yCord > 0) {
+            yCord++;
+        }
 
         while(playerBoard.getTileByCoordinate(xCoord + moveOneNorth, yCord).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
                 == WildlifeToken.WildlifeTokenType.ELK) {
             sameTilesNorthEast.add(playerBoard.getTileByCoordinate(xCoord + moveOneNorth, yCord));
+            moveOneNorth--;
             if ((xCoord + moveOneNorth) % 2 == 1 && yCord > 0) {
                 yCord++;
             }
-            moveOneNorth--;
 
         }
         return sameTilesNorthEast;

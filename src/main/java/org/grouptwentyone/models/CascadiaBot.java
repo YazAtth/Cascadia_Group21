@@ -48,8 +48,8 @@ public class CascadiaBot extends Player {
         for (Tile tile: placedTiles) {
 
             //check if token has already been placed on tile
-//            if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY)
-//                continue;
+            if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY)
+                continue;
 
             // Run code to populate reserve values for each tile.
             // Only populate the tiles we need.
@@ -126,6 +126,8 @@ public class CascadiaBot extends Player {
 
                 PriorityQueue<Integer> linesOfElk = BoardStateAnalyseController.getLinesOfElkFromPosition(this.getPlayerBoardObject(), tile.getHexCoordinate());
                 elkWeight = elkWeightValueMap.getWeightValue(linesOfElk);
+
+                System.out.println("Elk Weight: " + elkWeight);
 
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.ELK,
