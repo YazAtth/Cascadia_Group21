@@ -1,6 +1,7 @@
 package org.grouptwentyone.models.WeightValueMaps;
 
 import java.util.HashMap;
+import java.util.PriorityQueue;
 
 /*  FOR HABITAT TILES
     We want to place a habitat tile that will allow the possibility to get a large line of elk.
@@ -11,7 +12,7 @@ import java.util.HashMap;
     For any given non-ghost habitat tile that contains an elk icon, we want to see what
     would be the length of the line of elk we get as a result of placing an elk token on that
     tile.
-    For example, if placing an elk token on a tile gets us a length of line (i.e, there are no
+    For example, if placing an elk token on a tile gets us a length of line 1 (i.e, there are no
     other elks around the token to make a line) we return 0.9.
     example 2: if placing an elk token on a tile gets us a run of two (i.e, there was already one
     elk to connect to, and now we could make a line of two. In this case, we would return a weight of
@@ -54,9 +55,22 @@ public class ElkWeightValueMap extends AbstractWeightValueMap {
         elkWeightTable.put(4, 5.5);
     }
 
-
+    //not used
     @Override
-    double getWeightValue(int lengthOfPotentialLine) {
+    double getWeightValue(int numOfPairs){
+        return 0;
+    }
+
+    public double getWeightValue(PriorityQueue<Integer> potentialLines) {
+
+        if (potentialLines.size() == 0)
+            return 0.0;
+
+        int lengthOfPotentialLine = potentialLines.peek();
+
+        //no interest as it doesn't benefit player scoring
+        if (lengthOfPotentialLine > 4)
+            return -2;
 
         //error handling
         if (!elkWeightTable.containsKey(lengthOfPotentialLine)) {
@@ -65,7 +79,8 @@ public class ElkWeightValueMap extends AbstractWeightValueMap {
 
         double elkWeight = elkWeightTable.get(lengthOfPotentialLine);
 
-        if (doesIntersectLine()) {
+        boolean doesIntersectLine = potentialLines.size() > 1;
+        if (doesIntersectLine) {
             elkWeight -= 0.5;
         }
 
@@ -73,8 +88,8 @@ public class ElkWeightValueMap extends AbstractWeightValueMap {
     }
 
     // checks to see if placing an elk on that tile will intersect an existing line of elk
-    boolean doesIntersectLine() {
-
-        return true; //temporary
-    }
+//    boolean doesIntersectLine() {
+//
+//        return true; //temporary
+//    }
 }

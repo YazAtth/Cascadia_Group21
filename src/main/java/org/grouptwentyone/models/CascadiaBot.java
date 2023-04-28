@@ -4,6 +4,7 @@ import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.BoardStateAnalyseController;
 import org.grouptwentyone.controllers.WeightController;
 import org.grouptwentyone.models.WeightValueMaps.BearWeightValueMap;
+import org.grouptwentyone.models.WeightValueMaps.ElkWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.FoxWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.HawkWeightValueMap;
 import org.grouptwentyone.views.BoardView;
@@ -45,6 +46,10 @@ public class CascadiaBot extends Player {
 
         // Loop through all the tiles that have been placed on the board and calculate the reserve values for each tile.
         for (Tile tile: placedTiles) {
+
+            //check if token has already been placed on tile
+//            if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY)
+//                continue;
 
             // Run code to populate reserve values for each tile.
             // Only populate the tiles we need.
@@ -115,11 +120,16 @@ public class CascadiaBot extends Player {
 
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK))
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.ELK)) {
+
+                double elkWeight = 0;
+                ElkWeightValueMap elkWeightValueMap = new ElkWeightValueMap();
+
+                PriorityQueue<Integer> linesOfElk = BoardStateAnalyseController.getLinesOfElkFromPosition(this.getPlayerBoardObject(), tile.getHexCoordinate());
+                elkWeight = elkWeightValueMap.getWeightValue(linesOfElk);
+
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.ELK,
-                        BoardStateAnalyseController.getNumberOfBearPairsBeforePlacingToken(
-                                this.getPlayerBoardObject()
-                        )
+                        elkWeight
                 );
             }
 
