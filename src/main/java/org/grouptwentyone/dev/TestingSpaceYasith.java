@@ -18,7 +18,7 @@ public class TestingSpaceYasith {
                 new CascadiaBot("CascadiaBot")
 //                new Player("Dom"),
 //                new Player("Yasith")
-                ));
+        ));
 
         PlayerManager playerManager = new PlayerManager(playerList);
         Player activePlayer = playerManager.getFirstPlayer();
@@ -26,7 +26,7 @@ public class TestingSpaceYasith {
 //        while (true) {
 
 
-        for (int i=0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
 
 //            if (!activePlayer.playTurn()) {
 //                break;
@@ -97,7 +97,7 @@ public class TestingSpaceYasith {
 
         ArrayList<Player> playerList = GameSetupView.getPlayerInformationFromUser(4);
 
-        for (Player player: playerList) {
+        for (Player player : playerList) {
             System.out.println(player.getClass().getSimpleName());
         }
 
@@ -120,28 +120,28 @@ public class TestingSpaceYasith {
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1,1));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 1));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1,0));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 1));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2,0));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3,3));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3, 3));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3,2));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3, 2));
 
         p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX));
-        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,3));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1, 3));
 
         p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
-        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,2));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1, 2));
 
         p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
         p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2, 1));
@@ -150,7 +150,7 @@ public class TestingSpaceYasith {
         p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2, 3));
 
         p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON));
-        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3,3));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3, 3));
 
         p1.playTurn();
 
@@ -159,6 +159,53 @@ public class TestingSpaceYasith {
 
 
     public static void testingPlacingBearTokens() {
+
+        CascadiaBot p1 = new CascadiaBot("Ton");
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 1));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 1));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3, 3));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3, 2));
+
+//        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.FOX));
+//        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,3));
+//
+//        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
+//        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,2));
+//
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3, 2));
+//
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1, 2));
+
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3, 3));
+
+        p1.playTurn();
+
+
+    }
+    public static void testingPlacingHawksTokens() {
 
         CascadiaBot p1 = new CascadiaBot("Ton");
 
@@ -192,13 +239,13 @@ public class TestingSpaceYasith {
 //        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
 //        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,2));
 //
-        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.HAWK));
         p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3, 2));
 //
-        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.HAWK));
         p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1, 2));
 
-        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR));
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.HAWK));
         p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3,3));
 
         p1.playTurn();
@@ -211,6 +258,6 @@ public class TestingSpaceYasith {
     public static void main(String[] args) {
 
 //        testingPlacingFoxTokens();
-        testingPlacingBearTokens();
+        testingPlacingHawksTokens();
     }
 }

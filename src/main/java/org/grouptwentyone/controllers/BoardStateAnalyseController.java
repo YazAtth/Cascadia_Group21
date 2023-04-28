@@ -32,6 +32,35 @@ public class BoardStateAnalyseController {
         return foxScore;
     }
 
+    public static boolean doesPlacingBearRuinPair(PlayerBoard playerBoard, HexCoordinate tileCord) {
+        Tile tile = playerBoard.getTileByCoordinate(tileCord.getX(), tileCord.getY());
+
+        ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentTileList(tile);
+        int adjacentBears = 0;
+
+        for (Tile adjacentTile : adjacentTileList) {
+
+            if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                    == WildlifeToken.WildlifeTokenType.BEAR) {
+
+                adjacentBears++;
+                if (adjacentBears > 1) return true;
+
+                //check to see if adjacent tile with a bear on it is already in a pair
+                ArrayList<Tile> adjacentTilesOfAdjacentTileList = playerBoard.getAdjacentTileList(adjacentTile);
+
+                for (Tile adjacentTileOfAdjacentTile : adjacentTilesOfAdjacentTileList) {
+
+                    if (adjacentTileOfAdjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                            == WildlifeToken.WildlifeTokenType.BEAR) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public static int getNumberOfBearPairsBeforePlacingToken(PlayerBoard playerBoard) {
 
         double numberOfPairs = 0;
@@ -80,35 +109,6 @@ public class BoardStateAnalyseController {
         return (int) numberOfPairs;
     }
 
-    public static boolean doesPlacingBearRuinPair(PlayerBoard playerBoard, HexCoordinate tileCord) {
-        Tile tile = playerBoard.getTileByCoordinate(tileCord.getX(), tileCord.getY());
-
-        ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentTileList(tile);
-        int adjacentBears = 0;
-
-        for (Tile adjacentTile : adjacentTileList) {
-
-            if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType()
-                    == WildlifeToken.WildlifeTokenType.BEAR) {
-
-                adjacentBears++;
-                if (adjacentBears > 1) return true;
-
-                //check to see if adjacent tile with a bear on it is already in a pair
-                ArrayList<Tile> adjacentTilesOfAdjacentTileList = playerBoard.getAdjacentTileList(adjacentTile);
-
-                for (Tile adjacentTileOfAdjacentTile : adjacentTilesOfAdjacentTileList) {
-
-                    if (adjacentTileOfAdjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType()
-                            == WildlifeToken.WildlifeTokenType.BEAR) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     public static boolean doesPlacingBearMakePair(PlayerBoard playerBoard, HexCoordinate tileCord) {
         Tile tile = playerBoard.getTileByCoordinate(tileCord.getX(), tileCord.getY());
         int adjacentBears = 0;
@@ -144,5 +144,42 @@ public class BoardStateAnalyseController {
         } else {
             return false;
         }
+    }
+
+    public static int getNumberOfScorableHawksBeforePlacingToken(PlayerBoard playerBoard) {
+        ArrayList<Tile> listOfAllHawks = new ArrayList<>();
+
+        for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
+            for (Tile tile : row) {
+                if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() ==
+                    WildlifeToken.WildlifeTokenType.HAWK) {
+                    listOfAllHawks.add(tile);
+                }
+            }
+        }
+
+        for (Tile tileInList : listOfAllHawks) {
+            ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentNonEmptyTileList(tileInList);
+            for (Tile adjacentTile : adjacentTileList) {
+                if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() ==
+                        WildlifeToken.WildlifeTokenType.HAWK) {
+                    listOfAllHawks.remove(adjacentTile);
+                }
+            }
+        }
+
+        return listOfAllHawks.size();
+    }
+    public static boolean doesHawkPlacementMakeAdjacentHawks(PlayerBoard playerBoard, HexCoordinate tileCord) {
+        Tile tile = playerBoard.getTileByCoordinate(tileCord.getX(), tileCord.getY());
+
+        ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentNonEmptyTileList(tile);
+
+        for (Tile adjacentTile : adjacentTileList) {
+            if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() ==
+                    WildlifeToken.WildlifeTokenType.HAWK)  return true;
+        }
+
+        return false;
     }
 }

@@ -42,30 +42,6 @@ public class HawkWeightValueMap extends AbstractWeightValueMap {
             throw new IllegalArgumentException(String.format("Key \"%s\" does not exist", validHawksOnPlayerBoard));
         }
 
-        //placing next to a valid hawk yields no extra points, so return weight = 0
-        //we don't get rewarded for having more than 8 hawks, so return weight = 0
-        if (isAdjacentToOneHawk() || validHawksOnPlayerBoard > 8) {
-            return 0;
-        }
-
-        //placing next to two or more hawks may result in weird behaviour in scoring, we punish this with weight = -2
-        if (isAdjacentToMoreThanOneHawk()) {
-            return -2;
-        }
-
         return hawkWeightTable.get(validHawksOnPlayerBoard);
     }
-
-    //check to see if placing a hawk on that tile will result in two hawks being beside each other
-    boolean isAdjacentToOneHawk() {
-        //TODO
-        return true; //temporary
-    }
-    //check to see if placing a hawk on that tile will result in three or more hawks being beside each other
-    boolean isAdjacentToMoreThanOneHawk() {
-        //TODO
-        return true; //temporary
-    }
-
-
 }
