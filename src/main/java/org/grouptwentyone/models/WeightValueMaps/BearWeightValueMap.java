@@ -1,5 +1,7 @@
 package org.grouptwentyone.models.WeightValueMaps;
 
+import org.grouptwentyone.controllers.WeightController;
+
 import java.util.HashMap;
 
 public class BearWeightValueMap extends AbstractWeightValueMap {
@@ -38,7 +40,7 @@ public class BearWeightValueMap extends AbstractWeightValueMap {
         double bearWeight = bearWeightTable.get(numOfPairs);
 
         if (areAllBearsInPairs()) {
-            bearWeight -= 0.5;
+            bearWeight -= WeightController.WeightConstants.allBearsInPairsReduction;
         }
 
         return bearWeight;
@@ -60,7 +62,7 @@ public class BearWeightValueMap extends AbstractWeightValueMap {
     }
 
     public double ruinsPairWeight() {
-        return -2.0;
+        return WeightController.WeightConstants.ruinsBearPairWeight;
     }
 
 
