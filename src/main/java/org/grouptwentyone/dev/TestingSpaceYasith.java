@@ -256,8 +256,7 @@ public class TestingSpaceYasith {
 
 
     public static void main(String[] args) {
-
-//        testingPlacingFoxTokens();
-        testingPlacingHawksTokens();
+            testingPlacingBearTokens();
+//        testingPlacingHawksTokens();
     }
 }

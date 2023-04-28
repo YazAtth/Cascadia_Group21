@@ -52,7 +52,7 @@ public class CascadiaBot extends Player {
                 int numberOfAdjacentUniquePlacedWildlifeTokensToFox =
                         BoardStateAnalyseController.getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(this.getPlayerBoardObject(), tile);
 
-//                System.out.printf("Number of adjacent unique wildlife tokens to fox at %s: %d\n", tile.getHexCoordinate(), numberOfAdjacentUniquePlacedWildlifeTokensToFox);
+                //System.out.printf("Number of adjacent unique wildlife tokens to fox at %s: %d\n", tile.getHexCoordinate(), numberOfAdjacentUniquePlacedWildlifeTokensToFox);
 
                 // Get weight based on state
                 FoxWeightValueMap foxWeightValueMap = new FoxWeightValueMap();
@@ -68,7 +68,7 @@ public class CascadiaBot extends Player {
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR))
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.BEAR)) {
 
-                //System.out.printf("Looking at tile at %s\n", tile.getHexCoordinate());
+                System.out.printf("Looking at tile at %s\n", tile.getHexCoordinate());
 
                 double bearWeight = 0;
                 BearWeightValueMap bearWeightValueMap = new BearWeightValueMap();
@@ -95,7 +95,7 @@ public class CascadiaBot extends Player {
                 boolean doesPlacingBearRuinPair = BoardStateAnalyseController.doesPlacingBearRuinPair(this.playerBoardObject, tile.getHexCoordinate());
                 if (doesPlacingBearRuinPair) bearWeight = bearWeightValueMap.ruinsPairWeight();
 
-               // System.out.println("\tBear weight: " + bearWeight);
+                System.out.println("\tBear weight: " + bearWeight);
 
 
                 wildlifeTokenWeightContainer.setWildlifeWeight(
