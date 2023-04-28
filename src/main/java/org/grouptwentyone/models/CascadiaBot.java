@@ -199,10 +199,61 @@ public class CascadiaBot extends Player {
 
     }
 
-    private HabitatTile getOptimalHabitatTileToPlace() {
+    public CustomPair<HabitatTile, HexCoordinate> getOptimalHabitatTileAndPositionToPlace() {
 
-        // Returns empty habitat tile for the time being.
-        return new HabitatTile();
+        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
+        System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
+        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+
+        ArrayList<Tile> ghostTileList = this.getPlayerBoardObject().getPlaceableTileOptionList();
+
+        // Gets list of token types that can be placed on the tiles in selectedTiles list (optimisation)
+        ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenOptionList =
+                StartGame.selectedTiles
+                        .stream()
+                        .flatMap(habitatTile -> habitatTile.getWildlifeTokenTypeList().stream())
+                        .distinct()
+                        .collect(Collectors.toCollection(ArrayList::new));
+
+
+        // Hash of ghost tiles and their wildlife token weight containers.
+        HashMap<Tile, WildlifeTokenWeightContainer> ghostTileAndWildlifeWeightHash = ghostTileList
+                .stream()
+                .map(ghostTile -> new CustomPair<>(ghostTile, new WildlifeTokenWeightContainer(wildlifeTokenOptionList)))
+                .collect(Collectors.toMap(CustomPair::getField1, CustomPair::getField2, (a, b) -> b, HashMap::new));
+
+
+        // TODO: Populate the weight containers of each ghost tile
+
+
+
+
+
+        // List of selected tile/ghost/weight tile triples.
+        ArrayList<Triple<HabitatTile, Tile, Double>> selectedTileAndGhostTilePairs = new ArrayList<>();
+
+        // Populate the list with all the selected tile/ghost tile pair and the weight of each pair (making it a triple)
+        for (HabitatTile selectedTile: StartGame.selectedTiles) {
+            for (Tile ghostTile: ghostTileList) {
+
+                // Get the list of wildlife tokens that can be placed on the selected tile
+                ArrayList<WildlifeToken.WildlifeTokenType> placeableWildlifeTokensOnSelectedTileList = new ArrayList<>(selectedTile.getWildlifeTokenTypeList());
+                // Get WildlifeWeightContainer of ghost tile
+                WildlifeTokenWeightContainer ghostTileWildlifeWeightContainer = ghostTileAndWildlifeWeightHash.get(ghostTile);
+                // Get the combined weight of the wildlife tokens that can be placed on the selected tile
+                double localWeight = ghostTileWildlifeWeightContainer.getCombinedWeightValue(placeableWildlifeTokensOnSelectedTileList);
+
+                selectedTileAndGhostTilePairs.add(new Triple<>(selectedTile, ghostTile, localWeight));
+            }
+        }
+
+        // TODO: Get the triple with the largest weight value, then hex coordinate of the ghost tile and selected tile of said triple
+
+
+//        System.out.println(ghostTileAndWildlifeWeightHash);
+
+        // Temporary dummy output
+        return new CustomPair<>(new HabitatTile(), new HexCoordinate(0,0) );
     }
 
 
@@ -218,7 +269,8 @@ public class CascadiaBot extends Player {
         System.out.println(wildlifeTokenTypeToPlace);
         System.out.println(wildlifeTokenPositionToPlace);
 
-        HabitatTile habitatTileToPlace = getOptimalHabitatTileToPlace();
+        CustomPair<HabitatTile, HexCoordinate> habitatTileAndPositionToPlace = getOptimalHabitatTileAndPositionToPlace();
+
 
 
         // Will never return false as the bot will never want to quit the game ... hopefully

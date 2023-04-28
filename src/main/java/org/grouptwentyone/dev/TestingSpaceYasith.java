@@ -253,11 +253,21 @@ public class TestingSpaceYasith {
 
     }
 
+    public static void testingPlacingTileAlgo() {
+        CascadiaBot p1 = new CascadiaBot("Ton");
+
+//        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+//        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
+
+        p1.getOptimalHabitatTileAndPositionToPlace();
+    }
+
 
 
     public static void main(String[] args) {
 
 //        testingPlacingFoxTokens();
-        testingPlacingHawksTokens();
+//        testingPlacingHawksTokens();
+        testingPlacingTileAlgo();
     }
 }
