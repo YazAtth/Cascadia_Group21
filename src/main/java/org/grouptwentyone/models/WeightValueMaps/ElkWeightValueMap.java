@@ -97,8 +97,6 @@ public class ElkWeightValueMap extends AbstractWeightValueMap {
                 intersectingLines++;
         }
 
-        System.out.println(intersectingLines);
-
         return intersectingLines > 1;
     }
 }

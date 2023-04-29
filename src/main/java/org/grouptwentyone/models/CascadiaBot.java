@@ -129,7 +129,7 @@ public class CascadiaBot extends Player {
                 PriorityQueue<Integer> linesOfElk = BoardStateAnalyseController.getLinesOfElkFromPosition(this.getPlayerBoardObject(), tile.getHexCoordinate());
                 elkWeight = elkWeightValueMap.getWeightValue(linesOfElk);
 
-                System.out.printf("Elk Weight: %.2f, at tile %s\n", elkWeight, tile.getHexCoordinate());
+//                System.out.printf("Elk Weight: %.2f, at tile %s\n", elkWeight, tile.getHexCoordinate());
 
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.ELK,

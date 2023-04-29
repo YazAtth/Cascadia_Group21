@@ -250,8 +250,6 @@ public class BoardStateAnalyseController {
         if (tilesNorthWest.size() > 0) lines.add(tilesNorthWest.size());
         if (tilesNorthEast.size() > 0) lines.add(tilesNorthEast.size());
 
-        System.out.println("line length: " + lines.peek());
-
         return lines;
     }
 }
