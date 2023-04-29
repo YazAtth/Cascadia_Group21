@@ -311,7 +311,6 @@ public class CascadiaBot extends Player {
                 Tile tileWithBearPlaceable = new Tile(new HabitatTile(true), ghostTile.getHexCoordinate());
                 duplicatePlayerBoard.setSelectedTile(tileWithBearPlaceable.getHabitatTile());
                 duplicatePlayerBoard.addNewTile(tileWithBearPlaceable.getHexCoordinate());
-
                 double bearWeight = 0;
                 BearWeightValueMap bearWeightValueMap = new BearWeightValueMap();
 
