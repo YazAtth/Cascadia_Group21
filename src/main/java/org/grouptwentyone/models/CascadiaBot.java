@@ -223,7 +223,6 @@ public class CascadiaBot extends Player {
                 .collect(Collectors.toMap(CustomPair::getField1, CustomPair::getField2, (a, b) -> b, HashMap::new));
 
 
-        // TODO: Populate the weight containers of each ghost tile
         for (Map.Entry<Tile, WildlifeTokenWeightContainer> ghostTileWeightPair:
                 ghostTileAndWildlifeWeightHash.entrySet()) {
 
@@ -231,30 +230,24 @@ public class CascadiaBot extends Player {
             Tile ghostTile = ghostTileWeightPair.getKey();
             WildlifeTokenWeightContainer wildlifeTokenWeightContainer = ghostTileWeightPair.getValue();
 
-            System.out.println("Looking at position " + ghostTile.getHexCoordinate());
-
+            // TODO: Populate the weight containers of each ghost tile, fox entries have already been populated.
+            // Populate Fox tokens
             if (wildlifeTokenOptionList.contains(WildlifeToken.WildlifeTokenType.FOX)) {
 
+                // Duplicate PlayerBoard is needed to simulate placing a tile with a fox placeable on the ghost tile position.
                 PlayerBoard duplicatePlayerBoard = this.getPlayerBoardObject().getDuplicate();
                 Tile tileWithFoxPlaceable = new Tile(new HabitatTile(true), ghostTile.getHexCoordinate());
-
                 duplicatePlayerBoard.setSelectedTile(tileWithFoxPlaceable.getHabitatTile());
                 duplicatePlayerBoard.addNewTile(tileWithFoxPlaceable.getHexCoordinate());
 
-                // Get state of board
+                // Get state of duplicate PlayerBoard
                 int numberOfAdjacentUniquePlacedWildlifeTokensToFox =
                         BoardStateAnalyseController.getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(duplicatePlayerBoard, tileWithFoxPlaceable);
 
-//                System.out.println("\tNumber of adjacent unique wildlife tokens to fox: " + numberOfAdjacentUniquePlacedWildlifeTokensToFox);
-
-
-//                System.out.printf("Number of adjacent unique wildlife tokens to fox at %s: %d\n", tile.getHexCoordinate(), numberOfAdjacentUniquePlacedWildlifeTokensToFox);
 
                 // Get weight based on state
                 FoxWeightValueMap foxWeightValueMap = new FoxWeightValueMap();
                 double foxWeight = foxWeightValueMap.getWeightValue(numberOfAdjacentUniquePlacedWildlifeTokensToFox);
-
-                System.out.println("\tfox weight: " + foxWeight);
 
                 // Set weight container based on weight
                 wildlifeTokenWeightContainer.setWildlifeWeight(
@@ -262,11 +255,8 @@ public class CascadiaBot extends Player {
                         foxWeight
                 );
 
-                System.out.println("\tWildlifeWeightContainer: " + wildlifeTokenWeightContainer);
 
             }
-
-//            System.out.println("Wildlife token weight container: " + wildlifeTokenWeightContainer.getLargestWildlifeWeightValue());
         }
 
 

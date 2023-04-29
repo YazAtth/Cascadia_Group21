@@ -12,10 +12,7 @@ public class BoardStateAnalyseController {
     public static int getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(PlayerBoard playerBoard, Tile focusedTile) {
 
         int foxScore = 0;
-
-
         boolean tileHasFoxToken = focusedTile.getHabitatTile().getWildlifeTokenTypeList().contains(WildlifeToken.WildlifeTokenType.FOX);
-        System.out.println("\tfocusedTile: " + focusedTile.getHabitatTile().getWildlifeTokenTypeList());
 
         if (tileHasFoxToken) {
             ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentTileList(focusedTile);
