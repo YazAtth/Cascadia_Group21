@@ -444,30 +444,37 @@ public class CascadiaBot extends Player {
 //        find best token option
         PriorityQueue<CustomPair<Tile, WildlifeTokenWeightContainer>> listOfTokenAndPositionOptions = getOptimalWildlifeTokenTypeAndPositionToPlace();
         CustomPair<Tile, WildlifeTokenWeightContainer> bestTokenAndPosition = listOfTokenAndPositionOptions.poll();
-        WildlifeToken bestToken = new WildlifeToken(bestTokenAndPosition.getField2().getLargestWildlifeWeightValue().getKey());
-        HexCoordinate bestTokenCoord = bestTokenAndPosition.getField1().getHexCoordinate();
 
-        //place both tile and token
-        this.getPlayerBoardObject().setSelectedTile(bestHabitatTile);
-        StartGame.selectedTiles.remove(bestHabitatTile);
-        StartGame.selectedTiles.add(habitatTilesBag.remove(0));
-        this.getPlayerBoardObject().addNewTile(bestTileCoord);
-        this.getPlayerBoardObject().setSelectedToken(bestToken);
-        this.getPlayerBoardObject().addNewToken(bestTokenCoord);
+        if (bestTokenAndPosition != null) {
+            WildlifeToken bestToken = new WildlifeToken(bestTokenAndPosition.getField2().getLargestWildlifeWeightValue().getKey());
+            HexCoordinate bestTokenCoord = bestTokenAndPosition.getField1().getHexCoordinate();
 
-        //attempt to remove token from token selection
-        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
-        boolean check = true;
-        for (WildlifeToken token: StartGame.selectedTokens) {
-            if (token.getWildlifeTokenType() == bestToken.getWildlifeTokenType()) {
-                StartGame.selectedTokens.remove(token);
-                System.out.println("token removed");
-                check = false;
-                break;
+            //place both tile and token
+            this.getPlayerBoardObject().setSelectedTile(bestHabitatTile);
+            StartGame.selectedTiles.remove(bestHabitatTile);
+            this.getPlayerBoardObject().addNewTile(bestTileCoord);
+            this.getPlayerBoardObject().setSelectedToken(bestToken);
+            this.getPlayerBoardObject().addNewToken(bestTokenCoord);
+
+            //attempt to remove token from token selection
+            System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
+            boolean check = true;
+            for (WildlifeToken token : StartGame.selectedTokens) {
+                if (token.getWildlifeTokenType() == bestToken.getWildlifeTokenType()) {
+                    StartGame.selectedTokens.remove(token);
+                    System.out.println("token removed");
+                    check = false;
+                    break;
+                }
             }
+            if (check) throw new IllegalStateException(String.format("token %s, not removed", bestToken.getWildlifeTokenType()));
+        } else {
+            StartGame.selectedTokens.remove(StartGame.selectedTiles.indexOf(bestHabitatTile));
+            this.getPlayerBoardObject().setSelectedTile(bestHabitatTile);
+            StartGame.selectedTiles.remove(bestHabitatTile);
+            this.getPlayerBoardObject().addNewTile(bestTileCoord);
         }
-        StartGame.selectedTokens.add(wildlifeTokenBag.remove(0));
-        if (check) throw new IllegalStateException(String.format("token %s, not removed", bestToken.getWildlifeTokenType()));
+        SelectionOptionsView.replaceTileAndToken();
 
 
 
