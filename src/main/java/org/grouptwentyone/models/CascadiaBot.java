@@ -474,7 +474,7 @@ public class CascadiaBot extends Player {
             StartGame.selectedTiles.remove(bestHabitatTile);
             this.getPlayerBoardObject().addNewTile(bestTileCoord);
         }
-        SelectionOptionsView.replaceTileAndToken();
+        StartGame.tilesRemain = SelectionOptionsView.replaceTileAndToken();
 
 
 
