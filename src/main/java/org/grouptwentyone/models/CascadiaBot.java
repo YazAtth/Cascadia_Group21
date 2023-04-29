@@ -264,7 +264,7 @@ public class CascadiaBot extends Player {
 
 
         // List of selected tile/ghost/weight tile triples.
-        ArrayList<Triple<HabitatTile, Tile, Double>> selectedTileAndGhostTilePairs = new ArrayList<>();
+        ArrayList<Triple<HabitatTile, Tile, Double>> selectedTileGhostTileAndWeightTriple = new ArrayList<>();
 
         // Populate the list with all the selected tile/ghost tile pair and the weight of each pair (making it a triple)
         for (HabitatTile selectedTile: StartGame.selectedTiles) {
@@ -277,17 +277,22 @@ public class CascadiaBot extends Player {
                 // Get the combined weight of the wildlife tokens that can be placed on the selected tile
                 double localWeight = ghostTileWildlifeWeightContainer.getCombinedWeightValue(placeableWildlifeTokensOnSelectedTileList);
 
-                selectedTileAndGhostTilePairs.add(new Triple<>(selectedTile, ghostTile, localWeight));
+                selectedTileGhostTileAndWeightTriple.add(new Triple<>(selectedTile, ghostTile, localWeight));
             }
         }
 
-        // TODO: Get the triple with the largest weight value, then hex coordinate of the ghost tile and selected tile of said triple
+        // Get the triple with the largest weight value
+        Triple<HabitatTile, Tile, Double> tripleWithLargestWeight = selectedTileGhostTileAndWeightTriple.get(0);
+        for (Triple<HabitatTile, Tile, Double> triple: selectedTileGhostTileAndWeightTriple) {
+            if (triple.getField3() > tripleWithLargestWeight.getField3()) {
+                tripleWithLargestWeight = triple;
+            }
+        }
 
+        HabitatTile optimalSelectedTile = tripleWithLargestWeight.getField1();
+        HexCoordinate optimalHexCoordinatePosition = tripleWithLargestWeight.getField2().getHexCoordinate();
 
-//        System.out.println(ghostTileAndWildlifeWeightHash);
-
-        // Temporary dummy output
-        return new CustomPair<>(new HabitatTile(), new HexCoordinate(0,0) );
+        return new CustomPair<>(optimalSelectedTile, optimalHexCoordinatePosition);
     }
 
 
@@ -296,6 +301,7 @@ public class CascadiaBot extends Player {
         System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
         System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
 
+        // Finds the most optimal token and its position to place from the selected tokens.
         CustomPair<WildlifeToken.WildlifeTokenType, HexCoordinate> wildlifeTokenTypeAndPositionToPlace = getOptimalWildlifeTokenTypeAndPositionToPlace();
         WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = wildlifeTokenTypeAndPositionToPlace.getField1();
         HexCoordinate wildlifeTokenPositionToPlace = wildlifeTokenTypeAndPositionToPlace.getField2();
@@ -303,7 +309,10 @@ public class CascadiaBot extends Player {
         System.out.println(wildlifeTokenTypeToPlace);
         System.out.println(wildlifeTokenPositionToPlace);
 
+        // Finds the most optimal tile and its position from the selected tiles.
         CustomPair<HabitatTile, HexCoordinate> habitatTileAndPositionToPlace = getOptimalHabitatTileAndPositionToPlace();
+        HabitatTile habitatTileToPlace = habitatTileAndPositionToPlace.getField1();
+        HexCoordinate habitatTilePositionToPlace = habitatTileAndPositionToPlace.getField2();
 
 
 
