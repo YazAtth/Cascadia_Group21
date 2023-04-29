@@ -67,4 +67,12 @@ public class WildlifeTokenWeightContainer {
     private ArrayList<WildlifeToken.WildlifeTokenType> getActiveWildlifeTokenTypes() {
         return activeWildlifeTokenTypes;
     }
+
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+        for (Map.Entry<WildlifeToken.WildlifeTokenType, Double> weightValue: wildlifeWeightValueHash.entrySet()) {
+            output.append(weightValue.getKey()).append(": ").append(weightValue.getValue()).append("\n");
+        }
+        return output.toString();
+    }
 }
