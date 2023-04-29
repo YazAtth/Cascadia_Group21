@@ -2,11 +2,17 @@ package org.grouptwentyone.dev;
 
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.HabitatTilesController;
+import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.controllers.UserTerminationController;
+import org.grouptwentyone.controllers.WildlifeTokensController;
 import org.grouptwentyone.models.*;
 import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
+
+import static org.grouptwentyone.controllers.HabitatTilesController.createBagOfHabitatTiles;
+import static org.grouptwentyone.controllers.StarterHabitatTilesController.createBagOfStarterHabitatTiles;
+import static org.grouptwentyone.controllers.WildlifeTokensController.createBagOfWildlifeTokens;
 
 public class TestingSpaceColm {
 
@@ -90,11 +96,15 @@ public class TestingSpaceColm {
     }
 
     public static void main(String[] args) {
-//        long startTime = System.currentTimeMillis();
-//        testBotGame();
-//        long endTime = System.currentTimeMillis();
-//        System.out.println("Time taken: " + (endTime-startTime));
+        long startTime = System.currentTimeMillis();
+        testBotGame();
+        HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
+        StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
+        WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
+        StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+        StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+        long endTime = System.currentTimeMillis();
+        System.out.println("Time taken: " + (endTime-startTime));
 
-        testPlacingElkTokens();
     }
 }

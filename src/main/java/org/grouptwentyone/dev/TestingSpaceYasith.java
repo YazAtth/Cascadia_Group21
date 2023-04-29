@@ -297,12 +297,13 @@ public class TestingSpaceYasith {
         p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON));
         p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3, 3));
 
-        CustomPair<HabitatTile, HexCoordinate> habitatTileAndPositionToPlace = p1.getOptimalHabitatTileAndPositionToPlace();
-        HabitatTile habitatTileToPlace = habitatTileAndPositionToPlace.getField1();
-        HexCoordinate habitatTilePositionToPlace = habitatTileAndPositionToPlace.getField2();
-
-        System.out.println(habitatTileToPlace);
-        System.out.println(habitatTilePositionToPlace);
+        //Colm: commented out due to changes to core code
+//        CustomPair<HabitatTile, HexCoordinate> habitatTileAndPositionToPlace = p1.getOptimalHabitatTileAndPositionToPlace();
+//        HabitatTile habitatTileToPlace = habitatTileAndPositionToPlace.getField1();
+//        HexCoordinate habitatTilePositionToPlace = habitatTileAndPositionToPlace.getField2();
+//
+//        System.out.println(habitatTileToPlace);
+//        System.out.println(habitatTilePositionToPlace);
     }
 
     public static void salmontesting() {

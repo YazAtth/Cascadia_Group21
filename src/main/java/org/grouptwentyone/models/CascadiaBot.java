@@ -15,6 +15,9 @@ import org.grouptwentyone.views.SelectionOptionsView;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.grouptwentyone.controllers.HabitatTilesController.habitatTilesBag;
+import static org.grouptwentyone.controllers.WildlifeTokensController.wildlifeTokenBag;
+
 
 // NOTE: Program will sometimes crash until the elk, salmon and hawk reserve values are implemented.
 
@@ -27,7 +30,7 @@ public class CascadiaBot extends Player {
         this.getPlayerBoardObject().setVerbose(false);
     }
 
-    private CustomPair<WildlifeToken.WildlifeTokenType, HexCoordinate> getOptimalWildlifeTokenTypeAndPositionToPlace() {
+    private PriorityQueue<CustomPair<Tile, WildlifeTokenWeightContainer>> getOptimalWildlifeTokenTypeAndPositionToPlace() {
         // Calculate reserve values
         // Ensure only tiles with empty tokens are collected
         ArrayList<Tile> placedTiles =
@@ -44,7 +47,10 @@ public class CascadiaBot extends Player {
         ArrayList<WildlifeToken> wildlifeTokenOptionList = StartGame.selectedTokens;
 
         WildlifeToken.WildlifeTokenType bestWildlifeTokenToPlace = wildlifeTokenOptionList.get(0).getWildlifeTokenType();
-        ArrayList<CustomPair<Tile, WildlifeTokenWeightContainer>> tileAndWeightPairs = new ArrayList<>();
+        //sort array by wildlife token weights, from greatest to least
+        PriorityQueue<CustomPair<Tile, WildlifeTokenWeightContainer>> tileAndWeightPairs = new PriorityQueue<>(
+                (o1, o2) -> o2.getField2().getLargestWildlifeWeightValue().getValue().compareTo(o1.getField2().getLargestWildlifeWeightValue().getValue())
+        );
 
         // Loop through all the tiles that have been placed on the board and calculate the reserve values for each tile.
         for (Tile tile: placedTiles) {
@@ -178,27 +184,27 @@ public class CascadiaBot extends Player {
 
 
         // Identify the largest reserve value that is ALSO available in the wildlife token options
-        CustomPair<Tile, WildlifeTokenWeightContainer> bestTileWeightPair = tileAndWeightPairs.get(0); // Defaults to the first tile/reserve pair
-
-        // Loop through all the tile/reserve pairs and find the one with the largest reserve value.
-        for (CustomPair<Tile, WildlifeTokenWeightContainer> tileWeightPair: tileAndWeightPairs) {
-            boolean foundWeightValueLargerThanRecorded = tileWeightPair.getField2().getLargestWildlifeWeightValue().getValue() >
-                    bestTileWeightPair.getField2().getLargestWildlifeWeightValue().getValue();
-
-            if (foundWeightValueLargerThanRecorded) {
-                bestTileWeightPair = tileWeightPair;
-            }
-        }
-
-        // Extract the wildlife token type from the best tile/reserve pair and return it.
-        WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = bestTileWeightPair.getField2().getLargestWildlifeWeightValue().getKey();
-        HexCoordinate hexCoordinateToPlaceWildlifeToken = bestTileWeightPair.getField1().getHexCoordinate();
-
-        return new CustomPair<>(wildlifeTokenTypeToPlace, hexCoordinateToPlaceWildlifeToken);
-
+//        CustomPair<Tile, WildlifeTokenWeightContainer> bestTileWeightPair = tileAndWeightPairs.poll(); // Defaults to the first tile/reserve pair
+//
+//        // Loop through all the tile/reserve pairs and find the one with the largest reserve value.
+//        for (CustomPair<Tile, WildlifeTokenWeightContainer> tileWeightPair: tileAndWeightPairs) {
+//            boolean foundWeightValueLargerThanRecorded = tileWeightPair.getField2().getLargestWildlifeWeightValue().getValue() >
+//                    bestTileWeightPair.getField2().getLargestWildlifeWeightValue().getValue();
+//
+//            if (foundWeightValueLargerThanRecorded) {
+//                bestTileWeightPair = tileWeightPair;
+//            }
+//        }
+//
+//        // Extract the wildlife token type from the best tile/reserve pair and return it.
+//        WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = bestTileWeightPair.getField2().getLargestWildlifeWeightValue().getKey();
+//        HexCoordinate hexCoordinateToPlaceWildlifeToken = bestTileWeightPair.getField1().getHexCoordinate();
+//
+//        return new CustomPair<>(wildlifeTokenTypeToPlace, hexCoordinateToPlaceWildlifeToken);
+        return tileAndWeightPairs;
     }
 
-    public CustomPair<HabitatTile, HexCoordinate> getOptimalHabitatTileAndPositionToPlace() {
+    public PriorityQueue<Triple<HabitatTile, Tile, Double>> getOptimalHabitatTileAndPositionToPlace() {
 
         System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
         System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
@@ -384,8 +390,8 @@ public class CascadiaBot extends Player {
 
 
 
-        // List of selected tile/ghost/weight tile triples.
-        ArrayList<Triple<HabitatTile, Tile, Double>> selectedTileGhostTileAndWeightTriple = new ArrayList<>();
+        // List of selected tile/ghost/weight tile triples, with front of queue being greatest value
+        PriorityQueue<Triple<HabitatTile, Tile, Double>> selectedTileGhostTileAndWeightTriple = new PriorityQueue<>((o1, o2) -> o2.getField3().compareTo(o1.getField3()));
 
         // Populate the list with all the selected tile/ghost tile pair and the weight of each pair (making it a triple)
         for (HabitatTile selectedTile: StartGame.selectedTiles) {
@@ -402,18 +408,19 @@ public class CascadiaBot extends Player {
             }
         }
 
-        // Get the triple with the largest weight value
-        Triple<HabitatTile, Tile, Double> tripleWithLargestWeight = selectedTileGhostTileAndWeightTriple.get(0);
-        for (Triple<HabitatTile, Tile, Double> triple: selectedTileGhostTileAndWeightTriple) {
-            if (triple.getField3() > tripleWithLargestWeight.getField3()) {
-                tripleWithLargestWeight = triple;
-            }
-        }
-
-        HabitatTile optimalSelectedTile = tripleWithLargestWeight.getField1();
-        HexCoordinate optimalHexCoordinatePosition = tripleWithLargestWeight.getField2().getHexCoordinate();
-
-        return new CustomPair<>(optimalSelectedTile, optimalHexCoordinatePosition);
+//        // Get the triple with the largest weight value
+//        Triple<HabitatTile, Tile, Double> tripleWithLargestWeight = selectedTileGhostTileAndWeightTriple.poll();
+//        for (Triple<HabitatTile, Tile, Double> triple: selectedTileGhostTileAndWeightTriple) {
+//            if (triple.getField3() > tripleWithLargestWeight.getField3()) {
+//                tripleWithLargestWeight = triple;
+//            }
+//        }
+//
+//        HabitatTile optimalSelectedTile = tripleWithLargestWeight.getField1();
+//        HexCoordinate optimalHexCoordinatePosition = tripleWithLargestWeight.getField2().getHexCoordinate();
+//
+//        return new CustomPair<>(optimalSelectedTile, optimalHexCoordinatePosition);
+        return selectedTileGhostTileAndWeightTriple;
     }
 
 
@@ -422,18 +429,54 @@ public class CascadiaBot extends Player {
         System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
         System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
 
+        //find best habitat tile option
+        PriorityQueue<Triple<HabitatTile, Tile, Double>> listOfHabitatAndPositionOptions = getOptimalHabitatTileAndPositionToPlace();
+        Triple<HabitatTile, Tile, Double> bestHabitatAndPositionOption = listOfHabitatAndPositionOptions.poll();
+        HabitatTile bestHabitatTile = bestHabitatAndPositionOption.getField1();
+        HexCoordinate bestTileCoord = bestHabitatAndPositionOption.getField2().getHexCoordinate();
+
+//        find best token option
+        PriorityQueue<CustomPair<Tile, WildlifeTokenWeightContainer>> listOfTokenAndPositionOptions = getOptimalWildlifeTokenTypeAndPositionToPlace();
+        CustomPair<Tile, WildlifeTokenWeightContainer> bestTokenAndPosition = listOfTokenAndPositionOptions.poll();
+        WildlifeToken bestToken = new WildlifeToken(bestTokenAndPosition.getField2().getLargestWildlifeWeightValue().getKey());
+        HexCoordinate bestTokenCoord = bestTokenAndPosition.getField1().getHexCoordinate();
+
+        //place both tile and token
+        this.getPlayerBoardObject().setSelectedTile(bestHabitatTile);
+        StartGame.selectedTiles.remove(bestHabitatTile);
+        StartGame.selectedTiles.add(habitatTilesBag.remove(0));
+        this.getPlayerBoardObject().addNewTile(bestTileCoord);
+        this.getPlayerBoardObject().setSelectedToken(bestToken);
+        this.getPlayerBoardObject().addNewToken(bestTokenCoord);
+
+        //attempt to remove token from token selection
+        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
+        boolean check = true;
+        for (WildlifeToken token: StartGame.selectedTokens) {
+            if (token.getWildlifeTokenType() == bestToken.getWildlifeTokenType()) {
+                StartGame.selectedTokens.remove(token);
+                System.out.println("token removed");
+                check = false;
+                break;
+            }
+        }
+        StartGame.selectedTokens.add(wildlifeTokenBag.remove(0));
+        if (check) throw new IllegalStateException(String.format("token %s, not removed", bestToken.getWildlifeTokenType()));
+
+
+
         // Finds the most optimal token and its position to place from the selected tokens.
-        CustomPair<WildlifeToken.WildlifeTokenType, HexCoordinate> wildlifeTokenTypeAndPositionToPlace = getOptimalWildlifeTokenTypeAndPositionToPlace();
-        WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = wildlifeTokenTypeAndPositionToPlace.getField1();
-        HexCoordinate wildlifeTokenPositionToPlace = wildlifeTokenTypeAndPositionToPlace.getField2();
+//        CustomPair<WildlifeToken.WildlifeTokenType, HexCoordinate> wildlifeTokenTypeAndPositionToPlace = getOptimalWildlifeTokenTypeAndPositionToPlace();
+//        WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = wildlifeTokenTypeAndPositionToPlace.getField1();
+//        HexCoordinate wildlifeTokenPositionToPlace = wildlifeTokenTypeAndPositionToPlace.getField2();
+//
+//        System.out.println(wildlifeTokenTypeToPlace);
+//        System.out.println(wildlifeTokenPositionToPlace);
 
-        System.out.println(wildlifeTokenTypeToPlace);
-        System.out.println(wildlifeTokenPositionToPlace);
-
-        // Finds the most optimal tile and its position from the selected tiles.
-        CustomPair<HabitatTile, HexCoordinate> habitatTileAndPositionToPlace = getOptimalHabitatTileAndPositionToPlace();
-        HabitatTile habitatTileToPlace = habitatTileAndPositionToPlace.getField1();
-        HexCoordinate habitatTilePositionToPlace = habitatTileAndPositionToPlace.getField2();
+//        // Finds the most optimal tile and its position from the selected tiles.
+//        CustomPair<HabitatTile, HexCoordinate> habitatTileAndPositionToPlace = getOptimalHabitatTileAndPositionToPlace();
+//        HabitatTile habitatTileToPlace = habitatTileAndPositionToPlace.getField1();
+//        HexCoordinate habitatTilePositionToPlace = habitatTileAndPositionToPlace.getField2();
 
 
 

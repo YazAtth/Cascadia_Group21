@@ -55,6 +55,18 @@ public class WildlifeTokenWeightContainer {
         return combinedWeightValue;
     }
 
+    public double getAverageWeightValue(ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypes) {
+        double averageWeightValue = 0.0;
+
+        for (WildlifeToken.WildlifeTokenType wildlifeTokenType: wildlifeTokenTypes) {
+            averageWeightValue += wildlifeWeightValueHash.get(wildlifeTokenType);
+        }
+
+        averageWeightValue /= wildlifeTokenTypes.size();
+
+        return averageWeightValue;
+    }
+
     public void setWildlifeWeight(WildlifeToken.WildlifeTokenType wildlifeTokenType, double n) {
         wildlifeWeightValueHash.put(wildlifeTokenType, n);
     }

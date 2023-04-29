@@ -201,7 +201,7 @@ public class PlayerBoard {
 
         // Adds the new tile to board and then activeTiles
         this.playerBoard.get(newTile.getHexCoordinate().getX()).set(newTile.getHexCoordinate().getY(), newTile);
-        activeTiles.add(newTile);
+        this.activeTiles.add(newTile);
 
         //increment tile's token types within tokenOptions
         this.incrementTileTokenOption(newTile.getHabitatTile().getWildlifeTokenTypeList());
