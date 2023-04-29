@@ -2,10 +2,12 @@ package org.grouptwentyone.models;
 
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.BoardStateAnalyseController;
+import org.grouptwentyone.controllers.ScoringController;
 import org.grouptwentyone.controllers.WeightController;
 import org.grouptwentyone.models.WeightValueMaps.BearWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.FoxWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.HawkWeightValueMap;
+import org.grouptwentyone.models.WeightValueMaps.SalmonWeightValueMap;
 import org.grouptwentyone.views.BoardView;
 import org.grouptwentyone.views.SelectionOptionsView;
 
@@ -34,7 +36,7 @@ public class CascadiaBot extends Player {
                         .collect(Collectors.toCollection(ArrayList::new));
 
 
-        System.out.println(placedTiles);
+//        System.out.println(placedTiles);
 
         // List of habitat tiles and wildlife tokens that are available to the bot
         ArrayList<HabitatTile> habitatTileOptionList = StartGame.selectedTiles;
@@ -77,7 +79,7 @@ public class CascadiaBot extends Player {
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR))
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.BEAR)) {
 
-                System.out.printf("Looking at tile at %s\n", tile.getHexCoordinate());
+//                System.out.printf("Looking at tile at %s\n", tile.getHexCoordinate());
 
                 double bearWeight = 0;
                 BearWeightValueMap bearWeightValueMap = new BearWeightValueMap();
@@ -87,7 +89,7 @@ public class CascadiaBot extends Player {
                         this.getPlayerBoardObject()
                 );
 
-                System.out.println("\tNumber of bear pairs before placing token: " + numberOfBearPairsAfterPlacingToken);
+//                System.out.println("\tNumber of bear pairs before placing token: " + numberOfBearPairsAfterPlacingToken);
                 numberOfBearPairsAfterPlacingToken += 1; // We plus one to account for the fact that there will be an extra pair after placing the token.
                 bearWeight = bearWeightValueMap.getWeightValue(numberOfBearPairsAfterPlacingToken); // Get weight value for that pair from the table.
 
@@ -104,7 +106,7 @@ public class CascadiaBot extends Player {
                 boolean doesPlacingBearRuinPair = BoardStateAnalyseController.doesPlacingBearRuinPair(this.playerBoardObject, tile.getHexCoordinate());
                 if (doesPlacingBearRuinPair) bearWeight = bearWeightValueMap.ruinsPairWeight();
 
-                System.out.println("\tBear weight: " + bearWeight);
+//                System.out.println("\tBear weight: " + bearWeight);
 
 
                 wildlifeTokenWeightContainer.setWildlifeWeight(
@@ -125,11 +127,15 @@ public class CascadiaBot extends Player {
 
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.SALMON))
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.SALMON)) {
+                SalmonWeightValueMap salmonWeightValueMap = new SalmonWeightValueMap();
+                ArrayList<Tile> salmonInRun = new ArrayList<>();
+
+                int lengthOfSalmonRun = BoardStateAnalyseController.getLengthOfRunTileIsIn(tile, playerBoardObject, salmonInRun);
+                double salmonWeight = salmonWeightValueMap.getWeightValue(lengthOfSalmonRun);
+
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.SALMON,
-                        BoardStateAnalyseController.getNumberOfBearPairsBeforePlacingToken(
-                                this.getPlayerBoardObject()
-                        )
+                        salmonWeight
                 );
             }
 
@@ -146,10 +152,6 @@ public class CascadiaBot extends Player {
                 if (numberOfScorableHawkPairsBeforePlacingToken < 8 &&
                         !BoardStateAnalyseController.doesHawkPlacementMakeAdjacentHawks(playerBoardObject, tile.getHexCoordinate())) {
                     hawkWeight = hawkWeightValueMap.getWeightValue(numberOfScorableHawkPairsBeforePlacingToken + 1);
-                    System.out.printf("Looking at tile at %s will score %f\n", tile.getHexCoordinate(), hawkWeight);
-                }
-                else {
-                    System.out.printf("Looking at tile at %s will score %f\n", tile.getHexCoordinate(), hawkWeight);
                 }
 
                 wildlifeTokenWeightContainer.setWildlifeWeight(

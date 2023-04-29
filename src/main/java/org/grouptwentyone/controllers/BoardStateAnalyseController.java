@@ -2,7 +2,9 @@ package org.grouptwentyone.controllers;
 
 import org.grouptwentyone.models.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Set;
 
 public class BoardStateAnalyseController {
 
@@ -152,7 +154,7 @@ public class BoardStateAnalyseController {
         for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
             for (Tile tile : row) {
                 if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() ==
-                    WildlifeToken.WildlifeTokenType.HAWK) {
+                        WildlifeToken.WildlifeTokenType.HAWK) {
                     listOfAllHawks.add(tile);
                 }
             }
@@ -170,6 +172,7 @@ public class BoardStateAnalyseController {
 
         return listOfAllHawks.size();
     }
+
     public static boolean doesHawkPlacementMakeAdjacentHawks(PlayerBoard playerBoard, HexCoordinate tileCord) {
         Tile tile = playerBoard.getTileByCoordinate(tileCord.getX(), tileCord.getY());
 
@@ -177,9 +180,58 @@ public class BoardStateAnalyseController {
 
         for (Tile adjacentTile : adjacentTileList) {
             if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() ==
-                    WildlifeToken.WildlifeTokenType.HAWK)  return true;
+                    WildlifeToken.WildlifeTokenType.HAWK) return true;
         }
 
         return false;
     }
+
+    public static int getLengthOfRunTileIsIn(Tile root, PlayerBoard playerBoard, ArrayList<Tile> run) {
+
+        run.add(root);
+
+        if (doesSalmonPlacementRuinRun(playerBoard, root.getHexCoordinate())) {
+            return 0;
+        }
+
+        ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentTileList(root);
+        ArrayList<Tile> adjacentSalmonTiles = new ArrayList<>();
+
+        for (Tile tile : adjacentTileList) {
+            if (!run.contains(tile) &&
+                    tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.SALMON) {
+                adjacentSalmonTiles.add(tile);
+            }
+        }
+
+        if (adjacentSalmonTiles.size() == 1) {
+            return 1 + getLengthOfRunTileIsIn(adjacentSalmonTiles.get(0), playerBoard, run);
+        }
+        if (adjacentSalmonTiles.size() == 2) {
+            return 1 + getLengthOfRunTileIsIn(adjacentSalmonTiles.get(0), playerBoard, run) +
+                    getLengthOfRunTileIsIn(adjacentSalmonTiles.get(1), playerBoard, run);
+        }
+
+        return 1;
+    }
+
+
+    public static boolean doesSalmonPlacementRuinRun(PlayerBoard playerBoard, HexCoordinate tileCord) {
+        Tile tile = playerBoard.getTileByCoordinate(tileCord.getX(), tileCord.getY());
+        ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentTileList(tile);
+        int adjacentSalmonCount = 0;
+
+        for (Tile adjacentTile : adjacentTileList) {
+            if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() ==
+                    WildlifeToken.WildlifeTokenType.SALMON) {
+                adjacentSalmonCount++;
+            }
+            if (adjacentSalmonCount > 2) {
+                return true;
+            }
+        }
+
+        return false;
+     }
+
 }

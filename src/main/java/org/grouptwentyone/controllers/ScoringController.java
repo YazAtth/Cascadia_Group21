@@ -1187,7 +1187,7 @@ public class ScoringController {
      * @param usedTiles to store already counted tiles in the run
      * @return ArrayList of tiles which stores the run of tiles
      */
-    public static ArrayList<Tile> getRunOfSalmon (Tile root, PlayerBoard playerBoard, ArrayList < Tile > run, Set < Tile > usedTiles) {
+    public static ArrayList<Tile> getRunOfSalmon (Tile root, PlayerBoard playerBoard, ArrayList < Tile > run, Set <Tile> usedTiles) {
 
         //base case : there are no more salmon in the run, i.e, we have reached a null tile
         if (root == null) {
@@ -1195,7 +1195,6 @@ public class ScoringController {
         }
 
         //recursive case
-
         ArrayList<Tile> adjacentSalmonTiles = new ArrayList<>();
 
         //get adjacent tiles to the salmon in the recursive call to see if there are any other salmon in the existing run
