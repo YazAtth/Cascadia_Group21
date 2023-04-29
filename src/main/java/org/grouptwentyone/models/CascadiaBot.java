@@ -247,6 +247,9 @@ public class CascadiaBot extends Player {
                 FoxWeightValueMap foxWeightValueMap = new FoxWeightValueMap();
                 double foxWeight = foxWeightValueMap.getWeightValue(numberOfAdjacentUniquePlacedWildlifeTokensToFox);
 
+                if (ghostTile.getHabitatTile().isKeystone())
+                    foxWeight += 1.2;
+
                 // Set weight container based on weight
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.FOX,
@@ -267,6 +270,9 @@ public class CascadiaBot extends Player {
 
                 PriorityQueue<Integer> linesOfElk = BoardStateAnalyseController.getLinesOfElkFromPosition(duplicatePlayerBoard, tileWithElkPlaceable.getHexCoordinate());
                 elkWeight = elkWeightValueMap.getWeightValue(linesOfElk);
+
+                if (ghostTile.getHabitatTile().isKeystone())
+                    elkWeight += 1.2;
 
 //                System.out.printf("Elk Weight: %.2f, at tile %s\n", elkWeight, tile.getHexCoordinate());
 
@@ -295,6 +301,9 @@ public class CascadiaBot extends Player {
                 if (numberOfScorableHawkPairsBeforePlacingToken < 8 &&
                         !BoardStateAnalyseController.doesHawkPlacementMakeAdjacentHawks(duplicatePlayerBoard, ghostTile.getHexCoordinate())) {
                     hawkWeight = hawkWeightValueMap.getWeightValue(numberOfScorableHawkPairsBeforePlacingToken + 1);
+
+                    if (ghostTile.getHabitatTile().isKeystone())
+                        hawkWeight += 1.2;
                 }
 
                 // Set weight container based on weight
@@ -332,6 +341,9 @@ public class CascadiaBot extends Player {
                 boolean doesPlacingBearRuinPair = BoardStateAnalyseController.doesPlacingBearRuinPair(duplicatePlayerBoard, ghostTile.getHexCoordinate());
                 if (doesPlacingBearRuinPair) bearWeight = bearWeightValueMap.ruinsPairWeight();
 
+                if (ghostTile.getHabitatTile().isKeystone())
+                    bearWeight += 1.2;
+
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.BEAR,
                         bearWeight
@@ -353,6 +365,9 @@ public class CascadiaBot extends Player {
 
                 int lengthOfSalmonRun = BoardStateAnalyseController.getLengthOfRunTileIsIn(ghostTile, duplicatePlayerBoard, salmonInRun);
                 salmonWeight = salmonWeightValueMap.getWeightValue(lengthOfSalmonRun);
+
+                if (ghostTile.getHabitatTile().isKeystone())
+                    salmonWeight += 1.2;
 
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.SALMON,
