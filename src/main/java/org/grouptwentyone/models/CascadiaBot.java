@@ -212,9 +212,9 @@ public class CascadiaBot extends Player {
 
     public PriorityQueue<Triple<HabitatTile, Tile, Double>> getOptimalHabitatTileAndPositionToPlace() {
 
-        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
-        System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
-        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+//        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
+//        System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
+//        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
 
         ArrayList<Tile> ghostTileList = this.getPlayerBoardObject().getPlaceableTileOptionList();
 
@@ -432,8 +432,8 @@ public class CascadiaBot extends Player {
 
     @Override
     public boolean playTurn() {
-        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
-        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+//        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
+//        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
 
         //find best habitat tile option
         PriorityQueue<Triple<HabitatTile, Tile, Double>> listOfHabitatAndPositionOptions = getOptimalHabitatTileAndPositionToPlace();

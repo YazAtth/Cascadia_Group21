@@ -159,15 +159,17 @@ public class BoardStateAnalyseController {
             }
         }
 
+        ArrayList<Tile> tilesToRemove = new ArrayList<>();
         for (Tile tileInList : listOfAllHawks) {
             ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentNonEmptyTileList(tileInList);
             for (Tile adjacentTile : adjacentTileList) {
                 if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() ==
                         WildlifeToken.WildlifeTokenType.HAWK) {
-                    listOfAllHawks.remove(adjacentTile);
+                    tilesToRemove.add(adjacentTile);
                 }
             }
         }
+        tilesToRemove.removeAll(tilesToRemove);
 
         return listOfAllHawks.size();
     }
