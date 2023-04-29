@@ -2,9 +2,6 @@ package org.grouptwentyone.controllers;
 
 import org.grouptwentyone.models.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Set;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -238,12 +235,12 @@ public class BoardStateAnalyseController {
 
     public static PriorityQueue<Integer> getLinesOfElkFromPosition(PlayerBoard playerBoard, HexCoordinate tileCoord) {
         Tile tile = new Tile(new HabitatTile(WildlifeToken.WildlifeTokenType.ELK), tileCoord);
-        ArrayList<Tile> tilesEast = playerBoard.getConnectedSameTilesEast(tile, playerBoard);
-        ArrayList<Tile> tilesSouthEast = playerBoard.getConnectedSameTilesSouthEast(tile, playerBoard);
-        ArrayList<Tile> tilesSouthWest = playerBoard.getConnectedSameTilesSouthWest(tile, playerBoard);
-        ArrayList<Tile> tilesWest = playerBoard.getConnectedSameTilesWest(tile, playerBoard);
-        ArrayList<Tile> tilesNorthWest = playerBoard.getConnectedSameTilesNorthWest(tile, playerBoard);
-        ArrayList<Tile> tilesNorthEast = playerBoard.getConnectedSameTilesNorthEast(tile, playerBoard);
+        ArrayList<Tile> tilesEast = playerBoard.getConnectedSameTilesEastWeight(tile, playerBoard);
+        ArrayList<Tile> tilesSouthEast = playerBoard.getConnectedSameTilesSouthEastWeight(tile, playerBoard);
+        ArrayList<Tile> tilesSouthWest = playerBoard.getConnectedSameTilesSouthWestWeight(tile, playerBoard);
+        ArrayList<Tile> tilesWest = playerBoard.getConnectedSameTilesWestWeight(tile, playerBoard);
+        ArrayList<Tile> tilesNorthWest = playerBoard.getConnectedSameTilesNorthWestWeight(tile, playerBoard);
+        ArrayList<Tile> tilesNorthEast = playerBoard.getConnectedSameTilesNorthEastWeight(tile, playerBoard);
 
         PriorityQueue<Integer> lines = new PriorityQueue<>(Comparator.reverseOrder());
         if (tilesEast.size() > 0) lines.add(tilesEast.size());

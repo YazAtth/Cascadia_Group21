@@ -80,16 +80,25 @@ public class ElkWeightValueMap extends AbstractWeightValueMap {
         double elkWeight = elkWeightTable.get(lengthOfPotentialLine);
 
 //        boolean doesIntersectLine = potentialLines.size() > 1;
-//        if (doesIntersectLine) {
-//            elkWeight -= 0.5;
-//        }
+        if (doesIntersectLine(potentialLines)) {
+            elkWeight -= 0.5;
+        }
 
         return elkWeight;
     }
 
     // checks to see if placing an elk on that tile will intersect an existing line of elk
-//    boolean doesIntersectLine() {
-//
-//        return true; //temporary
-//    }
+    //TODO: only calculates when theres multiple lines of elk merging on the current tile, not if its breaking lines elsewhere
+    boolean doesIntersectLine(PriorityQueue<Integer> potentialLines) {
+        int intersectingLines = 0;
+
+        for (Integer line: potentialLines) {
+            if (line > 1)
+                intersectingLines++;
+        }
+
+        System.out.println(intersectingLines);
+
+        return intersectingLines > 1;
+    }
 }

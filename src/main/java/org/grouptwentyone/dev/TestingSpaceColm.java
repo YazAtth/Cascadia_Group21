@@ -38,16 +38,16 @@ public class TestingSpaceColm {
         p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3, 2));
 
         p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(4, 3));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(4, 1));
 
         p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
         p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2, 2));
 //
-//        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
-//        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1, 2));
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3, 3));
 
         p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
-        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2, 3));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,3));
 
         p1.playTurn();
     }
