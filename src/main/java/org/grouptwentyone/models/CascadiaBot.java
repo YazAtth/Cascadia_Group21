@@ -252,8 +252,28 @@ public class CascadiaBot extends Player {
                         WildlifeToken.WildlifeTokenType.FOX,
                         foxWeight
                 );
+            }
 
+            if (wildlifeTokenOptionList.contains(WildlifeToken.WildlifeTokenType.ELK)) {
 
+                // Duplicate PlayerBoard is needed to simulate placing a tile with an elk placeable on the ghost tile position.
+                PlayerBoard duplicatePlayerBoard = this.getPlayerBoardObject().getDuplicate();
+                Tile tileWithElkPlaceable = new Tile(new HabitatTile(true), ghostTile.getHexCoordinate());
+                duplicatePlayerBoard.setSelectedTile(tileWithElkPlaceable.getHabitatTile());
+                duplicatePlayerBoard.addNewTile(tileWithElkPlaceable.getHexCoordinate());
+
+                double elkWeight = 0;
+                ElkWeightValueMap elkWeightValueMap = new ElkWeightValueMap();
+
+                PriorityQueue<Integer> linesOfElk = BoardStateAnalyseController.getLinesOfElkFromPosition(duplicatePlayerBoard, tileWithElkPlaceable.getHexCoordinate());
+                elkWeight = elkWeightValueMap.getWeightValue(linesOfElk);
+
+//                System.out.printf("Elk Weight: %.2f, at tile %s\n", elkWeight, tile.getHexCoordinate());
+
+                wildlifeTokenWeightContainer.setWildlifeWeight(
+                        WildlifeToken.WildlifeTokenType.ELK,
+                        elkWeight
+                );
             }
 
             if (wildlifeTokenOptionList.contains(WildlifeToken.WildlifeTokenType.HAWK)) {
