@@ -234,8 +234,9 @@ public class CascadiaBot extends Player {
 
                 // Duplicate PlayerBoard is needed to simulate placing a tile with a fox placeable on the ghost tile position.
                 PlayerBoard duplicatePlayerBoard = this.getPlayerBoardObject().getDuplicate();
-                Tile tileWithFoxPlaceable = new Tile(new HabitatTile(true), ghostTile.getHexCoordinate());
-                duplicatePlayerBoard.setSelectedTile(tileWithFoxPlaceable.getHabitatTile());
+                Tile tileWithFoxPlaceable = new Tile(new HabitatTile(true), new HexCoordinate(ghostTile.getHexCoordinate().getX(),
+                        ghostTile.getHexCoordinate().getY()
+                ));                duplicatePlayerBoard.setSelectedTile(tileWithFoxPlaceable.getHabitatTile());
                 duplicatePlayerBoard.addNewTile(tileWithFoxPlaceable.getHexCoordinate());
 
                 // Get state of duplicate PlayerBoard
@@ -261,8 +262,9 @@ public class CascadiaBot extends Player {
 
                 // Duplicate PlayerBoard is needed to simulate placing a tile with an elk placeable on the ghost tile position.
                 PlayerBoard duplicatePlayerBoard = this.getPlayerBoardObject().getDuplicate();
-                Tile tileWithElkPlaceable = new Tile(new HabitatTile(true), ghostTile.getHexCoordinate());
-                duplicatePlayerBoard.setSelectedTile(tileWithElkPlaceable.getHabitatTile());
+                Tile tileWithElkPlaceable = new Tile(new HabitatTile(true), new HexCoordinate(ghostTile.getHexCoordinate().getX(),
+                        ghostTile.getHexCoordinate().getY()
+                ));                duplicatePlayerBoard.setSelectedTile(tileWithElkPlaceable.getHabitatTile());
                 duplicatePlayerBoard.addNewTile(tileWithElkPlaceable.getHexCoordinate());
 
                 double elkWeight = 0;
@@ -286,8 +288,9 @@ public class CascadiaBot extends Player {
 
                 // Duplicate PlayerBoard is needed to simulate placing a tile with a fox placeable on the ghost tile position.
                 PlayerBoard duplicatePlayerBoard = this.getPlayerBoardObject().getDuplicate();
-                Tile tileWithHawkPlaceable = new Tile(new HabitatTile(true), ghostTile.getHexCoordinate());
-                duplicatePlayerBoard.setSelectedTile(tileWithHawkPlaceable.getHabitatTile());
+                Tile tileWithHawkPlaceable = new Tile(new HabitatTile(true), new HexCoordinate(ghostTile.getHexCoordinate().getX(),
+                        ghostTile.getHexCoordinate().getY()
+                ));                duplicatePlayerBoard.setSelectedTile(tileWithHawkPlaceable.getHabitatTile());
                 duplicatePlayerBoard.addNewTile(tileWithHawkPlaceable.getHexCoordinate());
 
                 double hawkWeight = 0;
@@ -317,7 +320,9 @@ public class CascadiaBot extends Player {
 
                 // Duplicate PlayerBoard is needed to simulate placing a tile with a fox placeable on the ghost tile position.
                 PlayerBoard duplicatePlayerBoard = this.getPlayerBoardObject().getDuplicate();
-                Tile tileWithBearPlaceable = new Tile(new HabitatTile(true), ghostTile.getHexCoordinate());
+                Tile tileWithBearPlaceable = new Tile(new HabitatTile(true), new HexCoordinate(ghostTile.getHexCoordinate().getX(),
+                        ghostTile.getHexCoordinate().getY()
+                ));
                 duplicatePlayerBoard.setSelectedTile(tileWithBearPlaceable.getHabitatTile());
                 duplicatePlayerBoard.addNewTile(tileWithBearPlaceable.getHexCoordinate());
                 double bearWeight = 0;
@@ -354,8 +359,9 @@ public class CascadiaBot extends Player {
 
                 // Duplicate PlayerBoard is needed to simulate placing a tile with a fox placeable on the ghost tile position.
                 PlayerBoard duplicatePlayerBoard = this.getPlayerBoardObject().getDuplicate();
-                Tile tileWithSalmonPlaceable = new Tile(new HabitatTile(true), ghostTile.getHexCoordinate());
-                duplicatePlayerBoard.setSelectedTile(tileWithSalmonPlaceable.getHabitatTile());
+                Tile tileWithSalmonPlaceable = new Tile(new HabitatTile(true), new HexCoordinate(ghostTile.getHexCoordinate().getX(),
+                        ghostTile.getHexCoordinate().getY()
+                ));                duplicatePlayerBoard.setSelectedTile(tileWithSalmonPlaceable.getHabitatTile());
                 duplicatePlayerBoard.addNewTile(tileWithSalmonPlaceable.getHexCoordinate());
 
                 double salmonWeight = 0;
