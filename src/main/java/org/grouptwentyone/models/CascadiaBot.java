@@ -173,9 +173,6 @@ public class CascadiaBot extends Player {
 
             }
 
-            //TODO: Fill in reserves for Elk, Hawk and Salmon
-
-
             tileAndWeightPairs.add(new CustomPair<>(tile, wildlifeTokenWeightContainer));
         }
 
@@ -228,7 +225,6 @@ public class CascadiaBot extends Player {
         for (Map.Entry<Tile, WildlifeTokenWeightContainer> ghostTileWeightPair:
                 ghostTileAndWildlifeWeightHash.entrySet()) {
 
-
             Tile ghostTile = ghostTileWeightPair.getKey();
             WildlifeTokenWeightContainer wildlifeTokenWeightContainer = ghostTileWeightPair.getValue();
 
@@ -259,9 +255,92 @@ public class CascadiaBot extends Player {
 
 
             }
+
+            if (wildlifeTokenOptionList.contains(WildlifeToken.WildlifeTokenType.HAWK)) {
+
+                // Duplicate PlayerBoard is needed to simulate placing a tile with a fox placeable on the ghost tile position.
+                PlayerBoard duplicatePlayerBoard = this.getPlayerBoardObject().getDuplicate();
+                Tile tileWithHawkPlaceable = new Tile(new HabitatTile(true), ghostTile.getHexCoordinate());
+                duplicatePlayerBoard.setSelectedTile(tileWithHawkPlaceable.getHabitatTile());
+                duplicatePlayerBoard.addNewTile(tileWithHawkPlaceable.getHexCoordinate());
+
+                double hawkWeight = 0;
+                HawkWeightValueMap hawkWeightValueMap = new HawkWeightValueMap();
+
+                // Get state of duplicate PlayerBoard
+                int numberOfScorableHawkPairsBeforePlacingToken = BoardStateAnalyseController.getNumberOfScorableHawksBeforePlacingToken (
+                        duplicatePlayerBoard
+                );
+
+                if (numberOfScorableHawkPairsBeforePlacingToken < 8 &&
+                        !BoardStateAnalyseController.doesHawkPlacementMakeAdjacentHawks(playerBoardObject, ghostTile.getHexCoordinate())) {
+                    hawkWeight = hawkWeightValueMap.getWeightValue(numberOfScorableHawkPairsBeforePlacingToken + 1);
+                }
+
+                // Set weight container based on weight
+                wildlifeTokenWeightContainer.setWildlifeWeight(
+                        WildlifeToken.WildlifeTokenType.HAWK,
+                        hawkWeight
+                );
+            }
+
+            if (wildlifeTokenOptionList.contains(WildlifeToken.WildlifeTokenType.BEAR)) {
+
+                // Duplicate PlayerBoard is needed to simulate placing a tile with a fox placeable on the ghost tile position.
+                PlayerBoard duplicatePlayerBoard = this.getPlayerBoardObject().getDuplicate();
+                Tile tileWithBearPlaceable = new Tile(new HabitatTile(true), ghostTile.getHexCoordinate());
+                duplicatePlayerBoard.setSelectedTile(tileWithBearPlaceable.getHabitatTile());
+                duplicatePlayerBoard.addNewTile(tileWithBearPlaceable.getHexCoordinate());
+
+                double bearWeight = 0;
+                BearWeightValueMap bearWeightValueMap = new BearWeightValueMap();
+
+                // Get state of duplicate PlayerBoard
+                int numberOfBearPairsAfterPlacingToken = BoardStateAnalyseController.getNumberOfBearPairsBeforePlacingToken (
+                        duplicatePlayerBoard
+                );
+
+                numberOfBearPairsAfterPlacingToken += 1;
+                bearWeight = bearWeightValueMap.getWeightValue(numberOfBearPairsAfterPlacingToken); // Get weight value for that pair from the table.
+
+                // If placing bear makes a pair, get the weight value for that pair.
+                boolean doesPlacingBearMakePair = BoardStateAnalyseController.doesPlacingBearMakePair(this.playerBoardObject, ghostTile.getHexCoordinate());
+                if (!doesPlacingBearMakePair) {
+                    bearWeight -= WeightController.WeightConstants.nonPairBearPlacementReduction;
+                }
+
+                // Custom weight if a bear pair gets ruined.
+                boolean doesPlacingBearRuinPair = BoardStateAnalyseController.doesPlacingBearRuinPair(this.playerBoardObject, ghostTile.getHexCoordinate());
+                if (doesPlacingBearRuinPair) bearWeight = bearWeightValueMap.ruinsPairWeight();
+
+                wildlifeTokenWeightContainer.setWildlifeWeight(
+                        WildlifeToken.WildlifeTokenType.BEAR,
+                        bearWeight
+                );
+            }
+
+            if (wildlifeTokenOptionList.contains(WildlifeToken.WildlifeTokenType.SALMON)) {
+
+                // Duplicate PlayerBoard is needed to simulate placing a tile with a fox placeable on the ghost tile position.
+                PlayerBoard duplicatePlayerBoard = this.getPlayerBoardObject().getDuplicate();
+                Tile tileWithSalmonPlaceable = new Tile(new HabitatTile(true), ghostTile.getHexCoordinate());
+                duplicatePlayerBoard.setSelectedTile(tileWithSalmonPlaceable.getHabitatTile());
+                duplicatePlayerBoard.addNewTile(tileWithSalmonPlaceable.getHexCoordinate());
+
+                double salmonWeight = 0;
+                SalmonWeightValueMap salmonWeightValueMap = new SalmonWeightValueMap();
+
+                ArrayList<Tile> salmonInRun = new ArrayList<>();
+
+                int lengthOfSalmonRun = BoardStateAnalyseController.getLengthOfRunTileIsIn(ghostTile, playerBoardObject, salmonInRun);
+                salmonWeight = salmonWeightValueMap.getWeightValue(lengthOfSalmonRun);
+
+                wildlifeTokenWeightContainer.setWildlifeWeight(
+                        WildlifeToken.WildlifeTokenType.SALMON,
+                        salmonWeight
+                );
+            }
         }
-
-
 
 
 
