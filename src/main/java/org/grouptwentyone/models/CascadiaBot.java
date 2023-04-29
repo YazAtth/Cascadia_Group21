@@ -299,7 +299,7 @@ public class CascadiaBot extends Player {
                 );
 
                 if (numberOfScorableHawkPairsBeforePlacingToken < 8 &&
-                        !BoardStateAnalyseController.doesHawkPlacementMakeAdjacentHawks(playerBoardObject, ghostTile.getHexCoordinate())) {
+                        !BoardStateAnalyseController.doesHawkPlacementMakeAdjacentHawks(duplicatePlayerBoard, ghostTile.getHexCoordinate())) {
                     hawkWeight = hawkWeightValueMap.getWeightValue(numberOfScorableHawkPairsBeforePlacingToken + 1);
 
                     if (ghostTile.getHabitatTile().isKeystone())
@@ -333,13 +333,13 @@ public class CascadiaBot extends Player {
                 bearWeight = bearWeightValueMap.getWeightValue(numberOfBearPairsAfterPlacingToken); // Get weight value for that pair from the table.
 
                 // If placing bear makes a pair, get the weight value for that pair.
-                boolean doesPlacingBearMakePair = BoardStateAnalyseController.doesPlacingBearMakePair(this.playerBoardObject, ghostTile.getHexCoordinate());
+                boolean doesPlacingBearMakePair = BoardStateAnalyseController.doesPlacingBearMakePair(duplicatePlayerBoard, ghostTile.getHexCoordinate());
                 if (!doesPlacingBearMakePair) {
                     bearWeight -= WeightController.WeightConstants.nonPairBearPlacementReduction;
                 }
 
                 // Custom weight if a bear pair gets ruined.
-                boolean doesPlacingBearRuinPair = BoardStateAnalyseController.doesPlacingBearRuinPair(this.playerBoardObject, ghostTile.getHexCoordinate());
+                boolean doesPlacingBearRuinPair = BoardStateAnalyseController.doesPlacingBearRuinPair(duplicatePlayerBoard, ghostTile.getHexCoordinate());
                 if (doesPlacingBearRuinPair) bearWeight = bearWeightValueMap.ruinsPairWeight();
 
                 if (ghostTile.getHabitatTile().isKeystone())
@@ -364,7 +364,7 @@ public class CascadiaBot extends Player {
 
                 ArrayList<Tile> salmonInRun = new ArrayList<>();
 
-                int lengthOfSalmonRun = BoardStateAnalyseController.getLengthOfRunTileIsIn(ghostTile, playerBoardObject, salmonInRun);
+                int lengthOfSalmonRun = BoardStateAnalyseController.getLengthOfRunTileIsIn(ghostTile, duplicatePlayerBoard, salmonInRun);
                 salmonWeight = salmonWeightValueMap.getWeightValue(lengthOfSalmonRun);
 
                 if (ghostTile.getHabitatTile().isKeystone())
