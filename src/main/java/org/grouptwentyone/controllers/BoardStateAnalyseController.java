@@ -5,15 +5,17 @@ import org.grouptwentyone.models.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class BoardStateAnalyseController {
 
     public static int getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(PlayerBoard playerBoard, Tile focusedTile) {
 
         int foxScore = 0;
-
-
         boolean tileHasFoxToken = focusedTile.getHabitatTile().getWildlifeTokenTypeList().contains(WildlifeToken.WildlifeTokenType.FOX);
+
         if (tileHasFoxToken) {
             ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentTileList(focusedTile);
 
@@ -234,4 +236,25 @@ public class BoardStateAnalyseController {
         return false;
      }
 
+    public static PriorityQueue<Integer> getLinesOfElkFromPosition(PlayerBoard playerBoard, HexCoordinate tileCoord) {
+        Tile tile = new Tile(new HabitatTile(WildlifeToken.WildlifeTokenType.ELK), tileCoord);
+        ArrayList<Tile> tilesEast = playerBoard.getConnectedSameTilesEast(tile, playerBoard);
+        ArrayList<Tile> tilesSouthEast = playerBoard.getConnectedSameTilesSouthEast(tile, playerBoard);
+        ArrayList<Tile> tilesSouthWest = playerBoard.getConnectedSameTilesSouthWest(tile, playerBoard);
+        ArrayList<Tile> tilesWest = playerBoard.getConnectedSameTilesWest(tile, playerBoard);
+        ArrayList<Tile> tilesNorthWest = playerBoard.getConnectedSameTilesNorthWest(tile, playerBoard);
+        ArrayList<Tile> tilesNorthEast = playerBoard.getConnectedSameTilesNorthEast(tile, playerBoard);
+
+        PriorityQueue<Integer> lines = new PriorityQueue<>(Comparator.reverseOrder());
+        if (tilesEast.size() > 0) lines.add(tilesEast.size());
+        if (tilesSouthEast.size() > 0) lines.add(tilesSouthEast.size());
+        if (tilesSouthWest.size() > 0) lines.add(tilesSouthWest.size());
+        if (tilesWest.size() > 0) lines.add(tilesWest.size());
+        if (tilesNorthWest.size() > 0) lines.add(tilesNorthWest.size());
+        if (tilesNorthEast.size() > 0) lines.add(tilesNorthEast.size());
+
+        System.out.println("line length: " + lines.peek());
+
+        return lines;
+    }
 }

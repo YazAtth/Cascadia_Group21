@@ -5,6 +5,7 @@ import org.grouptwentyone.controllers.BoardStateAnalyseController;
 import org.grouptwentyone.controllers.ScoringController;
 import org.grouptwentyone.controllers.WeightController;
 import org.grouptwentyone.models.WeightValueMaps.BearWeightValueMap;
+import org.grouptwentyone.models.WeightValueMaps.ElkWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.FoxWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.HawkWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.SalmonWeightValueMap;
@@ -47,6 +48,10 @@ public class CascadiaBot extends Player {
 
         // Loop through all the tiles that have been placed on the board and calculate the reserve values for each tile.
         for (Tile tile: placedTiles) {
+
+            //check if token has already been placed on tile
+            if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY)
+                continue;
 
             // Run code to populate reserve values for each tile.
             // Only populate the tiles we need.
@@ -117,11 +122,18 @@ public class CascadiaBot extends Player {
 
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK))
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.ELK)) {
+
+                double elkWeight = 0;
+                ElkWeightValueMap elkWeightValueMap = new ElkWeightValueMap();
+
+                PriorityQueue<Integer> linesOfElk = BoardStateAnalyseController.getLinesOfElkFromPosition(this.getPlayerBoardObject(), tile.getHexCoordinate());
+                elkWeight = elkWeightValueMap.getWeightValue(linesOfElk);
+
+                System.out.println("Elk Weight: " + elkWeight);
+
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.ELK,
-                        BoardStateAnalyseController.getNumberOfBearPairsBeforePlacingToken(
-                                this.getPlayerBoardObject()
-                        )
+                        elkWeight
                 );
             }
 
@@ -189,10 +201,100 @@ public class CascadiaBot extends Player {
 
     }
 
-    private HabitatTile getOptimalHabitatTileToPlace() {
+    public CustomPair<HabitatTile, HexCoordinate> getOptimalHabitatTileAndPositionToPlace() {
 
-        // Returns empty habitat tile for the time being.
-        return new HabitatTile();
+        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
+        System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
+        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+
+        ArrayList<Tile> ghostTileList = this.getPlayerBoardObject().getPlaceableTileOptionList();
+
+        // Gets list of token types that can be placed on the tiles in selectedTiles list (optimisation)
+        ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenOptionList =
+                StartGame.selectedTiles
+                        .stream()
+                        .flatMap(habitatTile -> habitatTile.getWildlifeTokenTypeList().stream())
+                        .distinct()
+                        .collect(Collectors.toCollection(ArrayList::new));
+
+
+        // Hash of ghost tiles and their wildlife token weight containers.
+        HashMap<Tile, WildlifeTokenWeightContainer> ghostTileAndWildlifeWeightHash = ghostTileList
+                .stream()
+                .map(ghostTile -> new CustomPair<>(ghostTile, new WildlifeTokenWeightContainer(wildlifeTokenOptionList)))
+                .collect(Collectors.toMap(CustomPair::getField1, CustomPair::getField2, (a, b) -> b, HashMap::new));
+
+
+        for (Map.Entry<Tile, WildlifeTokenWeightContainer> ghostTileWeightPair:
+                ghostTileAndWildlifeWeightHash.entrySet()) {
+
+
+            Tile ghostTile = ghostTileWeightPair.getKey();
+            WildlifeTokenWeightContainer wildlifeTokenWeightContainer = ghostTileWeightPair.getValue();
+
+            // TODO: Populate the weight containers of each ghost tile, fox entries have already been populated.
+            // Populate Fox tokens
+            if (wildlifeTokenOptionList.contains(WildlifeToken.WildlifeTokenType.FOX)) {
+
+                // Duplicate PlayerBoard is needed to simulate placing a tile with a fox placeable on the ghost tile position.
+                PlayerBoard duplicatePlayerBoard = this.getPlayerBoardObject().getDuplicate();
+                Tile tileWithFoxPlaceable = new Tile(new HabitatTile(true), ghostTile.getHexCoordinate());
+                duplicatePlayerBoard.setSelectedTile(tileWithFoxPlaceable.getHabitatTile());
+                duplicatePlayerBoard.addNewTile(tileWithFoxPlaceable.getHexCoordinate());
+
+                // Get state of duplicate PlayerBoard
+                int numberOfAdjacentUniquePlacedWildlifeTokensToFox =
+                        BoardStateAnalyseController.getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(duplicatePlayerBoard, tileWithFoxPlaceable);
+
+
+                // Get weight based on state
+                FoxWeightValueMap foxWeightValueMap = new FoxWeightValueMap();
+                double foxWeight = foxWeightValueMap.getWeightValue(numberOfAdjacentUniquePlacedWildlifeTokensToFox);
+
+                // Set weight container based on weight
+                wildlifeTokenWeightContainer.setWildlifeWeight(
+                        WildlifeToken.WildlifeTokenType.FOX,
+                        foxWeight
+                );
+
+
+            }
+        }
+
+
+
+
+
+        // List of selected tile/ghost/weight tile triples.
+        ArrayList<Triple<HabitatTile, Tile, Double>> selectedTileGhostTileAndWeightTriple = new ArrayList<>();
+
+        // Populate the list with all the selected tile/ghost tile pair and the weight of each pair (making it a triple)
+        for (HabitatTile selectedTile: StartGame.selectedTiles) {
+            for (Tile ghostTile: ghostTileList) {
+
+                // Get the list of wildlife tokens that can be placed on the selected tile
+                ArrayList<WildlifeToken.WildlifeTokenType> placeableWildlifeTokensOnSelectedTileList = new ArrayList<>(selectedTile.getWildlifeTokenTypeList());
+                // Get WildlifeWeightContainer of ghost tile
+                WildlifeTokenWeightContainer ghostTileWildlifeWeightContainer = ghostTileAndWildlifeWeightHash.get(ghostTile);
+                // Get the combined weight of the wildlife tokens that can be placed on the selected tile
+                double localWeight = ghostTileWildlifeWeightContainer.getCombinedWeightValue(placeableWildlifeTokensOnSelectedTileList);
+
+                selectedTileGhostTileAndWeightTriple.add(new Triple<>(selectedTile, ghostTile, localWeight));
+            }
+        }
+
+        // Get the triple with the largest weight value
+        Triple<HabitatTile, Tile, Double> tripleWithLargestWeight = selectedTileGhostTileAndWeightTriple.get(0);
+        for (Triple<HabitatTile, Tile, Double> triple: selectedTileGhostTileAndWeightTriple) {
+            if (triple.getField3() > tripleWithLargestWeight.getField3()) {
+                tripleWithLargestWeight = triple;
+            }
+        }
+
+        HabitatTile optimalSelectedTile = tripleWithLargestWeight.getField1();
+        HexCoordinate optimalHexCoordinatePosition = tripleWithLargestWeight.getField2().getHexCoordinate();
+
+        return new CustomPair<>(optimalSelectedTile, optimalHexCoordinatePosition);
     }
 
 
@@ -201,6 +303,7 @@ public class CascadiaBot extends Player {
         System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
         System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
 
+        // Finds the most optimal token and its position to place from the selected tokens.
         CustomPair<WildlifeToken.WildlifeTokenType, HexCoordinate> wildlifeTokenTypeAndPositionToPlace = getOptimalWildlifeTokenTypeAndPositionToPlace();
         WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = wildlifeTokenTypeAndPositionToPlace.getField1();
         HexCoordinate wildlifeTokenPositionToPlace = wildlifeTokenTypeAndPositionToPlace.getField2();
@@ -208,7 +311,11 @@ public class CascadiaBot extends Player {
         System.out.println(wildlifeTokenTypeToPlace);
         System.out.println(wildlifeTokenPositionToPlace);
 
-        HabitatTile habitatTileToPlace = getOptimalHabitatTileToPlace();
+        // Finds the most optimal tile and its position from the selected tiles.
+        CustomPair<HabitatTile, HexCoordinate> habitatTileAndPositionToPlace = getOptimalHabitatTileAndPositionToPlace();
+        HabitatTile habitatTileToPlace = habitatTileAndPositionToPlace.getField1();
+        HexCoordinate habitatTilePositionToPlace = habitatTileAndPositionToPlace.getField2();
+
 
 
         // Will never return false as the bot will never want to quit the game ... hopefully

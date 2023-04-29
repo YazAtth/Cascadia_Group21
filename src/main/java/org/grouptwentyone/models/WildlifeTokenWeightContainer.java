@@ -44,6 +44,17 @@ public class WildlifeTokenWeightContainer {
         return largestWeightValue;
     }
 
+
+    public double getCombinedWeightValue(ArrayList<WildlifeToken.WildlifeTokenType> wildlifeTokenTypes) {
+        double combinedWeightValue = 0.0;
+
+        for (WildlifeToken.WildlifeTokenType wildlifeTokenType: wildlifeTokenTypes) {
+            combinedWeightValue += wildlifeWeightValueHash.get(wildlifeTokenType);
+        }
+
+        return combinedWeightValue;
+    }
+
     public void setWildlifeWeight(WildlifeToken.WildlifeTokenType wildlifeTokenType, double n) {
         wildlifeWeightValueHash.put(wildlifeTokenType, n);
     }
@@ -55,5 +66,13 @@ public class WildlifeTokenWeightContainer {
 
     private ArrayList<WildlifeToken.WildlifeTokenType> getActiveWildlifeTokenTypes() {
         return activeWildlifeTokenTypes;
+    }
+
+    public String toString() {
+        StringBuilder output = new StringBuilder();
+        for (Map.Entry<WildlifeToken.WildlifeTokenType, Double> weightValue: wildlifeWeightValueHash.entrySet()) {
+            output.append(weightValue.getKey()).append(": ").append(weightValue.getValue()).append("\n");
+        }
+        return output.toString();
     }
 }
