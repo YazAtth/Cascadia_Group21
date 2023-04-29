@@ -62,7 +62,13 @@ public class CascadiaBot extends Player {
             // Run code to populate reserve values for each tile.
             // Only populate the tiles we need.
 
-            WildlifeTokenWeightContainer wildlifeTokenWeightContainer = new WildlifeTokenWeightContainer(tile.getHabitatTile().getWildlifeTokenTypeList());
+            ArrayList<WildlifeToken.WildlifeTokenType> tokenTypePossibilities = wildlifeTokenOptionList.stream()
+                    .map(token -> token.getWildlifeTokenType())
+                    .filter(token -> tile.getHabitatTile().getWildlifeTokenTypeList().contains(token))
+                    .collect(Collectors.toCollection(ArrayList::new));
+
+            if (tokenTypePossibilities.size() < 1) continue;
+            WildlifeTokenWeightContainer wildlifeTokenWeightContainer = new WildlifeTokenWeightContainer(tokenTypePossibilities);
             ArrayList<WildlifeToken.WildlifeTokenType> placeableWildlifeTokenTypes = tile.getHabitatTile().getWildlifeTokenTypeList();
 
             // Code that will set the reserve values for each wildlife token go here.
