@@ -102,7 +102,7 @@ public class CascadiaBot extends Player {
                 boolean doesPlacingBearMakePair = BoardStateAnalyseController.doesPlacingBearMakePair(this.playerBoardObject, tile.getHexCoordinate());
                 if (!doesPlacingBearMakePair) {
                     //System.out.println("\tDoes not make pair");
-                    // If placing bear doesn't make a pair we subtract "n" (eg. 0.75) as the token will not increase the number of pairs.
+                    // If placing bear doesn't make a pair we subtract "n" (e.g. 0.75) as the token will not increase the number of pairs.
                     // But it will allow for the possibility of a pair being made in the future.
                     bearWeight -= WeightController.WeightConstants.nonPairBearPlacementReduction;
                 }
