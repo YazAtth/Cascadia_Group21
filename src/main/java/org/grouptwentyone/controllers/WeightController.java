@@ -9,6 +9,9 @@ public class WeightController {
         public final static double ruinsBearPairWeight = -2.0;
         public final static double allBearsInPairsReduction = 0.5;
 
+        public final static double salmonMultiplier = 3;
+        public final static double foxMultiplier = 0.1;
+
     }
 
 }

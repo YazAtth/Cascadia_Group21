@@ -1,5 +1,7 @@
 package org.grouptwentyone.models.WeightValueMaps;
 
+import org.grouptwentyone.controllers.WeightController;
+
 import java.util.HashMap;
 
 public class SalmonWeightValueMap extends AbstractWeightValueMap {
@@ -9,14 +11,14 @@ public class SalmonWeightValueMap extends AbstractWeightValueMap {
     public SalmonWeightValueMap() {
         super();
 
-        salmonWeightTable.put(0, -2.0);
-        salmonWeightTable.put(1, 1.3);
-        salmonWeightTable.put(2, 2.35);
-        salmonWeightTable.put(3, 3.45);
-        salmonWeightTable.put(4, 4.65);
-        salmonWeightTable.put(5, 5.7);
-        salmonWeightTable.put(6, 6.9);
-        salmonWeightTable.put(7, 9.0);
+        salmonWeightTable.put(0, -2.0 * WeightController.WeightConstants.salmonMultiplier);
+        salmonWeightTable.put(1, 1.3 * WeightController.WeightConstants.salmonMultiplier);
+        salmonWeightTable.put(2, 2.35 * WeightController.WeightConstants.salmonMultiplier);
+        salmonWeightTable.put(3, 3.45 * WeightController.WeightConstants.salmonMultiplier);
+        salmonWeightTable.put(4, 4.65 * WeightController.WeightConstants.salmonMultiplier);
+        salmonWeightTable.put(5, 5.7 * WeightController.WeightConstants.salmonMultiplier);
+        salmonWeightTable.put(6, 6.9 * WeightController.WeightConstants.salmonMultiplier);
+        salmonWeightTable.put(7, 9.0 * WeightController.WeightConstants.salmonMultiplier);
     }
 
 

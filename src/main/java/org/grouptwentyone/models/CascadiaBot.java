@@ -11,8 +11,10 @@ import org.grouptwentyone.models.WeightValueMaps.FoxWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.HawkWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.SalmonWeightValueMap;
 import org.grouptwentyone.views.BoardView;
+import org.grouptwentyone.views.GameUiView;
 import org.grouptwentyone.views.SelectionOptionsView;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,6 +32,85 @@ public class CascadiaBot extends Player {
         super(userName);
         this.getPlayerBoardObject().setVerbose(false);
     }
+
+    @Override
+    public boolean playTurn() {
+        //record the time that the bot starts playing its move
+        long startTime = System.currentTimeMillis();
+
+
+        CustomPair<CustomPair<HabitatTile, HexCoordinate>, CustomPair<WildlifeToken, HexCoordinate>> placements =
+                placeOptimalHabitatTileAndWildlifeToken();
+        HabitatTile placedHabitatTile = placements.getField1().getField1();
+        HexCoordinate placedWildlifeTokenPosition = placements.getField1().getField2();
+
+        boolean wildlifeTokenGotPlaced = true;
+        WildlifeToken.WildlifeTokenType placedWildlifeTokenType = null;
+        HexCoordinate placedHabitatTilePosition = null;
+        try {
+            placedWildlifeTokenType = placements.getField2().getField1().getWildlifeTokenType();
+            placedHabitatTilePosition = placements.getField2().getField2();
+        } catch (NullPointerException e) {
+            wildlifeTokenGotPlaced = false;
+        }
+
+
+        // Display the bots actions to the user. Will not display if the user has requested the feature be turned off.
+        if (displayBotActions) {
+            // Displays the bots playerboard
+            GameUiView.printPlayerHeader(this);
+            System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
+
+            // String to display the habitats of the habitat tiles
+            StringBuilder placedHabitatTileBiomes = new StringBuilder();
+            if (placedHabitatTile.getHabitatTileTypeList().size() == 1) {
+                placedHabitatTileBiomes.append(placedHabitatTile.getHabitatTileTypeList().get(0));
+            } else {
+                placedHabitatTileBiomes.append(placedHabitatTile.getHabitatTileTypeList().get(0));
+                placedHabitatTileBiomes.append(" & ");
+                placedHabitatTileBiomes.append(placedHabitatTile.getHabitatTileTypeList().get(1));
+            }
+
+            long endTime = System.currentTimeMillis();
+
+            System.out.printf("""
+                            STATS
+                            -----------------------------------------
+                            - placed a %s habitat tile on position %s.
+                            - %s                                 \s
+                            Score       |    %d points
+                            Time Taken  |    %d milliseconds
+                            
+                            """,
+
+                    placedHabitatTileBiomes,
+                    placedHabitatTilePosition,
+                    wildlifeTokenGotPlaced?
+                            String.format("placed a %s wildlife token on position %s", placedWildlifeTokenType, placedWildlifeTokenPosition)
+                            :
+                            "did not place wildlife token (nowhere to place)",
+                    this.getScore(),
+                    (endTime - startTime)
+            );
+
+            System.out.println("Press \"ENTER\" on your keyboard to continue or press \"1\" to disable bot action description.");
+            Scanner sc = new Scanner(System.in);
+            String userInput = sc.nextLine().toLowerCase().trim();
+
+            if (userInput.equals("1")) {
+                displayBotActions = false;
+            }
+
+            GameUiView.printLargeSpace();
+        }
+
+
+        // Will never return false as the bot will never want to quit the game ... hopefully
+        return true;
+    }
+
+
+
 
     private PriorityQueue<CustomPair<Tile, WildlifeTokenWeightContainer>> getOptimalWildlifeTokenTypeAndPositionToPlace() {
         // Calculate reserve values
@@ -189,33 +270,11 @@ public class CascadiaBot extends Player {
             tileAndWeightPairs.add(new CustomPair<>(tile, wildlifeTokenWeightContainer));
         }
 
-
-        // Identify the largest reserve value that is ALSO available in the wildlife token options
-//        CustomPair<Tile, WildlifeTokenWeightContainer> bestTileWeightPair = tileAndWeightPairs.poll(); // Defaults to the first tile/reserve pair
-//
-//        // Loop through all the tile/reserve pairs and find the one with the largest reserve value.
-//        for (CustomPair<Tile, WildlifeTokenWeightContainer> tileWeightPair: tileAndWeightPairs) {
-//            boolean foundWeightValueLargerThanRecorded = tileWeightPair.getField2().getLargestWildlifeWeightValue().getValue() >
-//                    bestTileWeightPair.getField2().getLargestWildlifeWeightValue().getValue();
-//
-//            if (foundWeightValueLargerThanRecorded) {
-//                bestTileWeightPair = tileWeightPair;
-//            }
-//        }
-//
-//        // Extract the wildlife token type from the best tile/reserve pair and return it.
-//        WildlifeToken.WildlifeTokenType wildlifeTokenTypeToPlace = bestTileWeightPair.getField2().getLargestWildlifeWeightValue().getKey();
-//        HexCoordinate hexCoordinateToPlaceWildlifeToken = bestTileWeightPair.getField1().getHexCoordinate();
-//
-//        return new CustomPair<>(wildlifeTokenTypeToPlace, hexCoordinateToPlaceWildlifeToken);
         return tileAndWeightPairs;
     }
 
-    public PriorityQueue<Triple<HabitatTile, Tile, Double>> getOptimalHabitatTileAndPositionToPlace() {
+    private PriorityQueue<Triple<HabitatTile, Tile, Double>> getOptimalHabitatTileAndPositionToPlace() {
 
-//        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
-//        System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
-//        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
 
         ArrayList<Tile> ghostTileList = this.getPlayerBoardObject().getPlaceableTileOptionList();
 
@@ -418,27 +477,12 @@ public class CascadiaBot extends Player {
             }
         }
 
-//        // Get the triple with the largest weight value
-//        Triple<HabitatTile, Tile, Double> tripleWithLargestWeight = selectedTileGhostTileAndWeightTriple.poll();
-//        for (Triple<HabitatTile, Tile, Double> triple: selectedTileGhostTileAndWeightTriple) {
-//            if (triple.getField3() > tripleWithLargestWeight.getField3()) {
-//                tripleWithLargestWeight = triple;
-//            }
-//        }
-//
-//        HabitatTile optimalSelectedTile = tripleWithLargestWeight.getField1();
-//        HexCoordinate optimalHexCoordinatePosition = tripleWithLargestWeight.getField2().getHexCoordinate();
-//
-//        return new CustomPair<>(optimalSelectedTile, optimalHexCoordinatePosition);
         return selectedTileGhostTileAndWeightTriple;
     }
 
-
-    @Override
-    public boolean playTurn() {
-//        System.out.println("\n\nStarted playTurn()");
-//        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
-//        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+    public CustomPair<CustomPair<HabitatTile, HexCoordinate>, CustomPair<WildlifeToken, HexCoordinate>> placeOptimalHabitatTileAndWildlifeToken() {
+        //create variable that will hold the return variable
+        CustomPair<CustomPair<HabitatTile, HexCoordinate>, CustomPair<WildlifeToken, HexCoordinate>> placements = null;
 
         //will always try use nature token to choose any combination of tile and token as it will yield a higher score
         if (this.getPlayerBoardObject().getNumOfNatureTokens() > 0) {
@@ -482,6 +526,9 @@ public class CascadiaBot extends Player {
                     }
                 }
             }
+
+            placements = new CustomPair<>(new CustomPair<>(optimalHabitatTileAndPosition.getField1(), tileCoord),
+                            new CustomPair<>(new WildlifeToken(optimalTokenType), tokenCoord));
         } else {
 
             // Get list of habitat tiles and their positions that can be placed on the board
@@ -518,9 +565,6 @@ public class CascadiaBot extends Player {
                         .stream()
                         .filter(tokenPair -> tokenPair.getField1().getHabitatTile().getWildlifeTokenTypeList().contains(requiredWildlifeTokenType))
                         .collect(Collectors.toCollection(ArrayList::new));
-
-                //TODO: In the case where you can place the tile but there is nowhere for the token to be placed:
-                // validTokenPairs is empty and we get an index out of bounds exception in the following line.
 
                 CustomPair<Tile, WildlifeTokenWeightContainer> largestWeightTokenPair =
                         new CustomPair<>(null, new WildlifeTokenWeightContainer(new ArrayList<>(
@@ -562,6 +606,7 @@ public class CascadiaBot extends Player {
                 }
             }
 
+
             HabitatTile optimalHabitatTile = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField1().getField1();
 
             HexCoordinate optimalHabitatTilePosition = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField1().getField2().getHexCoordinate();
@@ -569,25 +614,30 @@ public class CascadiaBot extends Player {
             this.getPlayerBoardObject().setSelectedTile(optimalHabitatTile);
             this.getPlayerBoardObject().addNewTile(optimalHabitatTilePosition);
 
+            WildlifeToken optimalWildlifeToken = null;
+            HexCoordinate optimalWildlifeTokenPosition = null;
             if (chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField2().getField1() != null) {
-//            System.out.println("Placing tokens");
-                WildlifeToken optimalWildlifeToken = new WildlifeToken(chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField3());
-                HexCoordinate optimalWildlifeTokenPosition = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField2().getField1().getHexCoordinate();
+                optimalWildlifeToken = new WildlifeToken(chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField3());
+                optimalWildlifeTokenPosition = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField2().getField1().getHexCoordinate();
 
                 this.getPlayerBoardObject().setSelectedToken(optimalWildlifeToken);
                 this.getPlayerBoardObject().addNewToken(optimalWildlifeTokenPosition);
 
                 StartGame.selectedTokens.remove(StartGame.selectedTiles.indexOf(optimalHabitatTile));
             } else {
-//            System.out.println("Not placing tokens");
                 StartGame.selectedTokens.remove(StartGame.selectedTiles.indexOf(optimalHabitatTile));
             }
             StartGame.selectedTiles.remove(optimalHabitatTile);
+
+            placements = new CustomPair<>(new CustomPair<>(optimalHabitatTile, optimalHabitatTilePosition),
+                            new CustomPair<>(optimalWildlifeToken, optimalWildlifeTokenPosition));
         }
 
         StartGame.tilesRemain = SelectionOptionsView.replaceTileAndToken();
+        this.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY));
+        this.getPlayerBoardObject().setSelectedTile(new HabitatTile());
 
-        // Will never return false as the bot will never want to quit the game ... hopefully
-        return true;
+
+        return placements;
     }
 }

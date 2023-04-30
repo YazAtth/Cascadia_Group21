@@ -1,5 +1,7 @@
 package org.grouptwentyone.models.WeightValueMaps;
 
+import org.grouptwentyone.controllers.WeightController;
+
 import java.util.HashMap;
 
 public class FoxWeightValueMap extends AbstractWeightValueMap {
@@ -11,12 +13,12 @@ public class FoxWeightValueMap extends AbstractWeightValueMap {
     public FoxWeightValueMap() {
         super();
 
-        foxWeightTable.put(0, 0.0);
-        foxWeightTable.put(1, 0.4);
-        foxWeightTable.put(2, 1.0);
-        foxWeightTable.put(3, 2.2);
-        foxWeightTable.put(4, 3.5);
-        foxWeightTable.put(5, 9.4);
+        foxWeightTable.put(0, 0.0 * WeightController.WeightConstants.foxMultiplier);
+        foxWeightTable.put(1, 0.4 * WeightController.WeightConstants.foxMultiplier);
+        foxWeightTable.put(2, 1.0 * WeightController.WeightConstants.foxMultiplier);
+        foxWeightTable.put(3, 2.2 * WeightController.WeightConstants.foxMultiplier);
+        foxWeightTable.put(4, 3.5 * WeightController.WeightConstants.foxMultiplier);
+        foxWeightTable.put(5, 9.4 * WeightController.WeightConstants.foxMultiplier);
     }
 
     @Override
