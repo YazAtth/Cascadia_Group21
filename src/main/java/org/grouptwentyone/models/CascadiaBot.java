@@ -32,6 +32,18 @@ public class CascadiaBot extends Player {
         this.getPlayerBoardObject().setVerbose(false);
     }
 
+    @Override
+    public boolean playTurn() {
+        placeOptimalHabitatTileAndWildlifeToken();
+
+
+        // Will never return false as the bot will never want to quit the game ... hopefully
+        return true;
+    }
+
+
+
+
     private PriorityQueue<CustomPair<Tile, WildlifeTokenWeightContainer>> getOptimalWildlifeTokenTypeAndPositionToPlace() {
         // Calculate reserve values
         // Ensure only tiles with empty tokens are collected
@@ -193,7 +205,7 @@ public class CascadiaBot extends Player {
         return tileAndWeightPairs;
     }
 
-    public PriorityQueue<Triple<HabitatTile, Tile, Double>> getOptimalHabitatTileAndPositionToPlace() {
+    private PriorityQueue<Triple<HabitatTile, Tile, Double>> getOptimalHabitatTileAndPositionToPlace() {
 
 
         ArrayList<Tile> ghostTileList = this.getPlayerBoardObject().getPlaceableTileOptionList();
@@ -401,8 +413,7 @@ public class CascadiaBot extends Player {
     }
 
 
-    @Override
-    public boolean playTurn() {
+    public void placeOptimalHabitatTileAndWildlifeToken() {
 
         // Get list of habitat tiles and their positions that can be placed on the board
         PriorityQueue<Triple<HabitatTile, Tile, Double>> listOfHabitatAndPositionOptions = getOptimalHabitatTileAndPositionToPlace();
@@ -505,9 +516,5 @@ public class CascadiaBot extends Player {
         this.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY));
         this.getPlayerBoardObject().setSelectedTile(new HabitatTile());
 
-
-
-        // Will never return false as the bot will never want to quit the game ... hopefully
-        return true;
     }
 }
