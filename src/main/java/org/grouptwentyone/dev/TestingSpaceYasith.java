@@ -409,7 +409,7 @@ public class TestingSpaceYasith {
     }
 
     private static void testPlayGame() {
-        DebugController.setDebugMode(false);
+        DebugController.setDebugMode(true);
         long startTime = System.currentTimeMillis();
         runGame();
         HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
@@ -421,6 +421,14 @@ public class TestingSpaceYasith {
         System.out.println("Time taken: " + (endTime-startTime));
     }
 
+    private static void testingBotTileTokenPairing() {
+        CascadiaBot p1 = new CascadiaBot("Ton");
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
+
+        p1.playTurn();
+    }
+
     public static void main(String[] args) {
 //            testingPlacingBearTokens();
 //        testingPlacingHawksTokens();
@@ -428,6 +436,15 @@ public class TestingSpaceYasith {
 //        testingPlacingFoxTokens();
 //        testingPlacingHawksTokens();
 //        testingPlacingTileAlgo();
-        testPlayGame();
+//        testPlayGame();
+
+        for (int i=0; i<10; i++) {
+            testingBotTileTokenPairing();
+            HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
+            StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
+            WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
+            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+        }
     }
 }
