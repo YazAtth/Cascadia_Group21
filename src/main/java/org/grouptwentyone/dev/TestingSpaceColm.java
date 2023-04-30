@@ -57,6 +57,12 @@ public class TestingSpaceColm {
 
         p1.playTurn();
     }
+
+    public static int maxScore = -1;
+    public static String maxName = "";
+    public static int minScore = 1000;
+    public static String minName = "";
+
     private static void testBotGame() {
         ArrayList<Player> playerList = new ArrayList<>();
         playerList.add(new CascadiaBot("bot1"));
@@ -80,9 +86,9 @@ public class TestingSpaceColm {
             }
 
             //next player
-            System.out.println("Moving to next player");
+//            System.out.println("Moving to next player");
             activePlayer = playerManager.cycleToNextPlayer();
-            GameUiView.printLargeSpace();
+//            GameUiView.printLargeSpace();
         }
 
         System.out.println("No tiles remain so play is finished, calculating player score...");
@@ -97,14 +103,17 @@ public class TestingSpaceColm {
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
-        testBotGame();
-        HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
-        StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
-        WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
-        StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
-        StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+        for (int i = 0; i < 100; i++) {
+            StartGame.tilesRemain = true;
+            HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
+            StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
+            WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
+            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+            testBotGame();
+        }
         long endTime = System.currentTimeMillis();
         System.out.println("Time taken: " + (endTime-startTime));
-
+        System.out.printf("Max Score: %d\nMin Score: %d", maxScore, minScore);
     }
 }

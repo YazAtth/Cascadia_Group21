@@ -416,11 +416,11 @@ public class TestingSpaceYasith {
         DebugController.setDebugMode(true);
         long startTime = System.currentTimeMillis();
         runGame();
-        HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
-        StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
-        WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
-        StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
-        StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+//        HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
+//        StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
+//        WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
+//        StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+//        StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
         long endTime = System.currentTimeMillis();
         System.out.println("Time taken: " + (endTime-startTime));
     }

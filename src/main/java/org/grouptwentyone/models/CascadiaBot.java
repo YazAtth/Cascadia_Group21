@@ -563,6 +563,10 @@ public class CascadiaBot extends Player {
             this.getPlayerBoardObject().addNewToken(optimalWildlifeTokenPosition);
         }
 
+        StartGame.tilesRemain = SelectionOptionsView.replaceTileAndToken();
+        this.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY));
+        this.getPlayerBoardObject().setSelectedTile(new HabitatTile());
+
 
 
 
