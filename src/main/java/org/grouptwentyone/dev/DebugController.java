@@ -11,12 +11,15 @@ package org.grouptwentyone.dev;
 
 import org.grouptwentyone.controllers.HabitatTilesController;
 import org.grouptwentyone.controllers.WildlifeTokensController;
+import org.grouptwentyone.models.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class DebugController {
+
+    public static boolean debugMode = false;
 
     public static void registerDebugCommand(String inputString) {
 
@@ -55,5 +58,17 @@ public class DebugController {
     private static void removeAllTilesAndTokens() {
         HabitatTilesController.habitatTilesBag = new ArrayList<>();
         WildlifeTokensController.wildlifeTokenBag = new ArrayList<>();
+    }
+
+    public static void printUserTrace(Player player, String message, Object... formatArgs) {
+        if (debugMode) {
+            if (player.getUserName().equals("Dom")) {
+                System.out.printf(message + "\n", formatArgs);
+            }
+        }
+    }
+
+    public static void setDebugMode(boolean debugMode) {
+        DebugController.debugMode = debugMode;
     }
 }
