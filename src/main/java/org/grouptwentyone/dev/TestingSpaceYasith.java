@@ -379,9 +379,9 @@ public class TestingSpaceYasith {
 
         while (StartGame.tilesRemain) {
 
-//            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
-//            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
-//            System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
+            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
+            System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
 
             // If the user wants to quit the game: playTurn() returns false which breaks the loop
             // otherwise it ends with returning true.

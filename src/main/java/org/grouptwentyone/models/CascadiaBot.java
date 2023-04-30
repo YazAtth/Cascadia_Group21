@@ -451,26 +451,6 @@ public class CascadiaBot extends Player {
         while (listOfHabitatAndPositionOptions.size() > 0 || selectedHabitatTileList.size() > 0) {
             // Keep removing from listOfHabitatAndPositionOptions until it is empty.
             Triple<HabitatTile, Tile, Double> habitatTriple = listOfHabitatAndPositionOptions.poll();
-//
-//
-//            int indexOfHabitatTile = StartGame.selectedTiles.indexOf(habitatTriple.getField1());
-//            WildlifeToken.WildlifeTokenType correspondingWildlifeTokenType = StartGame.selectedTokens.get(indexOfHabitatTile).getWildlifeTokenType();
-//
-//            System.out.println("\nLooking at selected tile " + habitatTriple.getField1() + " which corresponds to " + correspondingWildlifeTokenType);
-//
-//
-//            // If the corresponding wildlife token cannot be placed on the board, skip this habitat tile
-//            boolean correspondingWildlifeTokenCanBePlaced = false;
-//            for (Tile tile: this.getPlayerBoardObject().getActiveTiles()) {
-//                System.out.println("\tLooking at " + tile + " to see if token " + correspondingWildlifeTokenType + " can be placed on it");
-//                if (tile.getHabitatTile().getWildlifeTokenTypeList().contains(correspondingWildlifeTokenType)) {
-//                    correspondingWildlifeTokenCanBePlaced = true;
-//                    System.out.println("\t\tToken " + correspondingWildlifeTokenType + " can be placed on the board at " + tile.getHexCoordinate().toString());
-//                    break;
-//                }
-//            }
-//            if (!correspondingWildlifeTokenCanBePlaced) continue;
-
 
             // If a habitat tile is found that exists inside of selectedHabitatTileList, add it to chosenHabitatTriples and remove it from selectedHabitatTileList
             if (selectedHabitatTileList.contains(habitatTriple.getField1())) {
@@ -508,15 +488,15 @@ public class CascadiaBot extends Player {
             //TODO: In the case where you can place the tile but there is nowhere for the token to be placed:
             // validTokenPairs is empty and we get an index out of bounds exception in the following line.
 
-        CustomPair<Tile, WildlifeTokenWeightContainer> largestWeightTokenPair =
-                new CustomPair<>(null, new WildlifeTokenWeightContainer(new ArrayList<>(
-                        Arrays.asList(WildlifeToken.WildlifeTokenType.FOX,
-                                WildlifeToken.WildlifeTokenType.BEAR,
-                                WildlifeToken.WildlifeTokenType.ELK,
-                                WildlifeToken.WildlifeTokenType.HAWK,
-                                WildlifeToken.WildlifeTokenType.SALMON
-                        )
-                )));
+            CustomPair<Tile, WildlifeTokenWeightContainer> largestWeightTokenPair =
+                    new CustomPair<>(null, new WildlifeTokenWeightContainer(new ArrayList<>(
+                            Arrays.asList(WildlifeToken.WildlifeTokenType.FOX,
+                                    WildlifeToken.WildlifeTokenType.BEAR,
+                                    WildlifeToken.WildlifeTokenType.ELK,
+                                    WildlifeToken.WildlifeTokenType.HAWK,
+                                    WildlifeToken.WildlifeTokenType.SALMON
+                            )
+                    )));
 
             if (validTokenPairs.size() != 0) {
                 largestWeightTokenPair = validTokenPairs.get(0);
@@ -551,16 +531,27 @@ public class CascadiaBot extends Player {
 
 
         HabitatTile optimalHabitatTile = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField1().getField1();
+        StartGame.selectedTiles.remove(optimalHabitatTile);
+
+
+
+
         HexCoordinate optimalHabitatTilePosition = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField1().getField2().getHexCoordinate();
+
         this.getPlayerBoardObject().setSelectedTile(optimalHabitatTile);
         this.getPlayerBoardObject().addNewTile(optimalHabitatTilePosition);
 
         if (chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField2().getField1() != null) {
+            System.out.println("Placing tokens");
             WildlifeToken optimalWildlifeToken = new WildlifeToken(chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField3());
             HexCoordinate optimalWildlifeTokenPosition = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField2().getField1().getHexCoordinate();
 
             this.getPlayerBoardObject().setSelectedToken(optimalWildlifeToken);
             this.getPlayerBoardObject().addNewToken(optimalWildlifeTokenPosition);
+
+            StartGame.selectedTokens.remove(optimalWildlifeToken);
+        } else {
+            System.out.println("Not placing tokens");
         }
 
         StartGame.tilesRemain = SelectionOptionsView.replaceTileAndToken();
