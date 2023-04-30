@@ -437,7 +437,7 @@ public class CascadiaBot extends Player {
 
     @Override
     public boolean playTurn() {
-        System.out.println("\n\nStarted playTurn()");
+//        System.out.println("\n\nStarted playTurn()");
 //        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
 //        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
 
@@ -542,16 +542,17 @@ public class CascadiaBot extends Player {
         this.getPlayerBoardObject().addNewTile(optimalHabitatTilePosition);
 
         if (chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField2().getField1() != null) {
-            System.out.println("Placing tokens");
+//            System.out.println("Placing tokens");
             WildlifeToken optimalWildlifeToken = new WildlifeToken(chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField3());
             HexCoordinate optimalWildlifeTokenPosition = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField2().getField1().getHexCoordinate();
 
             this.getPlayerBoardObject().setSelectedToken(optimalWildlifeToken);
             this.getPlayerBoardObject().addNewToken(optimalWildlifeTokenPosition);
 
-            StartGame.selectedTokens.remove(optimalWildlifeToken);
+            StartGame.selectedTokens.remove(StartGame.selectedTiles.indexOf(optimalHabitatTile));
         } else {
-            System.out.println("Not placing tokens");
+//            System.out.println("Not placing tokens");
+            StartGame.selectedTokens.remove(StartGame.selectedTiles.indexOf(optimalHabitatTile));
         }
 
         StartGame.tilesRemain = SelectionOptionsView.replaceTileAndToken();
