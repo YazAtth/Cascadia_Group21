@@ -379,9 +379,9 @@ public class TestingSpaceYasith {
 
         while (StartGame.tilesRemain) {
 
-            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
-            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
-            System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+//            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
+//            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
+//            System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
 
             // If the user wants to quit the game: playTurn() returns false which breaks the loop
             // otherwise it ends with returning true.
@@ -413,16 +413,19 @@ public class TestingSpaceYasith {
     }
 
     private static void testPlayGame() {
-        DebugController.setDebugMode(true);
-        long startTime = System.currentTimeMillis();
-        runGame();
-//        HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
-//        StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
-//        WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
-//        StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
-//        StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
-        long endTime = System.currentTimeMillis();
-        System.out.println("Time taken: " + (endTime-startTime));
+
+        for (int i=0; i<1000; i++) {
+            DebugController.setDebugMode(true);
+            long startTime = System.currentTimeMillis();
+            runGame();
+            HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
+            StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
+            WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
+            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+            long endTime = System.currentTimeMillis();
+            System.out.println("Time taken: " + (endTime - startTime));
+        }
     }
 
     private static void testingBotTileTokenPairing() {

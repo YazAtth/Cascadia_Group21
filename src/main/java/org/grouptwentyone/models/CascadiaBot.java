@@ -16,6 +16,8 @@ import org.grouptwentyone.views.SelectionOptionsView;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.lang.System.exit;
+
 
 // NOTE: Program will sometimes crash until the elk, salmon and hawk reserve values are implemented.
 
@@ -38,6 +40,12 @@ public class CascadiaBot extends Player {
                 placeOptimalHabitatTileAndWildlifeToken();
         HabitatTile placedHabitatTile = placements.getField1().getField1();
         HexCoordinate placedWildlifeTokenPosition = placements.getField1().getField2();
+        Boolean isNatureTokenSpent = placements.getField3();
+
+//        if (isNatureTokenSpent) {
+//            System.out.println("Bot spent a nature token");
+//            displayBotActions = true;
+//        }
 
         boolean wildlifeTokenGotPlaced = true;
         WildlifeToken.WildlifeTokenType placedWildlifeTokenType = null;
@@ -73,6 +81,7 @@ public class CascadiaBot extends Player {
                             -----------------------------------------
                             - placed a %s habitat tile on position %s.
                             - %s                                 \s
+                            %s
                             Score       |    %d points
                             Time Taken  |    %d milliseconds
                             
@@ -84,6 +93,7 @@ public class CascadiaBot extends Player {
                             String.format("placed a %s wildlife token on position %s", placedWildlifeTokenType, placedWildlifeTokenPosition)
                             :
                             "did not place wildlife token (nowhere to place)",
+                    isNatureTokenSpent? "- spent a nature token\n" : "",
                     this.getScore(),
                     (endTime - startTime)
             );
