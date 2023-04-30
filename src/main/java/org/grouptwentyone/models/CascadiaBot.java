@@ -437,6 +437,7 @@ public class CascadiaBot extends Player {
 
     @Override
     public boolean playTurn() {
+        System.out.println("\n\nStarted playTurn()");
 //        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
 //        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
 
@@ -450,6 +451,26 @@ public class CascadiaBot extends Player {
         while (listOfHabitatAndPositionOptions.size() > 0 || selectedHabitatTileList.size() > 0) {
             // Keep removing from listOfHabitatAndPositionOptions until it is empty.
             Triple<HabitatTile, Tile, Double> habitatTriple = listOfHabitatAndPositionOptions.poll();
+//
+//
+//            int indexOfHabitatTile = StartGame.selectedTiles.indexOf(habitatTriple.getField1());
+//            WildlifeToken.WildlifeTokenType correspondingWildlifeTokenType = StartGame.selectedTokens.get(indexOfHabitatTile).getWildlifeTokenType();
+//
+//            System.out.println("\nLooking at selected tile " + habitatTriple.getField1() + " which corresponds to " + correspondingWildlifeTokenType);
+//
+//
+//            // If the corresponding wildlife token cannot be placed on the board, skip this habitat tile
+//            boolean correspondingWildlifeTokenCanBePlaced = false;
+//            for (Tile tile: this.getPlayerBoardObject().getActiveTiles()) {
+//                System.out.println("\tLooking at " + tile + " to see if token " + correspondingWildlifeTokenType + " can be placed on it");
+//                if (tile.getHabitatTile().getWildlifeTokenTypeList().contains(correspondingWildlifeTokenType)) {
+//                    correspondingWildlifeTokenCanBePlaced = true;
+//                    System.out.println("\t\tToken " + correspondingWildlifeTokenType + " can be placed on the board at " + tile.getHexCoordinate().toString());
+//                    break;
+//                }
+//            }
+//            if (!correspondingWildlifeTokenCanBePlaced) continue;
+
 
             // If a habitat tile is found that exists inside of selectedHabitatTileList, add it to chosenHabitatTriples and remove it from selectedHabitatTileList
             if (selectedHabitatTileList.contains(habitatTriple.getField1())) {
@@ -476,10 +497,33 @@ public class CascadiaBot extends Player {
                     .filter(tokenPair -> tokenPair.getField1().getHabitatTile().getWildlifeTokenTypeList().contains(requiredWildlifeTokenType))
                     .collect(Collectors.toCollection(ArrayList::new));
 
-            CustomPair<Tile, WildlifeTokenWeightContainer> largestWeightTokenPair = validTokenPairs.get(0);
-            for (CustomPair<Tile, WildlifeTokenWeightContainer> tokenPair: validTokenPairs) {
-                if (tokenPair.getField2().getWeightOfSpecificAnimal(requiredWildlifeTokenType) > largestWeightTokenPair.getField2().getWeightOfSpecificAnimal(requiredWildlifeTokenType)) {
-                    largestWeightTokenPair = tokenPair;
+//            System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
+//            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
+//            System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+//            System.out.println("Looking at placing " + focusedHabitatTriple.getField1() + " at " + focusedHabitatTriple.getField2().getHexCoordinate().toString());
+//            System.out.println(requiredWildlifeTokenType);
+//            System.out.println(tokenPairs);
+//            System.out.println(validTokenPairs);
+
+            //TODO: In the case where you can place the tile but there is nowhere for the token to be placed:
+            // validTokenPairs is empty and we get an index out of bounds exception in the following line.
+
+        CustomPair<Tile, WildlifeTokenWeightContainer> largestWeightTokenPair =
+                new CustomPair<>(null, new WildlifeTokenWeightContainer(new ArrayList<>(
+                        Arrays.asList(WildlifeToken.WildlifeTokenType.FOX,
+                                WildlifeToken.WildlifeTokenType.BEAR,
+                                WildlifeToken.WildlifeTokenType.ELK,
+                                WildlifeToken.WildlifeTokenType.HAWK,
+                                WildlifeToken.WildlifeTokenType.SALMON
+                        )
+                )));
+
+            if (validTokenPairs.size() != 0) {
+                largestWeightTokenPair = validTokenPairs.get(0);
+                for (CustomPair<Tile, WildlifeTokenWeightContainer> tokenPair : validTokenPairs) {
+                    if (tokenPair.getField2().getWeightOfSpecificAnimal(requiredWildlifeTokenType) > largestWeightTokenPair.getField2().getWeightOfSpecificAnimal(requiredWildlifeTokenType)) {
+                        largestWeightTokenPair = tokenPair;
+                    }
                 }
             }
 
@@ -489,7 +533,7 @@ public class CascadiaBot extends Player {
 
 
         // Get optimal habitat tile and wildlife token pairing
-        int largestWeightPairIndex = -1;
+        int largestWeightPairIndex = 0;
         double largestTokenPairingWeight = -1;
         for (Triple<Triple<HabitatTile, Tile, Double>, CustomPair<Tile, WildlifeTokenWeightContainer>, WildlifeToken.WildlifeTokenType>
                 habitatTileAndTokenPair: chosenHabitatTileAndTokenPairList) {
@@ -505,17 +549,24 @@ public class CascadiaBot extends Player {
             }
         }
 
+
         HabitatTile optimalHabitatTile = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField1().getField1();
         HexCoordinate optimalHabitatTilePosition = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField1().getField2().getHexCoordinate();
-        WildlifeToken optimalWildlifeToken = new WildlifeToken(chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField3());
-        HexCoordinate optimalWildlifeTokenPosition = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField2().getField1().getHexCoordinate();
-
-
-
         this.getPlayerBoardObject().setSelectedTile(optimalHabitatTile);
         this.getPlayerBoardObject().addNewTile(optimalHabitatTilePosition);
-        this.getPlayerBoardObject().setSelectedToken(optimalWildlifeToken);
-        this.getPlayerBoardObject().addNewToken(optimalWildlifeTokenPosition);
+
+        if (chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField2().getField1() != null) {
+            WildlifeToken optimalWildlifeToken = new WildlifeToken(chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField3());
+            HexCoordinate optimalWildlifeTokenPosition = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField2().getField1().getHexCoordinate();
+
+            this.getPlayerBoardObject().setSelectedToken(optimalWildlifeToken);
+            this.getPlayerBoardObject().addNewToken(optimalWildlifeTokenPosition);
+        }
+
+
+
+
+
 
 //        System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
 //        System.out.println(StartGame.selectedTiles);

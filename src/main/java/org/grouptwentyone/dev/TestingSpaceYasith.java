@@ -379,6 +379,10 @@ public class TestingSpaceYasith {
 
         while (StartGame.tilesRemain) {
 
+//            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
+//            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
+//            System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+
             // If the user wants to quit the game: playTurn() returns false which breaks the loop
             // otherwise it ends with returning true.
             if (!activePlayer.playTurn()) {
@@ -429,15 +433,7 @@ public class TestingSpaceYasith {
         p1.playTurn();
     }
 
-    public static void main(String[] args) {
-//            testingPlacingBearTokens();
-//        testingPlacingHawksTokens();
-
-//        testingPlacingFoxTokens();
-//        testingPlacingHawksTokens();
-//        testingPlacingTileAlgo();
-//        testPlayGame();
-
+    private static void testingBotTileTokenPairingLotsOfTimes() {
         for (int i=0; i<10; i++) {
             testingBotTileTokenPairing();
             HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
@@ -446,5 +442,17 @@ public class TestingSpaceYasith {
             StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
             StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
         }
+    }
+
+    public static void main(String[] args) {
+//            testingPlacingBearTokens();
+//        testingPlacingHawksTokens();
+
+//        testingPlacingFoxTokens();
+//        testingPlacingHawksTokens();
+//        testingPlacingTileAlgo();
+        testPlayGame();
+
+
     }
 }
