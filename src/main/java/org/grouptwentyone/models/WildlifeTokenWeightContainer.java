@@ -74,6 +74,10 @@ public class WildlifeTokenWeightContainer {
         //wildlifeReserveValueHash.put(wildlifeTokenType, n);
     }
 
+    public double getWeightOfSpecificAnimal(WildlifeToken.WildlifeTokenType wildlifeTokenType) {
+        return wildlifeWeightValueHash.get(wildlifeTokenType);
+    }
+
 
 
     private ArrayList<WildlifeToken.WildlifeTokenType> getActiveWildlifeTokenTypes() {
