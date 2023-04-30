@@ -2,7 +2,6 @@ package org.grouptwentyone.models;
 
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.BoardStateAnalyseController;
-import org.grouptwentyone.controllers.ScoringController;
 import org.grouptwentyone.controllers.WeightController;
 import org.grouptwentyone.dev.DebugController;
 import org.grouptwentyone.models.WeightValueMaps.BearWeightValueMap;
@@ -14,12 +13,8 @@ import org.grouptwentyone.views.BoardView;
 import org.grouptwentyone.views.GameUiView;
 import org.grouptwentyone.views.SelectionOptionsView;
 
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static org.grouptwentyone.controllers.HabitatTilesController.habitatTilesBag;
-import static org.grouptwentyone.controllers.WildlifeTokensController.wildlifeTokenBag;
 
 
 // NOTE: Program will sometimes crash until the elk, salmon and hawk reserve values are implemented.
@@ -39,7 +34,7 @@ public class CascadiaBot extends Player {
         long startTime = System.currentTimeMillis();
 
 
-        CustomPair<CustomPair<HabitatTile, HexCoordinate>, CustomPair<WildlifeToken, HexCoordinate>> placements =
+        Triple<CustomPair<HabitatTile, HexCoordinate>, CustomPair<WildlifeToken, HexCoordinate>, Boolean> placements =
                 placeOptimalHabitatTileAndWildlifeToken();
         HabitatTile placedHabitatTile = placements.getField1().getField1();
         HexCoordinate placedWildlifeTokenPosition = placements.getField1().getField2();
@@ -480,9 +475,10 @@ public class CascadiaBot extends Player {
         return selectedTileGhostTileAndWeightTriple;
     }
 
-    public CustomPair<CustomPair<HabitatTile, HexCoordinate>, CustomPair<WildlifeToken, HexCoordinate>> placeOptimalHabitatTileAndWildlifeToken() {
+    public Triple<CustomPair<HabitatTile, HexCoordinate>, CustomPair<WildlifeToken, HexCoordinate>, Boolean> placeOptimalHabitatTileAndWildlifeToken() {
         //create variable that will hold the return variable
-        CustomPair<CustomPair<HabitatTile, HexCoordinate>, CustomPair<WildlifeToken, HexCoordinate>> placements = null;
+        Triple<CustomPair<HabitatTile, HexCoordinate>, CustomPair<WildlifeToken, HexCoordinate>, Boolean> placements = null;
+        Boolean natureTokenSpent = false;
 
         //will always try use nature token to choose any combination of tile and token as it will yield a higher score
         if (this.getPlayerBoardObject().getNumOfNatureTokens() > 0) {
@@ -502,6 +498,7 @@ public class CascadiaBot extends Player {
                     .equals(optimalTokenType);
             if (!tileAndTokenMatch) {
                 this.spendNatureToken();
+                natureTokenSpent = true;
             }
 
             //place tile
@@ -527,8 +524,8 @@ public class CascadiaBot extends Player {
                 }
             }
 
-            placements = new CustomPair<>(new CustomPair<>(optimalHabitatTileAndPosition.getField1(), tileCoord),
-                            new CustomPair<>(new WildlifeToken(optimalTokenType), tokenCoord));
+            placements = new Triple<>(new CustomPair<>(optimalHabitatTileAndPosition.getField1(), tileCoord),
+                            new CustomPair<>(new WildlifeToken(optimalTokenType), tokenCoord), natureTokenSpent);
         } else {
 
             // Get list of habitat tiles and their positions that can be placed on the board
@@ -629,8 +626,8 @@ public class CascadiaBot extends Player {
             }
             StartGame.selectedTiles.remove(optimalHabitatTile);
 
-            placements = new CustomPair<>(new CustomPair<>(optimalHabitatTile, optimalHabitatTilePosition),
-                            new CustomPair<>(optimalWildlifeToken, optimalWildlifeTokenPosition));
+            placements = new Triple<>(new CustomPair<>(optimalHabitatTile, optimalHabitatTilePosition),
+                            new CustomPair<>(optimalWildlifeToken, optimalWildlifeTokenPosition), false);
         }
 
         StartGame.tilesRemain = SelectionOptionsView.replaceTileAndToken();
