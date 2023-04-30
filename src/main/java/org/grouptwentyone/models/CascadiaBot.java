@@ -441,15 +441,12 @@ public class CascadiaBot extends Player {
 //        System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
 
 
-
-
-        //find best habitat tile option
+        // Get list of habitat tiles and their positions that can be placed on the board
         PriorityQueue<Triple<HabitatTile, Tile, Double>> listOfHabitatAndPositionOptions = getOptimalHabitatTileAndPositionToPlace();
 
         // From listofHabitatAndPositions get the 4 distinct habitat tile triple with the highest weight value
         ArrayList<Triple<HabitatTile, Tile, Double>> chosenHabitatTriples = new ArrayList<>();
         ArrayList<HabitatTile> selectedHabitatTileList = new ArrayList<>(StartGame.selectedTiles);
-
         while (listOfHabitatAndPositionOptions.size() > 0 || selectedHabitatTileList.size() > 0) {
             // Keep removing from listOfHabitatAndPositionOptions until it is empty.
             Triple<HabitatTile, Tile, Double> habitatTriple = listOfHabitatAndPositionOptions.poll();
@@ -461,27 +458,25 @@ public class CascadiaBot extends Player {
             }
         }
 
+        // Get list of tokens and their positions that can be placed on the board
         ArrayList<CustomPair<Tile, WildlifeTokenWeightContainer>> tokenPairs = new ArrayList<>(getOptimalWildlifeTokenTypeAndPositionToPlace());
 
-//        System.out.println("Token Pairs: " + tokenPairs);
-
-        ArrayList<Triple<Triple<HabitatTile, Tile, Double>, CustomPair<Tile, WildlifeTokenWeightContainer>, WildlifeToken.WildlifeTokenType>> chosenHabitatTileAndTokenPairList = new ArrayList<>();
+        // Pair up the four selected habitat tile with an optimal token that can be placed on it.
+        ArrayList<Triple<Triple<HabitatTile, Tile, Double>, CustomPair<Tile, WildlifeTokenWeightContainer>, WildlifeToken.WildlifeTokenType>>
+                chosenHabitatTileAndTokenPairList = new ArrayList<>();
 
         for (int i=0; i<4; i++) {
             Triple<HabitatTile, Tile, Double> focusedHabitatTriple = chosenHabitatTriples.get(i);
             int index = StartGame.selectedTiles.indexOf(focusedHabitatTriple.getField1());
             WildlifeToken.WildlifeTokenType requiredWildlifeTokenType = StartGame.selectedTokens.get(index).getWildlifeTokenType();
 
-//            System.out.printf("Paired %s with %s\n", focusedHabitatTriple.getField1(), requiredWildlifeTokenType);
-
+            // Ensure the list of tokens can all be placed on the habitat tile
             ArrayList<CustomPair<Tile, WildlifeTokenWeightContainer>> validTokenPairs = tokenPairs
                     .stream()
                     .filter(tokenPair -> tokenPair.getField1().getHabitatTile().getWildlifeTokenTypeList().contains(requiredWildlifeTokenType))
                     .collect(Collectors.toCollection(ArrayList::new));
 
             CustomPair<Tile, WildlifeTokenWeightContainer> largestWeightTokenPair = validTokenPairs.get(0);
-
-
             for (CustomPair<Tile, WildlifeTokenWeightContainer> tokenPair: validTokenPairs) {
                 if (tokenPair.getField2().getWeightOfSpecificAnimal(requiredWildlifeTokenType) > largestWeightTokenPair.getField2().getWeightOfSpecificAnimal(requiredWildlifeTokenType)) {
                     largestWeightTokenPair = tokenPair;
@@ -493,26 +488,23 @@ public class CascadiaBot extends Player {
 
 
 
-
-
-
+        // Get optimal habitat tile and wildlife token pairing
         int largestWeightPairIndex = -1;
         double largestTokenPairingWeight = -1;
-
         for (Triple<Triple<HabitatTile, Tile, Double>, CustomPair<Tile, WildlifeTokenWeightContainer>, WildlifeToken.WildlifeTokenType>
                 habitatTileAndTokenPair: chosenHabitatTileAndTokenPairList) {
             Triple<HabitatTile, Tile, Double> habitatTriple = habitatTileAndTokenPair.getField1();
             CustomPair<Tile, WildlifeTokenWeightContainer> tokenPair = habitatTileAndTokenPair.getField2();
             WildlifeToken.WildlifeTokenType requiredWildlifeTokenType = habitatTileAndTokenPair.getField3();
 
+            // Optimality is determined by the sum of the weight of the habitat tile and the weight of the token that's required to be placed on it
             double tileTokenPairingWeight = habitatTriple.getField3() + tokenPair.getField2().getWeightOfSpecificAnimal(requiredWildlifeTokenType);
             if (tileTokenPairingWeight > largestTokenPairingWeight) {
                 largestTokenPairingWeight = tileTokenPairingWeight;
                 largestWeightPairIndex = chosenHabitatTileAndTokenPairList.indexOf(habitatTileAndTokenPair);
             }
-
         }
-//
+
         HabitatTile optimalHabitatTile = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField1().getField1();
         HexCoordinate optimalHabitatTilePosition = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField1().getField2().getHexCoordinate();
         WildlifeToken optimalWildlifeToken = new WildlifeToken(chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField3());
@@ -531,6 +523,17 @@ public class CascadiaBot extends Player {
 //
 //        System.out.printf("Placed %s at position %s\n", optimalHabitatTile, optimalHabitatTilePosition);
 //        System.out.printf("Places %s at position %s\n", optimalWildlifeToken, optimalWildlifeTokenPosition);
+
+
+
+
+
+
+
+
+
+
+
 
 
 
