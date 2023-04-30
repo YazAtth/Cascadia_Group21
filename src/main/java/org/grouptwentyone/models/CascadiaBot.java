@@ -4,6 +4,7 @@ import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.BoardStateAnalyseController;
 import org.grouptwentyone.controllers.ScoringController;
 import org.grouptwentyone.controllers.WeightController;
+import org.grouptwentyone.dev.DebugController;
 import org.grouptwentyone.models.WeightValueMaps.BearWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.ElkWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.FoxWeightValueMap;
@@ -399,6 +400,9 @@ public class CascadiaBot extends Player {
         // List of selected tile/ghost/weight tile triples, with front of queue being greatest value
         PriorityQueue<Triple<HabitatTile, Tile, Double>> selectedTileGhostTileAndWeightTriple = new PriorityQueue<>((o1, o2) -> o2.getField3().compareTo(o1.getField3()));
 
+
+        Collections.shuffle(ghostTileList); // Stops bot from placing lines of tiles heading to top left corner
+
         // Populate the list with all the selected tile/ghost tile pair and the weight of each pair (making it a triple)
         for (HabitatTile selectedTile: StartGame.selectedTiles) {
             for (Tile ghostTile: ghostTileList) {
@@ -445,9 +449,17 @@ public class CascadiaBot extends Player {
         PriorityQueue<CustomPair<Tile, WildlifeTokenWeightContainer>> listOfTokenAndPositionOptions = getOptimalWildlifeTokenTypeAndPositionToPlace();
         CustomPair<Tile, WildlifeTokenWeightContainer> bestTokenAndPosition = listOfTokenAndPositionOptions.poll();
 
+        DebugController.printUserTrace(this, "Tile Priority Queue: %s", listOfHabitatAndPositionOptions);
+        DebugController.printUserTrace(this, "Token Priority Queue: %s", listOfTokenAndPositionOptions);
+        DebugController.printUserTrace(this, "....");
+
+
         if (bestTokenAndPosition != null) {
             WildlifeToken bestToken = new WildlifeToken(bestTokenAndPosition.getField2().getLargestWildlifeWeightValue().getKey());
             HexCoordinate bestTokenCoord = bestTokenAndPosition.getField1().getHexCoordinate();
+
+            DebugController.printUserTrace(this, "Selected Tiles: %s", StartGame.selectedTiles);
+            DebugController.printUserTrace(this, "Selected Tokens: %s", StartGame.selectedTokens);
 
             //place both tile and token
             this.getPlayerBoardObject().setSelectedTile(bestHabitatTile);
@@ -456,13 +468,17 @@ public class CascadiaBot extends Player {
             this.getPlayerBoardObject().setSelectedToken(bestToken);
             this.getPlayerBoardObject().addNewToken(bestTokenCoord);
 
+
+            DebugController.printUserTrace(this, "Placed %s at %s and %s token at %s", bestHabitatTile, bestTileCoord, bestToken.getWildlifeTokenType(), bestTokenCoord);
+            DebugController.printUserTrace(this,"\n\n");
+
             //attempt to remove token from token selection
-            System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
+//            System.out.println(BoardView.displayTiles(this.getPlayerBoardObject()));
             boolean check = true;
             for (WildlifeToken token : StartGame.selectedTokens) {
                 if (token.getWildlifeTokenType() == bestToken.getWildlifeTokenType()) {
                     StartGame.selectedTokens.remove(token);
-                    System.out.println("token removed");
+//                    System.out.println("token removed");
                     check = false;
                     break;
                 }
