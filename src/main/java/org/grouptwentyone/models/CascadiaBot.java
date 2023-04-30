@@ -531,7 +531,6 @@ public class CascadiaBot extends Player {
 
 
         HabitatTile optimalHabitatTile = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField1().getField1();
-        StartGame.selectedTiles.remove(optimalHabitatTile);
 
 
 
@@ -554,6 +553,7 @@ public class CascadiaBot extends Player {
 //            System.out.println("Not placing tokens");
             StartGame.selectedTokens.remove(StartGame.selectedTiles.indexOf(optimalHabitatTile));
         }
+        StartGame.selectedTiles.remove(optimalHabitatTile);
 
         StartGame.tilesRemain = SelectionOptionsView.replaceTileAndToken();
         this.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY));
