@@ -83,7 +83,7 @@ public class WildlifeTokenWeightContainer {
     public String toString() {
         StringBuilder output = new StringBuilder();
         for (Map.Entry<WildlifeToken.WildlifeTokenType, Double> weightValue: wildlifeWeightValueHash.entrySet()) {
-            output.append(weightValue.getKey()).append(": ").append(weightValue.getValue()).append("\n");
+            output.append(weightValue.getKey()).append(": ").append(weightValue.getValue()).append(", ");
         }
         return output.toString();
     }
