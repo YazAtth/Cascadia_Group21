@@ -64,11 +64,6 @@ public class CascadiaBot extends Player {
             wildlifeTokenGotPlaced = false;
         }
 
-//        if (placedHabitatTilePosition == null) {
-//            throw new NullPointerException("placedWildlifeTokenPosition is null");
-//        } else {
-//            System.out.println(placedHabitatTilePosition);
-//        }
 
         // Display the bots actions to the user. Will not display if the user has requested the feature be turned off.
         if (displayBotActions) {
