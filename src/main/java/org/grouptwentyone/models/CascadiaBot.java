@@ -501,41 +501,58 @@ public class CascadiaBot extends Player {
             Triple<HabitatTile, Tile, Double> optimalHabitatTileAndPosition = listOfHabitatAndPositionOptions.poll();
             CustomPair<Tile, WildlifeTokenWeightContainer> optimalWildlifeTokenAndPosition = listOfTokenAndPositionOptions.poll();
 
-            //spend nature token if they don't match in selection
-            int habitatTileIndexInSelection = StartGame.selectedTiles.indexOf(optimalHabitatTileAndPosition.getField1());
-            WildlifeToken.WildlifeTokenType optimalTokenType = optimalWildlifeTokenAndPosition.getField2().getLargestWildlifeWeightValue().getKey();
-            boolean tileAndTokenMatch = StartGame.selectedTokens.get(habitatTileIndexInSelection).getWildlifeTokenType()
-                    .equals(optimalTokenType);
-            if (!tileAndTokenMatch) {
-                this.spendNatureToken();
-                natureTokenSpent = true;
-            }
+            //check that there is a position to place a token
+            boolean tokenOptionAvailable = optimalWildlifeTokenAndPosition != null;
+            if (tokenOptionAvailable) {
+                //spend nature token if they don't match in selection
+                int habitatTileIndexInSelection = StartGame.selectedTiles.indexOf(optimalHabitatTileAndPosition.getField1());
+                WildlifeToken.WildlifeTokenType optimalTokenType = optimalWildlifeTokenAndPosition.getField2().getLargestWildlifeWeightValue().getKey();
+                boolean tileAndTokenMatch = StartGame.selectedTokens.get(habitatTileIndexInSelection).getWildlifeTokenType()
+                        .equals(optimalTokenType);
+                if (!tileAndTokenMatch) {
+                    //System.out.println("bot spent nature token");
+                    this.spendNatureToken();
+                    natureTokenSpent = true;
+                }
 
-            //place tile
-            this.getPlayerBoardObject().setSelectedTile(optimalHabitatTileAndPosition.getField1());
-            HexCoordinate tileCoord = optimalHabitatTileAndPosition.getField2().getHexCoordinate();
-            this.getPlayerBoardObject().addNewTile(tileCoord);
-            //place token
-            this.getPlayerBoardObject().setSelectedToken(new WildlifeToken(optimalTokenType));
-            HexCoordinate tokenCoord = optimalWildlifeTokenAndPosition.getField1().getHexCoordinate();
-            this.getPlayerBoardObject().addNewToken(tokenCoord);
 
-            //remove tile/token from future selection
-            if (tileAndTokenMatch) {
-                StartGame.selectedTokens.remove(StartGame.selectedTiles.indexOf(optimalHabitatTileAndPosition.getField1()));
-                StartGame.selectedTiles.remove(optimalHabitatTileAndPosition.getField1());
-            } else {
-                StartGame.selectedTiles.remove(optimalHabitatTileAndPosition.getField1());
-                for (WildlifeToken token: StartGame.selectedTokens) {
-                    if (token.getWildlifeTokenType().equals(optimalTokenType)) {
-                        StartGame.selectedTokens.remove(token);
-                        break;
+                //place tile
+                this.getPlayerBoardObject().setSelectedTile(optimalHabitatTileAndPosition.getField1());
+                HexCoordinate tileCoord = optimalHabitatTileAndPosition.getField2().getHexCoordinate();
+                this.getPlayerBoardObject().addNewTile(tileCoord);
+                //place token
+                this.getPlayerBoardObject().setSelectedToken(new WildlifeToken(optimalTokenType));
+                HexCoordinate tokenCoord = optimalWildlifeTokenAndPosition.getField1().getHexCoordinate();
+                this.getPlayerBoardObject().addNewToken(tokenCoord);
+
+                //remove tile/token from future selection
+                if (tileAndTokenMatch) {
+                    StartGame.selectedTokens.remove(StartGame.selectedTiles.indexOf(optimalHabitatTileAndPosition.getField1()));
+                    StartGame.selectedTiles.remove(optimalHabitatTileAndPosition.getField1());
+                } else {
+                    StartGame.selectedTiles.remove(optimalHabitatTileAndPosition.getField1());
+                    for (WildlifeToken token : StartGame.selectedTokens) {
+                        if (token.getWildlifeTokenType().equals(optimalTokenType)) {
+                            StartGame.selectedTokens.remove(token);
+                            break;
+                        }
                     }
                 }
-            }
 
-            placements = new Triple<>(new CustomPair<>(optimalHabitatTileAndPosition.getField1(), tileCoord),
-                            new CustomPair<>(new WildlifeToken(optimalTokenType), tokenCoord), natureTokenSpent);
+                placements = new Triple<>(new CustomPair<>(optimalHabitatTileAndPosition.getField1(), tileCoord),
+                        new CustomPair<>(new WildlifeToken(optimalTokenType), tokenCoord), natureTokenSpent);
+            } else { //no token option available
+                //place tile
+                this.getPlayerBoardObject().setSelectedTile(optimalHabitatTileAndPosition.getField1());
+                HexCoordinate tileCoord = optimalHabitatTileAndPosition.getField2().getHexCoordinate();
+                this.getPlayerBoardObject().addNewTile(tileCoord);
+
+                //remove tile/token from future selection
+                StartGame.selectedTokens.remove(StartGame.selectedTiles.indexOf(optimalHabitatTileAndPosition.getField1()));
+                StartGame.selectedTiles.remove(optimalHabitatTileAndPosition.getField1());
+                placements = new Triple<>(new CustomPair<>(optimalHabitatTileAndPosition.getField1(), tileCoord),
+                        new CustomPair<>(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY), null), natureTokenSpent);
+            }
         } else {
 
             // Get list of habitat tiles and their positions that can be placed on the board

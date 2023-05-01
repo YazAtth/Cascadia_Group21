@@ -247,7 +247,7 @@ public class PlayerBoard {
 
         Tile focusedTile;
         try {
-            focusedTile = playerBoard.get(newTokenHexCoordinate.getX()).get(newTokenHexCoordinate.getY());
+            focusedTile = this.playerBoard.get(newTokenHexCoordinate.getX()).get(newTokenHexCoordinate.getY());
         } catch (IndexOutOfBoundsException ex) {
             throw new TokenPlacedAtEmptyPositionException("Tried to place Wildlife Token where there is no Habitat Tile");
         }
@@ -266,9 +266,10 @@ public class PlayerBoard {
         this.decrementTileTokenOption(focusedTile.getHabitatTile().getWildlifeTokenTypeList());
 
         //check if habitat tile is keystone and if so, increase numOfNatureTokens by 1
-        if (focusedTile.getHabitatTile().isKeystone() && this.isVerbose()) {
+        if (focusedTile.getHabitatTile().isKeystone()) {
             this.addToNumOfNatureTokens();
-            System.out.println("You have just received 1 nature token for placing a token on a keystone tile");
+            if (this.isVerbose())
+                System.out.println("You have just received 1 nature token for placing a token on a keystone tile");
         }
 
         //reset selectedToken

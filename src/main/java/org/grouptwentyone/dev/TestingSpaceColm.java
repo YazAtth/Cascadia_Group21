@@ -108,7 +108,7 @@ public class TestingSpaceColm {
             HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
             StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
             WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
-            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+            StartGame.selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
             StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
             testBotGame();
         }
