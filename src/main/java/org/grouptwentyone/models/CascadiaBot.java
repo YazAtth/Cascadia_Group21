@@ -2,6 +2,7 @@ package org.grouptwentyone.models;
 
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.BoardStateAnalyseController;
+import org.grouptwentyone.controllers.CullingController;
 import org.grouptwentyone.controllers.WeightController;
 import org.grouptwentyone.dev.DebugController;
 import org.grouptwentyone.models.WeightValueMaps.BearWeightValueMap;
@@ -35,6 +36,8 @@ public class CascadiaBot extends Player {
         //record the time that the bot starts playing its move
         long startTime = System.currentTimeMillis();
 
+        //check for culling options
+        CullingController.checkForCull(this);
 
         Triple<CustomPair<HabitatTile, HexCoordinate>, CustomPair<WildlifeToken, HexCoordinate>, Boolean> placements =
                 placeOptimalHabitatTileAndWildlifeToken();

@@ -55,7 +55,7 @@ public class Dev_StartGame {
             System.out.println("      (1)            (2)            (3)            (4)      \n");
 
             //check for cull before user turn
-            CullingController.checkForCull();
+            CullingController.checkForCull(activePlayer);
 
 
             //nature token options

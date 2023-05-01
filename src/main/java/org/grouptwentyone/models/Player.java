@@ -94,7 +94,7 @@ public class Player implements Comparable<Player>{
         System.out.println("      (1)            (2)            (3)            (4)      \n");
 
         //check for cull before user turn
-        CullingController.checkForCull();
+        CullingController.checkForCull(this);
 
 
         //nature token options
