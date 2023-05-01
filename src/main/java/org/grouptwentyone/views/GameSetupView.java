@@ -61,7 +61,7 @@ public class GameSetupView {
                     System.out.printf("%sInvalid Input:%s Please enter a total number between 2-4 OR type \"quit\" to exit the program%s\n",
                             GameUiView.RED_BOLD, GameUiView.RED, GameUiView.RESET_COLOUR);
                 } else {
-                    return new CustomPair<Integer, Integer>(numberOfPlayers, numberOfBots);
+                    return new CustomPair<>(numberOfPlayers, numberOfBots);
                 }
 
             } catch (NumberFormatException ex) {
@@ -160,27 +160,6 @@ public class GameSetupView {
         }
 
         return playerList;
-    }
-
-    private static void printUsers(ArrayList<String> playerNameList, ArrayList<String> playerTypeList) {
-        // Print display
-        int longestNameLength = playerNameList.stream()
-                .reduce((x, y) -> x.length() > y.length() ? x: y)
-                .get()
-                .length();
-
-        int spacingLength = longestNameLength+4;
-        for (int i=0; i<playerNameList.size(); i++) {
-
-            String playerType = playerTypeList.get(i).equals("BOT") ? "[BOT]":"[PLAYER]";
-
-            int playerName = playerNameList.get(i).length();
-            StringBuilder spacing = new StringBuilder();
-            spacing.append(" ".repeat(Math.max(0, spacingLength - playerName)));
-
-            System.out.printf("%d. %s%s%s", i+1, playerNameList.get(i), spacing, playerType);
-            System.out.println();
-        }
     }
 
     public static void displayPlayerOrder(ArrayList<Player> playerList) {
