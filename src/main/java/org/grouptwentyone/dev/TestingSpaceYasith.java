@@ -102,11 +102,11 @@ public class TestingSpaceYasith {
 
 //        System.out.println(playerList);
 
-        ArrayList<Player> playerList = GameSetupView.getPlayerInformationFromUser(4);
-
-        for (Player player : playerList) {
-            System.out.println(player.getClass().getSimpleName());
-        }
+//        ArrayList<Player> playerList = GameSetupView.getPlayerInformationFromUser(4);
+//
+//        for (Player player : playerList) {
+//            System.out.println(player.getClass().getSimpleName());
+//        }
 
     }
 
@@ -532,7 +532,7 @@ public class TestingSpaceYasith {
 //        testingPlacingFoxTokens();
 //        testingPlacingHawksTokens();
 //        testingPlacingTileAlgo();
-        getGameStatsAcrossMultipleGames(1000, true);
+        getGameStatsAcrossMultipleGames(100, true);
 //        testWeights(1000);
 
 

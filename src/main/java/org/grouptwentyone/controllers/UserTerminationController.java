@@ -12,7 +12,7 @@ package org.grouptwentyone.controllers;
 public class UserTerminationController {
 
     public static void checkUserInputForProgramTermination(String userInput) {
-        if (userInput.equalsIgnoreCase("exit")) {
+        if (userInput.equalsIgnoreCase("exit") || userInput.equalsIgnoreCase("quit")) {
             UserTerminationController.endProgram();
         }
     }
