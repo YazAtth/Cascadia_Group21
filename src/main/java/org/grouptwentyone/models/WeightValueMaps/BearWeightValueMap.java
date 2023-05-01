@@ -4,6 +4,15 @@ import org.grouptwentyone.controllers.WeightController;
 
 import java.util.HashMap;
 
+/*
+ * Cascadia
+ * 21: Group 21
+ * Student name:            GitHub ID:
+ * Yasith Atthanayake       YazAtth
+ * Colm Ó hAonghusa         C0hAongha
+ * Dominykas Jakubauskas    dominicjk
+ */
+
 public class BearWeightValueMap extends AbstractWeightValueMap {
 
     //hashtable to associate weight with the number of pair of bear in the playerBoard
