@@ -16,8 +16,8 @@ public class WeightController {
         // of pairs it would have created had it resulted in a new pair.
         public static double nonPairBearPlacementReduction = 0.75;
         public static double ruinsBearPairWeight = -2.0;
-        public static double allBearsInPairsReduction = 0.5;
 
+        //If placing an elk intersects another line of elk, subtract this value from its weight
         public static double elkIntersectsLine = 0.5;
 
         // Multipliers for each animal weight table
