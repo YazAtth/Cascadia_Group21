@@ -84,60 +84,22 @@ public class Tile {
     }
 
     public String toString() {
-
-
         if (this.habitatTile.isNull()) {
             return String.format("Empty Tile at %s", this.hexCoordinate);
         } else {
             return String.format("Habitat Tile at %s", this.hexCoordinate);
         }
-
-//        return String.format("\nTileId: %d\n\tHabitatTile: %s\n\tHexCoordinate: %s\n\tisActive: %s\n\tisIncludedInScoring: %s\n\ttileOrientation: %d\n",
-//                this.getTileId(),
-//                this.getHabitatTile(),
-//                this.getHexCoordinate(),
-//                this.isActive(),
-//                this.isIncludedInScoring(),
-//                this.getTileOrientation());
     }
 
     //rotate tile by custom number
     public void rotateTile(int numRotations) {this.tileOrientation = (this.tileOrientation + numRotations) % 6;}
 
-    public void setIncludedInScoring(boolean includedInScoring) {
-        this.isIncludedInScoring = includedInScoring;
-    }
-
     public int getTileId() {
         return this.tileId;
     }
 
-    public static int getTileIdCounter() {
-        return tileIdCounter;
-    }
-
     public boolean isIncludedInScoring() {
         return isIncludedInScoring;
-    }
-
-    public static void setTileIdCounter(int tileIdCounter) {
-        Tile.tileIdCounter = tileIdCounter;
-    }
-
-    public void setHabitatTile(HabitatTile habitatTile) {
-        this.habitatTile = habitatTile;
-    }
-
-    public void setHexCoordinate(HexCoordinate hexCoordinate) {
-        this.hexCoordinate = hexCoordinate;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
-    }
-
-    public void setTileOrientation(int tileOrientation) {
-        this.tileOrientation = tileOrientation;
     }
 
     @Override
