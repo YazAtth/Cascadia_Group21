@@ -16,48 +16,6 @@ import static org.grouptwentyone.controllers.WildlifeTokensController.createBagO
 
 public class TestingSpaceColm {
 
-    private static void testPlacingElkTokens() {
-        CascadiaBot p1 = new CascadiaBot("Ton");
-
-        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
-
-        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
-
-        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 1));
-
-        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
-
-        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 1));
-
-        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
-
-        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3, 3));
-
-        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3, 2));
-
-        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
-        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(4, 1));
-
-        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
-        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2, 2));
-//
-        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
-        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3, 3));
-
-        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
-        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,3));
-
-        p1.playTurn();
-    }
-
     public static int maxScore = -1;
     public static String maxName = "";
     public static int minScore = 1000;
@@ -101,19 +59,63 @@ public class TestingSpaceColm {
 //        GameUiView.printLargeSpace();
     }
 
+    private static void testPlacingElkTokens() {
+        CascadiaBot p1 = new CascadiaBot("Ton");
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 1));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 1));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3, 3));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3, 2));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(4, 1));
+
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2, 2));
+//
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3, 3));
+
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,3));
+
+        p1.playTurn();
+    }
+
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
-        for (int i = 0; i < 500; i++) {
-            testBotGame();
-            StartGame.tilesRemain = true;
-            HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
-            StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
-            WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
-            StartGame.selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
-            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
-        }
-        long endTime = System.currentTimeMillis();
-        System.out.println("Time taken: " + (endTime-startTime));
-        System.out.printf("Max Score: %d\nMin Score: %d", maxScore, minScore);
+        testPlacingElkTokens();
+
+//        long startTime = System.currentTimeMillis();
+//        for (int i = 0; i < 500; i++) {
+//            testBotGame();
+//            StartGame.tilesRemain = true;
+//            HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
+//            StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
+//            WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
+//            StartGame.selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
+//            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+//        }
+//        long endTime = System.currentTimeMillis();
+//        System.out.println("Time taken: " + (endTime-startTime));
+//        System.out.printf("Max Score: %d\nMin Score: %d", maxScore, minScore);
     }
 }

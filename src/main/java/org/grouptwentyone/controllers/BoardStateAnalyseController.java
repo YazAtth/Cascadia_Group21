@@ -235,7 +235,7 @@ public class BoardStateAnalyseController {
         return false;
      }
 
-    public static PriorityQueue<Integer> getLinesOfElkFromPosition(PlayerBoard playerBoard, HexCoordinate tileCoord) {
+    public static PriorityQueue<ArrayList<Tile>> getLinesOfElkFromPosition(PlayerBoard playerBoard, HexCoordinate tileCoord) {
         Tile tile = new Tile(new HabitatTile(WildlifeToken.WildlifeTokenType.ELK), tileCoord);
         ArrayList<Tile> tilesEast = playerBoard.getConnectedSameTilesEastWeight(tile, playerBoard);
         ArrayList<Tile> tilesSouthEast = playerBoard.getConnectedSameTilesSouthEastWeight(tile, playerBoard);
@@ -244,13 +244,23 @@ public class BoardStateAnalyseController {
         ArrayList<Tile> tilesNorthWest = playerBoard.getConnectedSameTilesNorthWestWeight(tile, playerBoard);
         ArrayList<Tile> tilesNorthEast = playerBoard.getConnectedSameTilesNorthEastWeight(tile, playerBoard);
 
-        PriorityQueue<Integer> lines = new PriorityQueue<>(Comparator.reverseOrder());
-        if (tilesEast.size() > 0) lines.add(tilesEast.size());
-        if (tilesSouthEast.size() > 0) lines.add(tilesSouthEast.size());
-        if (tilesSouthWest.size() > 0) lines.add(tilesSouthWest.size());
-        if (tilesWest.size() > 0) lines.add(tilesWest.size());
-        if (tilesNorthWest.size() > 0) lines.add(tilesNorthWest.size());
-        if (tilesNorthEast.size() > 0) lines.add(tilesNorthEast.size());
+//        PriorityQueue<Integer> lines = new PriorityQueue<>(Comparator.reverseOrder());
+//        if (tilesEast.size() > 0) lines.add(tilesEast.size());
+//        if (tilesSouthEast.size() > 0) lines.add(tilesSouthEast.size());
+//        if (tilesSouthWest.size() > 0) lines.add(tilesSouthWest.size());
+//        if (tilesWest.size() > 0) lines.add(tilesWest.size());
+//        if (tilesNorthWest.size() > 0) lines.add(tilesNorthWest.size());
+//        if (tilesNorthEast.size() > 0) lines.add(tilesNorthEast.size());
+//
+//        return lines;
+
+        PriorityQueue<ArrayList<Tile>> lines = new PriorityQueue<>((o1, o2) -> o2.size() - o1.size());
+        lines.add(tilesEast);
+        lines.add(tilesSouthEast);
+        lines.add(tilesSouthWest);
+        lines.add(tilesWest);
+        lines.add(tilesNorthEast);
+        lines.add(tilesNorthWest);
 
         return lines;
     }

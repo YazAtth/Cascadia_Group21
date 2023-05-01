@@ -586,9 +586,9 @@ public class TestingSpaceYasith {
 //        testingPlacingFoxTokens();
 //        testingPlacingHawksTokens();
 //        testingPlacingTileAlgo();
-//        getGameStatsAcrossMultipleGames(5000, true);
+        getGameStatsAcrossMultipleGames(100, true);
 //        testWeights(1000);
-        runGame();
+//        runGame();
 
 
 

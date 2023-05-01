@@ -252,8 +252,8 @@ public class CascadiaBot extends Player {
                 double elkWeight = 0;
                 ElkWeightValueMap elkWeightValueMap = new ElkWeightValueMap();
 
-                PriorityQueue<Integer> linesOfElk = BoardStateAnalyseController.getLinesOfElkFromPosition(this.getPlayerBoardObject(), tile.getHexCoordinate());
-                elkWeight = elkWeightValueMap.getWeightValue(linesOfElk);
+                PriorityQueue<ArrayList<Tile>> linesOfElk = BoardStateAnalyseController.getLinesOfElkFromPosition(this.getPlayerBoardObject(), tile.getHexCoordinate());
+                elkWeight = elkWeightValueMap.getWeightValue(linesOfElk, this);
 
 //                System.out.printf("Elk Weight: %.2f, at tile %s\n", elkWeight, tile.getHexCoordinate());
 
@@ -374,8 +374,8 @@ public class CascadiaBot extends Player {
                 double elkWeight = 0;
                 ElkWeightValueMap elkWeightValueMap = new ElkWeightValueMap();
 
-                PriorityQueue<Integer> linesOfElk = BoardStateAnalyseController.getLinesOfElkFromPosition(duplicatePlayerBoard, tileWithElkPlaceable.getHexCoordinate());
-                elkWeight = elkWeightValueMap.getWeightValue(linesOfElk);
+                PriorityQueue<ArrayList<Tile>> linesOfElk = BoardStateAnalyseController.getLinesOfElkFromPosition(duplicatePlayerBoard, tileWithElkPlaceable.getHexCoordinate());
+                elkWeight = elkWeightValueMap.getWeightValue(linesOfElk, this);
 
                 if (ghostTile.getHabitatTile().isKeystone())
                     elkWeight += 1.2;

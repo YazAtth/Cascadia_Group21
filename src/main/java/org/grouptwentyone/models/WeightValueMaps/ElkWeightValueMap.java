@@ -1,7 +1,10 @@
 package org.grouptwentyone.models.WeightValueMaps;
 
 import org.grouptwentyone.controllers.WeightController;
+import org.grouptwentyone.models.CascadiaBot;
+import org.grouptwentyone.models.Tile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
@@ -63,12 +66,12 @@ public class ElkWeightValueMap extends AbstractWeightValueMap {
         return 0;
     }
 
-    public double getWeightValue(PriorityQueue<Integer> potentialLines) {
+    public double getWeightValue(PriorityQueue<ArrayList<Tile>> potentialLines, CascadiaBot bot) {
 
         if (potentialLines.size() == 0)
             return 0.0;
 
-        int lengthOfPotentialLine = potentialLines.peek();
+        int lengthOfPotentialLine = potentialLines.peek().size();
 
         //no interest as it doesn't benefit player scoring
         if (lengthOfPotentialLine > 4)
@@ -81,9 +84,8 @@ public class ElkWeightValueMap extends AbstractWeightValueMap {
 
         double elkWeight = elkWeightTable.get(lengthOfPotentialLine);
 
-//        boolean doesIntersectLine = potentialLines.size() > 1;
-        if (doesIntersectLine(potentialLines)) {
-            elkWeight -= 0.5;
+        if (doesIntersectLine(potentialLines, bot)) {
+            elkWeight -= WeightController.WeightConstants.elkIntersectsLine;
         }
 
         return elkWeight;
@@ -91,14 +93,20 @@ public class ElkWeightValueMap extends AbstractWeightValueMap {
 
     // checks to see if placing an elk on that tile will intersect an existing line of elk
     //TODO: only calculates when theres multiple lines of elk merging on the current tile, not if its breaking lines elsewhere
-    boolean doesIntersectLine(PriorityQueue<Integer> potentialLines) {
-        int intersectingLines = 0;
+    boolean doesIntersectLine(PriorityQueue<ArrayList<Tile>> potentialLines, CascadiaBot bot) {
 
-        for (Integer line: potentialLines) {
-            if (line > 1)
-                intersectingLines++;
+        ArrayList<Tile> longestLineOfElk = new ArrayList<>(potentialLines.peek());
+
+        for (Tile tile: bot.getPlayerBoardObject().getActiveTiles()) {
+            if (longestLineOfElk.contains(tile)) {
+                for (Tile lineTile: longestLineOfElk) {
+                    if (lineTile.isAdjacentToTile(tile)) {
+                        return true;
+                    }
+                }
+            }
         }
 
-        return intersectingLines > 1;
+        return false;
     }
 }
