@@ -91,8 +91,6 @@ public class ElkWeightValueMap extends AbstractWeightValueMap {
         return elkWeight;
     }
 
-    // checks to see if placing an elk on that tile will intersect an existing line of elk
-    //TODO: only calculates when theres multiple lines of elk merging on the current tile, not if its breaking lines elsewhere
     boolean doesIntersectLine(PriorityQueue<ArrayList<Tile>> potentialLines, CascadiaBot bot) {
 
         ArrayList<Tile> longestLineOfElk = new ArrayList<>(potentialLines.peek());

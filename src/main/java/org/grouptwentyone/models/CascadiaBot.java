@@ -141,9 +141,6 @@ public class CascadiaBot extends Player {
         return true;
     }
 
-
-
-
     private PriorityQueue<CustomPair<Tile, WildlifeTokenWeightContainer>> getOptimalWildlifeTokenTypeAndPositionToPlace() {
         // Calculate reserve values
         // Ensure only tiles with empty tokens are collected
@@ -152,9 +149,6 @@ public class CascadiaBot extends Player {
                         .stream()
                         .filter(tile -> tile.getHabitatTile().getWildlifeToken().equals(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY)))
                         .collect(Collectors.toCollection(ArrayList::new));
-
-
-//        System.out.println(placedTiles);
 
         // List of habitat tiles and wildlife tokens that are available to the bot
         ArrayList<HabitatTile> habitatTileOptionList = StartGame.selectedTiles;
@@ -194,8 +188,6 @@ public class CascadiaBot extends Player {
                 int numberOfAdjacentUniquePlacedWildlifeTokensToFox =
                         BoardStateAnalyseController.getNumberOfAdjacentUniquePlacedWildlifeTokensToFox(this.getPlayerBoardObject(), tile);
 
-                //System.out.printf("Number of adjacent unique wildlife tokens to fox at %s: %d\n", tile.getHexCoordinate(), numberOfAdjacentUniquePlacedWildlifeTokensToFox);
-
                 // Get weight based on state
                 FoxWeightValueMap foxWeightValueMap = new FoxWeightValueMap();
                 double foxWeight = foxWeightValueMap.getWeightValue(numberOfAdjacentUniquePlacedWildlifeTokensToFox);
@@ -210,8 +202,6 @@ public class CascadiaBot extends Player {
             if (wildlifeTokenOptionList.contains(new WildlifeToken(WildlifeToken.WildlifeTokenType.BEAR))
                     && placeableWildlifeTokenTypes.contains(WildlifeToken.WildlifeTokenType.BEAR)) {
 
-//                System.out.printf("Looking at tile at %s\n", tile.getHexCoordinate());
-
                 double bearWeight = 0;
                 BearWeightValueMap bearWeightValueMap = new BearWeightValueMap();
 
@@ -220,25 +210,19 @@ public class CascadiaBot extends Player {
                         this.getPlayerBoardObject()
                 );
 
-//                System.out.println("\tNumber of bear pairs before placing token: " + numberOfBearPairsAfterPlacingToken);
                 numberOfBearPairsAfterPlacingToken += 1; // We plus one to account for the fact that there will be an extra pair after placing the token.
                 bearWeight = bearWeightValueMap.getWeightValue(numberOfBearPairsAfterPlacingToken); // Get weight value for that pair from the table.
 
                 // If placing bear makes a pair, get the weight value for that pair.
                 boolean doesPlacingBearMakePair = BoardStateAnalyseController.doesPlacingBearMakePair(this.playerBoardObject, tile.getHexCoordinate());
                 if (!doesPlacingBearMakePair) {
-                    //System.out.println("\tDoes not make pair");
-                    // If placing bear doesn't make a pair we subtract "n" (e.g. 0.75) as the token will not increase the number of pairs.
-                    // But it will allow for the possibility of a pair being made in the future.
+
                     bearWeight -= WeightController.WeightConstants.nonPairBearPlacementReduction;
                 }
 
                 // Custom weight if a bear pair gets ruined.
                 boolean doesPlacingBearRuinPair = BoardStateAnalyseController.doesPlacingBearRuinPair(this.playerBoardObject, tile.getHexCoordinate());
                 if (doesPlacingBearRuinPair) bearWeight = bearWeightValueMap.ruinsPairWeight();
-
-//                System.out.println("\tBear weight: " + bearWeight);
-
 
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.BEAR,
@@ -254,8 +238,6 @@ public class CascadiaBot extends Player {
 
                 PriorityQueue<ArrayList<Tile>> linesOfElk = BoardStateAnalyseController.getLinesOfElkFromPosition(this.getPlayerBoardObject(), tile.getHexCoordinate());
                 elkWeight = elkWeightValueMap.getWeightValue(linesOfElk, this);
-
-//                System.out.printf("Elk Weight: %.2f, at tile %s\n", elkWeight, tile.getHexCoordinate());
 
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.ELK,
@@ -332,7 +314,6 @@ public class CascadiaBot extends Player {
             Tile ghostTile = ghostTileWeightPair.getKey();
             WildlifeTokenWeightContainer wildlifeTokenWeightContainer = ghostTileWeightPair.getValue();
 
-            // TODO: Populate the weight containers of each ghost tile, fox entries have already been populated.
             // Populate Fox tokens
             if (wildlifeTokenOptionList.contains(WildlifeToken.WildlifeTokenType.FOX)) {
 
@@ -379,8 +360,6 @@ public class CascadiaBot extends Player {
 
                 if (ghostTile.getHabitatTile().isKeystone())
                     elkWeight += 1.2;
-
-//                System.out.printf("Elk Weight: %.2f, at tile %s\n", elkWeight, tile.getHexCoordinate());
 
                 wildlifeTokenWeightContainer.setWildlifeWeight(
                         WildlifeToken.WildlifeTokenType.ELK,
@@ -487,10 +466,8 @@ public class CascadiaBot extends Player {
         }
 
 
-
         // List of selected tile/ghost/weight tile triples, with front of queue being greatest value
         PriorityQueue<Triple<HabitatTile, Tile, Double>> selectedTileGhostTileAndWeightTriple = new PriorityQueue<>((o1, o2) -> o2.getField3().compareTo(o1.getField3()));
-
 
         Collections.shuffle(ghostTileList); // Stops bot from placing lines of tiles heading to top left corner
 
@@ -635,7 +612,6 @@ public class CascadiaBot extends Player {
                         }
                     }
                 }
-
                 chosenHabitatTileAndTokenPairList.add(new Triple<>(focusedHabitatTriple, largestWeightTokenPair, requiredWildlifeTokenType));
             }
 

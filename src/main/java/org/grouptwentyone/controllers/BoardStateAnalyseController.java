@@ -123,7 +123,7 @@ public class BoardStateAnalyseController {
                     == WildlifeToken.WildlifeTokenType.BEAR) {
 
                 adjacentBears++;
-                if (adjacentBears > 1) return false;
+                if (adjacentBears > 1) return false; //two bears are adjacent : not a pair
 
                 //check to see if adjacent tile with a bear on it is already in a pair
                 ArrayList<Tile> adjacentTilesOfAdjacentTileList = playerBoard.getAdjacentTileList(adjacentTile);
@@ -150,6 +150,7 @@ public class BoardStateAnalyseController {
     public static int getNumberOfScorableHawksBeforePlacingToken(PlayerBoard playerBoard) {
         ArrayList<Tile> listOfAllHawks = new ArrayList<>();
 
+        //get a list of every hawk on the board
         for (ArrayList<Tile> row : playerBoard.getPlayerBoardAs2dArray()) {
             for (Tile tile : row) {
                 if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() ==
@@ -159,6 +160,7 @@ public class BoardStateAnalyseController {
             }
         }
 
+        //remove non-scoring hawks
         ArrayList<Tile> tilesToRemove = new ArrayList<>();
         for (Tile tileInList : listOfAllHawks) {
             ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentNonEmptyTileList(tileInList);
@@ -169,6 +171,7 @@ public class BoardStateAnalyseController {
                 }
             }
         }
+        //remove non-scoring hawks from the list of all hawks
         tilesToRemove.removeAll(tilesToRemove);
 
         return listOfAllHawks.size();
@@ -180,6 +183,7 @@ public class BoardStateAnalyseController {
         ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentNonEmptyTileList(tile);
 
         for (Tile adjacentTile : adjacentTileList) {
+            //if at least one adjacent hawk is found
             if (adjacentTile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() ==
                     WildlifeToken.WildlifeTokenType.HAWK) return true;
         }
@@ -191,6 +195,7 @@ public class BoardStateAnalyseController {
 
         run.add(root);
 
+        //base case, is the root adjacent to more than 2 salmon
         if (doesSalmonPlacementRuinRun(playerBoard, root.getHexCoordinate())) {
             return 0;
         }
@@ -205,14 +210,17 @@ public class BoardStateAnalyseController {
             }
         }
 
+        //if salmon tile is at the end of a run
         if (adjacentSalmonTiles.size() == 1) {
             return 1 + getLengthOfRunTileIsIn(adjacentSalmonTiles.get(0), playerBoard, run);
         }
+        //if salmon tile is in between a run
         if (adjacentSalmonTiles.size() == 2) {
             return 1 + getLengthOfRunTileIsIn(adjacentSalmonTiles.get(0), playerBoard, run) +
                     getLengthOfRunTileIsIn(adjacentSalmonTiles.get(1), playerBoard, run);
         }
 
+        //end of run
         return 1;
     }
 
@@ -231,7 +239,6 @@ public class BoardStateAnalyseController {
                 return true;
             }
         }
-
         return false;
      }
 
