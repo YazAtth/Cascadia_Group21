@@ -59,9 +59,6 @@ public class GameUiView {
                 player.getUserName(), player.getNumOfNatureTokens(), GameUiView.RESET_COLOUR);
         //print scorecard rules below player header for player convenience
         printLinePageBorder();
-        //commented out to reduce bloat on computer screen when testing bots
-//        printScoreCardRules();
-//        printLinePageBorder();
     }
 
     public static void printScoreCardRules() {
