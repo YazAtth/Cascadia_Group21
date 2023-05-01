@@ -58,6 +58,14 @@ public class HabitatTile {
         this.isNull = false;
     }
 
+    public HabitatTile(WildlifeToken.WildlifeTokenType tokenType) {
+        this.habitatTileTypeList = habitatTileTypeListGenerator(2);
+        this.wildlifeTokenTypeList = wildlifeTokenTypeListGenerator(5);
+        this.wildlifeToken = new WildlifeToken(tokenType);
+        this.keystone = false;
+        this.isNull = false;
+    }
+
     // Creates a new habitat tile by value based on arguments .
     public HabitatTile(ArrayList<HabitatTileType> newHabitatTileType, ArrayList<WildlifeToken.WildlifeTokenType> newWildlifeTokenTypeList,
                        WildlifeToken.WildlifeTokenType newWildlifeTokenType, boolean isKeystone, boolean isNull) {

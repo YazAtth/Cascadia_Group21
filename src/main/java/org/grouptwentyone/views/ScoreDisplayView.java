@@ -9,6 +9,7 @@
 
 package org.grouptwentyone.views;
 
+import org.grouptwentyone.dev.TestingSpaceColm;
 import org.grouptwentyone.models.PlayerManager;
 import org.grouptwentyone.models.Player;
 
@@ -55,6 +56,9 @@ public class ScoreDisplayView {
                     GameUiView.RESET_COLOUR,
                     playerListInOrder.get(i).getScore());
                     GameUiView.printThinBorder();
+
+            TestingSpaceColm.minScore = Math.min(TestingSpaceColm.minScore, playerListInOrder.get(i).getScore());
+            TestingSpaceColm.maxScore = Math.max(TestingSpaceColm.maxScore, playerListInOrder.get(i).getScore());
         }
 
 

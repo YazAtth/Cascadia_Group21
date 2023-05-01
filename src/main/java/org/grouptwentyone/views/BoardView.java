@@ -20,7 +20,6 @@ import java.util.ArrayList;
 
 public class BoardView {
 
-
     //gave these hashtables a private scope for use in helper methods
     private static final Hashtable<HabitatTile.HabitatTileType, String> tileToColourTable = new Hashtable<>();
     private static final Hashtable<WildlifeToken.WildlifeTokenType, String> tokenToStringTable = new Hashtable<>();

@@ -13,6 +13,7 @@ import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.ScoringController;
 import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.models.Exceptions.*;
+import org.grouptwentyone.views.BoardView;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -200,7 +201,7 @@ public class PlayerBoard {
 
         // Adds the new tile to board and then activeTiles
         this.playerBoard.get(newTile.getHexCoordinate().getX()).set(newTile.getHexCoordinate().getY(), newTile);
-        activeTiles.add(newTile);
+        this.activeTiles.add(newTile);
 
         //increment tile's token types within tokenOptions
         this.incrementTileTokenOption(newTile.getHabitatTile().getWildlifeTokenTypeList());
@@ -246,7 +247,7 @@ public class PlayerBoard {
 
         Tile focusedTile;
         try {
-            focusedTile = playerBoard.get(newTokenHexCoordinate.getX()).get(newTokenHexCoordinate.getY());
+            focusedTile = this.playerBoard.get(newTokenHexCoordinate.getX()).get(newTokenHexCoordinate.getY());
         } catch (IndexOutOfBoundsException ex) {
             throw new TokenPlacedAtEmptyPositionException("Tried to place Wildlife Token where there is no Habitat Tile");
         }
@@ -265,9 +266,10 @@ public class PlayerBoard {
         this.decrementTileTokenOption(focusedTile.getHabitatTile().getWildlifeTokenTypeList());
 
         //check if habitat tile is keystone and if so, increase numOfNatureTokens by 1
-        if (focusedTile.getHabitatTile().isKeystone() && this.isVerbose()) {
+        if (focusedTile.getHabitatTile().isKeystone()) {
             this.addToNumOfNatureTokens();
-            System.out.println("You have just received 1 nature token for placing a token on a keystone tile");
+            if (this.isVerbose())
+                System.out.println("You have just received 1 nature token for placing a token on a keystone tile");
         }
 
         //reset selectedToken
@@ -523,6 +525,133 @@ public class PlayerBoard {
 
         }
         return sameTilesSouthEast;
+    }
+
+    ////////////////////////
+
+    public ArrayList<Tile> getConnectedSameTilesEastWeight(Tile tile, PlayerBoard playerBoard) {
+        ArrayList<Tile> sameTilesEast = new ArrayList<>();
+        sameTilesEast.add(tile);
+
+        int moveOneEast = 1;
+        int xCoord = tile.getHexCoordinate().getX();
+        int yCord =  tile.getHexCoordinate().getY();
+
+        while(playerBoard.getTileByCoordinate(xCoord, yCord + moveOneEast).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                == WildlifeToken.WildlifeTokenType.ELK) {
+            sameTilesEast.add(playerBoard.getTileByCoordinate(xCoord, yCord + moveOneEast));
+            moveOneEast++;
+        }
+        return sameTilesEast;
+    }
+    public ArrayList<Tile> getConnectedSameTilesSouthEastWeight(Tile tile, PlayerBoard playerBoard) {
+        ArrayList<Tile> sameTilesSouthEast = new ArrayList<>();
+        sameTilesSouthEast.add(tile);
+
+        int moveOneEast = 0;
+        int moveOneSouth = 1;
+        int xCoord = tile.getHexCoordinate().getX();
+        int yCord =  tile.getHexCoordinate().getY();
+        if (((xCoord + moveOneSouth) % 2 == 1)) {
+            moveOneEast++;
+        }
+
+        while(playerBoard.getTileByCoordinate(xCoord + moveOneSouth, yCord + moveOneEast).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                == WildlifeToken.WildlifeTokenType.ELK) {
+            sameTilesSouthEast.add(playerBoard.getTileByCoordinate(xCoord + moveOneSouth, yCord + moveOneEast));
+            moveOneSouth++;
+            if (((xCoord + moveOneSouth) % 2 == 1)) {
+                moveOneEast++;
+            }
+
+        }
+        return sameTilesSouthEast;
+    }
+
+    public ArrayList<Tile> getConnectedSameTilesSouthWestWeight(Tile tile, PlayerBoard playerBoard) {
+        ArrayList<Tile> sameTilesSouthWest = new ArrayList<>();
+        sameTilesSouthWest.add(tile);
+
+        int moveOneSouth = 1;
+        int xCoord = tile.getHexCoordinate().getX();
+        int yCord =  tile.getHexCoordinate().getY();
+        if ((xCoord + moveOneSouth) % 2 == 1 && yCord > 0) {
+            yCord--;
+        }
+
+        while(playerBoard.getTileByCoordinate(xCoord + moveOneSouth, yCord).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                == WildlifeToken.WildlifeTokenType.ELK) {
+            sameTilesSouthWest.add(playerBoard.getTileByCoordinate(xCoord + moveOneSouth, yCord));
+            if ((xCoord + moveOneSouth) % 2 == 1 && yCord > 0) {
+                yCord--;
+            }
+            moveOneSouth++;
+
+        }
+        return sameTilesSouthWest;
+    }
+
+    public ArrayList<Tile> getConnectedSameTilesWestWeight(Tile tile, PlayerBoard playerBoard) {
+        ArrayList<Tile> sameTilesWest = new ArrayList<>();
+        sameTilesWest.add(tile);
+
+        int moveOneWest = -1;
+        int xCoord = tile.getHexCoordinate().getX();
+        int yCord =  tile.getHexCoordinate().getY();
+
+        while(playerBoard.getTileByCoordinate(xCoord, yCord + moveOneWest).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                == WildlifeToken.WildlifeTokenType.ELK) {
+            sameTilesWest.add(playerBoard.getTileByCoordinate(xCoord, yCord + moveOneWest));
+            moveOneWest--;
+        }
+        return sameTilesWest;
+    }
+
+    public ArrayList<Tile> getConnectedSameTilesNorthWestWeight(Tile tile, PlayerBoard playerBoard) {
+        ArrayList<Tile> sameTilesNorthWest = new ArrayList<>();
+        sameTilesNorthWest.add(tile);
+
+        int moveOneWest = 0;
+        int moveOneNorth = -1;
+        int xCoord = tile.getHexCoordinate().getX();
+        int yCord =  tile.getHexCoordinate().getY();
+        if (((xCoord + moveOneNorth) % 2 == 0)) {
+            moveOneWest--;
+        }
+
+        while(playerBoard.getTileByCoordinate(xCoord + moveOneNorth, yCord + moveOneWest).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                == WildlifeToken.WildlifeTokenType.ELK) {
+            sameTilesNorthWest.add(playerBoard.getTileByCoordinate(xCoord + moveOneNorth, yCord + moveOneWest));
+            moveOneNorth--;
+            if ((xCoord + moveOneNorth) % 2 == 0) {
+                moveOneWest--;
+            }
+
+        }
+        return sameTilesNorthWest;
+    }
+
+    public ArrayList<Tile> getConnectedSameTilesNorthEastWeight(Tile tile, PlayerBoard playerBoard) {
+        ArrayList<Tile> sameTilesNorthEast = new ArrayList<>();
+        sameTilesNorthEast.add(tile);
+
+        int moveOneNorth = -1;
+        int xCoord = tile.getHexCoordinate().getX();
+        int yCord =  tile.getHexCoordinate().getY();
+        if ((xCoord + moveOneNorth) % 2 == 1 && yCord > 0) {
+            yCord++;
+        }
+
+        while(playerBoard.getTileByCoordinate(xCoord + moveOneNorth, yCord).getHabitatTile().getWildlifeToken().getWildlifeTokenType()
+                == WildlifeToken.WildlifeTokenType.ELK) {
+            sameTilesNorthEast.add(playerBoard.getTileByCoordinate(xCoord + moveOneNorth, yCord));
+            moveOneNorth--;
+            if ((xCoord + moveOneNorth) % 2 == 1 && yCord > 0) {
+                yCord++;
+            }
+
+        }
+        return sameTilesNorthEast;
     }
 
     public ArrayList<Tile> getPlacedTilesList() {
@@ -810,5 +939,10 @@ public class PlayerBoard {
 
     public void setVerbose(boolean verbose) {
         this.verbose = verbose;
+    }
+
+    @Override
+    public String toString() {
+        return BoardView.displayTiles(this);
     }
 }

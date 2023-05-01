@@ -11,6 +11,7 @@ package org.grouptwentyone.views;
 
 import org.grouptwentyone.controllers.UserTerminationController;
 import org.grouptwentyone.models.CascadiaBot;
+import org.grouptwentyone.models.CustomPair;
 import org.grouptwentyone.models.Player;
 
 import java.util.ArrayList;
@@ -19,36 +20,48 @@ import java.util.Scanner;
 
 public class GameSetupView {
 
-    public static int getNumberOfPlayersFromUser() {
+    public static CustomPair<Integer, Integer> getNumberOfPlayersFromUser() {
+        System.out.printf("<> First you will be asked to enter the %snumber of players%s. \n" +
+                "<> Then you will be asked to enter the %snumber of bots%s.\n" +
+                "<> %sEnter 0%s if you dont want any of that type.\n",
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR
+                );
         Scanner sc = new Scanner(System.in);
 
         GameUiView.printPageBorder();
-        System.out.println("Enter Number of Players");
 
         String userInput;
-        int numberOfPlayers;
+        int numberOfPlayers, numberOfBots;
 
         // Keep asking until user enters a valid int or exit program (returns -1).
         while (true) {
+            System.out.print("Please enter the number of Players\n> ");
             userInput = sc.nextLine().trim();
 
             UserTerminationController.checkUserInputForProgramTermination(userInput);
 
-            if (Objects.equals(userInput.toLowerCase(), "quit")) {
-                UserTerminationController.endProgram();
-            }
-
             try {
                 numberOfPlayers = Integer.parseInt(userInput);
 
-                if (numberOfPlayers > 4 || numberOfPlayers < 2) {
+                System.out.print("Please enter the number of Bots\n> ");
+
+                userInput = sc.nextLine().trim();
+
+                UserTerminationController.checkUserInputForProgramTermination(userInput);
+
+                numberOfBots = Integer.parseInt(userInput);
+
+
+                if (numberOfPlayers + numberOfBots > 4 || numberOfPlayers + numberOfBots < 2) {
                     GameUiView.printLargeSpace();
                     GameUiView.printPageBorder();
 
-                    System.out.printf("%sInvalid Input:%s Please enter a number between 2-4 OR type \"quit\" to exit the program%s\n",
+                    System.out.printf("%sInvalid Input:%s Please enter a total number between 2-4 OR type \"quit\" to exit the program%s\n",
                             GameUiView.RED_BOLD, GameUiView.RED, GameUiView.RESET_COLOUR);
                 } else {
-                    return numberOfPlayers;
+                    return new CustomPair<Integer, Integer>(numberOfPlayers, numberOfBots);
                 }
 
             } catch (NumberFormatException ex) {
@@ -60,10 +73,12 @@ public class GameSetupView {
                         GameUiView.RED_BOLD, GameUiView.RED, GameUiView.RESET_COLOUR);
             }
         }
-
     }
 
-    public static ArrayList<Player> getPlayerInformationFromUser(int numberOfPlayers) {
+    public static ArrayList<Player> getPlayerInformationFromUser(CustomPair<Integer, Integer> numPlayersAndBots) {
+        int numberOfPlayers = numPlayersAndBots.getField1();
+        int numberOfBots = numPlayersAndBots.getField2();
+
         ArrayList<String> playerNameList = new ArrayList<>();
         ArrayList<String> playerTypeList = new ArrayList<>();
         String playerName;
@@ -71,8 +86,8 @@ public class GameSetupView {
         Scanner sc = new Scanner(System.in);
 
         GameUiView.printLargeSpace();
-        GameUiView.printPageBorder();
         System.out.println("Player Names");
+        GameUiView.printPageBorder();
 
         for (int i=0; i<numberOfPlayers; i++) {
             System.out.printf("Enter \"Player %d\" name: ", i + 1);
@@ -102,8 +117,47 @@ public class GameSetupView {
             playerTypeList.add("PLAYER");
         }
 
-        GameUiView.printLargeSpace();
-        ArrayList<Player> playerList = createPlayers(playerNameList, playerTypeList);
+        for (int i=0; i<numberOfBots; i++) {
+            System.out.printf("Enter \"Bot %d\" name: ", i + 1);
+            playerName = sc.nextLine().trim();
+
+            boolean invalidPlayerName = false;
+
+            if (Objects.equals(playerName, "")) {
+                System.out.printf("\n%sInvalid Input:%s A bot cannot have an empty name!%s\n", GameUiView.RED_BOLD, GameUiView.RED, GameUiView.RESET_COLOUR);
+                invalidPlayerName = true;
+            }
+
+            // Ensure two players can't have the same name
+            for (String existingPlayer: playerNameList) {
+                if (Objects.equals(playerName, existingPlayer)) {
+                    System.out.printf("\n%sInvalid Input:%s Player/Bot name already exists!%s\n", GameUiView.RED_BOLD, GameUiView.RED, GameUiView.RESET_COLOUR);
+                    invalidPlayerName = true;
+                }
+            }
+
+            if (invalidPlayerName) {
+                i--;
+                continue;
+            }
+
+            playerNameList.add(playerName);
+            playerTypeList.add("BOT");
+        }
+
+        ArrayList<Player> playerList = new ArrayList<>();
+        for (int i=0; i<playerNameList.size(); i++) {
+            String username = playerNameList.get(i);
+            String playerType = playerTypeList.get(i);
+
+            if (playerType.equals("PLAYER")) {
+                playerList.add(new Player(username));
+            } else if (playerType.equals("BOT")) {
+                playerList.add(new CascadiaBot(username));
+            } else {
+                throw new IllegalArgumentException("Illegal Player Type");
+            }
+        }
 
         return playerList;
     }
@@ -129,71 +183,6 @@ public class GameSetupView {
         }
     }
 
-    public static ArrayList<Player> createPlayers(ArrayList<String> playerNameList, ArrayList<String> playerTypeList) {
-
-        String errorMessage = "";
-        while (true) {
-            GameUiView.printPageBorder();
-            printUsers(playerNameList, playerTypeList);
-            GameUiView.printPageBorder();
-
-            System.out.println("Type the number of any player you wish to turn into a bot or back into a player.\nOtherwise press \"ENTER\" to continue.");
-            System.out.printf("%s", errorMessage);
-            errorMessage = "";
-            System.out.print("> ");
-            String userInput = UserInputView.askUserForInput();
-//            System.out.printf("User input was '%s'\n", userInput);
-
-            // User wants to continue;
-            if (userInput.trim().equals("")) {
-//                System.out.println("ran");
-                break;
-            }
-
-            int userInputInt;
-            // Guards for invalid input
-            try {
-                userInputInt = Integer.parseInt(userInput.trim());
-                if (userInputInt < 1 || userInputInt > playerNameList.size()) {
-                    throw new IllegalArgumentException();
-                }
-            } catch (IllegalArgumentException ex){
-                errorMessage = String.format("%sIllegal argument: You must enter a number between 1 and %d OR press \"ENTER\".%s\n", GameUiView.RED_BOLD, playerNameList.size(), GameUiView.RESET_COLOUR);
-                GameUiView.printLargeSpace();
-                continue;
-            }
-
-            String oldPlayerType = playerTypeList.get(userInputInt-1);
-            if (oldPlayerType.equals("PLAYER")) {
-                playerTypeList.set(userInputInt-1, "BOT");
-            } else if (oldPlayerType.equals("BOT")) {
-                playerTypeList.set(userInputInt-1, "PLAYER");
-            } else {
-                System.out.println("This shouldn't run");
-            }
-
-            GameUiView.printLargeSpace();
-        }
-
-
-        ArrayList<Player> playerList = new ArrayList<>();
-        for (int i=0; i<playerNameList.size(); i++) {
-            String username = playerNameList.get(i);
-            String playerType = playerTypeList.get(i);
-
-            if (playerType.equals("PLAYER")) {
-                playerList.add(new Player(username));
-            } else if (playerType.equals("BOT")) {
-                playerList.add(new CascadiaBot(username));
-            } else {
-                throw new IllegalArgumentException("Illegal Player Type");
-            }
-        }
-
-        return playerList;
-
-    }
-
     public static void displayPlayerOrder(ArrayList<Player> playerList) {
 
         StringBuilder output = new StringBuilder();
@@ -202,7 +191,8 @@ public class GameSetupView {
         System.out.print("Players will play in this order:");
 
         for (int i=0; i<playerList.size(); i++) {
-            output.append(String.format("\n%d. %s", i+1, playerList.get(i).getUserName()));
+            String playerType = playerList.get(i) instanceof CascadiaBot ? "[BOT]":"[PLAYER]";
+            output.append(String.format("\n%d. %s %s", i+1, playerType, playerList.get(i).getUserName()));
         }
 
         System.out.println(output);

@@ -5,20 +5,22 @@ import org.grouptwentyone.controllers.HabitatTilesController;
 import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.controllers.UserTerminationController;
 import org.grouptwentyone.controllers.WildlifeTokensController;
-import org.grouptwentyone.models.CascadiaBot;
-import org.grouptwentyone.models.Player;
-import org.grouptwentyone.models.PlayerManager;
+import org.grouptwentyone.models.*;
 import org.grouptwentyone.views.*;
 
 import java.util.ArrayList;
 
+import static org.grouptwentyone.controllers.HabitatTilesController.createBagOfHabitatTiles;
+import static org.grouptwentyone.controllers.StarterHabitatTilesController.createBagOfStarterHabitatTiles;
 import static org.grouptwentyone.controllers.WildlifeTokensController.createBagOfWildlifeTokens;
 
 public class TestingSpaceColm {
+
     public static int maxScore = -1;
     public static String maxName = "";
     public static int minScore = 1000;
     public static String minName = "";
+
     private static void testBotGame() {
         ArrayList<Player> playerList = new ArrayList<>();
         playerList.add(new CascadiaBot("bot1"));
@@ -42,9 +44,9 @@ public class TestingSpaceColm {
             }
 
             //next player
-            //System.out.println("Moving to next player");
+//            System.out.println("Moving to next player");
             activePlayer = playerManager.cycleToNextPlayer();
-            //GameUiView.printLargeSpace();
+//            GameUiView.printLargeSpace();
         }
 
         System.out.println("No tiles remain so play is finished, calculating player score...");
@@ -57,20 +59,63 @@ public class TestingSpaceColm {
         //GameUiView.printLargeSpace();
     }
 
+    private static void testPlacingElkTokens() {
+        CascadiaBot p1 = new CascadiaBot("Ton");
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 1));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(1, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 1));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(2, 0));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3, 3));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(3, 2));
+
+        p1.getPlayerBoardObject().setSelectedTile(new HabitatTile(true));
+        p1.getPlayerBoardObject().addNewTile(new HexCoordinate(4, 1));
+
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(2, 2));
+//
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(3, 3));
+
+        p1.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.ELK));
+        p1.getPlayerBoardObject().addNewToken(new HexCoordinate(1,3));
+
+        p1.playTurn();
+    }
+
     public static void main(String[] args) {
-        long startTime = System.currentTimeMillis();
-        for (int i = 0; i < 1000; i++) {
-            StartGame.tilesRemain = true;
-            WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
-            HabitatTilesController.habitatTilesBag = HabitatTilesController.createBagOfHabitatTiles();
-            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
-            StartGame.selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
-            StarterHabitatTilesController.starterHabitatTilesBag = StarterHabitatTilesController.createBagOfStarterHabitatTiles();
-            testBotGame();
-        }
-        long endTime = System.currentTimeMillis();
-        System.out.println("Time taken: " + (endTime-startTime));
-        System.out.println("Max Score = " + maxScore + ", name: " + maxName);
-        System.out.println("Min Score = " + minScore + ", name: " + minName);
+        testPlacingElkTokens();
+
+//        long startTime = System.currentTimeMillis();
+//        for (int i = 0; i < 500; i++) {
+//            testBotGame();
+//            StartGame.tilesRemain = true;
+//            HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
+//            StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
+//            WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
+//            StartGame.selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
+//            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+//        }
+//        long endTime = System.currentTimeMillis();
+//        System.out.println("Time taken: " + (endTime-startTime));
+//        System.out.printf("Max Score: %d\nMin Score: %d", maxScore, minScore);
     }
 }

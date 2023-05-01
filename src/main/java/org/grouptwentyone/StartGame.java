@@ -30,8 +30,8 @@ public class StartGame {
         LandingPageView.show();
         GameUiView.printLargeSpace();
 
-        int numOfPlayers = GameSetupView.getNumberOfPlayersFromUser();
-        ArrayList<Player> playerList = GameSetupView.getPlayerInformationFromUser(numOfPlayers);
+        CustomPair<Integer, Integer> numOfPlayersAndBots = GameSetupView.getNumberOfPlayersFromUser();
+        ArrayList<Player> playerList = GameSetupView.getPlayerInformationFromUser(numOfPlayersAndBots);
 
         PlayerManager playerManager = new PlayerManager(playerList);
         playerManager.shufflePlayerList();
@@ -42,7 +42,8 @@ public class StartGame {
         GameSetupView.displayPlayerOrder(playerList);
 
         //remove habitat tiles depending on number of players
-        int tilesToRemove = (((numOfPlayers-4)*-1)*20)+2;
+        int totalPlayers = numOfPlayersAndBots.getField1() + numOfPlayersAndBots.getField2();
+        int tilesToRemove = (((totalPlayers-4)*-1)*20)+2;
         if (tilesToRemove > 0)
             HabitatTilesController.habitatTilesBag.subList(0, tilesToRemove).clear();
 
