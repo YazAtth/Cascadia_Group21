@@ -1,5 +1,7 @@
 package org.grouptwentyone.models.WeightValueMaps;
 
+import org.grouptwentyone.controllers.WeightController;
+
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
@@ -48,11 +50,11 @@ public class ElkWeightValueMap extends AbstractWeightValueMap {
     public ElkWeightValueMap() {
         super();
 
-        elkWeightTable.put(0, 0.0);
-        elkWeightTable.put(1, 0.9);
-        elkWeightTable.put(2, 2.65);
-        elkWeightTable.put(3, 4.5);
-        elkWeightTable.put(4, 5.5);
+        elkWeightTable.put(0, 0.0 * WeightController.WeightConstants.elkMultiplier);
+        elkWeightTable.put(1, 0.9 * WeightController.WeightConstants.elkMultiplier);
+        elkWeightTable.put(2, 2.65 * WeightController.WeightConstants.elkMultiplier);
+        elkWeightTable.put(3, 4.5 * WeightController.WeightConstants.elkMultiplier);
+        elkWeightTable.put(4, 5.5 * WeightController.WeightConstants.elkMultiplier);
     }
 
     //not used

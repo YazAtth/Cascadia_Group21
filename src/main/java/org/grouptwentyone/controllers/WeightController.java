@@ -9,6 +9,10 @@ public class WeightController {
         public final static double ruinsBearPairWeight = -2.0;
         public final static double allBearsInPairsReduction = 0.5;
 
+        // Multipliers for each animal weight table
+        public final static double elkMultiplier = 1;
+        public final static double bearMultiplier = 1;
+        public final static double hawkMultiplier = 1;
         public final static double salmonMultiplier = 3;
         public final static double foxMultiplier = 0.1;
 

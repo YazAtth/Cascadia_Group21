@@ -12,11 +12,11 @@ public class BearWeightValueMap extends AbstractWeightValueMap {
     public BearWeightValueMap() {
         super();
 
-        bearWeightTable.put(0, 0.35); //if placing a bear will result in 0 pairs
-        bearWeightTable.put(1, 1.0); //if placing a bear will result in 1 valid pair
-        bearWeightTable.put(2, 4.1); //if placing a bear will result in 2 valid pair
-        bearWeightTable.put(3, 6.8); //if placing a bear will result in 3 valid pair
-        bearWeightTable.put(4, 8.9); //if placing a bear will result in 4 valid pair
+        bearWeightTable.put(0, 0.35 * WeightController.WeightConstants.bearMultiplier); //if placing a bear will result in 0 pairs
+        bearWeightTable.put(1, 1.0 * WeightController.WeightConstants.bearMultiplier); //if placing a bear will result in 1 valid pair
+        bearWeightTable.put(2, 4.1 * WeightController.WeightConstants.bearMultiplier); //if placing a bear will result in 2 valid pair
+        bearWeightTable.put(3, 6.8 * WeightController.WeightConstants.bearMultiplier); //if placing a bear will result in 3 valid pair
+        bearWeightTable.put(4, 8.9 * WeightController.WeightConstants.bearMultiplier); //if placing a bear will result in 4 valid pair
     }
 
     @Override
