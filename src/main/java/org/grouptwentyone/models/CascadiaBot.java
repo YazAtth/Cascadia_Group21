@@ -51,18 +51,24 @@ public class CascadiaBot extends Player {
         Triple<CustomPair<HabitatTile, HexCoordinate>, CustomPair<WildlifeToken, HexCoordinate>, Boolean> placements =
                 placeOptimalHabitatTileAndWildlifeToken();
         HabitatTile placedHabitatTile = placements.getField1().getField1();
-        HexCoordinate placedWildlifeTokenPosition = placements.getField1().getField2();
+        HexCoordinate placedHabitatTilePosition = placements.getField1().getField2();
         Boolean isNatureTokenSpent = placements.getField3();
 
         boolean wildlifeTokenGotPlaced = true;
         WildlifeToken.WildlifeTokenType placedWildlifeTokenType = null;
-        HexCoordinate placedHabitatTilePosition = null;
+        HexCoordinate placedWildlifeTokenPosition = null;
         try {
             placedWildlifeTokenType = placements.getField2().getField1().getWildlifeTokenType();
-            placedHabitatTilePosition = placements.getField2().getField2();
+            placedWildlifeTokenPosition = placements.getField2().getField2();
         } catch (NullPointerException e) {
             wildlifeTokenGotPlaced = false;
         }
+
+//        if (placedHabitatTilePosition == null) {
+//            throw new NullPointerException("placedWildlifeTokenPosition is null");
+//        } else {
+//            System.out.println(placedHabitatTilePosition);
+//        }
 
         // Display the bots actions to the user. Will not display if the user has requested the feature be turned off.
         if (displayBotActions) {
