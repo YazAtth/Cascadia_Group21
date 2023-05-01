@@ -474,6 +474,12 @@ public class TestingSpaceYasith {
 
         double timeStdDev = Math.sqrt(timeVariance);
 
+        double maxScore = perPlayerScorePerGameList
+                .stream()
+                .mapToInt(Integer::intValue)
+                .max()
+                .orElse(0);
+
 
         if (verbose) {
         System.out.printf("Average Score per Player across %d games is %.2f points with a standard deviation of %f\n",
@@ -486,6 +492,8 @@ public class TestingSpaceYasith {
                 averageTimeTakenPerGame,
                 timeStdDev);
         }
+
+        System.out.println("Max score: " + maxScore);
 
         return new CustomPair<>(new CustomPair<>(averageScorePerPlayerAcrossNGames, scoreStdDev), new CustomPair<>(averageTimeTakenPerGame, timeStdDev));
 
@@ -586,7 +594,7 @@ public class TestingSpaceYasith {
 //        testingPlacingFoxTokens();
 //        testingPlacingHawksTokens();
 //        testingPlacingTileAlgo();
-        getGameStatsAcrossMultipleGames(100, true);
+        getGameStatsAcrossMultipleGames(1000, true);
 //        testWeights(1000);
 //        runGame();
 
