@@ -21,7 +21,6 @@ public class SalmonWeightValueMap extends AbstractWeightValueMap {
         salmonWeightTable.put(7, 9.0 * WeightController.WeightConstants.salmonMultiplier);
     }
 
-
     @Override
     public  double getWeightValue(int numOfSalmonInRun) {
 

@@ -48,11 +48,6 @@ public class CascadiaBot extends Player {
         HexCoordinate placedWildlifeTokenPosition = placements.getField1().getField2();
         Boolean isNatureTokenSpent = placements.getField3();
 
-//        if (isNatureTokenSpent) {
-//            System.out.println("Bot spent a nature token");
-//            displayBotActions = true;
-//        }
-
         boolean wildlifeTokenGotPlaced = true;
         WildlifeToken.WildlifeTokenType placedWildlifeTokenType = null;
         HexCoordinate placedHabitatTilePosition = null;
@@ -62,7 +57,6 @@ public class CascadiaBot extends Player {
         } catch (NullPointerException e) {
             wildlifeTokenGotPlaced = false;
         }
-
 
         // Display the bots actions to the user. Will not display if the user has requested the feature be turned off.
         if (displayBotActions) {
@@ -633,7 +627,6 @@ public class CascadiaBot extends Player {
                 }
             }
 
-
             HabitatTile optimalHabitatTile = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField1().getField1();
 
             HexCoordinate optimalHabitatTilePosition = chosenHabitatTileAndTokenPairList.get(largestWeightPairIndex).getField1().getField2().getHexCoordinate();
@@ -663,7 +656,6 @@ public class CascadiaBot extends Player {
         StartGame.tilesRemain = SelectionOptionsView.replaceTileAndToken();
         this.getPlayerBoardObject().setSelectedToken(new WildlifeToken(WildlifeToken.WildlifeTokenType.EMPTY));
         this.getPlayerBoardObject().setSelectedTile(new HabitatTile());
-
 
         return placements;
     }
