@@ -363,7 +363,7 @@ public class TestingSpaceYasith {
 
     }
 
-    private static int runGame() {
+    private static int runGameToGetStats() {
 
         ArrayList<Player> playerList = new ArrayList<>();
         playerList.add(new CascadiaBot("Dom"));
@@ -427,7 +427,7 @@ public class TestingSpaceYasith {
 
             long startTime = System.currentTimeMillis();
 
-            int scorePerPlayer = runGame();
+            int scorePerPlayer = runGameToGetStats();
             HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
             StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
             WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
@@ -525,6 +525,60 @@ public class TestingSpaceYasith {
 
     }
 
+    private static int runGame() {
+
+        ArrayList<Player> playerList = new ArrayList<>();
+        playerList.add(new CascadiaBot("Dom"));
+        playerList.add(new CascadiaBot("Colm"));
+
+        PlayerManager playerManager = new PlayerManager(playerList);
+        playerManager.shufflePlayerList();
+
+        //remove habitat tiles depending on number of players
+        int tilesToRemove = (((2-4)*-1)*20)+2;
+        if (tilesToRemove > 0)
+            HabitatTilesController.habitatTilesBag.subList(0, tilesToRemove).clear();
+
+        Player activePlayer = playerManager.getFirstPlayer();
+//        CascadiaBot.displayBotActions = false;
+
+        while (StartGame.tilesRemain) {
+
+//            System.out.println(BoardView.displayTiles(activePlayer.getPlayerBoardObject()));
+//            System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(StartGame.selectedTiles));
+//            System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(StartGame.selectedTokens));
+
+            // If the user wants to quit the game: playTurn() returns false which breaks the loop
+            // otherwise it ends with returning true.
+            if (!activePlayer.playTurn()) {
+                break;
+            }
+
+            //next player
+//            System.out.println("Moving to next player");
+            activePlayer = playerManager.cycleToNextPlayer();
+//            GameUiView.printLargeSpace();
+        }
+
+//        System.out.println("No tiles remain so play is finished, calculating player score...");
+
+//        playerManager.tallyUpAllScores();
+//        ScoreDisplayView.displayScorePage(playerManager);
+
+        int sumOfScores = 0;
+        for (Player player : playerList) {
+            sumOfScores += player.getScore();
+        }
+        int scorePerPlayer = sumOfScores / playerList.size();
+
+        return scorePerPlayer;
+
+//        System.out.println(scorePerPlayer);
+//        System.out.println(BoardView.displayTiles(playerManager.getPlayerList().get(0).getPlayerBoardObject()));;
+
+
+    }
+
     public static void main(String[] args) {
 //            testingPlacingBearTokens();
 //        testingPlacingHawksTokens();
@@ -532,10 +586,11 @@ public class TestingSpaceYasith {
 //        testingPlacingFoxTokens();
 //        testingPlacingHawksTokens();
 //        testingPlacingTileAlgo();
-//        getGameStatsAcrossMultipleGames(1000, true);
-        testWeights(1000);
+//        getGameStatsAcrossMultipleGames(5000, true);
+//        testWeights(1000);
+        runGame();
 
-        System.out.println("\n\n lolololololol");
+
 
 
     }
