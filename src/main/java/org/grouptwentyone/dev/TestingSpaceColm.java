@@ -102,20 +102,20 @@ public class TestingSpaceColm {
     }
 
     public static void main(String[] args) {
-        testPlacingElkTokens();
+//        testPlacingElkTokens();
 
-//        long startTime = System.currentTimeMillis();
-//        for (int i = 0; i < 500; i++) {
-//            testBotGame();
-//            StartGame.tilesRemain = true;
-//            HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
-//            StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
-//            WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
-//            StartGame.selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
-//            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
-//        }
-//        long endTime = System.currentTimeMillis();
-//        System.out.println("Time taken: " + (endTime-startTime));
-//        System.out.printf("Max Score: %d\nMin Score: %d", maxScore, minScore);
+        long startTime = System.currentTimeMillis();
+        for (int i = 0; i < 5000; i++) {
+            testBotGame();
+            StartGame.tilesRemain = true;
+            HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
+            StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
+            WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
+            StartGame.selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
+            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println("Time taken: " + (endTime-startTime));
+        System.out.printf("Max Score: %d\nMin Score: %d", maxScore, minScore);
     }
 }

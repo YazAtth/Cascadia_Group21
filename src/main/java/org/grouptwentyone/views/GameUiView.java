@@ -35,13 +35,9 @@ public class GameUiView {
     public  static String PAGE_BORDER_THIN_NO_COLOUR = "------------------------------------------------------------------------------------------";
     public static String PAGE_BORDER_NO_COLOUR = "==========================================================================================";
     public static String PAGE_BORDER = "\033[1;90m" + PAGE_BORDER_NO_COLOUR + RESET_COLOUR;
-    public static String PAGE_BORDER_BOTTOM = "\n====================================================\n\n";
     public static String LARGE_SPACE = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" +
             "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-    public static String SMALL_SPACE = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
     public static String LINE_PAGE_BORDER_NO_COLOUR = "------------------------------------------------------------------------------------------";
-
-    public static String targetCircle = "\uD800\uDF48";
 
     public static void printLargeSpace() {
         System.out.println(LARGE_SPACE);
@@ -63,9 +59,6 @@ public class GameUiView {
                 player.getUserName(), player.getNumOfNatureTokens(), GameUiView.RESET_COLOUR);
         //print scorecard rules below player header for player convenience
         printLinePageBorder();
-        //commented out to reduce bloat on computer screen when testing bots
-//        printScoreCardRules();
-//        printLinePageBorder();
     }
 
     public static void printScoreCardRules() {

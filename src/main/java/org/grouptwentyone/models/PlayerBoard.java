@@ -9,7 +9,6 @@
 
 package org.grouptwentyone.models;
 
-import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.ScoringController;
 import org.grouptwentyone.controllers.StarterHabitatTilesController;
 import org.grouptwentyone.models.Exceptions.*;
@@ -91,23 +90,6 @@ public class PlayerBoard {
             default:
                 throw new IllegalArgumentException("Did not enter a valid \"playerBoardSide\" type");
         }
-    }
-
-    public boolean isCoordinateOnBoardEdge(HexCoordinate coordinate) {
-        int lastRow = this.getPlayerBoardAs2dArray().size()-1;
-        int lastColumn = this.getPlayerBoardAs2dArray().get(0).size()-1;
-
-        int coordinateYVal = coordinate.getY();
-        int coordinateXVal = coordinate.getX();
-
-        boolean isCoordinateOnFirstOrLastRow = coordinateXVal == 0 || coordinateXVal == lastRow;
-        boolean isCoordinateOnFirstOrLastColumn = coordinateYVal == 0 || coordinateYVal == lastColumn;
-
-        if (coordinateXVal < 0 || coordinateXVal > lastRow || coordinateYVal < 0 || coordinateYVal > lastColumn) {
-            throw new IllegalArgumentException("Entered coordinate in not on the board");
-        }
-
-        return isCoordinateOnFirstOrLastRow || isCoordinateOnFirstOrLastColumn;
     }
 
     public ArrayList<PlayerBoard.PlayerBoardSide> getPartOfBoardCoordinateIsOn(HexCoordinate coordinate) {
@@ -383,10 +365,6 @@ public class PlayerBoard {
     public ArrayList<ArrayList<Tile>> getPlayerBoardAs2dArray() {
         return this.playerBoard;
     }
-
-    public ArrayList<ArrayList<Tile>> getPlayerBoardAsNew2dArray() {
-        return new ArrayList<>(this.playerBoard);
-    }
     public Tile getRecentlyPlacedTile() {
         return this.recentlyPlacedTile;
     }
@@ -456,17 +434,6 @@ public class PlayerBoard {
         private void setNumOfTokenOption(WildlifeToken.WildlifeTokenType tokenType, Integer value) {
             this.numTokenOptions.replace(tokenType, value);
         }
-
-        public Hashtable<WildlifeToken.WildlifeTokenType, Integer> getNumTokenOptions() {
-            return numTokenOptions;
-        }
-
-//        @Override
-//        public boolean equals(Object obj) {
-//            if (!(obj instanceof TokenOptions o)) return false;
-//
-//            return this.getNumTokenOptions().equals(o.getNumTokenOptions());
-//        }
     }
     public ArrayList<Tile> getConnectedSameTilesEast(Tile tile, PlayerBoard playerBoard) {
         ArrayList<Tile> sameTilesEast = new ArrayList<>();
@@ -487,8 +454,6 @@ public class PlayerBoard {
     public ArrayList<Tile> getConnectedSameTilesSouthEast(Tile tile, PlayerBoard playerBoard) {
         ArrayList<Tile> sameTilesSouthEast = new ArrayList<>();
 
-        boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
-
         int moveOneEast = 0;
         int moveOneSouth = 0;
         int xCoord = tile.getHexCoordinate().getX();
@@ -508,8 +473,6 @@ public class PlayerBoard {
 
     public ArrayList<Tile> getConnectedSameTilesSouthWest(Tile tile, PlayerBoard playerBoard) {
         ArrayList<Tile> sameTilesSouthEast = new ArrayList<>();
-
-        boolean hasElkToken = tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.ELK;
 
         int moveOneSouth = 0;
         int xCoord = tile.getHexCoordinate().getX();
@@ -688,7 +651,6 @@ public class PlayerBoard {
 
         for (Tile tile: placedTileList) {
             ArrayList<Tile> adjacentTiles = this.getAllAdjacentPositions(tile);
-//            System.out.println(adjacentTiles);
 
             for (Tile adjacentTile: adjacentTiles) {
 
@@ -730,10 +692,6 @@ public class PlayerBoard {
             HabitatTile newHabitatTile = new HabitatTile(oldHabitatTile);
 
             Tile newTile = new Tile(newHabitatTile, tile);
-
-//            System.out.println(tile);
-//            System.out.println(newTile);
-//            System.out.println("\n");
 
             newActiveTiles.add(newTile);
         }
@@ -817,12 +775,6 @@ public class PlayerBoard {
 
         System.out.printf("to1: %s\nto2: %s\n\n",this.getActiveTiles(), o.getActiveTiles());
 
-        Tile ac2 = o.getActiveTiles().get(1);
-        Tile ac4 = this.getActiveTiles().get(1);
-
-//        System.out.printf("Is '%s' and '%s' equal? %s\n\n",ac2, ac4, ac2.equals(ac4));
-//        System.out.printf("ActiveTiles1: %s\nActiveTiles2: %s\n", this.getActiveTiles(), o.getActiveTiles());
-
         // Recently placed tiles, selected tiles and selected tokens can be null so we have to deal with those conditions separately
         boolean isRecentlyPlacedTilesEqual;
         if (this.getRecentlyPlacedTile() == null || o.getRecentlyPlacedTile() == null) {
@@ -856,81 +808,12 @@ public class PlayerBoard {
 
     }
 
-    public ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> getPlaceableWildlifeTokenList(int tokenIndex) {
-
-        ArrayList<CustomPair<HexCoordinate, WildlifeToken.WildlifeTokenType>> output = new ArrayList<>();
-
-        for (ArrayList<Tile> row: this.getPlayerBoardAs2dArray()) {
-            for (Tile tile: row) {
-                for (WildlifeToken.WildlifeTokenType placeableWildlifeToken: tile.getHabitatTile().getWildlifeTokenTypeList()) {
-
-                    // Ignore tiles where there are already wildlife tokens placed down
-//                    if (!this.getPlayerBoardAs2dArray().get(tile.getHexCoordinate().getX()).get(tile.getHexCoordinate().getY()).getHabitatTile().isNull())
-//                        continue;
-//                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY) continue;
-//                    System.out.println(tile.getHabitatTile().toString(true));
-
-                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY
-                    && placeableWildlifeToken == StartGame.selectedTokens.get(tokenIndex).getWildlifeTokenType()) {
-                        output.add(new CustomPair<>(tile.getHexCoordinate(), placeableWildlifeToken));
-                    }
-                }
-            }
-        }
-
-//        for (Tile tile : activeTiles) {
-//            for (WildlifeToken.WildlifeTokenType placeableWildlifeToken: tile.getHabitatTile().getWildlifeTokenTypeList()) {
-//
-//                // Ignore tiles where there are already wildlife tokens placed down
-////                    if (!this.getPlayerBoardAs2dArray().get(tile.getHexCoordinate().getX()).get(tile.getHexCoordinate().getY()).getHabitatTile().isNull())
-////                        continue;
-////                    if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() != WildlifeToken.WildlifeTokenType.EMPTY) continue;
-////                    System.out.println(tile.getHabitatTile().toString(true));
-//
-//                if (tile.getHabitatTile().getWildlifeToken().getWildlifeTokenType() == WildlifeToken.WildlifeTokenType.EMPTY) {
-//                    output.add(new CustomPair<>(tile.getHexCoordinate(), placeableWildlifeToken));
-//                }
-//            }
-//        }
-
-//        System.out.printf("getPlaceableWildlifeTokenList output: %s\n", output);
-        return output;
-    }
-
     public ArrayList<BoardShift> getLastBoardShift() {
         return lastBoardShift;
     }
 
     public void setLastBoardShift(ArrayList<BoardShift> lastBoardShift) {
         this.lastBoardShift = lastBoardShift;
-    }
-
-    public HexCoordinate getHexCoordinateAfterBoardShift(HexCoordinate hexCoordinate) {
-        HexCoordinate output = new HexCoordinate(hexCoordinate.getX(), hexCoordinate.getY());
-
-        if (this.getLastBoardShift().contains(BoardShift.TOP_SHIFT)) {
-            output.setX(output.getX()+2);
-        }
-
-        if (this.getLastBoardShift().contains(BoardShift.LEFT_SHIFT)) {
-            output.setY(output.getY()+1);
-        }
-
-        return output;
-    }
-
-    public HexCoordinate getHexCoordinateBeforeBoardShift(HexCoordinate hexCoordinate) {
-        HexCoordinate output = new HexCoordinate(hexCoordinate.getX(), hexCoordinate.getY());
-
-        if (this.getLastBoardShift().contains(BoardShift.TOP_SHIFT)) {
-            output.setX(output.getX()-2);
-        }
-
-        if (this.getLastBoardShift().contains(BoardShift.LEFT_SHIFT)) {
-            output.setY(output.getY()-1);
-        }
-
-        return output;
     }
 
     public boolean isVerbose() {
