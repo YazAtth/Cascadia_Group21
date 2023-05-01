@@ -3,6 +3,7 @@ package org.grouptwentyone.dev;
 import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.HabitatTilesController;
 import org.grouptwentyone.controllers.StarterHabitatTilesController;
+import org.grouptwentyone.controllers.WeightController;
 import org.grouptwentyone.controllers.WildlifeTokensController;
 import org.grouptwentyone.models.*;
 import org.grouptwentyone.models.WeightValueMaps.FoxWeightValueMap;
@@ -416,7 +417,7 @@ public class TestingSpaceYasith {
 
     }
 
-    private static void getGameStatsAcrossMultipleGames(int numberOfGames) {
+    private static CustomPair<CustomPair<Double, Double>, CustomPair<Double, Double>> getGameStatsAcrossMultipleGames(int numberOfGames, boolean verbose) {
 
         ArrayList<Long> timeTakenPerGameList = new ArrayList<>();
         ArrayList<Integer> perPlayerScorePerGameList = new ArrayList<>();
@@ -474,6 +475,7 @@ public class TestingSpaceYasith {
         double timeStdDev = Math.sqrt(timeVariance);
 
 
+        if (verbose) {
         System.out.printf("Average Score per Player across %d games is %.2f points with a standard deviation of %f\n",
                 numberOfGames,
                 averageScorePerPlayerAcrossNGames,
@@ -483,6 +485,9 @@ public class TestingSpaceYasith {
                 numberOfGames,
                 averageTimeTakenPerGame,
                 timeStdDev);
+        }
+
+        return new CustomPair<>(new CustomPair<>(averageScorePerPlayerAcrossNGames, scoreStdDev), new CustomPair<>(averageTimeTakenPerGame, timeStdDev));
 
 
     }
@@ -506,6 +511,20 @@ public class TestingSpaceYasith {
         }
     }
 
+    private static void testWeights(int numberOfGames) {
+        List<Double> weights = new ArrayList<>();
+        for (double i = 0.1; i <= 4.0; i += 0.1) {
+            weights.add(i);
+        }
+
+        for (Double weight: weights) {
+            WeightController.WeightConstants.salmonMultiplier = weight;
+            double score = getGameStatsAcrossMultipleGames(numberOfGames, false).getField1().getField1();
+            System.out.printf(score + " ");
+        }
+
+    }
+
     public static void main(String[] args) {
 //            testingPlacingBearTokens();
 //        testingPlacingHawksTokens();
@@ -513,7 +532,8 @@ public class TestingSpaceYasith {
 //        testingPlacingFoxTokens();
 //        testingPlacingHawksTokens();
 //        testingPlacingTileAlgo();
-        getGameStatsAcrossMultipleGames(1000);
+        getGameStatsAcrossMultipleGames(1000, true);
+//        testWeights(1000);
 
 
     }
