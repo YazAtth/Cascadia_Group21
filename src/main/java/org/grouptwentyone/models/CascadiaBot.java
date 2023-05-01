@@ -13,7 +13,6 @@ import org.grouptwentyone.StartGame;
 import org.grouptwentyone.controllers.BoardStateAnalyseController;
 import org.grouptwentyone.controllers.CullingController;
 import org.grouptwentyone.controllers.WeightController;
-import org.grouptwentyone.dev.DebugController;
 import org.grouptwentyone.models.WeightValueMaps.BearWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.ElkWeightValueMap;
 import org.grouptwentyone.models.WeightValueMaps.FoxWeightValueMap;
@@ -25,8 +24,6 @@ import org.grouptwentyone.views.SelectionOptionsView;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static java.lang.System.exit;
 
 
 // NOTE: Program will sometimes crash until the elk, salmon and hawk reserve values are implemented.
@@ -217,14 +214,14 @@ public class CascadiaBot extends Player {
                 bearWeight = bearWeightValueMap.getWeightValue(numberOfBearPairsAfterPlacingToken); // Get weight value for that pair from the table.
 
                 // If placing bear makes a pair, get the weight value for that pair.
-                boolean doesPlacingBearMakePair = BoardStateAnalyseController.doesPlacingBearMakePair(this.playerBoardObject, tile.getHexCoordinate());
+                boolean doesPlacingBearMakePair = BoardStateAnalyseController.doesBearPlacementMakePair(this.playerBoardObject, tile.getHexCoordinate());
                 if (!doesPlacingBearMakePair) {
 
                     bearWeight -= WeightController.WeightConstants.nonPairBearPlacementReduction;
                 }
 
                 // Custom weight if a bear pair gets ruined.
-                boolean doesPlacingBearRuinPair = BoardStateAnalyseController.doesPlacingBearRuinPair(this.playerBoardObject, tile.getHexCoordinate());
+                boolean doesPlacingBearRuinPair = BoardStateAnalyseController.doesBearPlacementRuinPair(this.playerBoardObject, tile.getHexCoordinate());
                 if (doesPlacingBearRuinPair) bearWeight = bearWeightValueMap.ruinsPairWeight();
 
                 wildlifeTokenWeightContainer.setWildlifeWeight(
@@ -423,13 +420,13 @@ public class CascadiaBot extends Player {
                 bearWeight = bearWeightValueMap.getWeightValue(numberOfBearPairsAfterPlacingToken); // Get weight value for that pair from the table.
 
                 // If placing bear makes a pair, get the weight value for that pair.
-                boolean doesPlacingBearMakePair = BoardStateAnalyseController.doesPlacingBearMakePair(duplicatePlayerBoard, ghostTile.getHexCoordinate());
+                boolean doesPlacingBearMakePair = BoardStateAnalyseController.doesBearPlacementMakePair(duplicatePlayerBoard, ghostTile.getHexCoordinate());
                 if (!doesPlacingBearMakePair) {
                     bearWeight -= WeightController.WeightConstants.nonPairBearPlacementReduction;
                 }
 
                 // Custom weight if a bear pair gets ruined.
-                boolean doesPlacingBearRuinPair = BoardStateAnalyseController.doesPlacingBearRuinPair(duplicatePlayerBoard, ghostTile.getHexCoordinate());
+                boolean doesPlacingBearRuinPair = BoardStateAnalyseController.doesBearPlacementRuinPair(duplicatePlayerBoard, ghostTile.getHexCoordinate());
                 if (doesPlacingBearRuinPair) bearWeight = bearWeightValueMap.ruinsPairWeight();
 
                 if (ghostTile.getHabitatTile().isKeystone())

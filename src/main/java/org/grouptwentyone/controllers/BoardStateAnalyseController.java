@@ -12,7 +12,6 @@ package org.grouptwentyone.controllers;
 import org.grouptwentyone.models.*;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class BoardStateAnalyseController {
@@ -42,7 +41,7 @@ public class BoardStateAnalyseController {
         return foxScore;
     }
 
-    public static boolean doesPlacingBearRuinPair(PlayerBoard playerBoard, HexCoordinate tileCord) {
+    public static boolean doesBearPlacementRuinPair(PlayerBoard playerBoard, HexCoordinate tileCord) {
         Tile tile = playerBoard.getTileByCoordinate(tileCord.getX(), tileCord.getY());
 
         ArrayList<Tile> adjacentTileList = playerBoard.getAdjacentTileList(tile);
@@ -119,7 +118,7 @@ public class BoardStateAnalyseController {
         return (int) numberOfPairs;
     }
 
-    public static boolean doesPlacingBearMakePair(PlayerBoard playerBoard, HexCoordinate tileCord) {
+    public static boolean doesBearPlacementMakePair(PlayerBoard playerBoard, HexCoordinate tileCord) {
         Tile tile = playerBoard.getTileByCoordinate(tileCord.getX(), tileCord.getY());
         int adjacentBears = 0;
         int adjacentBearsToAdjacentBear = 0;
