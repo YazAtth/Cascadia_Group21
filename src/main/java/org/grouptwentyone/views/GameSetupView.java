@@ -21,9 +21,13 @@ import java.util.Scanner;
 public class GameSetupView {
 
     public static CustomPair<Integer, Integer> getNumberOfPlayersFromUser() {
-        System.out.println("First you will be asked to enter the number of players, \n" +
-                "then you will be asked to enter the number of bots.\n" +
-                "Enter 0 for either if you dont want any of that type.");
+        System.out.printf("<> First you will be asked to enter the %snumber of players%s. \n" +
+                "<> Then you will be asked to enter the %snumber of bots%s.\n" +
+                "<> %sEnter 0%s if you dont want any of that type.\n",
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR,
+                GameUiView.GREEN_BOLD, GameUiView.RESET_COLOUR
+                );
         Scanner sc = new Scanner(System.in);
 
         GameUiView.printPageBorder();
@@ -33,7 +37,7 @@ public class GameSetupView {
 
         // Keep asking until user enters a valid int or exit program (returns -1).
         while (true) {
-            System.out.print("Please enter the number of Players\n>");
+            System.out.print("Please enter the number of Players\n> ");
             userInput = sc.nextLine().trim();
 
             UserTerminationController.checkUserInputForProgramTermination(userInput);
@@ -41,7 +45,7 @@ public class GameSetupView {
             try {
                 numberOfPlayers = Integer.parseInt(userInput);
 
-                System.out.print("Please enter the number of Bots\n>");
+                System.out.print("Please enter the number of Bots\n> ");
 
                 userInput = sc.nextLine().trim();
 
@@ -82,8 +86,8 @@ public class GameSetupView {
         Scanner sc = new Scanner(System.in);
 
         GameUiView.printLargeSpace();
-        GameUiView.printPageBorder();
         System.out.println("Player Names");
+        GameUiView.printPageBorder();
 
         for (int i=0; i<numberOfPlayers; i++) {
             System.out.printf("Enter \"Player %d\" name: ", i + 1);

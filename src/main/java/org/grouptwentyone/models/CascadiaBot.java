@@ -106,7 +106,7 @@ public class CascadiaBot extends Player {
             );
 
             System.out.printf("<> %sPress \"ENTER\"%s on your keyboard to continue or %stype \"1\"%s to\n   disable " +
-                            "these bot action descriptions and fast forward \n   to the end.\n" +
+                            "these bot action descriptions.\n" +
                             "<> %sType 2%s to see the selection of habitat tiles and wildlife\n   tokens the bot had" +
                             "before placing the habitat tile and token.\n",
                     GameUiView.GREEN_BOLD,
