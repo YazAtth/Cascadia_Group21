@@ -23,7 +23,7 @@ import static java.lang.System.exit;
 
 public class CascadiaBot extends Player {
 
-    static boolean displayBotActions = true;
+    public static boolean displayBotActions = true;
 
     public CascadiaBot(String userName) {
         super(userName);

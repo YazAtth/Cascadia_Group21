@@ -362,7 +362,8 @@ public class TestingSpaceYasith {
 
     }
 
-    private static void runGame() {
+    private static int runGame() {
+
         ArrayList<Player> playerList = new ArrayList<>();
         playerList.add(new CascadiaBot("Dom"));
         playerList.add(new CascadiaBot("Colm"));
@@ -376,6 +377,7 @@ public class TestingSpaceYasith {
             HabitatTilesController.habitatTilesBag.subList(0, tilesToRemove).clear();
 
         Player activePlayer = playerManager.getFirstPlayer();
+        CascadiaBot.displayBotActions = false;
 
         while (StartGame.tilesRemain) {
 
@@ -395,10 +397,10 @@ public class TestingSpaceYasith {
 //            GameUiView.printLargeSpace();
         }
 
-        System.out.println("No tiles remain so play is finished, calculating player score...");
+//        System.out.println("No tiles remain so play is finished, calculating player score...");
 
-        playerManager.tallyUpAllScores();
-        ScoreDisplayView.displayScorePage(playerManager);
+//        playerManager.tallyUpAllScores();
+//        ScoreDisplayView.displayScorePage(playerManager);
 
         int sumOfScores = 0;
         for (Player player : playerList) {
@@ -406,26 +408,83 @@ public class TestingSpaceYasith {
         }
         int scorePerPlayer = sumOfScores / playerList.size();
 
-        System.out.println(scorePerPlayer);
-        System.out.println(BoardView.displayTiles(playerManager.getPlayerList().get(0).getPlayerBoardObject()));;
+        return scorePerPlayer;
+
+//        System.out.println(scorePerPlayer);
+//        System.out.println(BoardView.displayTiles(playerManager.getPlayerList().get(0).getPlayerBoardObject()));;
 
 
     }
 
-    private static void testPlayGame() {
+    private static void getGameStatsAcrossMultipleGames(int numberOfGames) {
 
-        for (int i=0; i<1000; i++) {
+        ArrayList<Long> timeTakenPerGameList = new ArrayList<>();
+        ArrayList<Integer> perPlayerScorePerGameList = new ArrayList<>();
+
+        for (int i=0; i<numberOfGames; i++) {
             DebugController.setDebugMode(true);
+
             long startTime = System.currentTimeMillis();
-            runGame();
+
+            int scorePerPlayer = runGame();
             HabitatTilesController.habitatTilesBag = createBagOfHabitatTiles();
             StarterHabitatTilesController.starterHabitatTilesBag = createBagOfStarterHabitatTiles();
             WildlifeTokensController.wildlifeTokenBag = createBagOfWildlifeTokens();
             StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
-            StartGame.selectedTiles = SelectionOptionsView.getFourHabitatTiles();
+            StartGame.selectedTokens = SelectionOptionsView.getFourWildlifeTokens();
+            StartGame.tilesRemain = true;
+
             long endTime = System.currentTimeMillis();
-            System.out.println("Time taken: " + (endTime - startTime));
+            long timeTaken = (endTime - startTime);
+            timeTakenPerGameList.add(timeTaken);
+            perPlayerScorePerGameList.add(scorePerPlayer);
+
+//            System.out.println("Time taken: " + (endTime - startTime));
+//            System.out.println("Average Score per Player = " + scorePerPlayer);
         }
+
+        double averageScorePerPlayerAcrossNGames = perPlayerScorePerGameList
+                .stream()
+                .mapToInt(Integer::intValue)
+                .average()
+                .orElse(Double.NaN);
+
+        double scoreVariance = perPlayerScorePerGameList
+                .stream()
+                .mapToDouble(num -> Math.pow(num - averageScorePerPlayerAcrossNGames, 2))
+                .average()
+                .orElse(Double.NaN);
+
+        double scoreStdDev = Math.sqrt(scoreVariance);
+
+
+        double averageTimeTakenPerGame = timeTakenPerGameList
+                .stream()
+                .mapToLong(Long::longValue)
+                .average()
+                .orElse(Double.NaN);
+
+
+        double timeVariance = perPlayerScorePerGameList
+                .stream()
+                .mapToDouble(num -> Math.pow(num - averageTimeTakenPerGame, 2))
+                .average()
+                .orElse(Double.NaN);
+
+        double timeStdDev = Math.sqrt(timeVariance);
+
+
+        System.out.printf("Average Score per Player across %d games is %.2f points with a standard deviation of %f\n",
+                numberOfGames,
+                averageScorePerPlayerAcrossNGames,
+                scoreStdDev);
+
+        System.out.printf("Average Time taken per game across %d games is %.2f milliseconds with a standard deviation of %f\n",
+                numberOfGames,
+                averageTimeTakenPerGame,
+                timeStdDev);
+
+
     }
 
     private static void testingBotTileTokenPairing() {
@@ -454,7 +513,7 @@ public class TestingSpaceYasith {
 //        testingPlacingFoxTokens();
 //        testingPlacingHawksTokens();
 //        testingPlacingTileAlgo();
-        testPlayGame();
+        getGameStatsAcrossMultipleGames(1000);
 
 
     }
