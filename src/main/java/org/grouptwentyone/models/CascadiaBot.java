@@ -89,7 +89,7 @@ public class CascadiaBot extends Player {
             System.out.printf("""
                             STATS
                             ----------------------------------------------------------------
-                            - placed a %s habitat tile on position %s.
+                            - placed a %s habitat tile on position %s
                             - %s                                 \s
                             %s
                             Score       |    %d points
