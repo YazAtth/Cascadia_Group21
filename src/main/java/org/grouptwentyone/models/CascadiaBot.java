@@ -479,7 +479,7 @@ public class CascadiaBot extends Player {
                 // Get WildlifeWeightContainer of ghost tile
                 WildlifeTokenWeightContainer ghostTileWildlifeWeightContainer = ghostTileAndWildlifeWeightHash.get(ghostTile);
                 // Get the combined weight of the wildlife tokens that can be placed on the selected tile
-                double localWeight = ghostTileWildlifeWeightContainer.getCombinedWeightValue(placeableWildlifeTokensOnSelectedTileList);
+                double localWeight = ghostTileWildlifeWeightContainer.getAverageWeightValue(placeableWildlifeTokensOnSelectedTileList);
 
                 selectedTileGhostTileAndWeightTriple.add(new Triple<>(selectedTile, ghostTile, localWeight));
             }

@@ -518,7 +518,7 @@ public class TestingSpaceYasith {
         }
 
         for (Double weight: weights) {
-            WeightController.WeightConstants.salmonMultiplier = weight;
+            WeightController.WeightConstants.nonPairBearPlacementReduction = weight;
             double score = getGameStatsAcrossMultipleGames(numberOfGames, false).getField1().getField1();
             System.out.printf(score + " ");
         }
@@ -532,8 +532,10 @@ public class TestingSpaceYasith {
 //        testingPlacingFoxTokens();
 //        testingPlacingHawksTokens();
 //        testingPlacingTileAlgo();
-        getGameStatsAcrossMultipleGames(1000, true);
-//        testWeights(1000);
+//        getGameStatsAcrossMultipleGames(1000, true);
+        testWeights(1000);
+
+        System.out.println("\n\n lolololololol");
 
 
     }
