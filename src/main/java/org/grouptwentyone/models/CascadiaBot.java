@@ -39,6 +39,9 @@ public class CascadiaBot extends Player {
         //check for culling options
         CullingController.checkForCull(this);
 
+        ArrayList<HabitatTile> previousHabitatTiles = new ArrayList<>(StartGame.selectedTiles);
+        ArrayList<WildlifeToken> previousWildlifeTokens = new ArrayList<>(StartGame.selectedTokens);
+
         Triple<CustomPair<HabitatTile, HexCoordinate>, CustomPair<WildlifeToken, HexCoordinate>, Boolean> placements =
                 placeOptimalHabitatTileAndWildlifeToken();
         HabitatTile placedHabitatTile = placements.getField1().getField1();
@@ -79,34 +82,55 @@ public class CascadiaBot extends Player {
 
             long endTime = System.currentTimeMillis();
 
+
             System.out.printf("""
                             STATS
-                            -----------------------------------------
+                            ----------------------------------------------------------------
                             - placed a %s habitat tile on position %s.
                             - %s                                 \s
                             %s
                             Score       |    %d points
                             Time Taken  |    %d milliseconds
-                            
+                            ----------------------------------------------------------------
                             """,
 
                     placedHabitatTileBiomes,
                     placedHabitatTilePosition,
-                    wildlifeTokenGotPlaced?
+                    wildlifeTokenGotPlaced ?
                             String.format("placed a %s wildlife token on position %s", placedWildlifeTokenType, placedWildlifeTokenPosition)
                             :
                             "did not place wildlife token (nowhere to place)",
-                    isNatureTokenSpent? "- spent a nature token\n" : "",
+                    isNatureTokenSpent ? "- spent a nature token\n" : "",
                     this.getScore(),
                     (endTime - startTime)
             );
 
-            System.out.println("Press \"ENTER\" on your keyboard to continue or press \"1\" to disable bot action description.");
+            System.out.printf("<> %sPress \"ENTER\"%s on your keyboard to continue or %stype \"1\"%s to\n   disable " +
+                            "these bot action descriptions and fast forward \n   to the end.\n" +
+                            "<> %sType 2%s to see the selection of habitat tiles and wildlife\n   tokens the bot had" +
+                            "before placing the habitat tile and token.\n",
+                    GameUiView.GREEN_BOLD,
+                    GameUiView.RESET_COLOUR,
+                    GameUiView.GREEN_BOLD,
+                    GameUiView.RESET_COLOUR,
+                    GameUiView.GREEN_BOLD,
+                    GameUiView.RESET_COLOUR
+            );
+            System.out.print("> ");
             Scanner sc = new Scanner(System.in);
             String userInput = sc.nextLine().toLowerCase().trim();
 
             if (userInput.equals("1")) {
                 displayBotActions = false;
+            } else if (userInput.equals("2")) {
+                System.out.println("\n\n----------------------------------------------------------------");
+                System.out.println(SelectionOptionsView.displaySelectedHabitatTiles(previousHabitatTiles));
+                System.out.println(SelectionOptionsView.displaySelectedWildlifeTokens(previousWildlifeTokens));
+                System.out.println("----------------------------------------------------------------");
+
+                System.out.println("Press \"ENTER\" on your keyboard to continue.");
+                System.out.print("> ");
+                sc.nextLine();
             }
 
             GameUiView.printLargeSpace();
@@ -479,7 +503,7 @@ public class CascadiaBot extends Player {
                 // Get WildlifeWeightContainer of ghost tile
                 WildlifeTokenWeightContainer ghostTileWildlifeWeightContainer = ghostTileAndWildlifeWeightHash.get(ghostTile);
                 // Get the combined weight of the wildlife tokens that can be placed on the selected tile
-                double localWeight = ghostTileWildlifeWeightContainer.getCombinedWeightValue(placeableWildlifeTokensOnSelectedTileList);
+                double localWeight = ghostTileWildlifeWeightContainer.getAverageWeightValue(placeableWildlifeTokensOnSelectedTileList);
 
                 selectedTileGhostTileAndWeightTriple.add(new Triple<>(selectedTile, ghostTile, localWeight));
             }
