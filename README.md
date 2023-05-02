@@ -1,5 +1,7 @@
 # How to Use Bot
 
+GitHub Project Link: https://github.com/YazAtth/Cascadia_Group21
+
 1. Run the "Main.java" file or the "Cascadia_Group21-2.0" .jar file located in 
    the project directory root.
 2. As we want a Bot vs Bot game: enter the number of players as 0 and the number of bots as 2.
